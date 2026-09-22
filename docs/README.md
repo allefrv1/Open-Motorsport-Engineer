@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 008 — MoTeC CSV Adapter Foundation](plans/active/008-motec-csv-adapter-foundation.md)
+- [Plan 009 — Lap Comparison Reference and Delta-Time Foundation](plans/active/009-lap-comparison-reference-delta-foundation.md)
 
 ## Verification and implementation guidance
 

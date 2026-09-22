@@ -16,7 +16,8 @@ The repository now has:
 4. production validation that is deterministic and non-destructive;
 5. explicit versioned normalization preserving source evidence;
 6. source-independent Session / Run / Lap context that does not invent missing boundaries;
-7. a verified iRacing IRSDK v2 adapter with grouped fixed-array source preservation.
+7. a verified iRacing IRSDK v2 adapter with grouped fixed-array source preservation;
+8. a MoTeC CSV professional-workflow adapter preserving preamble, units, lexical values and import/validation boundaries.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -82,19 +83,33 @@ The architecture is still intentionally being proven one boundary at a time.
 - real external fixture structural validation;
 - multiple recorded RED -> GREEN CI cycles.
 
+### Professional CSV ingestion — Plan 008
+
+- source-specific MoTeC CSV adapter;
+- licensed deterministic TRACE fixtures;
+- full preamble/name/unit/source-value preservation;
+- explicit Sample Rate preservation without cadence inference;
+- duplicate source-name technical disambiguation;
+- OME/MoTeC CSV arbitration;
+- decreasing-time import preserved for downstream validation;
+- external representative MoTeC-format validation;
+- recorded RED -> GREEN CI cycle.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/008-motec-csv-adapter-foundation.md`
+`docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
 
 ### Guardrail
 
-The first professional source adapter must preserve MoTeC CSV export evidence **without treating suspicious data as an ingestion repair problem**.
+Lap comparison must be deterministic and evidence-backed.
 
-The licensed TRACE fixture is suitable for deterministic CI, but real/representative MoTeC export validation is still required before Plan 008 completion.
+ADR-0009 and `docs/specs/lap-comparison-v0.1.md` now define the positional reference, 1.0 m default grid, linear time-vs-distance interpolation, delta sign, readiness rules and provenance contract.
+
+Production comparison code may proceed only through TDD against that contract. Missing or incompatible evidence must produce an explicit not-ready result rather than a plausible-looking comparison.
 
 The following remain separate responsibilities:
 
@@ -124,7 +139,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context and iRacing external ingestion have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, iRacing ingestion and MoTeC CSV ingestion have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 

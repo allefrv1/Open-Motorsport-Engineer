@@ -64,37 +64,44 @@ Completed:
 
 ## Phase 4 — Initial external/professional sources
 
-Status: **Active**
+Status: **Complete**
 
 Completed:
 
 - Plan 007 — iRacing `.ibt` Adapter Foundation;
+- Plan 008 — MoTeC CSV Adapter Foundation;
 - IRSDK v2 binary import;
 - project-owned synthetic binary fixture;
 - real-file-driven grouped 360 Hz source arrays;
-- source-adapter contract tests.
-
-Current plan:
-
-- `docs/plans/active/008-motec-csv-adapter-foundation.md`
-
-Next:
-
-- MoTeC CSV export adapter;
-- licensed deterministic fixture;
-- real/representative professional-export validation.
-
-This ordering follows REQ-001's accepted source sequence before lap comparison.
+- MoTeC CSV source adapter with licensed deterministic fixtures;
+- source-adapter arbitration and contract tests;
+- representative external validation for both source families;
+- complete REQ-001 initial source strategy.
 
 ## Phase 5 — Lap comparison vertical slice
 
-Future.
+Status: **Active**
 
-- readiness checks;
-- distance alignment;
-- delta-time calculation;
+Current plan:
+
+- `docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
+
+The numerical baseline is resolved by ADR-0009 and `docs/specs/lap-comparison-v0.1.md`.
+
+Current work:
+
+- implement readiness checks;
+- construct the common 1.0 m default distance grid;
+- linearly interpolate elapsed time vs distance;
+- calculate `delta_B_vs_A`;
+- preserve comparison provenance/evidence;
+- prove behavior with TDD.
+
+Later Phase 5 increments:
+
 - key channel overlays;
-- evidence model;
+- discrete gear alignment rule;
+- observation/evidence layer;
 - comparison report.
 
 ## Phase 6 — Expanded real-motorsport validation

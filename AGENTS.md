@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.0.0
+Version: 1.1.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -167,10 +167,10 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–007 implemented OME CSV ingestion, non-destructive validation, explicit telemetry normalization, truthful Session / Run / Lap context and the first external iRacing binary adapter.
+Plans 003–008 implemented the telemetry foundation and the complete initial source strategy: OME CSV, iRacing `.ibt` and MoTeC CSV.
 
 The active engineering task is:
 
-`docs/plans/active/008-motec-csv-adapter-foundation.md`
+`docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
 
-Use TDD. Treat MoTeC CSV as source evidence: preserve metadata, channel names, units and raw source values; do not infer missing sample rate, repair timestamps, normalize channels or depend on native i2 APIs during ingestion.
+ADR-0009 and `docs/specs/lap-comparison-v0.1.md` define the accepted comparison contract. Implement it through TDD: explicit `lap.distance` / `time.elapsed`, common distance interval, 1.0 m default grid, linear interpolation and `delta_B_vs_A`. Missing evidence returns not-ready; never repair/guess or turn measurable differences into causal engineering diagnoses automatically.
