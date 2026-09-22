@@ -122,7 +122,7 @@ class OMECsvProfileImporter:
             return self._invalid_profile(path, str(exc))
 
         try:
-            timestamps, values_by_channel = self._read_csv(path, sidecar)
+            csv_channels, timestamps, values_by_channel = self._read_csv(path, sidecar)
             fingerprint = self._content_fingerprint(path, sidecar_bytes)
             after = self._source_state(path, sidecar_path)
         except (OSError, UnicodeDecodeError) as exc:
@@ -159,7 +159,8 @@ class OMECsvProfileImporter:
                     values=values_by_channel[identifier],
                 ),
             )
-            for identifier, definition in sidecar.channels.items()
+            for identifier in csv_channels
+            for definition in (sidecar.channels[identifier],)
         )
 
         telemetry_source = TelemetrySource(
@@ -191,6 +192,7 @@ class OMECsvProfileImporter:
         summary = ImportSummary(
             source_type=OME_CSV_SOURCE_TYPE,
             source_identity=path.name,
+            source_metadata=source_metadata,
             channels=tuple(
                 ChannelSummary(
                     identifier=channel.identifier,
@@ -295,7 +297,11 @@ class OMECsvProfileImporter:
     def _read_csv(
         source: Path,
         sidecar: _ParsedSidecar,
-    ) -> tuple[tuple[float, ...], Mapping[str, tuple[str | None, ...]]]:
+    ) -> tuple[
+        tuple[str, ...],
+        tuple[float, ...],
+        Mapping[str, tuple[str | None, ...]],
+    ]:
         timestamps: list[float] = []
         values_by_channel: dict[str, list[str | None]] = {
             identifier: [] for identifier in sidecar.channels
@@ -316,10 +322,10 @@ class OMECsvProfileImporter:
                 raise _InvalidProfile("OME CSV header contains duplicate column identifiers.")
 
             csv_channels = header[1:]
-            sidecar_channels = list(sidecar.channels)
-            if csv_channels != sidecar_channels:
+            sidecar_channels = set(sidecar.channels)
+            if set(csv_channels) != sidecar_channels:
                 raise _InvalidProfile(
-                    "CSV channel columns must exactly match sidecar channel keys in the same order."
+                    "CSV channel columns must exactly match the sidecar channel identifiers."
                 )
 
             previous_time: float | None = None
@@ -350,10 +356,13 @@ class OMECsvProfileImporter:
                 for identifier, raw_value in zip(csv_channels, row[1:], strict=True):
                     values_by_channel[identifier].append(raw_value if raw_value != "" else None)
 
+        if not timestamps:
+            raise _InvalidProfile("OME CSV must contain at least one sample row.")
+
         frozen_values = {
             identifier: tuple(values) for identifier, values in values_by_channel.items()
         }
-        return tuple(timestamps), frozen_values
+        return tuple(csv_channels), tuple(timestamps), frozen_values
 
     @staticmethod
     def _source_state(source: Path, sidecar: Path) -> _SourceState:
