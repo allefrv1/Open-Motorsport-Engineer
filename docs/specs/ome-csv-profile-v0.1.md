@@ -34,22 +34,23 @@ A profile instance consists of:
 
 The CSV stores samples.
 
-The JSON sidecar stores metadata and channel definitions.
-
-The sidecar is required for an OME CSV Profile dataset.
+The required JSON sidecar stores source metadata and channel definitions.
 
 ## CSV rules
 
-- UTF-8 text;
+- UTF-8 text without implicit encoding conversion;
 - comma delimiter;
 - decimal point `.`;
-- first row contains channel identifiers;
-- first column is `time_s`;
-- `time_s` is seconds from the dataset's declared reference origin;
-- timestamps must be strictly increasing;
+- first row contains identifiers;
+- first column is exactly `time_s`;
+- `time_s` is a finite decimal number in seconds from the dataset's declared reference origin;
+- timestamps are strictly increasing;
+- at least one non-time channel exists;
+- remaining column identifiers are unique;
+- remaining column identifiers exactly match sidecar `channels` keys in the same order;
 - all remaining columns share the CSV time base;
-- empty values represent missing samples and must not be silently filled;
-- no unit conversion is implied by the CSV itself.
+- empty channel cells represent missing source samples and must not be silently filled;
+- channel cells are ingested as source values without implicit unit conversion or normalization.
 
 Example:
 
@@ -60,21 +61,71 @@ time_s,speed_src,throttle_src,brake_src,steering_src,rpm_src
 0.020,42.40,98,0,0.4,5170
 ```
 
-## Sidecar metadata
+## Sidecar contract
 
-The sidecar must identify:
+The machine-readable schema is:
 
-- profile version;
-- dataset/source description;
-- source-system identity if known;
-- channel definitions;
-- unit for each channel when known;
-- original source name for each channel;
-- optional sample-rate declaration;
-- optional session/run/lap metadata;
-- optional source provenance.
+`ome-csv-profile-v0.1.schema.json`
 
-Conceptual example:
+Required top-level fields:
+
+- `ome_csv_version` — exactly `"0.1"`;
+- `source`;
+- `channels`.
+
+### source
+
+Required:
+
+- `description` — non-empty string.
+
+Optional:
+
+- `system` — string or null.
+
+### sample_rate_hz
+
+Optional positive finite number.
+
+It describes the shared acquisition rate when the producer knows it.
+
+OME must not infer a missing `sample_rate_hz` silently from timestamps during ingestion.
+
+### channels
+
+A non-empty object keyed by the exact CSV column identifier.
+
+Each channel requires:
+
+- `source_name` — the original/source-facing name, non-empty string.
+
+Optional:
+
+- `unit` — string or null;
+- `description` — string or null;
+- `data_type` — source-declared type description, string or null.
+
+An empty string unit represents an explicitly unitless channel.
+
+A missing/null unit represents unknown metadata.
+
+Unknown additional channel fields may be preserved as source metadata but do not acquire OME engineering meaning automatically.
+
+### context
+
+Optional object for source-provided operational context such as Session / Run / Lap markers.
+
+Ingestion preserves it.
+
+Its presence does not authorize generic boundary inference.
+
+### source_provenance
+
+Optional object containing provenance supplied by the producer/source.
+
+OME preserves it as source metadata.
+
+## Example sidecar
 
 ```json
 {
@@ -83,26 +134,28 @@ Conceptual example:
     "system": "example",
     "description": "Controlled OME fixture"
   },
+  "sample_rate_hz": 100.0,
   "channels": {
     "speed_src": {
       "source_name": "GPS Speed",
-      "unit": "km/h"
+      "unit": "km/h",
+      "data_type": "float"
     },
     "throttle_src": {
       "source_name": "Throttle Position",
-      "unit": "%"
+      "unit": "%",
+      "data_type": "float"
     }
+  },
+  "context": {
+    "lap": 3
   }
 }
 ```
 
-This example is explanatory, not an implementation schema.
-
-A machine-readable schema may be defined when implementation begins.
-
 ## Channel identifiers
 
-CSV column identifiers are stable profile identifiers, not necessarily canonical engineering concepts.
+CSV column identifiers are stable profile identifiers, not canonical engineering concepts.
 
 The sidecar preserves the original source name.
 
@@ -115,9 +168,19 @@ speed_src
 
 without erasing `source_name = "GPS Speed"`.
 
+## Source-value policy
+
+The ingestion layer preserves non-time CSV cells as source values.
+
+It does not infer a canonical engineering data type from lexical appearance.
+
+For example, an importer must not decide that every text resembling an integer is semantically a gear or counter.
+
+A later validated transformation may create typed/canonical representations when required.
+
 ## Lap context
 
-Version 0.1 may include explicit lap metadata in the sidecar or an explicit lap identifier column when fixtures require it.
+Version 0.1 may include explicit lap metadata in `context` or an explicit lap source column.
 
 Automatic lap detection is not part of this profile.
 
@@ -139,4 +202,4 @@ These limitations are intentional.
 
 Do not expand this profile merely to imitate a full measurement-data standard.
 
-When a dataset needs richer representation, the source adapter/internal model should handle it rather than forcing everything into CSV.
+When a dataset needs richer representation, the source adapter/internal telemetry layer should handle it rather than forcing everything into CSV.

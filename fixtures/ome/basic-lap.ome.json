@@ -4,38 +4,46 @@
     "system": "OME",
     "description": "Synthetic harness fixture; not measured telemetry"
   },
+  "sample_rate_hz": 10.0,
   "channels": {
     "speed_src": {
       "source_name": "Synthetic Vehicle Speed",
-      "unit": "m/s"
+      "unit": "m/s",
+      "data_type": "float"
     },
     "throttle_src": {
       "source_name": "Synthetic Throttle Position",
-      "unit": "%"
+      "unit": "%",
+      "data_type": "float"
     },
     "brake_src": {
       "source_name": "Synthetic Brake Input",
-      "unit": "%"
+      "unit": "%",
+      "data_type": "float"
     },
     "steering_src": {
       "source_name": "Synthetic Steering Angle",
-      "unit": "rad"
+      "unit": "rad",
+      "data_type": "float"
     },
     "rpm_src": {
       "source_name": "Synthetic Engine Speed",
-      "unit": "rpm"
+      "unit": "rpm",
+      "data_type": "float"
     },
     "gear_src": {
       "source_name": "Synthetic Gear",
-      "unit": ""
+      "unit": "",
+      "data_type": "integer"
     },
     "lap_src": {
       "source_name": "Synthetic Lap",
-      "unit": ""
+      "unit": "",
+      "data_type": "integer"
     }
   },
-  "session": {
-    "name": "Harness fixture",
+  "context": {
+    "session": "Harness fixture",
     "lap": 1
   }
 }

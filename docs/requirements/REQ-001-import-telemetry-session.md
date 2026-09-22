@@ -177,6 +177,27 @@ For the same source data, importer version and import parameters, the semantical
 
 Generated identifiers, timestamps or other operational metadata may differ if later architecture decisions allow them.
 
+## OME CSV implementation traceability
+
+Plan 003 exercises the REQ-001 acceptance criteria for the first supported source through:
+
+`tests/ingestion/test_ome_csv_import.py`
+
+Mapping:
+
+- AC-001 → `test_ac001_supported_profile_import_succeeds`
+- AC-002 → `test_ac002_import_does_not_modify_source_files`
+- AC-003 → `test_ac003_provenance_identifies_source_and_importer`
+- AC-004 → `test_ac004_channel_inventory_preserves_source_identity`
+- AC-005 → `test_ac005_source_metadata_is_preserved`
+- AC-006 → `test_ac006_missing_metadata_remains_unknown_and_visible`
+- AC-007 → `test_ac007_unsupported_source_returns_explicit_failure`
+- AC-008 → `test_ac008_unreadable_source_returns_read_failure`
+- AC-009 → `test_ac009_import_does_not_normalize_channel_identity_or_values`
+- AC-010 → `test_ac010_semantic_import_is_reproducible`
+
+REQ-001 remains **Accepted**, not globally **Implemented**, until the project decides whether requirement completion means the first supported source or the broader initial source strategy.
+
 ## Relevant Domain Concepts
 
 - Telemetry Dataset
