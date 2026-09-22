@@ -22,7 +22,7 @@ Goals:
 
 ## Phase 1 — Technology selection
 
-Status: **Next**
+Status: **Complete**
 
 Before coding, evaluate candidate technologies against:
 
@@ -37,17 +37,22 @@ Before coding, evaluate candidate technologies against:
 - contributor accessibility;
 - future AI integration without coupling the core to AI.
 
-Outputs:
+Outputs completed:
 
 - technology evaluation;
-- selected application shape;
-- persistence/data representation decision;
-- initial repository/module layout;
-- accepted technology ADRs.
+- local modular monolith selected;
+- Python engineering/application core selected;
+- Arrow-compatible columnar boundaries + Parquet telemetry persistence selected;
+- SQLite local metadata catalog selected;
+- local FastAPI boundary selected;
+- React + TypeScript + Vite UI selected;
+- initial repository/module layout documented;
+- test strategy documented;
+- desktop packaging deliberately deferred.
 
 ## Phase 2 — Telemetry foundation implementation
 
-Future.
+Status: **Ready, intentionally not started**.
 
 Implement only after Phase 1 decisions:
 
