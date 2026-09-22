@@ -17,6 +17,10 @@ Use progressive disclosure: start here, then open only documents relevant to the
 - [PRE_CODE_READINESS.md](PRE_CODE_READINESS.md) — go/no-go assessment
 - [ROADMAP.md](ROADMAP.md) — engineering sequence
 
+## Current execution
+
+- [Plan 006 — Session / Run / Lap Context Foundation](plans/active/006-session-run-lap-context-foundation.md)
+
 ## Verification and implementation guidance
 
 - [TEST_STRATEGY.md](TEST_STRATEGY.md)
