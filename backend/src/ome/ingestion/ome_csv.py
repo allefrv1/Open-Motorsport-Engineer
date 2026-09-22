@@ -8,6 +8,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from types import MappingProxyType
 
 from ome.domain import (
     ChannelMetadata,
@@ -288,7 +289,7 @@ class OMECsvProfileImporter:
         return _ParsedSidecar(
             source_system=source_system,
             sample_rate_hz=sample_rate_hz,
-            channels=freeze_metadata(channels),
+            channels=MappingProxyType(channels),
             raw=freeze_metadata(payload),
         )
 
