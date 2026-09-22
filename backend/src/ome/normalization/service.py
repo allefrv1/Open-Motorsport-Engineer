@@ -186,7 +186,7 @@ class TelemetryNormalizer:
         raise _ConversionFailure(f"Unsupported conversion kind: {kind}")
 
 
-def _as_float(value: SourceValue) -> float:
+def _as_float(value: str | int | float | bool) -> float:
     if isinstance(value, bool):
         raise _ConversionFailure("Boolean source value cannot be converted to a numeric quantity.")
 
@@ -202,7 +202,7 @@ def _as_float(value: SourceValue) -> float:
     return result
 
 
-def _as_integer(value: SourceValue) -> int:
+def _as_integer(value: str | int | float | bool) -> int:
     if isinstance(value, bool):
         raise _ConversionFailure("Boolean source value cannot be converted to an integer.")
 
