@@ -51,6 +51,32 @@ Signals such as GPS speed, wheel speed and ECU vehicle speed must not be collaps
 
 Normalization behavior that affects engineering meaning must be versionable.
 
+## Foundation implementation traceability
+
+Plan 005 maps the foundational REQ-004 behavior to:
+
+`tests/normalization/test_normalization.py`
+
+Mapping:
+
+- AC-001 → `test_ac001_source_identity_and_values_are_preserved`
+- AC-002 → `test_ac002_mapping_is_linked_to_explicit_rule`
+- AC-003 → `test_ac003_unmatched_channel_remains_explicitly_unmapped`
+- AC-004 → `test_ac004_conversions_are_deterministic_and_traceable`
+- AC-005 → `test_ac005_similar_speed_sources_are_not_collapsed`
+- AC-006 → `test_ac006_rules_and_conversions_are_versioned_and_reproducible`
+
+Additional regression coverage verifies:
+
+- blocking validation evidence prevents mapping;
+- rule precondition mismatch does not trigger guessing;
+- multiple matching explicit rules are treated as ambiguous;
+- conversion failure leaves source evidence unchanged and unmapped;
+- validation evidence must belong to the dataset being normalized;
+- import → validate → normalize preserves source timestamps.
+
+The first implementation intentionally uses explicit caller-supplied rules rather than global channel-name inference.
+
 ## Out of Scope
 
 - resampling onto a common timeline;

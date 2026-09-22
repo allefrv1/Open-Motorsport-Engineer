@@ -36,7 +36,12 @@ forbid = [
 
 [layers.normalization]
 path = "normalization"
-forbid = ["ome.api", "ome.analysis"]
+forbid = [
+  "ome.api",
+  "ome.analysis",
+  "ome.ingestion",
+  "ome.validation",
+]
 
 [layers.evidence]
 path = "evidence"

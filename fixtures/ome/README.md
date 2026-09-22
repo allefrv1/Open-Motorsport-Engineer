@@ -19,3 +19,10 @@ Purpose:
 - deterministic harness input.
 
 The values are synthetic and must not be described as measured motorsport data.
+
+
+Normalization fixture note:
+
+- channels declaring `%` use percentage-point source values such as `40` for 40%;
+- normalized fraction conversion is therefore explicit and testable;
+- source values remain unchanged after normalization.
