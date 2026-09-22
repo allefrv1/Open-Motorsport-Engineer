@@ -176,9 +176,22 @@ def build_ibt_bytes(
 def build_array_variable_fixture() -> bytes:
     variables = (
         IbtVariable("SessionTime", "Session elapsed time", "s", TYPE_DOUBLE, 0),
-        IbtVariable("WheelSpeed", "Four wheel speeds", "m/s", TYPE_FLOAT, 8, count=4),
+        IbtVariable(
+            "SteeringWheelTorque_ST",
+            "Output torque on steering shaft at 360 Hz",
+            "N*m",
+            TYPE_FLOAT,
+            8,
+            count=6,
+            count_as_time=True,
+        ),
     )
-    records = ({"SessionTime": 1.0, "WheelSpeed": (10.0, 10.1, 9.9, 10.0)},)
+    records = (
+        {
+            "SessionTime": 1.0,
+            "SteeringWheelTorque_ST": (1.0, 1.1, 1.2, 1.3, 1.4, 1.5),
+        },
+    )
     return build_ibt_bytes(variables=variables, records=records)
 
 
