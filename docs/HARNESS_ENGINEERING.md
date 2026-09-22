@@ -88,20 +88,23 @@ Durable discoveries must be promoted to requirements, ADRs, specs or domain docu
 
 ## Feedback loop
 
-The operational agent loop is:
+For behavior changes, the operational agent loop is test-first:
 
 ```text
 UNDERSTAND
 -> PLAN
--> CHANGE
--> RUN FOCUSED CHECKS
--> INSPECT RESULT
+-> WRITE FOCUSED TEST
+-> RED: CONFIRM EXPECTED FAILURE
+-> IMPLEMENT SMALLEST CHANGE
+-> GREEN: RUN FOCUSED TEST
+-> REFACTOR
 -> SELF-REVIEW
--> FIX
 -> RUN FULL VERIFY
 -> UPDATE DURABLE DOCS
 -> COMPLETE
 ```
+
+For documentation-only, build, tooling or characterization work, use the closest equivalent feedback loop without manufacturing a meaningless failing test.
 
 A task is not complete because code was generated.
 
@@ -142,7 +145,9 @@ Requirement
 -> CI result
 ```
 
-Plan 003 begins that requirement-to-test traceability for REQ-001.
+REQ-001, REQ-002 and REQ-004 already have requirement-to-test traceability.
+
+New deterministic product behavior should establish the acceptance test before implementation and retain evidence that the test failed for the intended missing behavior before the production change made it pass.
 
 ## Fixtures as part of the harness
 
