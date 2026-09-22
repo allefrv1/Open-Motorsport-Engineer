@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-import sys
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -82,7 +81,9 @@ def check_docs(repo_root: Path = ROOT) -> list[str]:
 
     for path in sorted((repo_root / "docs" / "plans" / "active").glob("*.md")):
         if file_status(path) != "Active":
-            errors.append(f"{path.relative_to(repo_root)}: active plan must have Status: **Active**")
+            errors.append(
+                f"{path.relative_to(repo_root)}: active plan must have Status: **Active**"
+            )
 
     for path in sorted((repo_root / "docs" / "plans" / "completed").glob("*.md")):
         if file_status(path) != "Completed":
