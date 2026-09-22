@@ -49,7 +49,9 @@ class ValidationResult:
 
     @property
     def blocking_issues(self) -> tuple[ValidationIssue, ...]:
-        return tuple(issue for issue in self.issues if issue.severity is ValidationSeverity.BLOCKING)
+        return tuple(
+            issue for issue in self.issues if issue.severity is ValidationSeverity.BLOCKING
+        )
 
     @property
     def warning_issues(self) -> tuple[ValidationIssue, ...]:
