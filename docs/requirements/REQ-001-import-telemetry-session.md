@@ -16,7 +16,45 @@ Import must not silently reinterpret channels, fabricate metadata or modify the 
 
 Allow the user to import telemetry from a supported source into OME and obtain a traceable imported dataset that is ready for subsequent validation.
 
-This requirement intentionally does not define the first supported file format or implementation technology.
+This requirement defines the initial source families OME intends to support, but it does not prescribe the implementation technology for their importers.
+
+## Initial Source Strategy
+
+OME will begin with three source families that serve different purposes:
+
+### 1. OME CSV Profile — first implementation target
+
+OME will define a project-owned CSV profile for deterministic development fixtures, examples and controlled interoperability.
+
+This is not the same as promising support for every arbitrary CSV layout.
+
+The OME CSV profile should become the first importer implemented because it allows the import contract, provenance rules and validation behavior to be tested without depending on a proprietary ecosystem.
+
+### 2. iRacing binary telemetry (.ibt) — first external adapter target
+
+iRacing `.ibt` is the first external telemetry format targeted after the OME CSV profile.
+
+Its purpose is to exercise the importer against richer telemetry, session metadata and real-world variation in channel availability while remaining practical for development and repeatable testing.
+
+### 3. MoTeC log data (.ld) — first professional real-motorsport source target
+
+MoTeC `.ld` is a target source for validating OME against professional real-world motorsport workflows.
+
+Native `.ld` support is subject to a separate feasibility decision covering:
+
+- supported access mechanism;
+- licensing;
+- operating-system constraints;
+- test fixtures;
+- long-term maintainability.
+
+Until native `.ld` ingestion is accepted as technically and legally appropriate, MoTeC-exported CSV may be used as an interim source of real motorsport data.
+
+### Importer independence
+
+All source-specific importers must conform to a common ingestion boundary.
+
+Source-specific details must not leak into the core engineering domain unless the domain explicitly requires them.
 
 ## Preconditions
 
@@ -184,7 +222,6 @@ Import behavior should be reproducible for equivalent inputs and importer versio
 
 This requirement does not define:
 
-- the first supported telemetry format;
 - canonical channel naming;
 - unit conversion rules;
 - signal resampling;
@@ -204,16 +241,16 @@ These responsibilities require separate requirements or architecture decisions.
 
 The following questions must be resolved before or during acceptance of related requirements:
 
-1. What is the first real telemetry format OME will support?
-2. Should a generic CSV importer be part of the first vertical slice?
-3. Can one source contain multiple sessions or runs, and how should that be represented?
-4. Should import support partial recovery from damaged files, or fail atomically in the first version?
-5. How should OME identify that the same source has been imported before?
-6. What minimum provenance information is required across all source types?
-7. When should Session / Run / Lap detection happen: during import, validation or a later organization stage?
-8. Which metadata must be mandatory for a dataset to progress from imported to valid?
-9. What dataset sizes and import times should the first version support?
-10. Which source formats are legally and technically feasible to support in an open-source project?
+1. What exact schema will define the OME CSV profile?
+2. Can one source contain multiple sessions or runs, and how should that be represented?
+3. Should import support partial recovery from damaged files, or fail atomically in the first version?
+4. How should OME identify that the same source has been imported before?
+5. What minimum provenance information is required across all source types?
+6. When should Session / Run / Lap detection happen: during import, validation or a later organization stage?
+7. Which metadata must be mandatory for a dataset to progress from imported to valid?
+8. What dataset sizes and import times should the first version support?
+9. What access strategy should be used for native MoTeC `.ld` files?
+10. Which licensing and platform constraints apply to native MoTeC support?
 
 ## Notes
 
