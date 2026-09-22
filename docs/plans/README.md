@@ -1,25 +1,50 @@
-# Engineering Plans
+# Engineering Execution Plans
 
-Use this directory for substantial implementation or migration plans.
+Plans are first-class working artifacts for substantial or multi-step work.
 
-Small, obvious tasks do not require a plan document.
+## Structure
 
-## Naming
+- `active/` — work currently in progress or next to execute
+- `completed/` — finished plans retained for history
+- `tech-debt-tracker.md` — known debt and missing guardrails
 
-Use `NNN-short-plan-name.md`.
+## When to create a plan
 
-A useful plan contains:
+Use a durable execution plan when work is:
 
-- goal;
+- multi-step;
+- cross-cutting;
+- expected to span a long agent run;
+- likely to discover decisions during execution;
+- risky enough that progress and verification should remain visible.
+
+Small, obvious changes do not need a durable plan.
+
+## Required plan content
+
+A substantial plan should include:
+
+- objective;
 - requirements involved;
-- current behavior;
-- domain concepts;
-- architecture constraints;
-- proposed steps;
+- current state;
+- constraints;
+- milestones;
 - affected areas;
-- test strategy;
+- verification strategy;
+- progress/decision log;
 - risks;
-- open questions;
 - completion criteria.
 
-Important durable decisions should be promoted to requirements, domain documentation or ADRs.
+## Promotion rule
+
+Plans are temporary execution state.
+
+Durable discoveries must be promoted into:
+
+- requirements;
+- ADRs;
+- specs;
+- domain docs;
+- architecture/quality docs.
+
+A completed plan should move from `active/` to `completed/`.
