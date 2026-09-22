@@ -2,13 +2,13 @@
 
 Date: 2026-09-22
 
-Status: **Foundation complete — ready for technology evaluation, not yet implementation**
+Status: **Pre-code architecture complete — implementation intentionally paused**
 
 ## Executive conclusion
 
-OME now has enough product, domain and architecture definition to begin selecting implementation technologies without asking the programming agent to invent core behavior.
+OME now has enough product, domain, architecture and technology definition for Codex to begin implementation without inventing core behavior or major technology choices.
 
-Production code should still wait until the technology evaluation and initial module boundaries are documented.
+Production code is intentionally paused because the current instruction is to finish the software-engineering foundation first.
 
 ## Product foundation
 
@@ -80,20 +80,30 @@ Production code should still wait until the technology evaluation and initial mo
 - [x] ADR-0002 — CSV is exchange profile, not canonical storage
 - [x] ADR-0003 — AI is not deterministic engineering core
 
-## Deliberately unresolved until technology evaluation
+## Technology decisions completed
 
-The following are **not gaps** at this stage; they are deferred decisions:
+- application shape: local modular monolith;
+- engineering/application core: Python;
+- processing: Polars;
+- columnar interoperability: Apache Arrow/PyArrow;
+- telemetry persistence: Parquet;
+- local metadata: SQLite;
+- local application API: FastAPI;
+- frontend: React + TypeScript + Vite;
+- initial visualization: Plotly.js behind replaceable UI components;
+- lap comparison alignment: monotonic lap distance with deterministic derived alignment.
 
-- implementation language;
-- UI framework;
-- application runtime;
-- persistence engine;
-- internal columnar representation;
-- desktop/local-web packaging;
-- plotting library;
+## Deliberately unresolved
+
+These remain intentionally deferred because they do not need to be fixed before the first implementation:
+
+- desktop packaging/wrapper;
 - AI provider/model;
-- exact source-adapter libraries;
-- exact lap-alignment algorithm.
+- native MoTeC `.ld` integration;
+- optional DuckDB adoption;
+- performance-native extensions in Rust/C++;
+- advanced track geometry/segmentation;
+- strategy/endurance model.
 
 ## Data still needed before implementation validation
 
@@ -108,20 +118,14 @@ Representative fixtures should be acquired or created during technology evaluati
 
 ### Go
 
-Proceed to **technology and system-shape evaluation**.
+The repository is **implementation-ready** for the first telemetry-foundation slice.
 
-### No-Go
+### Current hold
 
-Do not begin production implementation yet.
+Do not begin production implementation until the CEO explicitly starts the coding phase.
 
-The next architecture work must decide:
+When that phase begins, Codex should receive small requirement-linked tasks rather than broad "build OME" instructions.
 
-- application shape;
-- language/runtime;
-- data-processing approach;
-- internal telemetry representation;
-- persistence approach;
-- packaging strategy;
-- testing strategy.
+### Remaining evidence work
 
-Those choices should be recorded through ADRs before Codex receives broad implementation authority.
+Representative real fixtures should be added as soon as legally shareable data is available. They may refine performance assumptions and source adapters, but they no longer need to redefine the architecture foundation.
