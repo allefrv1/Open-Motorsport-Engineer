@@ -37,6 +37,12 @@ Authoritative artifacts:
 - ADR-0009 — Align initial lap comparisons by monotonic lap distance
 - `docs/specs/lap-comparison-v0.1.md`
 
+Independent implementation audit:
+
+- `docs/research/lap-comparison-decision-audit.md`
+
+The audit found no reason to revise the accepted v0.1 numerical baseline before implementation.
+
 v0.1 uses:
 
 - canonical `lap.distance` in metres;
