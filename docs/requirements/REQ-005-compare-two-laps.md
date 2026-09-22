@@ -69,9 +69,18 @@ Comparison metrics and observations must remain traceable to the laps, channels,
 
 The user must be able to identify which Session / Run / Lap each comparison case belongs to.
 
-## Open Architecture Question
+## Resolved Architecture Decision
 
-The exact positional alignment algorithm and distance representation must be selected and documented before implementation.
+ADR-0009 and `docs/specs/lap-comparison-v0.1.md` resolve the initial comparison reference and numerical baseline:
+
+- align by trustworthy monotonic `lap.distance` in metres;
+- compare only the common distance interval;
+- use a deterministic analysis-only distance grid;
+- use linear interpolation for elapsed time as a function of distance;
+- compute `delta_B_vs_A = time_B - time_A`;
+- preserve source data unchanged and retain comparison provenance.
+
+The v0.1 spec defines a default 1.0 m grid step and conservative readiness requirements for the first implementation.
 
 ## Out of Scope
 
