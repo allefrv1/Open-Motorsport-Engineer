@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
@@ -27,6 +28,7 @@ class ChannelSummary:
 class ImportSummary:
     source_type: str
     source_identity: str
+    source_metadata: Mapping[str, object]
     channels: tuple[ChannelSummary, ...]
     warnings: tuple[ImportIssue, ...]
     missing_metadata: tuple[str, ...]
