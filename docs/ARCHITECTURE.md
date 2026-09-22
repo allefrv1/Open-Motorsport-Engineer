@@ -1,8 +1,12 @@
 # OME Architecture Foundation
 
-Status: **Accepted pre-code architecture**
+Status: **Accepted architecture baseline**
 
-This document defines the architecture boundaries and drivers that are sufficiently understood before implementation. It intentionally does **not** select a programming language, UI framework, database or deployment platform.
+## Purpose
+
+This document is the top-level architecture map.
+
+Detailed decisions live in `docs/adr/`. Requirements, domain rules and specifications remain separate sources of truth.
 
 ## Architecture flow
 
@@ -15,9 +19,10 @@ PROBLEM
   -> ARCHITECTURE DRIVER
   -> ARCHITECTURE
   -> TECHNOLOGY
+  -> EXECUTABLE FEEDBACK
 ```
 
-Technology selection happens after the current foundation is reviewed against representative data.
+The architecture baseline is selected, but the implementation harness and representative data validation are still pending.
 
 ## System context
 
@@ -79,52 +84,41 @@ SESSION/RUN/LAP CONTEXT    DETERMINISTIC METRICS
                HUMAN DECISION
 ```
 
-These are logical responsibilities, not microservices or deployment units.
+These are logical responsibilities, not microservices.
 
 ## Architecture boundaries
 
 ### Source adapters
 
-Responsible for:
+Read source-specific structures, preserve source identity/metadata/provenance, and emit import warnings.
 
-- reading source-specific structures;
-- preserving original channel identity;
-- preserving source metadata;
-- creating source-independent imported representations;
-- reporting import warnings.
-
-Not responsible for:
-
-- engineering diagnosis;
-- canonical channel guessing;
-- hidden resampling;
-- lap-performance analysis.
+They do not perform engineering diagnosis, hidden normalization, hidden resampling or lap-performance analysis.
 
 ### Data quality
 
-Responsible for non-destructive validation and explicit quality issues.
+Performs non-destructive validation and emits explicit issues.
 
-Not responsible for repairing data silently.
+It does not silently repair telemetry.
 
 ### Normalization
 
-Responsible for explicit, traceable mapping from source channels to canonical OME engineering concepts.
+Maps source channels to canonical OME concepts through explicit, traceable rules.
 
-Not responsible for erasing source representation.
+It does not erase source representation.
 
 ### Operational context
 
-Responsible for Session / Run / Lap and associated metadata such as driver, setup, tyres and conditions.
+Represents Session / Run / Lap and context such as driver, vehicle, setup, tyres and conditions.
 
 ### Engineering core
 
-Responsible for deterministic calculations, transformations and metrics.
+Performs deterministic transformations, alignment, calculations and metrics.
 
-Every important derived result must be traceable to inputs, algorithm version and parameters.
+Important results must remain traceable to inputs, parameters and algorithm versions.
 
 ### Evidence layer
 
-Represents the distinction between:
+Preserves the distinction between:
 
 - measured;
 - derived;
@@ -133,60 +127,63 @@ Represents the distinction between:
 - interpretation;
 - missing evidence.
 
-This layer is the contract between deterministic engineering computation and later AI assistance.
-
 ### AI layer
 
-AI may:
+AI may organize investigations, explain concepts, formulate hypotheses from structured evidence and identify missing evidence.
 
-- organize an investigation;
-- explain concepts;
-- relate structured evidence;
-- formulate hypotheses;
-- identify missing evidence;
-- draft summaries.
-
-AI must not:
-
-- fabricate telemetry;
-- replace deterministic numerical calculation;
-- silently modify evidence;
-- present hypotheses as measurements;
-- make the portable engineering core depend on an external AI service.
+AI must not fabricate telemetry, replace deterministic calculations, silently modify evidence or make essential local analysis depend on an external service.
 
 ## Architecture drivers
 
-The strongest drivers currently identified are:
+1. Integrity
+2. Traceability
+3. Reproducibility
+4. Interoperability
+5. Multi-rate data
+6. Offline usability
+7. Data ownership
+8. Extensibility
+9. Performance
+10. Explainability
+11. Agent legibility and mechanical verification
 
-1. **Integrity** — original telemetry is evidence.
-2. **Traceability** — results must lead back to source data.
-3. **Reproducibility** — deterministic results must be reproducible.
-4. **Interoperability** — OME must support heterogeneous sources.
-5. **Multi-rate data** — the model cannot assume one common sample rate.
-6. **Offline usability** — essential trackside work cannot depend on cloud access.
-7. **Data ownership** — telemetry should not leave the user's environment implicitly.
-8. **Extensibility** — adapters and metrics must evolve independently.
-9. **Performance** — realistic multi-hour, multi-channel datasets must remain practical.
-10. **Explainability** — users must be able to inspect why a result exists.
+See:
 
-See `docs/QUALITY_ATTRIBUTES.md`.
+- `docs/QUALITY_ATTRIBUTES.md`
+- `docs/CORE_BELIEFS.md`
+- `docs/HARNESS_ENGINEERING.md`
 
 ## Initial source strategy
 
-Accepted implementation order:
+1. OME CSV Exchange Profile
+2. iRacing `.ibt`
+3. MoTeC CSV export
+4. native MoTeC `.ld` evaluated later
 
-1. OME CSV Exchange Profile;
-2. iRacing `.ibt`;
-3. MoTeC CSV export;
-4. evaluate native MoTeC `.ld` later.
+CSV is an exchange/fixture profile, not the canonical internal telemetry model.
 
-The OME CSV profile is an exchange and fixture format, **not** the canonical internal model.
+## Application shape and technology baseline
+
+Accepted decisions currently select:
+
+- local modular monolith;
+- Python engineering/application core;
+- Arrow-compatible columnar processing;
+- Polars as initial high-level processing engine;
+- Parquet telemetry persistence;
+- SQLite project metadata;
+- local FastAPI application boundary;
+- React + TypeScript + Vite frontend;
+- Plotly.js as an initial replaceable visualization adapter;
+- distance-based deterministic lap alignment.
+
+These choices are recorded in ADR-0004 through ADR-0009.
+
+They are architecture baselines, not evidence that the executable harness or performance targets have already been validated.
 
 ## First vertical slice
 
-The first architecture will be validated against `docs/MVP.md`.
-
-It must support the conceptual flow:
+After harness bootstrap, the first feature flow is:
 
 ```text
 SOURCE
@@ -198,43 +195,41 @@ SOURCE
   -> STRUCTURED EVIDENCE
 ```
 
-No AI capability is required to prove the first vertical slice.
+No AI capability is required for this slice.
 
-## Architecture decisions already accepted
+## Accepted ADRs
 
-- ADR-0001 — Separate source ingestion from telemetry normalization.
+See `docs/adr/README.md` for the authoritative ADR index.
 
-Additional decisions should be recorded as ADRs when they materially constrain future implementation.
+Current accepted architecture topics include:
 
-## Technology decisions intentionally deferred
+- ingestion / validation / normalization separation;
+- CSV role;
+- AI boundary;
+- local modular monolith;
+- Python core;
+- Arrow/Parquet telemetry foundation;
+- SQLite metadata;
+- local HTTP API + React UI;
+- distance-based lap comparison.
 
-Still undecided:
+## Harness requirement
 
-- implementation language(s);
-- frontend framework;
-- backend/application framework;
-- persistence engine;
-- internal columnar/storage representation;
-- desktop packaging;
-- AI provider/model;
-- deployment topology.
+Architecture prose is not sufficient.
 
-These should be selected only after:
+As modules appear, high-value boundaries must be promoted into structural tests or dependency rules where practical.
 
-- representative fixtures are available;
-- architecture drivers are prioritized;
-- first-slice performance assumptions are checked;
-- technology options are compared against the requirements.
+Feature work starts only after the active harness-bootstrap plan establishes reproducible setup and canonical verification commands.
 
-## Explicit non-goals for the first architecture
+## Explicit first-phase non-goals
 
 - microservices;
 - mandatory cloud backend;
 - distributed messaging;
 - Kubernetes;
-- complex event sourcing/CQRS;
+- complex CQRS/event sourcing;
 - live telemetry;
-- full simulation;
-- AI-first analysis.
-
-The project should begin as the smallest architecture that preserves the boundaries above.
+- complete vehicle simulation;
+- AI-first analysis;
+- native MoTeC `.ld` dependency;
+- premature native-language optimization.
