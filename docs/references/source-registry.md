@@ -185,6 +185,28 @@ Vendored under `fixtures/public/trace/`.
 
 Classification: synthetic interoperability/validation fixture.
 
+### Arcayik/motec-csv — representative MoTeC CSV export
+
+URL: https://github.com/Arcayik/motec-csv
+
+Verified artifact:
+
+- `data/1hz.csv`
+
+Observed:
+
+- standard MoTeC CSV signature;
+- rich preamble;
+- explicit sample rate;
+- 15 channels;
+- 305 telemetry rows.
+
+OME use:
+
+External representative format validation only; not vendored.
+
+Classification: public MoTeC-compatible export / interoperability reference.
+
 ### B'Energy Racing — racing-data-converter
 
 URL: https://github.com/BenergyRacing/racing-data-converter
