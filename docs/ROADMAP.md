@@ -18,7 +18,7 @@ Status: **Complete**
 
 ## Phase 1 — Architecture and technology baseline
 
-Status: **Complete as a documented baseline; executable validation pending**
+Status: **Complete as an initial baseline**
 
 Selected direction includes:
 
@@ -28,40 +28,47 @@ Selected direction includes:
 - SQLite metadata;
 - FastAPI local application boundary;
 - React + TypeScript + Vite UI;
-- first test strategy and module layout.
+- test strategy and module layout.
 
-These choices must be tested against representative data during implementation rather than treated as automatically proven.
+These choices remain subject to evidence from real implementation and telemetry.
 
 ## Phase 2 — Agent harness bootstrap
 
-Status: **Next**
+Status: **Complete**
 
-See `docs/plans/active/002-harness-bootstrap.md`.
+Completed in Plan 002:
 
-Build:
-
-- reproducible environment;
-- locked toolchains/dependencies;
-- canonical local commands;
+- reproducible pinned environment;
+- lockfiles;
+- canonical commands;
 - CI;
-- lint/type/test loops;
+- format/lint/type/test loops;
 - docs checks;
-- architecture-boundary checks;
-- initial telemetry fixtures;
+- architecture checks;
+- fixture checks;
+- project-owned fixture;
 - PR/self-review loop.
 
-No ordinary feature development should precede this phase.
+See `docs/plans/completed/002-harness-bootstrap.md`.
 
 ## Phase 3 — Telemetry foundation
 
-Future.
+Status: **Active**
 
-- OME CSV Profile ingestion;
-- provenance;
-- imported telemetry model;
-- validation;
-- normalization;
-- Session / Run / Lap representation.
+Current plan:
+
+- `docs/plans/active/003-ome-csv-import-foundation.md`
+
+First slice:
+
+- OME CSV Profile import;
+- source-preserving telemetry domain objects;
+- provenance/fingerprint;
+- import summary;
+- explicit import failures;
+- REQ-001 acceptance tests.
+
+Follow-on slices will add validation, normalization and Session / Run / Lap behavior without collapsing their responsibilities.
 
 ## Phase 4 — First external source
 

@@ -1,0 +1,44 @@
+name: OME CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Harness verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.17"
+          python-version: "3.13.15"
+          enable-cache: true
+
+      - name: Set up pnpm and Node
+        uses: pnpm/setup@c9883cc79df532ad1a7b81bf9ab944ceb090d65c # v2.0.0
+        with:
+          version: "11.27.1"
+          runtime: "node@24.21.0"
+          cache: true
+          install: false
+
+      - name: Sync Python environment
+        run: uv sync --locked
+
+      - name: Install JavaScript workspace
+        run: pnpm install --frozen-lockfile
+
+      - name: Run canonical verification
+        run: uv run --locked python scripts/harness.py verify

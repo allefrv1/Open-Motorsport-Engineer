@@ -1,0 +1,12 @@
+{
+  "name": "open-motorsport-engineer",
+  "private": true,
+  "packageManager": "pnpm@11.27.1",
+  "engines": {
+    "node": "24.21.0",
+    "pnpm": "11.27.1"
+  },
+  "scripts": {
+    "test:frontend": "pnpm --dir frontend test"
+  }
+}

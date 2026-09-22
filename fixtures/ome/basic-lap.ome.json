@@ -1,0 +1,41 @@
+{
+  "ome_csv_version": "0.1",
+  "source": {
+    "system": "OME",
+    "description": "Synthetic harness fixture; not measured telemetry"
+  },
+  "channels": {
+    "speed_src": {
+      "source_name": "Synthetic Vehicle Speed",
+      "unit": "m/s"
+    },
+    "throttle_src": {
+      "source_name": "Synthetic Throttle Position",
+      "unit": "%"
+    },
+    "brake_src": {
+      "source_name": "Synthetic Brake Input",
+      "unit": "%"
+    },
+    "steering_src": {
+      "source_name": "Synthetic Steering Angle",
+      "unit": "rad"
+    },
+    "rpm_src": {
+      "source_name": "Synthetic Engine Speed",
+      "unit": "rpm"
+    },
+    "gear_src": {
+      "source_name": "Synthetic Gear",
+      "unit": ""
+    },
+    "lap_src": {
+      "source_name": "Synthetic Lap",
+      "unit": ""
+    }
+  },
+  "session": {
+    "name": "Harness fixture",
+    "lap": 1
+  }
+}
