@@ -88,9 +88,10 @@ class Plan008MoTeCCSVImporterTests(unittest.TestCase):
                 "Damper FL",
             ),
         )
-        self.assertEqual(tuple(channel.identifier for channel in channels), tuple(
-            channel.original_name for channel in channels
-        ))
+        self.assertEqual(
+            tuple(channel.identifier for channel in channels),
+            tuple(channel.original_name for channel in channels),
+        )
         self.assertEqual(outcome.dataset.channel("Ground Speed").metadata.unit, "km/h")
         self.assertEqual(outcome.dataset.channel("Gear").metadata.unit, "")
         self.assertEqual(outcome.dataset.channel("Damper FL").metadata.unit, "mm")
@@ -192,8 +193,12 @@ s,rpm,min
         assert isinstance(outcome, ImportSuccess)
 
         channels = outcome.dataset.channels
-        self.assertEqual(tuple(channel.identifier for channel in channels), ("Time", "Engine Speed", "Time#2"))
-        self.assertEqual(tuple(channel.original_name for channel in channels), ("Time", "Engine Speed", "Time"))
+        self.assertEqual(
+            tuple(channel.identifier for channel in channels), ("Time", "Engine Speed", "Time#2")
+        )
+        self.assertEqual(
+            tuple(channel.original_name for channel in channels), ("Time", "Engine Speed", "Time")
+        )
 
         duplicate = outcome.dataset.channel("Time#2")
         self.assertEqual(duplicate.metadata.unit, "min")
@@ -275,7 +280,9 @@ s,rpm,min
         self.assertEqual(first.dataset.provenance.content_fingerprint, expected)
         self.assertEqual(second.dataset.provenance.content_fingerprint, expected)
         self.assertEqual(first.dataset.channels, second.dataset.channels)
-        self.assertNotEqual(first.dataset.provenance.imported_at, second.dataset.provenance.imported_at)
+        self.assertNotEqual(
+            first.dataset.provenance.imported_at, second.dataset.provenance.imported_at
+        )
 
     def test_wrong_time_unit_is_explicit_invalid_profile_failure(self) -> None:
         source = """Format,MoTeC CSV File
