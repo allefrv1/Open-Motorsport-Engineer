@@ -1,0 +1,38 @@
+[architecture]
+root = "backend/src/ome"
+
+[layers.domain]
+path = "domain"
+forbid = [
+  "ome.api",
+  "ome.application",
+  "ome.persistence",
+  "ome.ingestion",
+  "ome.validation",
+  "ome.normalization",
+  "ome.analysis",
+  "fastapi",
+  "polars",
+  "pyarrow",
+  "sqlalchemy",
+]
+
+[layers.analysis]
+path = "analysis"
+forbid = ["ome.api", "ome.ai", "fastapi"]
+
+[layers.ingestion]
+path = "ingestion"
+forbid = ["ome.api", "ome.analysis"]
+
+[layers.validation]
+path = "validation"
+forbid = ["ome.api", "ome.analysis"]
+
+[layers.normalization]
+path = "normalization"
+forbid = ["ome.api", "ome.analysis"]
+
+[layers.evidence]
+path = "evidence"
+forbid = ["ome.api", "fastapi"]

@@ -12,9 +12,11 @@ Link the relevant requirement or ADR when applicable.
 
 ## Validation
 
+- [ ] `uv run --locked python scripts/harness.py verify` passes
 - [ ] Relevant tests were added or updated
-- [ ] Relevant tests pass
 - [ ] Documentation remains consistent
+- [ ] Architecture boundaries remain valid
+- [ ] Fixture/provenance metadata was updated when data changed
 - [ ] No unrelated changes were introduced
 
 ## Engineering / data considerations

@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 0.2.0
+Version: 0.3.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -23,6 +23,7 @@ Before substantial work, read only the documents relevant to the task:
 - `docs/specs/` — data/interface specifications
 - `docs/plans/active/` — active execution plans
 - `docs/HARNESS_ENGINEERING.md` — agent workflow and feedback-loop requirements
+- `docs/DEVELOPMENT.md` — reproducible environment and canonical commands
 
 Use `docs/README.md` as the documentation index.
 
@@ -87,6 +88,42 @@ Keep these distinct:
 
 Never present a hypothesis as a measurement or correlation as established causation.
 
+## Canonical harness commands
+
+Run from the repository root.
+
+Setup after installing `uv 0.12.17` and `pnpm 11.27.1`:
+
+```text
+uv sync --locked
+pnpm install --frozen-lockfile
+```
+
+Focused checks:
+
+```text
+uv run --locked python scripts/harness.py lint
+uv run --locked python scripts/harness.py type
+uv run --locked python scripts/harness.py test
+uv run --locked python scripts/harness.py docs
+uv run --locked python scripts/harness.py arch
+uv run --locked python scripts/harness.py fixtures
+```
+
+Full verification before completion:
+
+```text
+uv run --locked python scripts/harness.py verify
+```
+
+Format/fix Python code:
+
+```text
+uv run --locked python scripts/harness.py format
+```
+
+Do not claim a substantial change is complete while `verify` is failing.
+
 ## Change discipline
 
 - Inspect affected files before editing.
@@ -97,20 +134,6 @@ Never present a hypothesis as a measurement or correlation as established causat
 - Update requirements, ADRs, specs or domain docs when behavior changes intentionally.
 - Do not mark an ADR Accepted unless the maintainer has authorized that decision.
 - Do not create speculative abstractions for future features.
-
-## Verification
-
-When executable tooling exists, run the repository-prescribed checks before finishing.
-
-The harness bootstrap will define canonical commands for:
-
-- formatting/linting;
-- type/static checks;
-- unit/integration tests;
-- documentation structure/link checks;
-- architecture-boundary checks.
-
-Until those commands exist, do not claim the repository is fully harness-ready.
 
 ## Completion report
 
@@ -126,6 +149,6 @@ For substantial work, report:
 
 ## Current project state
 
-The product/domain/architecture documentation foundation exists.
+The executable harness bootstrap is the active engineering task.
 
-Feature implementation must not begin before the active harness-bootstrap plan is completed, unless the maintainer explicitly overrides that gate.
+Feature implementation must not begin before `docs/plans/active/002-harness-bootstrap.md` is completed, unless the maintainer explicitly overrides that gate.

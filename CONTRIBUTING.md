@@ -1,15 +1,46 @@
 # Contributing to Open Motorsport Engineer
 
-OME is in an early architecture and domain-definition stage.
+OME is built with an agent-first engineering workflow.
 
 Before contributing, read:
 
 - `AGENTS.md`
 - `docs/PROJECT.md`
-- `docs/DOMAIN.md`
 - `docs/ARCHITECTURE.md`
+- `docs/HARNESS_ENGINEERING.md`
+- `docs/DEVELOPMENT.md`
 
 Then read requirements, ADRs and domain documentation relevant to your change.
+
+## Setup
+
+The repository pins its toolchain.
+
+Use the versions documented in `docs/DEVELOPMENT.md`, then run:
+
+```text
+uv sync --locked
+pnpm install --frozen-lockfile
+```
+
+## Required verification
+
+Before opening or updating a substantial pull request:
+
+```text
+uv run --locked python scripts/harness.py verify
+```
+
+Use focused commands during development:
+
+```text
+uv run --locked python scripts/harness.py lint
+uv run --locked python scripts/harness.py type
+uv run --locked python scripts/harness.py test
+uv run --locked python scripts/harness.py docs
+uv run --locked python scripts/harness.py arch
+uv run --locked python scripts/harness.py fixtures
+```
 
 ## Principles
 
@@ -19,6 +50,7 @@ Then read requirements, ADRs and domain documentation relevant to your change.
 - do not invent motorsport engineering rules;
 - preserve telemetry provenance;
 - test deterministic behavior;
+- turn repeated review feedback into executable guardrails;
 - document significant decisions.
 
 ## Pull requests
@@ -26,9 +58,10 @@ Then read requirements, ADRs and domain documentation relevant to your change.
 A good pull request should explain:
 
 - the problem;
-- the change;
-- why the approach was chosen;
-- how it was validated;
+- the focused change;
+- requirement / ADR involved;
+- checks run and their result;
+- engineering/data assumptions;
 - limitations or follow-up work.
 
-Substantial architecture changes should reference an ADR. Changes that implement product behavior should reference a requirement when one exists.
+Substantial architecture changes should reference an ADR. Product behavior should reference a requirement when one exists.

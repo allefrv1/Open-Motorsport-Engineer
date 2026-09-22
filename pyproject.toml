@@ -1,0 +1,26 @@
+[project]
+name = "open-motorsport-engineer"
+version = "0.0.0"
+description = "Open Motorsport Engineer harness and application workspace"
+requires-python = "==3.13.*"
+dependencies = []
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = [
+  ".venv",
+  "fixtures",
+  "frontend",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ome", "scripts"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"

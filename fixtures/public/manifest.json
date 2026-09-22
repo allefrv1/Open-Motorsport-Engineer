@@ -1,5 +1,5 @@
 {
-  "manifest_version": "0.1",
+  "manifest_version": "0.2",
   "verified_date": "2026-09-22",
   "fixtures": [
     {
@@ -11,6 +11,7 @@
       "source_path": "exit_speed/testdata/test_parking_lot_20hz_2020-06-11T22_1.csv",
       "source_git_blob_sha": "df9aaa9827b85d33c4df4d5dd11912955e2240cf",
       "license": "Apache-2.0",
+      "license_path": "fixtures/public/licenses/exit-speed-Apache-2.0.txt",
       "redistribution": "approved_by_upstream_repository_license",
       "purpose": [
         "metadata preamble",
@@ -30,6 +31,7 @@
       "source_path": "crates/trace-motec/tests/fixtures/csv/canonical.csv",
       "source_git_blob_sha": "50f23127dff0b880d768ea91aa309bdc99f14432",
       "license": "MIT",
+      "license_path": "fixtures/public/licenses/trace-MIT.txt",
       "redistribution": "approved_by_upstream_repository_license",
       "purpose": [
         "metadata preamble",
@@ -47,6 +49,7 @@
       "source_repository": "https://github.com/keystroke-tools/TRACE",
       "source_path": "crates/trace-motec/tests/fixtures/csv/decreasing-time.csv",
       "license": "MIT",
+      "license_path": "fixtures/public/licenses/trace-MIT.txt",
       "redistribution": "approved_by_upstream_repository_license",
       "purpose": [
         "decreasing timestamp validation failure"
