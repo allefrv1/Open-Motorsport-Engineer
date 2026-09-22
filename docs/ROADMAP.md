@@ -4,93 +4,94 @@ Status: **Accepted planning baseline**
 
 This roadmap describes engineering sequence, not release dates.
 
-## Phase 0 — Foundation
+## Phase 0 — Product/domain foundation
 
 Status: **Complete**
 
-Goals:
+- mission and non-goals;
+- domain vocabulary;
+- initial requirements;
+- quality attributes;
+- source strategy;
+- first vertical slice;
+- core architecture boundaries.
 
-- establish project mission and non-goals;
-- define repository instructions for Codex;
-- establish documentation structure;
-- define initial domain vocabulary;
-- define quality attributes;
-- define source-ingestion boundaries;
-- define initial requirements;
-- define first vertical slice;
-- document initial architecture decisions.
+## Phase 1 — Architecture and technology baseline
 
-## Phase 1 — Technology selection
+Status: **Complete as a documented baseline; executable validation pending**
 
-Status: **Complete**
+Selected direction includes:
 
-Before coding, evaluate candidate technologies against:
+- local modular monolith;
+- Python engineering/application core;
+- Arrow/Polars/Parquet data stack;
+- SQLite metadata;
+- FastAPI local application boundary;
+- React + TypeScript + Vite UI;
+- first test strategy and module layout.
 
-- deterministic numerical/data processing;
-- multi-rate telemetry;
-- large local datasets;
-- offline-first usage;
-- cross-platform constraints;
-- visualization needs;
-- packaging/distribution;
-- testability;
-- contributor accessibility;
-- future AI integration without coupling the core to AI.
+These choices must be tested against representative data during implementation rather than treated as automatically proven.
 
-Outputs completed:
+## Phase 2 — Agent harness bootstrap
 
-- technology evaluation;
-- local modular monolith selected;
-- Python engineering/application core selected;
-- Arrow-compatible columnar boundaries + Parquet telemetry persistence selected;
-- SQLite local metadata catalog selected;
-- local FastAPI boundary selected;
-- React + TypeScript + Vite UI selected;
-- initial repository/module layout documented;
-- test strategy documented;
-- desktop packaging deliberately deferred.
+Status: **Next**
 
-## Phase 2 — Telemetry foundation implementation
+See `docs/plans/active/002-harness-bootstrap.md`.
 
-Status: **Ready, intentionally not started**.
+Build:
 
-Implement only after Phase 1 decisions:
+- reproducible environment;
+- locked toolchains/dependencies;
+- canonical local commands;
+- CI;
+- lint/type/test loops;
+- docs checks;
+- architecture-boundary checks;
+- initial telemetry fixtures;
+- PR/self-review loop.
+
+No ordinary feature development should precede this phase.
+
+## Phase 3 — Telemetry foundation
+
+Future.
 
 - OME CSV Profile ingestion;
 - provenance;
 - imported telemetry model;
 - validation;
-- initial normalization;
+- normalization;
 - Session / Run / Lap representation.
 
-## Phase 3 — First external source
+## Phase 4 — First external source
 
 Future.
 
 - iRacing `.ibt` adapter;
-- representative fixtures;
-- import/validation parity tests.
+- representative fixture;
+- source-adapter contract tests.
 
-## Phase 4 — Lap comparison vertical slice
+## Phase 5 — Lap comparison vertical slice
 
 Future.
 
-- lap comparison readiness;
-- deterministic alignment/delta;
+- readiness checks;
+- distance alignment;
+- delta-time calculation;
 - key channel overlays;
 - evidence model;
 - comparison report.
 
-## Phase 5 — Real-motorsport validation
+## Phase 6 — Real-motorsport validation
 
 Future.
 
 - MoTeC CSV export;
-- Formula Student / race-team representative datasets;
-- validate workflow and metadata assumptions;
+- Formula Student / race-team data where shareable;
+- validate performance and metadata assumptions;
 - revisit native `.ld` feasibility.
 
-## Phase 6 — Domain analysis modules
+## Phase 7 — Domain analysis modules
 
 Future and incremental.
 
@@ -102,17 +103,17 @@ Potential modules:
 - vehicle health;
 - tyres;
 - suspension;
-- setup A/B analysis.
+- setup A/B.
 
-Each module must define its engineering question, required evidence, deterministic metrics, uncertainty and validation references before AI explanations are added.
+Each module must define its question, required evidence, deterministic metrics, uncertainty and validation references.
 
-## Phase 7 — OME Engineer Agent
+## Phase 8 — OME Engineer Agent
 
 Future.
 
-The agent is added above a mature evidence/tool layer.
+AI is added above a mature evidence/tool layer.
 
-It should not be used to compensate for missing deterministic engineering functionality.
+It must not compensate for missing deterministic engineering capability.
 
 ## Rule
 
