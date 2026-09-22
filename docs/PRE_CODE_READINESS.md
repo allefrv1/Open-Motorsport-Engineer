@@ -2,130 +2,110 @@
 
 Date: 2026-09-22
 
-Status: **Pre-code architecture complete — implementation intentionally paused**
+Status: **Documentation foundation complete — executable harness not ready**
 
 ## Executive conclusion
 
-OME now has enough product, domain, architecture and technology definition for Codex to begin implementation without inventing core behavior or major technology choices.
+OME has a strong product, domain and architecture knowledge base.
 
-Production code is intentionally paused because the current instruction is to finish the software-engineering foundation first.
+A harness-engineering audit found that the earlier label **implementation-ready** was too strong.
 
-## Product foundation
+The repository does not yet provide the executable feedback loops required for reliable agent-led feature development.
 
-- [x] Problem defined
-- [x] Mission defined
-- [x] Non-goals defined
-- [x] Initial user groups identified
-- [x] First vertical slice defined
-- [x] Long-term scope separated from MVP
+## What is ready
 
-## Domain foundation
+### Product
 
-- [x] Event / Session / Run / Lap vocabulary
-- [x] TelemetrySource
-- [x] ImportedTelemetryDataset
-- [x] SourceChannel
-- [x] SampleSeries
-- [x] Provenance
-- [x] Validation concepts
-- [x] Normalization boundary
-- [x] Evidence hierarchy
-- [x] Unknown/missing-data behavior
+- mission and problem;
+- users and non-goals;
+- first vertical slice;
+- long-term scope boundaries.
 
-## Requirements
+### Domain
 
-- [x] REQ-001 Import Telemetry Session
-- [x] REQ-002 Validate Telemetry Dataset
-- [x] REQ-003 Organize Session / Run / Lap
-- [x] REQ-004 Normalize Telemetry Channels
-- [x] REQ-005 Compare Two Laps
-- [x] REQ-006 Preserve Analysis Evidence
+- Event / Session / Run / Lap vocabulary;
+- telemetry import model;
+- provenance;
+- validation concepts;
+- normalization boundary;
+- evidence hierarchy;
+- missing/unknown-data semantics.
 
-## Quality attributes
+### Requirements
 
-- [x] Integrity
-- [x] Traceability
-- [x] Reproducibility
-- [x] Explicit uncertainty
-- [x] Data ownership
-- [x] Auditability
-- [x] Interoperability
-- [x] Extensibility
-- [x] Offline usability
-- [x] Portability
-- [x] Performance evaluation envelope
+- REQ-001 through REQ-006 are defined and accepted as the initial baseline.
 
-## Data-source strategy
+### Architecture
 
-- [x] OME CSV Profile
-- [x] iRacing `.ibt` target
-- [x] MoTeC CSV professional workflow target
-- [x] Native MoTeC `.ld` explicitly deferred
-- [x] CSV not treated as canonical internal model
+- major responsibility boundaries exist;
+- local modular-monolith direction exists;
+- deterministic engineering-core boundary exists;
+- AI boundary exists;
+- data/storage/UI technology baseline exists;
+- first lap-comparison alignment approach exists.
 
-## Architecture
+### Process documentation
 
-- [x] Ingestion separated from validation
-- [x] Validation separated from normalization
-- [x] Multi-rate data supported conceptually
-- [x] Engineering core deterministic
-- [x] AI separated from deterministic core
-- [x] Evidence contract defined conceptually
-- [x] Local/offline-first principle established
-- [x] No microservices/cloud assumption
+- test strategy exists;
+- ADR process exists;
+- active/completed execution-plan lifecycle exists;
+- harness operating model exists;
+- quality score and technical-debt tracker exist.
 
-## ADRs
+## What is not ready
 
-- [x] ADR-0001 — Separate ingestion from normalization
-- [x] ADR-0002 — CSV is exchange profile, not canonical storage
-- [x] ADR-0003 — AI is not deterministic engineering core
+### Executable feedback
 
-## Technology decisions completed
+Missing:
 
-- application shape: local modular monolith;
-- engineering/application core: Python;
-- processing: Polars;
-- columnar interoperability: Apache Arrow/PyArrow;
-- telemetry persistence: Parquet;
-- local metadata: SQLite;
-- local application API: FastAPI;
-- frontend: React + TypeScript + Vite;
-- initial visualization: Plotly.js behind replaceable UI components;
-- lap comparison alignment: monotonic lap distance with deterministic derived alignment.
+- reproducible toolchain setup;
+- dependency lockfiles;
+- canonical repository commands;
+- formatter/linter/type checks;
+- test runner configuration;
+- CI;
+- documentation structure/link checks;
+- architecture dependency checks.
 
-## Deliberately unresolved
+### Data feedback
 
-These remain intentionally deferred because they do not need to be fixed before the first implementation:
+Missing:
 
-- desktop packaging/wrapper;
-- AI provider/model;
-- native MoTeC `.ld` integration;
-- optional DuckDB adoption;
-- performance-native extensions in Rust/C++;
-- advanced track geometry/segmentation;
-- strategy/endurance model.
+- committed OME CSV fixtures;
+- representative iRacing fixture;
+- representative MoTeC CSV fixture;
+- fixture manifest/licensing metadata.
 
-## Data still needed before implementation validation
+### Agent feedback loop
 
-Representative fixtures should be acquired or created during technology evaluation:
+The repository tells an agent what good behavior looks like, but cannot yet mechanically prove that behavior.
 
-1. controlled OME CSV fixture;
-2. representative iRacing `.ibt` file;
-3. representative MoTeC CSV export from real motorsport;
-4. later, Formula Student / race-team data where legally shareable.
-
-## Go / No-Go
+## Correct Go / No-Go
 
 ### Go
 
-The repository is **implementation-ready** for the first telemetry-foundation slice.
+Proceed to **Plan 002 — Agent Harness Bootstrap** when coding/configuration work is authorized.
 
-### Current hold
+### No-Go
 
-Do not begin production implementation until the CEO explicitly starts the coding phase.
+Do not begin REQ-001 feature implementation before harness bootstrap exit criteria are met, unless the maintainer explicitly overrides the gate.
 
-When that phase begins, Codex should receive small requirement-linked tasks rather than broad "build OME" instructions.
+## Harness bootstrap exit gates
 
-### Remaining evidence work
+Before feature work:
 
-Representative real fixtures should be added as soon as legally shareable data is available. They may refine performance assumptions and source adapters, but they no longer need to redefine the architecture foundation.
+- fresh-checkout environment setup is reproducible;
+- canonical verification commands exist;
+- PR CI runs those checks;
+- basic documentation checks exist;
+- initial architecture boundary checks exist;
+- at least initial fixtures exist;
+- `docs/QUALITY_SCORE.md` exit thresholds are met.
+
+## Why this correction matters
+
+Harness engineering treats repository context, tools and feedback loops as part of the product-development system.
+
+Good Markdown alone is not a reliable harness.
+
+The next phase must turn important repository rules into executable feedback.
