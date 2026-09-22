@@ -1,5 +1,14 @@
 """Source-independent OME domain concepts."""
 
+from ome.domain.context import (
+    ContextEvidence,
+    ContextMarker,
+    ContextMarkerValue,
+    LapContext,
+    RunContext,
+    RunOperationalMetadata,
+    SessionContext,
+)
 from ome.domain.normalization import (
     CanonicalConcept,
     ConversionKind,
@@ -30,19 +39,26 @@ from ome.domain.validation import (
 )
 
 __all__ = [
+    "ContextEvidence",
+    "ContextMarker",
+    "ContextMarkerValue",
     "CanonicalConcept",
     "ChannelMetadata",
     "ConversionKind",
     "ImportedTelemetryDataset",
     "ImportIssue",
+    "LapContext",
     "NormalizationMapping",
     "NormalizationResult",
     "NormalizationRule",
     "NormalizedSeries",
     "NormalizedValue",
     "Provenance",
+    "RunContext",
+    "RunOperationalMetadata",
     "SampleSeries",
     "SourceChannel",
+    "SessionContext",
     "SourceValue",
     "TelemetrySource",
     "UnmappedChannel",

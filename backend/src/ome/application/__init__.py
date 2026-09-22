@@ -1,4 +1,5 @@
-"""Application architecture boundary for OME.
+"""Application services for OME."""
 
-This module is intentionally empty during Plan 002.
-"""
+from ome.application.context import ContextOrganizer
+
+__all__ = ["ContextOrganizer"]

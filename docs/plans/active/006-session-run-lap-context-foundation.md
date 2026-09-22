@@ -145,6 +145,17 @@ REQ-003 explicitly defers it and the domain model states it is not a strict syno
 
 ## Test strategy
 
+This plan follows TDD.
+
+Before adding Session / Run / Lap production types or organizer behavior:
+
+1. add focused tests expressing REQ-003 acceptance criteria;
+2. run CI/focused tests and confirm RED for the expected missing context API/behavior;
+3. implement the smallest domain/application surface required;
+4. run focused tests until GREEN;
+5. refactor only while tests stay green;
+6. run canonical verify before merge.
+
 Map REQ-003 acceptance criteria to executable tests.
 
 Tests must prove:
@@ -156,6 +167,21 @@ Tests must prove:
 - AC-005 no Stint synonym/entity is introduced.
 
 Integration should use the OME fixture context where appropriate, but the source-independent organizer should be testable with directly constructed evidence.
+
+## TDD execution evidence
+
+RED was established before production implementation:
+
+- tests commit introduced REQ-003 behavior first;
+- OME CI #32 failed because `ome.application.context` did not yet exist.
+
+GREEN was established after the minimum implementation:
+
+- Session / Run / Lap context domain model added;
+- ContextOrganizer added;
+- OME CI #36 passed the full canonical verify.
+
+The implementation preserved incomplete truthful context: a known Lap without a known Run remains directly associated with the Session rather than causing a fabricated Run.
 
 ## Completion criteria
 
