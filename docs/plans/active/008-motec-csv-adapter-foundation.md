@@ -195,6 +195,71 @@ Plan 008 should also inspect at least one real or representative MoTeC CSV expor
 
 If redistribution permission is unclear, keep it external and record only verified structural observations.
 
+## TDD execution evidence
+
+Pre-behavior harness cleanup:
+
+- OME CI #63 — test formatting only.
+
+Behavioral RED:
+
+- OME CI #64;
+- expected failure: `ImportError: cannot import name 'MoTeCCSVImporter' from 'ome.ingestion'`.
+
+GREEN:
+
+- OME CI #67;
+- the complete canonical verify passed after the minimum source-specific importer was implemented.
+
+The tests were not weakened to obtain GREEN.
+
+## Implementation traceability
+
+Test module:
+
+`tests/ingestion/test_motec_csv_import.py`
+
+Coverage includes:
+
+- licensed TRACE canonical import;
+- source immutability;
+- complete parsed preamble preservation;
+- channel order/name/unit preservation;
+- explicit `Time [s]` timestamps while keeping Time source cells lexical;
+- discrete/missing-like source text preservation;
+- explicit Sample Rate preservation;
+- missing sample rate remains unknown;
+- quoted/unquoted equivalence;
+- duplicate source-name technical disambiguation;
+- OME CSV / MoTeC CSV adapter arbitration;
+- arbitrary CSV rejection;
+- decreasing time imported then blocked by validation;
+- deterministic fingerprint;
+- structural failure cases.
+
+## External representative validation
+
+External validation inspected:
+
+- repository: `Arcayik/motec-csv`;
+- path: `data/1hz.csv`;
+- Git blob: `55de91dbabaa04e4a8f5c37b8e5a3717fc9e3b9c`.
+
+Observed:
+
+- signature `Format,MoTeC CSV File`;
+- 12 non-empty metadata preamble rows;
+- explicit `Sample Rate = 1.000 Hz`;
+- 15 channels;
+- 305 telemetry rows;
+- no row-width mismatches;
+- finite, strictly increasing time from 0 s to 304 s;
+- standard richer metadata including venue, vehicle, driver, date/time, duration, range and beacon markers.
+
+This is treated as a representative public MoTeC-compatible export, not as proof of a licensed physical race-team dataset.
+
+The public-data gap for a redistributable physical-car MoTeC export remains open.
+
 ## Completion criteria
 
 - verified MoTeC CSV contract documented;
