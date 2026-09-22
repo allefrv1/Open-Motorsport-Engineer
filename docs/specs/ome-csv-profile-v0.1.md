@@ -47,10 +47,12 @@ The required JSON sidecar stores source metadata and channel definitions.
 - timestamps are strictly increasing;
 - at least one non-time channel exists;
 - remaining column identifiers are unique;
-- remaining column identifiers exactly match sidecar `channels` keys in the same order;
+- remaining column identifiers exactly match the set of sidecar `channels` keys;
+- CSV column order is the authoritative source-channel order; JSON object member order is not semantically significant;
 - all remaining columns share the CSV time base;
 - empty channel cells represent missing source samples and must not be silently filled;
-- channel cells are ingested as source values without implicit unit conversion or normalization.
+- channel cells are ingested as source values without implicit unit conversion or normalization;
+- at least one sample row is required.
 
 Example:
 
@@ -94,6 +96,8 @@ OME must not infer a missing `sample_rate_hz` silently from timestamps during in
 ### channels
 
 A non-empty object keyed by the exact CSV column identifier.
+
+JSON object member order is not significant. The CSV header defines channel ordering.
 
 Each channel requires:
 
