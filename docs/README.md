@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 006 — Session / Run / Lap Context Foundation](plans/active/006-session-run-lap-context-foundation.md)
+- [Plan 007 — iRacing .ibt Adapter Foundation](plans/active/007-iracing-ibt-adapter-foundation.md)
 
 ## Verification and implementation guidance
 

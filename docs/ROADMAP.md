@@ -40,13 +40,14 @@ See `docs/plans/completed/002-harness-bootstrap.md`.
 
 ## Phase 3 — Telemetry foundation
 
-Status: **Active**
+Status: **Complete**
 
 Completed:
 
 - Plan 003 — OME CSV Import Foundation;
 - Plan 004 — Telemetry Validation Foundation;
 - Plan 005 — Telemetry Normalization Foundation;
+- Plan 006 — Session / Run / Lap Context Foundation;
 - source-preserving telemetry domain objects;
 - provenance/fingerprint;
 - importer contract;
@@ -56,21 +57,18 @@ Completed:
 - REQ-002 acceptance-test mapping;
 - explicit versioned normalization rules;
 - deterministic traceable conversions;
-- REQ-004 acceptance-test mapping.
-
-Current plan:
-
-- `docs/plans/active/006-session-run-lap-context-foundation.md`
-
-Next foundation slice will add:
-
-- truthful Session / Run / Lap representation without invented boundaries;
-
-without collapsing their responsibilities.
+- REQ-004 acceptance-test mapping;
+- truthful Session / Run / Lap context without invented boundaries;
+- REQ-003 acceptance-test mapping;
+- default RED -> GREEN -> REFACTOR workflow for new deterministic behavior.
 
 ## Phase 4 — First external source
 
-Future.
+Status: **Active**
+
+Current plan:
+
+- `docs/plans/active/007-iracing-ibt-adapter-foundation.md`
 
 - iRacing `.ibt` adapter;
 - representative fixture;

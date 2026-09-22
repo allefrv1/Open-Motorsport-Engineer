@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 0.8.0
+Version: 0.9.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -167,10 +167,10 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–005 implemented OME CSV ingestion, non-destructive validation and explicit telemetry normalization.
+Plans 003–006 implemented OME CSV ingestion, non-destructive validation, explicit telemetry normalization and truthful Session / Run / Lap context.
 
-The active product-code task is:
+The active engineering task is:
 
-`docs/plans/active/006-session-run-lap-context-foundation.md`
+`docs/plans/active/007-iracing-ibt-adapter-foundation.md`
 
-Organize only trusted Session / Run / Lap context. Preserve source markers and provenance. Do not invent run/lap boundaries, add generic lap detection, introduce Stint as a Run synonym, or move operational metadata into telemetry channels.
+Use TDD. Establish a legal/reproducible iRacing fixture and verified format contract before production parser behavior. Preserve iRacing source metadata exactly and do not normalize, repair or infer engineering meaning during ingestion.

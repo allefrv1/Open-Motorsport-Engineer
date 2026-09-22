@@ -14,7 +14,8 @@ The repository now has:
 2. an executable agent feedback loop proven in CI;
 3. production slices for source-preserving OME CSV ingestion;
 4. production validation that is deterministic and non-destructive;
-5. explicit versioned normalization preserving source evidence.
+5. explicit versioned normalization preserving source evidence;
+6. source-independent Session / Run / Lap context that does not invent missing boundaries.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -59,17 +60,29 @@ The architecture is still intentionally being proven one boundary at a time.
 - REQ-004 acceptance coverage;
 - architecture rule preventing normalization from depending on ingestion/validation implementation/analysis/API.
 
+### Operational context — Plan 006
+
+- Session / Run / Lap context domain model;
+- explicit trusted marker evidence;
+- incomplete context without fabricated hierarchy;
+- Run operational metadata outside telemetry channels;
+- deterministic identifiers;
+- REQ-003 acceptance coverage;
+- recorded test-first RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/006-session-run-lap-context-foundation.md`
+`docs/plans/active/007-iracing-ibt-adapter-foundation.md`
 
 ### Guardrail
 
-Session / Run / Lap organization must add operational context **without inventing boundaries or converting contextual metadata into telemetry channels**.
+The first external adapter must preserve iRacing source evidence **without allowing simulator-specific structures to redefine OME's core domain**.
+
+Before production parser behavior, the adapter needs a legal/reproducible fixture strategy and an independently verified format contract.
 
 The following remain separate responsibilities:
 
@@ -99,7 +112,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation and normalization have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization and operational context have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
