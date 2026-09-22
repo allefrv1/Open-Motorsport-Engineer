@@ -11,6 +11,12 @@ from ome.domain.telemetry import (
     TelemetrySource,
     freeze_metadata,
 )
+from ome.domain.validation import (
+    ValidationCategory,
+    ValidationIssue,
+    ValidationResult,
+    ValidationSeverity,
+)
 
 __all__ = [
     "ChannelMetadata",
@@ -21,5 +27,9 @@ __all__ = [
     "SourceChannel",
     "SourceValue",
     "TelemetrySource",
+    "ValidationCategory",
+    "ValidationIssue",
+    "ValidationResult",
+    "ValidationSeverity",
     "freeze_metadata",
 ]

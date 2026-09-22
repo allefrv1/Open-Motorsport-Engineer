@@ -91,6 +91,25 @@ Validation must not reduce all datasets to a single global valid/invalid flag fo
 
 The output must support later analysis-readiness evaluation.
 
+## Foundation implementation traceability
+
+Plan 004 maps the foundational REQ-002 behavior to:
+
+`tests/validation/test_validation.py`
+
+Mapping:
+
+- AC-001 → `test_ac001_validation_is_non_destructive`
+- AC-002 → `test_ac002_issue_contains_category_severity_scope_and_message`
+- AC-003 → `test_ac003_missing_metadata_remains_explicit`
+- AC-004 → `test_ac004_structural_time_corruption_is_blocking`
+- AC-005 → `test_ac005_validation_does_not_repair_values_or_time`
+- AC-006 → `test_ac006_validation_output_can_be_scoped_for_later_readiness`
+
+The foundational validator intentionally does not invent generic thresholds for gaps, frozen signals, clipping, spikes or physical ranges.
+
+Those checks remain part of the accepted capability direction but require explicit source/channel/domain policies before implementation.
+
 ## Relevant Domain Concepts
 
 - ImportedTelemetryDataset

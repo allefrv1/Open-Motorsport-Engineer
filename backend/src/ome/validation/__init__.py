@@ -1,4 +1,12 @@
-"""Validation architecture boundary for OME.
+"""Non-destructive telemetry validation."""
 
-This module is intentionally empty during Plan 002.
-"""
+from ome.validation.checks import check_metadata, check_time_structure, check_values
+from ome.validation.service import TelemetryValidator, ValidationCheck
+
+__all__ = [
+    "TelemetryValidator",
+    "ValidationCheck",
+    "check_metadata",
+    "check_time_structure",
+    "check_values",
+]
