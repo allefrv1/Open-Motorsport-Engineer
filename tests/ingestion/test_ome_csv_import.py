@@ -90,6 +90,10 @@ class Req001OmeCsvImportTests(unittest.TestCase):
             outcome.dataset.source.metadata["context"],
             {"session": "Harness fixture", "lap": 1},
         )
+        self.assertEqual(
+            outcome.summary.source_metadata["context"],
+            {"session": "Harness fixture", "lap": 1},
+        )
 
     def test_ac006_missing_metadata_remains_unknown_and_visible(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -221,7 +225,7 @@ class Req001OmeCsvImportTests(unittest.TestCase):
         self.assertEqual(outcome.code, ImportFailureCode.INVALID_PROFILE)
         self.assertIn("strictly increasing", outcome.message)
 
-    def test_sidecar_channel_order_must_match_csv(self) -> None:
+    def test_sidecar_channel_order_does_not_define_source_channel_order(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             csv_path = root / "mismatch.csv"
@@ -241,10 +245,34 @@ class Req001OmeCsvImportTests(unittest.TestCase):
 
             outcome = self.importer.import_source(csv_path, imported_at=FIXED_TIME)
 
+        self.assertIsInstance(outcome, ImportSuccess)
+        assert isinstance(outcome, ImportSuccess)
+        self.assertEqual(
+            tuple(channel.identifier for channel in outcome.dataset.channels),
+            ("a", "b"),
+        )
+
+    def test_empty_profile_has_explicit_invalid_profile_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            csv_path = root / "empty.csv"
+            csv_path.write_text("time_s,speed_src\n", encoding="utf-8")
+            sidecar = {
+                "ome_csv_version": "0.1",
+                "source": {"description": "Empty fixture"},
+                "channels": {"speed_src": {"source_name": "Speed", "unit": "m/s"}},
+            }
+            csv_path.with_suffix(".ome.json").write_text(
+                json.dumps(sidecar),
+                encoding="utf-8",
+            )
+
+            outcome = self.importer.import_source(csv_path, imported_at=FIXED_TIME)
+
         self.assertIsInstance(outcome, ImportFailure)
         assert isinstance(outcome, ImportFailure)
         self.assertEqual(outcome.code, ImportFailureCode.INVALID_PROFILE)
-        self.assertIn("same order", outcome.message)
+        self.assertIn("at least one sample row", outcome.message)
 
 
 if __name__ == "__main__":
