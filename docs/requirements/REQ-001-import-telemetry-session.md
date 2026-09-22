@@ -239,6 +239,37 @@ Second GREEN:
 
 - OME CI #54 — grouped fixed-array source values and explicit 360 Hz metadata passed canonical verification.
 
+## MoTeC CSV implementation traceability
+
+Plan 008 exercises REQ-001 against the first professional-workflow CSV adapter through:
+
+`tests/ingestion/test_motec_csv_import.py`
+
+The adapter verifies:
+
+- AC-001 — a supported MoTeC CSV export produces an imported telemetry dataset;
+- AC-002 — source bytes remain unchanged;
+- AC-003 — source identity, importer identity/version and SHA-256 fingerprint are retained;
+- AC-004 — every discovered source column is exposed and `original_name` remains exact even when technical identifiers need duplicate disambiguation;
+- AC-005 — units and explicit Sample Rate metadata are preserved;
+- AC-006 — absent Sample Rate remains unknown and visible rather than inferred from time spacing;
+- AC-007 — arbitrary CSV remains unsupported;
+- AC-008 — structurally invalid MoTeC CSV fails explicitly;
+- AC-009 — source cells remain lexical and no channel/unit normalization occurs;
+- AC-010 — equivalent source bytes produce reproducible semantic channel content and fingerprint.
+
+The import/validation boundary is also executable: the licensed decreasing-time fixture imports successfully, then the validator reports a blocking `decreasing_timestamp` issue.
+
+### TDD evidence
+
+Behavioral RED:
+
+- OME CI #64 — `MoTeCCSVImporter` absent.
+
+GREEN:
+
+- OME CI #67 — canonical verification successful with the minimum adapter.
+
 ## Relevant Domain Concepts
 
 - Telemetry Dataset
