@@ -200,10 +200,20 @@ class Plan007IRacingIBTImporterTests(unittest.TestCase):
 
         torque = outcome.dataset.channel("SteeringWheelTorque_ST")
         self.assertEqual(torque.series.timestamps_s, (1.0,))
-        self.assertEqual(
-            torque.series.values,
-            ((1.0, 1.1, 1.2, 1.3, 1.4, 1.5),),
-        )
+        self.assertEqual(len(torque.series.values), 1)
+        array_value = torque.series.values[0]
+        self.assertIsInstance(array_value, tuple)
+        assert isinstance(array_value, tuple)
+        self.assertEqual(len(array_value), 6)
+        for actual, expected in zip(
+            array_value,
+            (1.0, 1.1, 1.2, 1.3, 1.4, 1.5),
+            strict=True,
+        ):
+            self.assertIsInstance(actual, float)
+            assert isinstance(actual, float)
+            self.assertAlmostEqual(actual, expected, places=6)
+
         self.assertEqual(torque.metadata.sample_rate_hz, 360.0)
         self.assertEqual(torque.metadata.unit, "N*m")
         self.assertEqual(torque.metadata.source_attributes["iracing_count"], 6)
