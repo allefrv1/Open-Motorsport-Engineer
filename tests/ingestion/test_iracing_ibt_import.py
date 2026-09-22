@@ -32,9 +32,7 @@ FIXED_TIME = datetime(2026, 9, 22, 12, 0, tzinfo=UTC)
 class Plan007IRacingIBTImporterTests(unittest.TestCase):
     def setUp(self) -> None:
         self.importer = IRacingIBTImporter()
-        self.service = TelemetryImportService(
-            [OMECsvProfileImporter(), self.importer]
-        )
+        self.service = TelemetryImportService([OMECsvProfileImporter(), self.importer])
 
     def write_fixture(self, directory: str, payload: bytes, name: str = "synthetic.ibt") -> Path:
         path = Path(directory) / name
