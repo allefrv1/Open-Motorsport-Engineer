@@ -32,9 +32,7 @@ class FixtureHarnessTests(unittest.TestCase):
                     }
                 ]
             }
-            (fixture_root / "manifest.json").write_text(
-                json.dumps(manifest), encoding="utf-8"
-            )
+            (fixture_root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
 
             errors = check_public_fixtures(root)
 
