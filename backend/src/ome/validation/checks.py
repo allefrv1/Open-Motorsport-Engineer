@@ -189,9 +189,7 @@ def check_metadata(dataset: ImportedTelemetryDataset) -> tuple[ValidationIssue, 
                     category=ValidationCategory.METADATA,
                     severity=ValidationSeverity.WARNING,
                     channel_identifier=channel.identifier,
-                    message=(
-                        f"Channel {channel.identifier!r} has invalid sample-rate metadata."
-                    ),
+                    message=(f"Channel {channel.identifier!r} has invalid sample-rate metadata."),
                     evidence={"sample_rate_hz": repr(sample_rate)},
                 )
             )
