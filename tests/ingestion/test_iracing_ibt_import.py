@@ -76,6 +76,16 @@ class Plan007IRacingIBTImporterTests(unittest.TestCase):
             tuple(variable.name for variable in DEFAULT_VARIABLES),
         )
 
+    def test_import_does_not_modify_ibt_source_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = self.write_fixture(directory, build_ibt_bytes())
+            before = path.read_bytes()
+
+            outcome = self.importer.import_source(path, imported_at=FIXED_TIME)
+
+            self.assertIsInstance(outcome, ImportSuccess)
+            self.assertEqual(path.read_bytes(), before)
+
     def test_channel_metadata_and_source_semantics_are_preserved(self) -> None:
         outcome = self.import_fixture()
         speed = outcome.dataset.channel("Speed")
