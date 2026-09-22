@@ -82,6 +82,17 @@ Use:
 
 Classification: vendor format/workflow reference.
 
+### iRacing 2017 Season 1 release notes
+
+URL: https://www.iracing.com/2017-season-1-release-notes/
+
+Use:
+
+- source semantics for 360 Hz telemetry time-subdivision arrays;
+- evidence that six array elements at a 60 Hz base tick may represent a 360 Hz source channel.
+
+Classification: vendor format/telemetry semantics reference.
+
 ## Technology
 
 Technology-specific references are recorded in `docs/research/technology-evaluation.md`.

@@ -5,7 +5,9 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from types import MappingProxyType
 
-SourceValue = str | int | float | bool | None
+SourceScalarValue = str | int | float | bool | None
+SourceArrayValue = tuple[SourceScalarValue, ...]
+SourceValue = SourceScalarValue | SourceArrayValue
 
 
 def freeze_metadata(values: Mapping[str, object]) -> Mapping[str, object]:

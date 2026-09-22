@@ -22,6 +22,8 @@ Primary public SDK evidence:
   - https://github.com/vipoo/irsdk/blob/master/irsdk_diskclient.cpp
 - iRacing release notes confirming the disk-client wrapper:
   - https://www.iracing.com/2016-season-3-release-notes/
+- iRacing 2017 Season 1 release notes defining 360 Hz time-subdivision arrays:
+  - https://www.iracing.com/2017-season-1-release-notes/
 
 Independent implementation cross-checks:
 
@@ -219,17 +221,55 @@ If a future valid `.ibt` lacks a usable explicit time channel, behavior must be 
 
 IRSDK supports `count > 1`.
 
-The current OME `SourceValue` contract represents scalar source values only.
+iRacing's 2017 Season 1 release notes document 360 Hz telemetry as a six-element array whose variable-header flag indicates that the elements are a subdivision of time.
 
-Plan 007 must not silently flatten or discard array semantics.
+For a normal 60 Hz record containing a `count=6`, `countAsTime=true` source variable, the six source samples represent 360 Hz source acquisition.
 
-Therefore the first TDD slice will:
+OME must not silently flatten or discard this structure.
 
-- construct a scalar-only project-owned fixture;
-- implement scalar variable ingestion;
-- keep array-variable handling explicit and unresolved until the source-value/domain contract is deliberately extended.
+The first scalar TDD slice intentionally rejected arrays until real-file evidence could drive the domain extension.
 
-A real-file validation pass must report this limitation.
+### Real-file validation result
+
+External validation used the public `teamjorge/ibt` file:
+
+`.testing/valid_test_file.ibt`
+
+Observed without copying the binary into OME:
+
+- file size: 471,844 bytes;
+- IRSDK version: 2;
+- tick rate: 60 Hz;
+- 276 source variables;
+- 390 records;
+- one recorded lap;
+- representative scalar channels include `SessionTime`, `Speed`, `Throttle`, `Brake`, `SteeringWheelAngle`, `RPM`, `Gear`, `Lap`, `LapDist` and `LapDistPct`;
+- exactly one array variable:
+  - `SteeringWheelTorque_ST`;
+  - type `float`;
+  - count `6`;
+  - `countAsTime=true`;
+  - source description: output torque on steering shaft at 360 Hz;
+  - unit `N*m`.
+
+This proves that rejecting every file containing an array is too restrictive for a real iRacing adapter.
+
+That real-file evidence drove a second TDD increment.
+
+OME now preserves fixed source arrays as grouped source values, without flattening them onto a fabricated timeline.
+
+For `countAsTime=true`, the channel exposes source acquisition rate as:
+
+`tickRate * count`
+
+while retaining record timestamps and the grouped source array. Expanding those grouped samples to a 360 Hz timeline remains a later explicit transformation, not ingestion-time resampling.
+
+The second TDD cycle was:
+
+```text
+CI #51 RED -> array rejected by scalar importer
+CI #54 GREEN -> grouped array preserved
+```
 
 ## Project-owned fixture strategy
 
@@ -275,7 +315,7 @@ Reject rather than guess when:
 - variable-header table exceeds file bounds;
 - variable type is unsupported;
 - count is invalid;
-- a scalar variable extends beyond `bufLen`;
+- a variable's declared scalar-size × count extends beyond `bufLen`;
 - record count/stride exceeds file bounds;
 - required explicit source time cannot be read.
 
@@ -283,6 +323,6 @@ Do not normalize units, rename channels, repair data or infer engineering meanin
 
 ## Conclusion
 
-The format contract is sufficiently defined to create an independent project-owned scalar `.ibt` fixture and begin Plan 007 with a genuine TDD RED state.
+The format contract is sufficiently defined for the first OME iRacing adapter.
 
-Array-value representation remains an explicit known limitation rather than a hidden parser shortcut.
+Project-owned fixtures now exercise both scalar source variables and the real-file-driven `countAsTime=true` fixed-array shape without redistributing third-party iRacing recordings.

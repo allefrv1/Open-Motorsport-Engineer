@@ -41,15 +41,39 @@ A third-party iRacing recording is not required in the repository for TDD.
 
 Real/public recordings remain external validation sources.
 
-## Current domain limitation
+## Real-file validation and domain pressure
 
-IRSDK supports array variables through `count > 1`.
+The first scalar importer passed canonical CI, then was checked against the public external `teamjorge/ibt` fixture without copying that binary into OME.
 
-OME's current SourceValue contract is scalar.
+Observed real-file shape:
 
-The first Plan 007 TDD slice therefore supports a scalar-only synthetic fixture and scalar-variable ingestion.
+- IRSDK v2;
+- 60 Hz;
+- 276 variables;
+- 390 records;
+- representative comparison channels are scalar;
+- one time-subdivision array exists:
+  - `SteeringWheelTorque_ST`;
+  - float[6];
+  - `countAsTime=true`;
+  - source semantics identify 360 Hz steering-shaft torque.
 
-Array handling must remain explicit and must not be flattened or silently discarded. Extending SourceValue for arrays requires a deliberate domain change driven by a later test/requirement.
+This real evidence drove a second TDD increment.
+
+OME now:
+
+- preserves fixed source arrays as grouped source values;
+- keeps one grouped source array per recorded 60 Hz record;
+- preserves `count` and `countAsTime`;
+- exposes 360 Hz source acquisition metadata when the source explicitly marks six time subdivisions at a 60 Hz tick rate;
+- does not flatten/resample those six samples into fabricated timestamps during ingestion.
+
+External structural validation after the change found:
+
+- 276/276 variable headers structurally within bounds;
+- 390 telemetry records structurally within bounds;
+- `SessionTime` finite and strictly increasing;
+- exactly one array variable, `SteeringWheelTorque_ST float[6]`, represented by the supported grouped-array contract.
 
 ## Critical fixture constraint
 
@@ -143,6 +167,64 @@ Test-first coverage should include:
 - parser boundary tests proving no normalization leaks into ingestion.
 
 Where a behavior is not supported by verified format documentation, leave it unimplemented and explicit rather than guessing.
+
+## TDD execution evidence
+
+The first scalar iRacing adapter slice followed the repository TDD rule.
+
+Pre-RED harness cleanup:
+
+- OME CI #43 exposed test formatting only;
+- OME CI #44 exposed test import ordering only.
+
+Those runs are not counted as behavioral RED because production behavior had not yet been exercised.
+
+Behavioral RED:
+
+- OME CI #45;
+- expected failure: `ImportError: cannot import name 'IRacingIBTImporter' from 'ome.ingestion'`.
+
+GREEN:
+
+- OME CI #47;
+- the full canonical `verify` passed after the minimum production importer was added.
+
+Second behavioral RED, driven by real external telemetry:
+
+- OME CI #51;
+- expected failure: the scalar importer returned `INVALID_PROFILE` for `SteeringWheelTorque_ST float[6]`.
+
+Second GREEN:
+
+- OME CI #54;
+- grouped source-array preservation, 360 Hz metadata and downstream scalar-normalization protection passed the full canonical `verify`.
+
+The tests were not weakened to obtain GREEN.
+
+## Initial implementation traceability
+
+Test module:
+
+`tests/ingestion/test_iracing_ibt_import.py`
+
+The first slice covers:
+
+- reviewed fixture layout;
+- supported scalar IRSDK v2 import;
+- channel metadata/source-semantics preservation;
+- explicit `SessionTime` timestamps;
+- typed source values without normalization;
+- source/session metadata preservation;
+- deterministic SHA-256 provenance;
+- import-service adapter selection;
+- truncated-file rejection;
+- unsupported-version rejection;
+- missing-explicit-time rejection;
+- time-subdivision array preservation without flattening;
+- explicit `count` / `countAsTime` source metadata;
+- 360 Hz acquisition metadata for a 6-way time subdivision at 60 Hz;
+- extension selection behavior;
+- source bytes unchanged by import.
 
 ## Completion criteria
 
