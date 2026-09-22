@@ -206,18 +206,20 @@ Plan 007 exercises REQ-001 against the first external binary adapter through:
 
 The adapter reuses the same source-independent import contract and verifies:
 
-- AC-001 — a supported scalar IRSDK v2 `.ibt` produces an imported dataset;
+- AC-001 — a supported IRSDK v2 `.ibt` with scalar and fixed-array source variables produces an imported dataset;
 - AC-002 — import reads source bytes without modifying the source file;
 - AC-003 — source identity, importer identity/version and SHA-256 fingerprint are retained;
 - AC-004 — discovered iRacing source variables remain source channels with their original names;
 - AC-005 — description, unit, declared type/count and tick rate are preserved when supplied;
-- AC-008 — truncated, unsupported-version, missing-time and unsupported-array structures fail explicitly;
+- AC-008 — truncated, unsupported-version and missing-explicit-time structures fail explicitly;
 - AC-009 — source channel names/units/values are preserved without canonical normalization;
 - AC-010 — equivalent source bytes produce equivalent semantic channel content and fingerprint.
 
 The first iRacing slice intentionally requires an explicit `SessionTime` source variable instead of fabricating timestamps from `tickRate`.
 
-Array variables remain explicitly unsupported until the source-independent value model is deliberately extended.
+Fixed source arrays are preserved as grouped source values. They are not flattened or resampled during ingestion.
+
+When iRacing explicitly marks a variable as a time subdivision through `countAsTime=true`, the importer preserves the grouped value and exposes the source acquisition rate as `tickRate * count`.
 
 ### TDD evidence
 
@@ -228,6 +230,14 @@ Behavioral RED:
 GREEN:
 
 - OME CI #47 — canonical verification successful with the minimum importer implementation.
+
+Second RED from real-file evidence:
+
+- OME CI #51 — the scalar importer rejected the real 360 Hz-style `float[6]` source shape.
+
+Second GREEN:
+
+- OME CI #54 — grouped fixed-array source values and explicit 360 Hz metadata passed canonical verification.
 
 ## Relevant Domain Concepts
 
