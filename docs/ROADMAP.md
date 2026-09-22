@@ -62,17 +62,29 @@ Completed:
 - REQ-003 acceptance-test mapping;
 - default RED -> GREEN -> REFACTOR workflow for new deterministic behavior.
 
-## Phase 4 — First external source
+## Phase 4 — Initial external/professional sources
 
 Status: **Active**
 
+Completed:
+
+- Plan 007 — iRacing `.ibt` Adapter Foundation;
+- IRSDK v2 binary import;
+- project-owned synthetic binary fixture;
+- real-file-driven grouped 360 Hz source arrays;
+- source-adapter contract tests.
+
 Current plan:
 
-- `docs/plans/active/007-iracing-ibt-adapter-foundation.md`
+- `docs/plans/active/008-motec-csv-adapter-foundation.md`
 
-- iRacing `.ibt` adapter;
-- representative fixture;
-- source-adapter contract tests.
+Next:
+
+- MoTeC CSV export adapter;
+- licensed deterministic fixture;
+- real/representative professional-export validation.
+
+This ordering follows REQ-001's accepted source sequence before lap comparison.
 
 ## Phase 5 — Lap comparison vertical slice
 
@@ -85,11 +97,10 @@ Future.
 - evidence model;
 - comparison report.
 
-## Phase 6 — Real-motorsport validation
+## Phase 6 — Expanded real-motorsport validation
 
 Future.
 
-- MoTeC CSV export;
 - Formula Student / race-team data where shareable;
 - validate performance and metadata assumptions;
 - revisit native `.ld` feasibility.

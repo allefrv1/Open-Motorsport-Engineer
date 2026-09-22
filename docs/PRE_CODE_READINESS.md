@@ -15,7 +15,8 @@ The repository now has:
 3. production slices for source-preserving OME CSV ingestion;
 4. production validation that is deterministic and non-destructive;
 5. explicit versioned normalization preserving source evidence;
-6. source-independent Session / Run / Lap context that does not invent missing boundaries.
+6. source-independent Session / Run / Lap context that does not invent missing boundaries;
+7. a verified iRacing IRSDK v2 adapter with grouped fixed-array source preservation.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -70,19 +71,30 @@ The architecture is still intentionally being proven one boundary at a time.
 - REQ-003 acceptance coverage;
 - recorded test-first RED -> GREEN CI history.
 
+### External binary ingestion — Plan 007
+
+- IRSDK v2 `.ibt` source adapter;
+- independent project-owned binary fixture;
+- source metadata/type/count preservation;
+- explicit source time;
+- grouped `countAsTime` array preservation;
+- 360 Hz acquisition metadata without ingestion-time resampling;
+- real external fixture structural validation;
+- multiple recorded RED -> GREEN CI cycles.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/007-iracing-ibt-adapter-foundation.md`
+`docs/plans/active/008-motec-csv-adapter-foundation.md`
 
 ### Guardrail
 
-The first external adapter must preserve iRacing source evidence **without allowing simulator-specific structures to redefine OME's core domain**.
+The first professional source adapter must preserve MoTeC CSV export evidence **without treating suspicious data as an ingestion repair problem**.
 
-Before production parser behavior, the adapter needs a legal/reproducible fixture strategy and an independently verified format contract.
+The licensed TRACE fixture is suitable for deterministic CI, but real/representative MoTeC export validation is still required before Plan 008 completion.
 
 The following remain separate responsibilities:
 
@@ -105,14 +117,14 @@ Available:
 
 Still valuable for later source/scale validation:
 
-- redistributable full iRacing session;
+- a redistributable full iRacing session remains useful for broader regression coverage, but is no longer required for the initial adapter;
 - licensed real physical-car MoTeC export;
 - Brazilian Formula SAE full-session fixture with permission;
 - genuinely multi-rate physical-car acquisition fixture.
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization and operational context have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context and iRacing external ingestion have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 

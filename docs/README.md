@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 007 — iRacing .ibt Adapter Foundation](plans/active/007-iracing-ibt-adapter-foundation.md)
+- [Plan 008 — MoTeC CSV Adapter Foundation](plans/active/008-motec-csv-adapter-foundation.md)
 
 ## Verification and implementation guidance
 
