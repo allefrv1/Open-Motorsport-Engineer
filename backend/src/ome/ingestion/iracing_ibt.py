@@ -13,6 +13,7 @@ from ome.domain import (
     Provenance,
     SampleSeries,
     SourceChannel,
+    SourceScalarValue,
     SourceValue,
     TelemetrySource,
     freeze_metadata,
@@ -316,12 +317,6 @@ class IRacingIBTImporter:
                 raise _InvalidIBT(f"iRacing variable at index {index} has a negative offset.")
             if count <= 0:
                 raise _InvalidIBT(f"iRacing variable at index {index} has invalid count {count}.")
-            if count != 1:
-                name = IRacingIBTImporter._decode_fixed(raw_name)
-                raise _InvalidIBT(
-                    f"iRacing array variable {name!r} is not supported by this adapter slice."
-                )
-
             name = IRacingIBTImporter._decode_fixed(raw_name)
             if not name:
                 raise _InvalidIBT(f"iRacing variable at index {index} has no source name.")
@@ -329,8 +324,8 @@ class IRacingIBTImporter:
                 raise _InvalidIBT(f"iRacing variable name {name!r} is duplicated.")
             names.add(name)
 
-            scalar_size = _TYPE_FORMATS[type_code].size
-            if offset + scalar_size > header.buf_len:
+            value_size = _TYPE_FORMATS[type_code].size * count
+            if offset + value_size > header.buf_len:
                 raise _InvalidIBT(
                     f"iRacing variable {name!r} exceeds the telemetry record boundary."
                 )
@@ -404,13 +399,16 @@ class IRacingIBTImporter:
 
         timestamps: list[float] = []
         for record_index in range(disk.session_record_count):
-            value = IRacingIBTImporter._read_scalar(
+            if session_time.count != 1:
+                raise _InvalidIBT("iRacing SessionTime must be a scalar source variable.")
+
+            value = IRacingIBTImporter._read_source_value(
                 payload,
                 header,
                 record_index,
                 session_time,
             )
-            if isinstance(value, bool) or not isinstance(value, (int, float)):
+            if isinstance(value, (bool, tuple)) or not isinstance(value, (int, float)):
                 raise _InvalidIBT("iRacing SessionTime must be a numeric scalar source variable.")
             timestamp = float(value)
             if not math.isfinite(timestamp):
@@ -434,7 +432,7 @@ class IRacingIBTImporter:
                 values: tuple[SourceValue, ...] = timestamps
             else:
                 values = tuple(
-                    IRacingIBTImporter._read_scalar(
+                    IRacingIBTImporter._read_source_value(
                         payload,
                         header,
                         record_index,
@@ -458,7 +456,10 @@ class IRacingIBTImporter:
                     source_system="iRacing",
                     metadata=ChannelMetadata(
                         unit=variable.unit,
-                        sample_rate_hz=float(header.tick_rate),
+                        sample_rate_hz=IRacingIBTImporter._sample_rate_hz(
+                            header,
+                            variable,
+                        ),
                         data_type=_TYPE_NAMES[variable.type_code],
                         description=variable.description,
                         source_attributes=source_attributes,
@@ -473,7 +474,7 @@ class IRacingIBTImporter:
         return tuple(channels)
 
     @staticmethod
-    def _read_scalar(
+    def _read_source_value(
         payload: bytes,
         header: _Header,
         record_index: int,
@@ -481,7 +482,21 @@ class IRacingIBTImporter:
     ) -> SourceValue:
         record_start = header.data_offset + record_index * header.buf_len
         value_offset = record_start + variable.offset
-        return _TYPE_FORMATS[variable.type_code].unpack_from(payload, value_offset)[0]
+        scalar = _TYPE_FORMATS[variable.type_code]
+
+        if variable.count == 1:
+            return scalar.unpack_from(payload, value_offset)[0]
+
+        values: list[SourceScalarValue] = []
+        for index in range(variable.count):
+            element_offset = value_offset + index * scalar.size
+            values.append(scalar.unpack_from(payload, element_offset)[0])
+        return tuple(values)
+
+    @staticmethod
+    def _sample_rate_hz(header: _Header, variable: _Variable) -> float:
+        multiplier = variable.count if variable.count_as_time else 1
+        return float(header.tick_rate * multiplier)
 
     @staticmethod
     def _check_region(
