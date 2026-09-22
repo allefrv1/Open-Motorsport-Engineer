@@ -23,9 +23,7 @@ class DocumentationHarnessTests(unittest.TestCase):
             source = root / "README.md"
             source.write_text("# Test\n", encoding="utf-8")
 
-            self.assertTrue(
-                markdown_target_exists(source, "https://example.com/resource", root)
-            )
+            self.assertTrue(markdown_target_exists(source, "https://example.com/resource", root))
 
 
 if __name__ == "__main__":
