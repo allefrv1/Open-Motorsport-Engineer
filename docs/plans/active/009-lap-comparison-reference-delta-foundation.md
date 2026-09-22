@@ -28,82 +28,28 @@ Supporting domain/architecture:
 - `docs/ARCHITECTURE.md`
 - `docs/QUALITY_ATTRIBUTES.md`
 
-## Mandatory pre-implementation decision
+## Resolved numerical contract
 
-REQ-005 explicitly leaves this architecture question open:
+The mandatory pre-implementation decision is complete.
 
-> The exact positional alignment algorithm and distance representation must be selected and documented before implementation.
+Authoritative artifacts:
 
-Therefore production lap-comparison code must not begin until Plan 009 has:
+- ADR-0009 — Align initial lap comparisons by monotonic lap distance
+- `docs/specs/lap-comparison-v0.1.md`
 
-1. reviewed engineering references/current tool practice;
-2. defined comparison readiness;
-3. selected the positional reference;
-4. selected interpolation/alignment behavior;
-5. defined delta-time sign convention;
-6. defined evidence/provenance fields;
-7. recorded the decision in an ADR or accepted analysis specification.
+v0.1 uses:
 
-## Research questions
+- canonical `lap.distance` in metres;
+- canonical `time.elapsed` in seconds;
+- common overlap only;
+- default 1.0 m analysis grid, parameterized;
+- deterministic linear interpolation of elapsed time vs distance;
+- `delta_B_vs_A = time_B - time_A`;
+- no extrapolation;
+- explicit not-ready outcomes instead of repair/guessing;
+- conservative strictly increasing distance/time readiness for the first slice.
 
-### Positional reference
-
-Evaluate:
-
-- source-provided lap distance in metres;
-- source-provided normalized lap progress;
-- deterministic distance derived from validated telemetry;
-- GPS/track-centerline projection.
-
-Prefer the smallest reference that is:
-
-- source-independent at the comparison boundary;
-- monotonic within a valid lap;
-- physically interpretable;
-- reproducible;
-- available from the initial source families without hidden inference.
-
-### Common comparison grid
-
-Decide whether the first slice should compare on:
-
-- union of source distance samples;
-- one lap's distance samples;
-- fixed distance step;
-- another deterministic grid.
-
-The choice must document interpolation and endpoint behavior.
-
-### Time as a function of distance
-
-Define how OME obtains:
-
-`t_A(d)` and `t_B(d)`
-
-without silently resampling source telemetry.
-
-Any interpolation used by comparison is a named deterministic analysis transformation, not ingestion repair.
-
-### Delta sign
-
-Choose and document one convention, for example:
-
-`delta_time(d) = t_B(d) - t_A(d)`
-
-The UI/explanation must not reverse signs implicitly.
-
-### Readiness
-
-Define blocking conditions such as:
-
-- laps not belonging to trustworthy LapContext;
-- missing positional reference;
-- non-monotonic comparison position;
-- missing/invalid time;
-- insufficient overlap;
-- incompatible reference units/semantics.
-
-A comparison that is not ready must return explicit missing evidence rather than a plausible-looking curve.
+Plateau/duplicate-distance handling is deliberately deferred rather than hidden in the first algorithm.
 
 ## Initial comparison evidence
 
@@ -136,7 +82,7 @@ Those are later observations/hypotheses/engineering interpretation layers.
 
 ## TDD rule
 
-After the alignment decision is accepted, behavior is implemented test-first:
+The alignment decision is accepted and specified. Behavior is implemented test-first:
 
 ```text
 REQ-005 ACCEPTANCE CRITERION
@@ -152,7 +98,7 @@ The synthetic laps must have analytically known expected delta-time behavior.
 
 ## First executable test targets
 
-Once the algorithm is selected, tests should prove:
+Tests should prove:
 
 - explicit reference identity is present;
 - same inputs/parameters produce identical delta;
