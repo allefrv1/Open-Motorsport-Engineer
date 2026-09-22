@@ -2,7 +2,7 @@
 
 Date: 2026-09-22
 
-Status: **Operational harness — telemetry foundation verified; external adapter phase active**
+Status: **Operational harness — first external adapter verified; professional-source phase active**
 
 Scale:
 
@@ -22,12 +22,12 @@ Scale:
 | Architecture legibility | 4 | Boundaries and ADRs are clear and initial structural enforcement exists. |
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
-| Requirement traceability | 3 | REQ-001 through REQ-004 now have executable acceptance-criterion mappings, including a recorded RED -> GREEN history for REQ-003. |
-| Plan lifecycle | 4 | Plans 001–006 have completed history and Plan 007 is active. |
+| Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-001 now covers both project-owned CSV and the first external binary adapter with multiple recorded RED -> GREEN cycles. |
+| Plan lifecycle | 4 | Plans 001–007 have completed history and Plan 008 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
-| Representative fixtures | 3 | Project-owned fixture plus licensed public/negative fixtures are mechanically checked; source coverage still needs expansion. |
+| Representative fixtures | 3 | Project-owned CSV and binary fixtures plus licensed public/negative fixtures are mechanically checked; professional real-motorsport source coverage is the next gap. |
 | Agent self-verification | 4 | The first product slice was iterated through CI failures to a green canonical verify. |
 | Documentation drift control | 3 | Links, IDs, statuses, indexes and plan placement receive automated checks. |
 | Technical-debt control | 3 | Explicit tracker exists and repeated defects are candidates for new guardrails. |
@@ -36,11 +36,11 @@ Scale:
 
 ## Interpretation
 
-The harness has now been used across ingestion, validation, normalization and operational-context product code, not only on its own bootstrap.
+The harness has now been used across ingestion, validation, normalization, operational context and an external binary adapter.
 
 It has rejected real defects, preserved acceptance-criterion traceability and enforced architectural separation between ingestion, validation and downstream concerns.
 
-The next maturity step is to carry the same test-first discipline into the first external binary adapter while preserving fixture legality and source evidence.
+The next maturity step is to carry the same test-first discipline into the first professional MoTeC CSV workflow and then begin the lap-comparison vertical slice.
 
 ## Review cadence
 
