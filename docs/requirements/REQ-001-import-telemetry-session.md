@@ -1,6 +1,6 @@
 # REQ-001 — Import Telemetry Session
 
-Status: **Accepted**
+Status: **Implemented**
 
 ## Actor / User
 
@@ -196,7 +196,13 @@ Mapping:
 - AC-009 → `test_ac009_import_does_not_normalize_channel_identity_or_values`
 - AC-010 → `test_ac010_semantic_import_is_reproducible`
 
-REQ-001 remains **Accepted**, not globally **Implemented**, until the project decides whether requirement completion means the first supported source or the broader initial source strategy.
+The initial source strategy is now implemented across Plans 003, 007 and 008:
+
+- OME CSV Exchange Profile;
+- iRacing `.ibt`;
+- MoTeC CSV export.
+
+Native MoTeC `.ld` remains deliberately deferred and is not part of REQ-001 completion.
 
 ## iRacing .ibt implementation traceability
 
