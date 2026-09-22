@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 0.7.0
+Version: 0.8.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -123,6 +123,24 @@ uv run --locked python scripts/harness.py format
 ```
 
 Do not claim a substantial change is complete while `verify` is failing.
+
+## Test-driven development
+
+For new or changed deterministic behavior, use TDD by default:
+
+```text
+REQUIREMENT / ACCEPTANCE CRITERION
+-> WRITE FOCUSED TEST
+-> PROVE RED FOR THE EXPECTED REASON
+-> IMPLEMENT SMALLEST CHANGE
+-> PROVE GREEN
+-> REFACTOR WITHOUT CHANGING BEHAVIOR
+-> RUN FULL VERIFY
+```
+
+Do not write production behavior first and add tests afterward unless the task is explicitly a characterization test for existing behavior or a non-code/documentation-only change.
+
+A failing test is useful only when the failure demonstrates the missing behavior rather than an unrelated harness/configuration defect.
 
 ## Change discipline
 
