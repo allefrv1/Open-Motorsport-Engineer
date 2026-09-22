@@ -144,6 +144,51 @@ Test-first coverage should include:
 
 Where a behavior is not supported by verified format documentation, leave it unimplemented and explicit rather than guessing.
 
+## TDD execution evidence
+
+The first scalar iRacing adapter slice followed the repository TDD rule.
+
+Pre-RED harness cleanup:
+
+- OME CI #43 exposed test formatting only;
+- OME CI #44 exposed test import ordering only.
+
+Those runs are not counted as behavioral RED because production behavior had not yet been exercised.
+
+Behavioral RED:
+
+- OME CI #45;
+- expected failure: `ImportError: cannot import name 'IRacingIBTImporter' from 'ome.ingestion'`.
+
+GREEN:
+
+- OME CI #47;
+- the full canonical `verify` passed after the minimum production importer was added.
+
+The tests were not weakened to obtain GREEN.
+
+## Initial implementation traceability
+
+Test module:
+
+`tests/ingestion/test_iracing_ibt_import.py`
+
+The first slice covers:
+
+- reviewed fixture layout;
+- supported scalar IRSDK v2 import;
+- channel metadata/source-semantics preservation;
+- explicit `SessionTime` timestamps;
+- typed source values without normalization;
+- source/session metadata preservation;
+- deterministic SHA-256 provenance;
+- import-service adapter selection;
+- truncated-file rejection;
+- unsupported-version rejection;
+- missing-explicit-time rejection;
+- array-variable rejection rather than flattening/discarding;
+- extension selection behavior.
+
 ## Completion criteria
 
 - legal/reproducible CI fixture strategy documented;
