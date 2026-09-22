@@ -57,6 +57,23 @@ Their ownership rules are distinct:
 
 Tests must prove that adapter order does not cause a MoTeC file to be interpreted as OME CSV or vice versa.
 
+## Verified format contract
+
+Plan 008 now has an evidence-backed parsing contract:
+
+- `docs/research/motec-csv-format-contract.md`
+
+Key decisions:
+
+- detect parsed `Format,MoTeC CSV File` signature, not extension alone;
+- preserve complete preamble rows;
+- first data column must be `Time [s]` for this slice;
+- preserve CSV telemetry cells lexically;
+- preserve duplicate source names while assigning deterministic technical identifiers;
+- preserve explicit Sample Rate metadata when supplied;
+- never infer missing sample rate from timestamps;
+- import structurally readable decreasing-time data and leave the defect to validation.
+
 ## Known fixture structure
 
 The licensed TRACE canonical fixture contains:
@@ -104,6 +121,9 @@ Characterization tests may be added for already-existing common ingestion guaran
 ## First-slice behavior
 
 Tests should require:
+
+- quoted and unquoted MoTeC CSV parsing equivalence;
+- deterministic duplicate-name disambiguation without changing `original_name`;
 
 - positive import of the licensed canonical MoTeC-style CSV fixture;
 - source type/system identity;
