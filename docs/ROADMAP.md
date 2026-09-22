@@ -86,20 +86,22 @@ Current plan:
 
 - `docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
 
-Current work is decision-first:
+The numerical baseline is resolved by ADR-0009 and `docs/specs/lap-comparison-v0.1.md`.
 
-- define comparison readiness;
-- select distance/reference representation;
-- select interpolation/alignment behavior;
-- define delta-time sign convention;
-- define evidence/provenance contract;
-- then implement deterministic comparison behavior with TDD.
+Current work:
 
-- readiness checks;
-- distance alignment;
-- delta-time calculation;
+- implement readiness checks;
+- construct the common 1.0 m default distance grid;
+- linearly interpolate elapsed time vs distance;
+- calculate `delta_B_vs_A`;
+- preserve comparison provenance/evidence;
+- prove behavior with TDD.
+
+Later Phase 5 increments:
+
 - key channel overlays;
-- evidence model;
+- discrete gear alignment rule;
+- observation/evidence layer;
 - comparison report.
 
 ## Phase 6 — Expanded real-motorsport validation
