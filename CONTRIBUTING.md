@@ -42,6 +42,18 @@ uv run --locked python scripts/harness.py arch
 uv run --locked python scripts/harness.py fixtures
 ```
 
+## Test-driven development
+
+For new or changed product behavior, write the focused acceptance/unit test first, run it, and confirm it fails for the intended missing behavior before implementing the production change.
+
+Use the cycle:
+
+```text
+RED -> GREEN -> REFACTOR
+```
+
+Do not create artificial failing tests for documentation-only or tooling-only changes.
+
 ## Principles
 
 - solve a documented problem;
