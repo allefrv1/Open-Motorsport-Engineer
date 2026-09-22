@@ -190,15 +190,27 @@ class Plan007IRacingIBTImporterTests(unittest.TestCase):
         self.assertEqual(outcome.code, ImportFailureCode.INVALID_PROFILE)
         self.assertIn("SessionTime", outcome.message)
 
-    def test_array_variable_is_rejected_instead_of_flattened_or_discarded(self) -> None:
+    def test_time_subdivision_array_is_preserved_without_flattening(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = self.write_fixture(directory, build_array_variable_fixture())
             outcome = self.importer.import_source(path, imported_at=FIXED_TIME)
 
-        self.assertIsInstance(outcome, ImportFailure)
-        assert isinstance(outcome, ImportFailure)
-        self.assertEqual(outcome.code, ImportFailureCode.INVALID_PROFILE)
-        self.assertIn("array", outcome.message.lower())
+        self.assertIsInstance(outcome, ImportSuccess)
+        assert isinstance(outcome, ImportSuccess)
+
+        torque = outcome.dataset.channel("SteeringWheelTorque_ST")
+        self.assertEqual(torque.series.timestamps_s, (1.0,))
+        self.assertEqual(
+            torque.series.values,
+            ((1.0, 1.1, 1.2, 1.3, 1.4, 1.5),),
+        )
+        self.assertEqual(torque.metadata.sample_rate_hz, 360.0)
+        self.assertEqual(torque.metadata.unit, "N*m")
+        self.assertEqual(torque.metadata.source_attributes["iracing_count"], 6)
+        self.assertIs(
+            torque.metadata.source_attributes["iracing_count_as_time"],
+            True,
+        )
 
     def test_non_ibt_extension_is_not_claimed_by_adapter(self) -> None:
         self.assertFalse(self.importer.supports(Path("telemetry.bin")))
