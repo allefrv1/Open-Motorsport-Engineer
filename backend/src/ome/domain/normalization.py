@@ -4,7 +4,6 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from enum import StrEnum
 
-from ome.domain.telemetry import SourceValue
 
 
 class CanonicalConcept(StrEnum):
@@ -94,9 +93,7 @@ class NormalizationResult:
         canonical_concept: CanonicalConcept,
     ) -> tuple[NormalizationMapping, ...]:
         return tuple(
-            mapping
-            for mapping in self.mappings
-            if mapping.canonical_concept is canonical_concept
+            mapping for mapping in self.mappings if mapping.canonical_concept is canonical_concept
         )
 
     def mapping_for_source(self, source_channel_identifier: str) -> NormalizationMapping:
@@ -120,8 +117,3 @@ class NormalizationResult:
             if channel.source_channel_identifier in selected
         )
 
-
-def source_value_type_name(value: SourceValue) -> str:
-    if value is None:
-        return "null"
-    return type(value).__name__
