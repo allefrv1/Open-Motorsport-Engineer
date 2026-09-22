@@ -100,11 +100,7 @@ DEFAULT_RECORDS: tuple[Mapping[str, int | float | bool], ...] = (
 )
 
 DEFAULT_SESSION_INFO = (
-    "---\n"
-    "WeekendInfo:\n"
-    " TrackName: Synthetic Test Circuit\n"
-    "DriverInfo:\n"
-    " DriverCarIdx: 0\n"
+    "---\nWeekendInfo:\n TrackName: Synthetic Test Circuit\nDriverInfo:\n DriverCarIdx: 0\n"
 )
 
 
@@ -182,16 +178,12 @@ def build_array_variable_fixture() -> bytes:
         IbtVariable("SessionTime", "Session elapsed time", "s", TYPE_DOUBLE, 0),
         IbtVariable("WheelSpeed", "Four wheel speeds", "m/s", TYPE_FLOAT, 8, count=4),
     )
-    records = (
-        {"SessionTime": 1.0, "WheelSpeed": (10.0, 10.1, 9.9, 10.0)},
-    )
+    records = ({"SessionTime": 1.0, "WheelSpeed": (10.0, 10.1, 9.9, 10.0)},)
     return build_ibt_bytes(variables=variables, records=records)
 
 
 def build_missing_session_time_fixture() -> bytes:
-    variables = (
-        IbtVariable("Speed", "GPS vehicle speed", "m/s", TYPE_FLOAT, 0),
-    )
+    variables = (IbtVariable("Speed", "GPS vehicle speed", "m/s", TYPE_FLOAT, 0),)
     records = ({"Speed": 50.0},)
     return build_ibt_bytes(variables=variables, records=records)
 
