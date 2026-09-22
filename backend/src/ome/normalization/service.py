@@ -70,8 +70,7 @@ class TelemetryNormalizer:
                         source_original_name=channel.original_name,
                         reason=UnmappedReason.NO_MATCHING_RULE,
                         message=(
-                            f"No explicit normalization rule exists for "
-                            f"{channel.identifier!r}."
+                            f"No explicit normalization rule exists for {channel.identifier!r}."
                         ),
                     )
                 )
