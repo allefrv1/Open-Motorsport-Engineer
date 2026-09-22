@@ -254,13 +254,22 @@ Observed without copying the binary into OME:
 
 This proves that rejecting every file containing an array is too restrictive for a real iRacing adapter.
 
-The next TDD increment must extend OME source values to preserve fixed source arrays as arrays, without flattening them onto a fabricated timeline.
+That real-file evidence drove a second TDD increment.
 
-For `countAsTime=true`, the channel may expose source acquisition rate as:
+OME now preserves fixed source arrays as grouped source values, without flattening them onto a fabricated timeline.
+
+For `countAsTime=true`, the channel exposes source acquisition rate as:
 
 `tickRate * count`
 
-while retaining record timestamps and the grouped source array. Expanding those grouped samples to a 360 Hz timeline is a later explicit transformation, not ingestion-time resampling.
+while retaining record timestamps and the grouped source array. Expanding those grouped samples to a 360 Hz timeline remains a later explicit transformation, not ingestion-time resampling.
+
+The second TDD cycle was:
+
+```text
+CI #51 RED -> array rejected by scalar importer
+CI #54 GREEN -> grouped array preserved
+```
 
 ## Project-owned fixture strategy
 
@@ -306,7 +315,7 @@ Reject rather than guess when:
 - variable-header table exceeds file bounds;
 - variable type is unsupported;
 - count is invalid;
-- a scalar variable extends beyond `bufLen`;
+- a variable's declared scalar-size × count extends beyond `bufLen`;
 - record count/stride exceeds file bounds;
 - required explicit source time cannot be read.
 
@@ -314,6 +323,6 @@ Do not normalize units, rename channels, repair data or infer engineering meanin
 
 ## Conclusion
 
-The format contract is sufficiently defined to create an independent project-owned scalar `.ibt` fixture and begin Plan 007 with a genuine TDD RED state.
+The format contract is sufficiently defined for the first OME iRacing adapter.
 
-Array-value representation remains an explicit known limitation rather than a hidden parser shortcut.
+Project-owned fixtures now exercise both scalar source variables and the real-file-driven `countAsTime=true` fixed-array shape without redistributing third-party iRacing recordings.
