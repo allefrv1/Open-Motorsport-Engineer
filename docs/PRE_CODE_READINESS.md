@@ -107,7 +107,9 @@ Proceed to:
 
 Lap comparison must be deterministic and evidence-backed.
 
-Before production comparison code, select and document the positional reference, interpolation/alignment behavior, delta-time sign convention, readiness rules and provenance contract. Missing or incompatible evidence must produce an explicit not-ready result rather than a plausible-looking comparison.
+ADR-0009 and `docs/specs/lap-comparison-v0.1.md` now define the positional reference, 1.0 m default grid, linear time-vs-distance interpolation, delta sign, readiness rules and provenance contract.
+
+Production comparison code may proceed only through TDD against that contract. Missing or incompatible evidence must produce an explicit not-ready result rather than a plausible-looking comparison.
 
 The following remain separate responsibilities:
 
