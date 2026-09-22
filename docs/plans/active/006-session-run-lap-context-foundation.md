@@ -168,6 +168,21 @@ Tests must prove:
 
 Integration should use the OME fixture context where appropriate, but the source-independent organizer should be testable with directly constructed evidence.
 
+## TDD execution evidence
+
+RED was established before production implementation:
+
+- tests commit introduced REQ-003 behavior first;
+- OME CI #32 failed because `ome.application.context` did not yet exist.
+
+GREEN was established after the minimum implementation:
+
+- Session / Run / Lap context domain model added;
+- ContextOrganizer added;
+- OME CI #36 passed the full canonical verify.
+
+The implementation preserved incomplete truthful context: a known Lap without a known Run remains directly associated with the Session rather than causing a fabricated Run.
+
 ## Completion criteria
 
 - Session/Run/Lap domain concepts exist;
