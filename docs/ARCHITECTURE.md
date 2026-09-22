@@ -1,116 +1,240 @@
 # OME Architecture Foundation
 
-Status: **Pre-architecture / constraints only**
+Status: **Accepted pre-code architecture**
 
-This document records architecture principles that are already justified by the project. It does **not** select a programming language, framework, database, cloud provider or deployment platform.
+This document defines the architecture boundaries and drivers that are sufficiently understood before implementation. It intentionally does **not** select a programming language, UI framework, database or deployment platform.
 
-## Architecture starts from requirements
+## Architecture flow
 
-    PROBLEM
-      -> DOMAIN
-      -> USE CASE
-      -> REQUIREMENT
-      -> QUALITY ATTRIBUTE
-      -> ARCHITECTURE DRIVER
-      -> ARCHITECTURE
-      -> TECHNOLOGY
+```text
+PROBLEM
+  -> DOMAIN
+  -> USE CASE
+  -> REQUIREMENT
+  -> QUALITY ATTRIBUTE
+  -> ARCHITECTURE DRIVER
+  -> ARCHITECTURE
+  -> TECHNOLOGY
+```
 
-Technology choices should be postponed until the requirements that justify them are understood.
+Technology selection happens after the current foundation is reviewed against representative data.
 
-## Conceptual system responsibilities
+## System context
 
-    SOURCE DATA
-        |
-        v
-    INGESTION
-        |
-        v
-    VALIDATION / QUALITY
-        |
-        v
-    NORMALIZED DATA
-        |
-        v
-    DETERMINISTIC ENGINEERING ANALYSIS
-        |
-        v
-    STRUCTURED EVIDENCE
-        |
-        +------------------+
-        |                  |
-        v                  v
-    PRESENTATION       AI ASSISTANCE
-        |                  |
-        +--------+---------+
-                 v
-           HUMAN DECISION
+OME is a local-first engineering analysis application that consumes motorsport telemetry and operational context, performs deterministic processing, presents evidence and may later use AI to assist investigation and explanation.
 
-These are responsibilities, not necessarily deployable services or code modules.
+Primary human actors include:
 
-## Architecture principles
+- driver;
+- coach;
+- student;
+- data/performance engineer;
+- race engineer;
+- team member.
 
-### Raw data integrity
+External systems may include:
 
-Original telemetry is evidence and must not be silently overwritten by transformations.
+- telemetry files/loggers;
+- iRacing telemetry;
+- MoTeC workflows;
+- future DAQ/ECU/export formats;
+- optional AI providers.
 
-### Provenance
+## Conceptual responsibilities
 
-Derived values and findings should be traceable to their source data, parameters and algorithm versions.
+```text
+EXTERNAL TELEMETRY SOURCES
+          |
+          v
+SOURCE ADAPTERS / INGESTION
+          |
+          v
+IMPORTED SOURCE REPRESENTATION
+          |
+          v
+DATA QUALITY / VALIDATION
+          |
+          v
+NORMALIZATION
+          |
+          v
+CANONICAL ENGINEERING DATA
+          |
+          +----------------------+
+          |                      |
+          v                      v
+SESSION/RUN/LAP CONTEXT    DETERMINISTIC METRICS
+          |                      |
+          +-----------+----------+
+                      v
+              STRUCTURED EVIDENCE
+                      |
+             +--------+--------+
+             |                 |
+             v                 v
+       PRESENTATION      AI ASSISTANCE
+             |                 |
+             +--------+--------+
+                      v
+               HUMAN DECISION
+```
 
-### Determinism
+These are logical responsibilities, not microservices or deployment units.
 
-Critical numerical analysis and signal processing should be deterministic whenever practical.
+## Architecture boundaries
 
-### AI boundary
+### Source adapters
 
-LLMs may explain, organize investigations, formulate hypotheses and identify missing evidence.
+Responsible for:
 
-LLMs should not be the primary implementation of critical deterministic calculations.
+- reading source-specific structures;
+- preserving original channel identity;
+- preserving source metadata;
+- creating source-independent imported representations;
+- reporting import warnings.
 
-### Data ownership
+Not responsible for:
 
-Essential local analysis should not require sending team data to an external service unless the user explicitly chooses that workflow.
+- engineering diagnosis;
+- canonical channel guessing;
+- hidden resampling;
+- lap-performance analysis.
 
-### Interoperability
+### Data quality
 
-Data-source adapters should not define the engineering domain.
+Responsible for non-destructive validation and explicit quality issues.
 
-The project should be able to support multiple telemetry sources over time without rewriting the analysis concepts for every vendor.
+Not responsible for repairing data silently.
 
-### Incomplete data
+### Normalization
 
-Missing data must remain visible. The system must not fabricate unavailable channels or silently substitute questionable equivalents.
+Responsible for explicit, traceable mapping from source channels to canonical OME engineering concepts.
 
-### Simplicity
+Not responsible for erasing source representation.
 
-Use the smallest architecture that satisfies validated requirements.
+### Operational context
 
-## Not decided yet
+Responsible for Session / Run / Lap and associated metadata such as driver, setup, tyres and conditions.
+
+### Engineering core
+
+Responsible for deterministic calculations, transformations and metrics.
+
+Every important derived result must be traceable to inputs, algorithm version and parameters.
+
+### Evidence layer
+
+Represents the distinction between:
+
+- measured;
+- derived;
+- observation;
+- hypothesis;
+- interpretation;
+- missing evidence.
+
+This layer is the contract between deterministic engineering computation and later AI assistance.
+
+### AI layer
+
+AI may:
+
+- organize an investigation;
+- explain concepts;
+- relate structured evidence;
+- formulate hypotheses;
+- identify missing evidence;
+- draft summaries.
+
+AI must not:
+
+- fabricate telemetry;
+- replace deterministic numerical calculation;
+- silently modify evidence;
+- present hypotheses as measurements;
+- make the portable engineering core depend on an external AI service.
+
+## Architecture drivers
+
+The strongest drivers currently identified are:
+
+1. **Integrity** — original telemetry is evidence.
+2. **Traceability** — results must lead back to source data.
+3. **Reproducibility** — deterministic results must be reproducible.
+4. **Interoperability** — OME must support heterogeneous sources.
+5. **Multi-rate data** — the model cannot assume one common sample rate.
+6. **Offline usability** — essential trackside work cannot depend on cloud access.
+7. **Data ownership** — telemetry should not leave the user's environment implicitly.
+8. **Extensibility** — adapters and metrics must evolve independently.
+9. **Performance** — realistic multi-hour, multi-channel datasets must remain practical.
+10. **Explainability** — users must be able to inspect why a result exists.
+
+See `docs/QUALITY_ATTRIBUTES.md`.
+
+## Initial source strategy
+
+Accepted implementation order:
+
+1. OME CSV Exchange Profile;
+2. iRacing `.ibt`;
+3. MoTeC CSV export;
+4. evaluate native MoTeC `.ld` later.
+
+The OME CSV profile is an exchange and fixture format, **not** the canonical internal model.
+
+## First vertical slice
+
+The first architecture will be validated against `docs/MVP.md`.
+
+It must support the conceptual flow:
+
+```text
+SOURCE
+  -> IMPORT
+  -> VALIDATE
+  -> NORMALIZE
+  -> CONTEXTUALIZE
+  -> COMPARE TWO LAPS
+  -> STRUCTURED EVIDENCE
+```
+
+No AI capability is required to prove the first vertical slice.
+
+## Architecture decisions already accepted
+
+- ADR-0001 — Separate source ingestion from telemetry normalization.
+
+Additional decisions should be recorded as ADRs when they materially constrain future implementation.
+
+## Technology decisions intentionally deferred
+
+Still undecided:
 
 - implementation language(s);
 - frontend framework;
-- backend framework;
-- database;
-- file/storage format for internal persistence;
-- desktop vs local web packaging;
-- cloud architecture;
-- plugin framework;
+- backend/application framework;
+- persistence engine;
+- internal columnar/storage representation;
+- desktop packaging;
 - AI provider/model;
-- vector database;
 - deployment topology.
 
-These decisions require architecture drivers or ADRs.
+These should be selected only after:
 
-## First architecture validation target
+- representative fixtures are available;
+- architecture drivers are prioritized;
+- first-slice performance assumptions are checked;
+- technology options are compared against the requirements.
 
-The first architecture should be validated through a narrow vertical slice that can demonstrate, at minimum:
+## Explicit non-goals for the first architecture
 
-    real dataset
-      -> import
-      -> validate
-      -> preserve provenance
-      -> identify session/run/lap context
-      -> compare selected data
-      -> produce a reproducible result
+- microservices;
+- mandatory cloud backend;
+- distributed messaging;
+- Kubernetes;
+- complex event sourcing/CQRS;
+- live telemetry;
+- full simulation;
+- AI-first analysis.
 
-The exact scope of that slice must be defined by requirements before implementation.
+The project should begin as the smallest architecture that preserves the boundaries above.
