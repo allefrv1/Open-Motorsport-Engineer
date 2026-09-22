@@ -69,12 +69,21 @@ Missing:
 
 ### Data feedback
 
-Missing:
+Partially ready:
 
-- committed OME CSV fixtures;
-- representative iRacing fixture;
-- representative MoTeC CSV fixture;
-- fixture manifest/licensing metadata.
+- licensed public CSV fixtures are now committed;
+- fixture manifest and third-party license/provenance notices exist;
+- an external iRacing `.ibt` fixture has been inspected;
+- real Formula SAE public logs have been inspected;
+- MoTeC-style CSV validation fixtures exist.
+
+Still missing:
+
+- project-owned OME CSV fixture;
+- clearly redistributable full iRacing session, if legally appropriate;
+- clearly licensed real physical-car MoTeC export;
+- Brazilian Formula SAE full-session fixture with permission;
+- executable fixture-schema/licensing checks.
 
 ### Agent feedback loop
 
@@ -106,6 +115,6 @@ Before feature work:
 
 Harness engineering treats repository context, tools and feedback loops as part of the product-development system.
 
-Good Markdown alone is not a reliable harness.
+Good Markdown and public data alone are not a reliable harness.
 
-The next phase must turn important repository rules into executable feedback.
+Public-data validation has strengthened the architecture evidence, but the next phase must still turn important repository rules into executable feedback.

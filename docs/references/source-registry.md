@@ -87,3 +87,111 @@ Classification: vendor format/workflow reference.
 Technology-specific references are recorded in `docs/research/technology-evaluation.md`.
 
 Architecture decisions remain authoritative over external documentation.
+
+
+## Public telemetry datasets
+
+### exit_speed — Traqmate/race-car telemetry
+
+URL: https://github.com/djhedges/exit_speed
+
+Verified artifacts:
+
+- small Traqmate parking-lot telemetry CSV;
+- larger Portland International Raceway telemetry logs.
+
+License:
+
+Apache-2.0 at repository level.
+
+OME use:
+
+- small file vendored under `fixtures/public/exit-speed/`;
+- larger track data retained as an external benchmark candidate.
+
+Classification: public telemetry fixture / real vehicle data.
+
+### teamjorge/ibt — iRacing binary telemetry fixture
+
+URL: https://github.com/teamjorge/ibt
+
+Verified artifact:
+
+`.testing/valid_test_file.ibt`
+
+Observed:
+
+- iRacing v2 file;
+- 60 Hz;
+- 276 variables;
+- session/track metadata;
+- lap distance and driver/vehicle channels.
+
+License note:
+
+Repository is published under Apache-2.0, but OME has not independently established redistribution rights for simulator-generated telemetry binaries.
+
+OME use:
+
+External validation source only until redistribution is cleared.
+
+Classification: public external fixture / simulation telemetry.
+
+### CR Formula — Iowa State Formula SAE logs
+
+URL: https://github.com/CR-Formula/FSAEElectrical
+
+Verified artifacts:
+
+Public CSV logs for Autocross, Skidpad, Practice and Endurance.
+
+License note:
+
+No explicit repository-level redistribution license was identified during this review.
+
+OME use:
+
+External validation source only.
+
+Classification: real Formula SAE competition/test telemetry.
+
+### TRACE — MoTeC-style CSV fixtures
+
+URL: https://github.com/keystroke-tools/TRACE
+
+Verified artifacts:
+
+- canonical MoTeC-style CSV fixture;
+- decreasing-time negative fixture.
+
+License:
+
+MIT.
+
+OME use:
+
+Vendored under `fixtures/public/trace/`.
+
+Classification: synthetic interoperability/validation fixture.
+
+### B'Energy Racing — racing-data-converter
+
+URL: https://github.com/BenergyRacing/racing-data-converter
+
+Use:
+
+Evidence of Brazilian Formula SAE telemetry tooling and supported motorsport format families.
+
+No representative raw session fixture was identified in the repository during this review.
+
+Classification: Brazilian tooling/workflow reference.
+
+### Icarus/UFRJ telemetry projects
+
+Use:
+
+Evidence of Brazilian Formula SAE field telemetry work.
+
+No full redistributable vehicle-session dataset suitable for OME fixtures was identified during this review.
+
+Classification: Brazilian workflow reference / outreach target.

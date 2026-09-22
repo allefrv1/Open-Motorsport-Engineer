@@ -2,7 +2,7 @@
 
 Date: 2026-09-22
 
-Status: **Baseline**
+Status: **Baseline — updated after public-data validation**
 
 Scale:
 
@@ -27,7 +27,7 @@ Scale:
 | Automated feedback | 0 | No formatter/linter/type/test/CI harness exists because code has not started. |
 | Architecture enforcement | 0 | No structural tests or dependency lints exist yet. |
 | Reproducible environment | 0 | No locked runtime/toolchain/bootstrap command exists yet. |
-| Representative fixtures | 1 | Strategy is documented; actual reusable fixtures are not in the repository. |
+| Representative fixtures | 2 | Small licensed CSV fixtures and a manifest are now committed; rich external iRacing/Formula SAE sources are identified, but full source coverage is still incomplete. |
 | Agent self-verification | 1 | Expectations are documented, but there are no canonical commands to run. |
 | Documentation drift control | 1 | Manual only; stale contradictions were already found in this audit. |
 | Technical-debt control | 2 | Tracker structure exists; recurring cleanup is not operational. |

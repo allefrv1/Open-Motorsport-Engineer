@@ -1,0 +1,56 @@
+{
+  "manifest_version": "0.1",
+  "verified_date": "2026-09-22",
+  "fixtures": [
+    {
+      "id": "exit-speed-traqmate-parking-lot",
+      "path": "exit-speed/traqmate-parking-lot.csv",
+      "kind": "real_vehicle_test",
+      "format_family": "Traqmate Trackvision CSV",
+      "source_repository": "https://github.com/djhedges/exit_speed",
+      "source_path": "exit_speed/testdata/test_parking_lot_20hz_2020-06-11T22_1.csv",
+      "source_git_blob_sha": "df9aaa9827b85d33c4df4d5dd11912955e2240cf",
+      "license": "Apache-2.0",
+      "redistribution": "approved_by_upstream_repository_license",
+      "purpose": [
+        "metadata preamble",
+        "elapsed time",
+        "GPS coordinates",
+        "velocity",
+        "lap identifier",
+        "single-rate telemetry"
+      ]
+    },
+    {
+      "id": "trace-motec-canonical",
+      "path": "trace/motec-canonical.csv",
+      "kind": "synthetic_test_fixture",
+      "format_family": "MoTeC-style CSV",
+      "source_repository": "https://github.com/keystroke-tools/TRACE",
+      "source_path": "crates/trace-motec/tests/fixtures/csv/canonical.csv",
+      "source_git_blob_sha": "50f23127dff0b880d768ea91aa309bdc99f14432",
+      "license": "MIT",
+      "redistribution": "approved_by_upstream_repository_license",
+      "purpose": [
+        "metadata preamble",
+        "channel row",
+        "unit row",
+        "mixed values",
+        "missing-like source value"
+      ]
+    },
+    {
+      "id": "trace-motec-decreasing-time",
+      "path": "trace/motec-decreasing-time.csv",
+      "kind": "synthetic_negative_fixture",
+      "format_family": "MoTeC-style CSV",
+      "source_repository": "https://github.com/keystroke-tools/TRACE",
+      "source_path": "crates/trace-motec/tests/fixtures/csv/decreasing-time.csv",
+      "license": "MIT",
+      "redistribution": "approved_by_upstream_repository_license",
+      "purpose": [
+        "decreasing timestamp validation failure"
+      ]
+    }
+  ]
+}
