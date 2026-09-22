@@ -58,15 +58,22 @@ Observed real-file shape:
   - `countAsTime=true`;
   - source semantics identify 360 Hz steering-shaft torque.
 
-The scalar-only importer therefore cannot yet import the whole real file, because it correctly rejects that array instead of silently dropping it.
+This real evidence drove a second TDD increment.
 
-This real evidence now drives the next TDD increment:
+OME now:
 
-- extend SourceValue to preserve fixed scalar arrays;
-- keep one grouped source array per recorded 60 Hz record;
-- preserve `count` and `countAsTime`;
-- expose 360 Hz source acquisition metadata when the source explicitly marks six time subdivisions at a 60 Hz tick rate;
-- do not flatten/resample those six samples into fabricated timestamps during ingestion.
+- preserves fixed source arrays as grouped source values;
+- keeps one grouped source array per recorded 60 Hz record;
+- preserves `count` and `countAsTime`;
+- exposes 360 Hz source acquisition metadata when the source explicitly marks six time subdivisions at a 60 Hz tick rate;
+- does not flatten/resample those six samples into fabricated timestamps during ingestion.
+
+External structural validation after the change found:
+
+- 276/276 variable headers structurally within bounds;
+- 390 telemetry records structurally within bounds;
+- `SessionTime` finite and strictly increasing;
+- exactly one array variable, `SteeringWheelTorque_ST float[6]`, represented by the supported grouped-array contract.
 
 ## Critical fixture constraint
 
@@ -182,6 +189,16 @@ GREEN:
 - OME CI #47;
 - the full canonical `verify` passed after the minimum production importer was added.
 
+Second behavioral RED, driven by real external telemetry:
+
+- OME CI #51;
+- expected failure: the scalar importer returned `INVALID_PROFILE` for `SteeringWheelTorque_ST float[6]`.
+
+Second GREEN:
+
+- OME CI #54;
+- grouped source-array preservation, 360 Hz metadata and downstream scalar-normalization protection passed the full canonical `verify`.
+
 The tests were not weakened to obtain GREEN.
 
 ## Initial implementation traceability
@@ -203,8 +220,11 @@ The first slice covers:
 - truncated-file rejection;
 - unsupported-version rejection;
 - missing-explicit-time rejection;
-- array-variable rejection rather than flattening/discarding;
-- extension selection behavior.
+- time-subdivision array preservation without flattening;
+- explicit `count` / `countAsTime` source metadata;
+- 360 Hz acquisition metadata for a 6-way time subdivision at 60 Hz;
+- extension selection behavior;
+- source bytes unchanged by import.
 
 ## Completion criteria
 
