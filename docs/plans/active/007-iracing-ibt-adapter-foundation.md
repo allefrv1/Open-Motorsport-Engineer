@@ -41,15 +41,32 @@ A third-party iRacing recording is not required in the repository for TDD.
 
 Real/public recordings remain external validation sources.
 
-## Current domain limitation
+## Real-file validation and domain pressure
 
-IRSDK supports array variables through `count > 1`.
+The first scalar importer passed canonical CI, then was checked against the public external `teamjorge/ibt` fixture without copying that binary into OME.
 
-OME's current SourceValue contract is scalar.
+Observed real-file shape:
 
-The first Plan 007 TDD slice therefore supports a scalar-only synthetic fixture and scalar-variable ingestion.
+- IRSDK v2;
+- 60 Hz;
+- 276 variables;
+- 390 records;
+- representative comparison channels are scalar;
+- one time-subdivision array exists:
+  - `SteeringWheelTorque_ST`;
+  - float[6];
+  - `countAsTime=true`;
+  - source semantics identify 360 Hz steering-shaft torque.
 
-Array handling must remain explicit and must not be flattened or silently discarded. Extending SourceValue for arrays requires a deliberate domain change driven by a later test/requirement.
+The scalar-only importer therefore cannot yet import the whole real file, because it correctly rejects that array instead of silently dropping it.
+
+This real evidence now drives the next TDD increment:
+
+- extend SourceValue to preserve fixed scalar arrays;
+- keep one grouped source array per recorded 60 Hz record;
+- preserve `count` and `countAsTime`;
+- expose 360 Hz source acquisition metadata when the source explicitly marks six time subdivisions at a 60 Hz tick rate;
+- do not flatten/resample those six samples into fabricated timestamps during ingestion.
 
 ## Critical fixture constraint
 
