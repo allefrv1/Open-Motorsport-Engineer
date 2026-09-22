@@ -198,6 +198,37 @@ Mapping:
 
 REQ-001 remains **Accepted**, not globally **Implemented**, until the project decides whether requirement completion means the first supported source or the broader initial source strategy.
 
+## iRacing .ibt implementation traceability
+
+Plan 007 exercises REQ-001 against the first external binary adapter through:
+
+`tests/ingestion/test_iracing_ibt_import.py`
+
+The adapter reuses the same source-independent import contract and verifies:
+
+- AC-001 — a supported scalar IRSDK v2 `.ibt` produces an imported dataset;
+- AC-002 — import reads source bytes without modifying the source file;
+- AC-003 — source identity, importer identity/version and SHA-256 fingerprint are retained;
+- AC-004 — discovered iRacing source variables remain source channels with their original names;
+- AC-005 — description, unit, declared type/count and tick rate are preserved when supplied;
+- AC-008 — truncated, unsupported-version, missing-time and unsupported-array structures fail explicitly;
+- AC-009 — source channel names/units/values are preserved without canonical normalization;
+- AC-010 — equivalent source bytes produce equivalent semantic channel content and fingerprint.
+
+The first iRacing slice intentionally requires an explicit `SessionTime` source variable instead of fabricating timestamps from `tickRate`.
+
+Array variables remain explicitly unsupported until the source-independent value model is deliberately extended.
+
+### TDD evidence
+
+Behavioral RED:
+
+- OME CI #45 — `IRacingIBTImporter` absent.
+
+GREEN:
+
+- OME CI #47 — canonical verification successful with the minimum importer implementation.
+
 ## Relevant Domain Concepts
 
 - Telemetry Dataset
