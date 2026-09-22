@@ -22,8 +22,9 @@ The repository currently lacks:
 - formatting/lint/type checks;
 - executable architecture-boundary checks;
 - documentation freshness/structure checks;
-- representative committed fixtures;
 - requirement-to-test traceability.
+
+Initial public fixtures now exist, but the fixture harness is only partially complete.
 
 ## Scope
 
@@ -106,18 +107,31 @@ Acceptance:
 
 ## Milestone 6 — Fixture harness
 
-Add:
+Status: **Partially complete**
 
-- small OME CSV fixture;
-- fixture manifest with origin/license/provenance;
-- malformed/edge fixture cases;
-- documented location/process for external or private large fixtures.
+Completed during public-data validation:
 
-Acquire representative iRacing and MoTeC CSV fixtures as soon as legally redistributable examples are available.
+- machine-readable public fixture manifest;
+- provenance/license notices;
+- Apache-2.0 Traqmate CSV real-vehicle fixture;
+- MIT MoTeC-style canonical fixture;
+- MIT decreasing-time negative fixture;
+- external iRacing `.ibt` validation source identified;
+- external Formula SAE competition/test logs identified.
+
+Still required:
+
+- project-owned OME CSV fixture;
+- fixture-schema validation in the harness;
+- documented process for private/large fixtures;
+- clearly redistributable full iRacing session if legally appropriate;
+- clearly licensed real physical-car MoTeC export;
+- Brazilian Formula SAE full-session fixture with permission.
 
 Acceptance:
 
-- future importer contract tests have stable inputs.
+- future importer contract tests have stable inputs;
+- fixture provenance/licensing is mechanically checkable.
 
 ## Milestone 7 — PR/self-review loop
 
@@ -143,3 +157,6 @@ This plan completes only when:
 ## Decision log
 
 2026-09-22 — Harness-engineering audit determined that previous "implementation-ready" wording was too strong. Documentation readiness is not equivalent to executable agent readiness.
+
+
+2026-09-22 — Public telemetry survey validated the core source/import/validation boundaries against iRacing, Formula SAE, Traqmate and MoTeC-style data. Initial legally redistributable CSV fixtures were committed.
