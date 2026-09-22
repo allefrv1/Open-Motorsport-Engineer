@@ -1,40 +1,53 @@
 # OME Documentation
 
-This directory is the durable engineering knowledge base for **Open Motorsport Engineer (OME)**.
+This directory is the versioned system of record for Open Motorsport Engineer.
 
-The repository root `AGENTS.md` defines how Codex should work. This directory defines what OME is, what the project has decided, and what is still under investigation.
+Use progressive disclosure: start here, then open only documents relevant to the task.
 
-## Core documents
+## Start here
 
-- [PROJECT.md](PROJECT.md) — product problem, mission, scope and principles
+- [PROJECT.md](PROJECT.md) — mission, users, scope and current phase
 - [MVP.md](MVP.md) — first vertical slice
-- [DOMAIN.md](DOMAIN.md) — high-level domain map
-- [ARCHITECTURE.md](ARCHITECTURE.md) — accepted pre-code architecture
-- [QUALITY_ATTRIBUTES.md](QUALITY_ATTRIBUTES.md) — architecture drivers and quality expectations
-- [TEST_STRATEGY.md](TEST_STRATEGY.md) — verification strategy
-- [PLANNED_REPOSITORY_STRUCTURE.md](PLANNED_REPOSITORY_STRUCTURE.md) — implementation organization target
+- [CORE_BELIEFS.md](CORE_BELIEFS.md) — durable engineering principles
+- [ARCHITECTURE.md](ARCHITECTURE.md) — top-level architecture map
+- [QUALITY_ATTRIBUTES.md](QUALITY_ATTRIBUTES.md) — architecture drivers
+- [HARNESS_ENGINEERING.md](HARNESS_ENGINEERING.md) — agent operating model
+- [QUALITY_SCORE.md](QUALITY_SCORE.md) — current harness maturity
+- [PRE_CODE_READINESS.md](PRE_CODE_READINESS.md) — go/no-go assessment
 - [ROADMAP.md](ROADMAP.md) — engineering sequence
-- [PRE_CODE_READINESS.md](PRE_CODE_READINESS.md) — readiness review
 
-## Supporting directories
+## Verification and implementation guidance
 
-- [requirements/](requirements/) — accepted and proposed product/system requirements
-- [adr/](adr/) — Architecture Decision Records
-- [domain/](domain/) — validated motorsport/telemetry domain knowledge
-- [specs/](specs/) — interoperability and file/profile specifications
-- [research/](research/) — research and source material not automatically normative
-- [plans/](plans/) — substantial engineering plans
+- [TEST_STRATEGY.md](TEST_STRATEGY.md)
+- [PLANNED_REPOSITORY_STRUCTURE.md](PLANNED_REPOSITORY_STRUCTURE.md)
+
+## Durable knowledge
+
+- [requirements/](requirements/) — required behavior
+- [adr/](adr/) — architecture decisions
+- [domain/](domain/) — accepted domain semantics
+- [specs/](specs/) — data/interface specifications
+
+## Working and supporting knowledge
+
+- [plans/](plans/) — active/completed execution plans and debt
+- [research/](research/) — informative research, not automatically normative
+- [references/](references/) — external source registry
 
 ## Knowledge promotion
 
-Research is not automatically a requirement, domain rule or architecture decision.
-
 ```text
-RESEARCH
+EXTERNAL SOURCE / RESEARCH
   -> REVIEW
-  -> PROJECT / DOMAIN / REQUIREMENT / ADR / SPEC
+  -> REQUIREMENT / ADR / DOMAIN / SPEC
+  -> PLAN
   -> IMPLEMENTATION
-  -> TEST / VALIDATION
+  -> AUTOMATED VERIFICATION
+  -> QUALITY / DEBT FEEDBACK
 ```
 
-When documentation and implementation disagree, report the conflict instead of silently treating code as the only source of truth.
+## Conflict rule
+
+If two authoritative repository sources conflict, stop and surface the conflict.
+
+Do not silently treat existing code as more authoritative than an accepted requirement or ADR.
