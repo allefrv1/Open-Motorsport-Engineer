@@ -44,10 +44,15 @@ def capture(command: Sequence[str], *, cwd: Path = ROOT) -> str:
     return completed.stdout.strip()
 
 
+def uv_version() -> str:
+    output = capture(["uv", "--version"]).removeprefix("uv ")
+    return output.split(maxsplit=1)[0]
+
+
 def check_environment() -> None:
     observed = {
         "python": platform.python_version(),
-        "uv": capture(["uv", "--version"]).removeprefix("uv "),
+        "uv": uv_version(),
         "node": capture(["node", "--version"]),
         "pnpm": capture(["pnpm", "--version"]),
     }
