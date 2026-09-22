@@ -1,12 +1,12 @@
 # Open Motorsport Engineer — Project Definition
 
-Status: **Draft foundation**
+Status: **Accepted foundation**
 
 ## Problem
 
 Motorsport produces large amounts of telemetry and operational data, but interpreting those data requires engineering knowledge, context and disciplined workflows.
 
-Professional tools are powerful, but the difficulty is often not displaying data. The difficult part is turning measurements into a defensible engineering investigation.
+Professional tools are powerful, but the difficult part is often not displaying data. It is turning measurements into a defensible engineering investigation.
 
 ## Mission
 
@@ -16,7 +16,7 @@ OME should help users move from raw data to understandable, traceable and reprod
 
 ## Intended users
 
-The project may serve:
+OME may serve:
 
 - drivers;
 - coaches;
@@ -24,9 +24,9 @@ The project may serve:
 - Formula Student / Formula SAE teams;
 - small racing teams;
 - data and performance engineers;
-- technically advanced users who need deeper analysis.
+- advanced technical users.
 
-These groups do not necessarily need the same interface depth, but they should rely on the same engineering evidence.
+Different users may receive different levels of disclosure, but the underlying engineering evidence should remain consistent.
 
 ## Product principles
 
@@ -39,7 +39,7 @@ OME should be:
 - traceable;
 - interoperable;
 - extensible;
-- usable offline for essential analysis whenever practical;
+- offline-capable for essential analysis;
 - respectful of data ownership;
 - accessible without hiding engineering detail from advanced users.
 
@@ -49,46 +49,56 @@ OME should not begin as:
 
 - a clone of MoTeC i2, AiM RaceStudio or Cosworth Pi Toolbox;
 - a generic plotting application;
-- a chatbot connected directly to raw telemetry;
+- a chatbot directly over raw telemetry;
 - a black-box setup recommendation engine;
 - a complete vehicle simulation environment;
 - an attempt to solve every motorsport discipline in the first release.
 
 ## Core product loop
 
-    IMPORT
-      -> VALIDATE
-      -> CONTEXTUALIZE
-      -> COMPARE
-      -> OBSERVE
-      -> INVESTIGATE
-      -> EXPLAIN
-      -> DOCUMENT
+```text
+IMPORT
+  -> VALIDATE
+  -> CONTEXTUALIZE
+  -> COMPARE
+  -> OBSERVE
+  -> INVESTIGATE
+  -> EXPLAIN
+  -> DOCUMENT
+```
 
 ## Engineering reasoning model
 
-OME must preserve the distinction between:
+OME preserves:
 
-    MEASUREMENT
-      -> DERIVED DATA
-      -> OBSERVATION
-      -> HYPOTHESIS
-      -> ENGINEERING INTERPRETATION
-      -> POSSIBLE ACTION
+```text
+MEASUREMENT
+  -> DERIVED DATA
+  -> OBSERVATION
+  -> HYPOTHESIS
+  -> ENGINEERING INTERPRETATION
+  -> POSSIBLE ACTION
+```
 
-The system must be able to say that available evidence is insufficient.
+The system must be able to conclude that evidence is insufficient.
 
-## Near-term focus
+## Foundation status
 
-Before selecting a complete implementation stack, the project should establish:
+The project has established:
 
-1. core domain terminology;
-2. initial use cases;
-3. functional requirements;
-4. quality attributes;
-5. architecture drivers;
-6. data integrity and provenance rules;
-7. a first narrow vertical slice.
+- initial domain terminology;
+- first vertical-slice scope;
+- functional requirements;
+- quality attributes;
+- architecture drivers;
+- data integrity/provenance rules;
+- architecture and technology baseline;
+- testing strategy;
+- agent-first harness requirements.
+
+The next engineering phase is not feature implementation.
+
+It is the executable harness bootstrap defined in `docs/plans/active/002-harness-bootstrap.md`.
 
 ## Long-term vision
 
@@ -98,8 +108,8 @@ OME may eventually support:
 - vehicle dynamics analysis;
 - setup comparison;
 - tyre analysis;
-- vehicle health and reliability;
-- automated anomaly detection;
+- vehicle health/reliability;
+- anomaly detection;
 - race strategy;
 - telemetry visualization;
 - engineering reports;
