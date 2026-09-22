@@ -8,10 +8,10 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from ome.ingestion import (
-    IRacingIBTImporter,
     ImportFailure,
     ImportFailureCode,
     ImportSuccess,
+    IRacingIBTImporter,
     OMECsvProfileImporter,
     TelemetryImportService,
 )
