@@ -237,9 +237,7 @@ class Req002TelemetryValidationTests(unittest.TestCase):
         )
 
         result = self.validator.validate(dataset)
-        issue = next(
-            issue for issue in result.issues if issue.code == "non_finite_numeric_value"
-        )
+        issue = next(issue for issue in result.issues if issue.code == "non_finite_numeric_value")
 
         self.assertEqual(issue.severity, ValidationSeverity.WARNING)
         self.assertEqual(issue.evidence["count"], 2)
