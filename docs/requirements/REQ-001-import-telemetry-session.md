@@ -1,6 +1,6 @@
 # REQ-001 — Import Telemetry Session
 
-Status: **Proposed**
+Status: **Accepted**
 
 ## Actor / User
 
@@ -36,19 +36,13 @@ iRacing `.ibt` is the first external telemetry format targeted after the OME CSV
 
 Its purpose is to exercise the importer against richer telemetry, session metadata and real-world variation in channel availability while remaining practical for development and repeatable testing.
 
-### 3. MoTeC log data (.ld) — first professional real-motorsport source target
+### 3. MoTeC workflow — first professional real-motorsport source target
 
-MoTeC `.ld` is a target source for validating OME against professional real-world motorsport workflows.
+MoTeC-exported CSV is the accepted first professional real-motorsport path for the initial vertical slice.
 
-Native `.ld` support is subject to a separate feasibility decision covering:
+Native `.ld` ingestion is deferred. It may be added later as an optional adapter after licensing, API, platform and maintainability constraints are explicitly reviewed.
 
-- supported access mechanism;
-- licensing;
-- operating-system constraints;
-- test fixtures;
-- long-term maintainability.
-
-Until native `.ld` ingestion is accepted as technically and legally appropriate, MoTeC-exported CSV may be used as an interim source of real motorsport data.
+The portable OME core must not depend on native `.ld` access.
 
 ### Importer independence
 
@@ -237,20 +231,20 @@ This requirement does not define:
 
 These responsibilities require separate requirements or architecture decisions.
 
-## Open Questions
+## Resolved decisions
 
-The following questions must be resolved before or during acceptance of related requirements:
+The following decisions are accepted for the first vertical slice:
 
-1. What exact schema will define the OME CSV profile?
-2. Can one source contain multiple sessions or runs, and how should that be represented?
-3. Should import support partial recovery from damaged files, or fail atomically in the first version?
-4. How should OME identify that the same source has been imported before?
-5. What minimum provenance information is required across all source types?
-6. When should Session / Run / Lap detection happen: during import, validation or a later organization stage?
-7. Which metadata must be mandatory for a dataset to progress from imported to valid?
-8. What dataset sizes and import times should the first version support?
-9. What access strategy should be used for native MoTeC `.ld` files?
-10. Which licensing and platform constraints apply to native MoTeC support?
+1. The OME CSV Exchange Profile v0.1 is defined in `docs/specs/ome-csv-profile-v0.1.md`.
+2. One source may contain more than one operational context; import preserves source markers while canonical Session / Run / Lap organization remains a separate responsibility.
+3. The first version does not attempt partial recovery from structurally corrupted telemetry.
+4. Duplicate source content is detected using a stable content fingerprint; filename alone is insufficient.
+5. Minimum provenance is defined in `docs/domain/provenance.md`.
+6. Generic Session / Run / Lap inference is not an importer responsibility.
+7. Imported data progresses to analysis only after separate validation and analysis-readiness checks.
+8. The initial architecture must be evaluated against files up to approximately 2 GB, hundreds of channels and multi-hour sessions; these are architecture evaluation targets, not public guarantees.
+9. MoTeC CSV export is the accepted first MoTeC path.
+10. Native MoTeC `.ld` support is deferred and must not constrain the portable core.
 
 ## Notes
 
