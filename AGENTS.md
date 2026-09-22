@@ -173,4 +173,4 @@ The active engineering task is:
 
 `docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
 
-Do not implement lap-comparison calculations until the positional reference, interpolation/alignment behavior, delta-time sign convention, readiness contract and evidence/provenance contract are explicitly documented. After that decision is accepted, use TDD for every deterministic comparison behavior. Never turn measurable lap differences into causal engineering diagnoses automatically.
+ADR-0009 and `docs/specs/lap-comparison-v0.1.md` define the accepted comparison contract. Implement it through TDD: explicit `lap.distance` / `time.elapsed`, common distance interval, 1.0 m default grid, linear interpolation and `delta_B_vs_A`. Missing evidence returns not-ready; never repair/guess or turn measurable differences into causal engineering diagnoses automatically.
