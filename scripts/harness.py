@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import argparse
+import os
 import platform
 import subprocess
 import sys
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,10 +22,15 @@ class HarnessError(RuntimeError):
     pass
 
 
-def run(command: Sequence[str], *, cwd: Path = ROOT) -> None:
+def run(
+    command: Sequence[str],
+    *,
+    cwd: Path = ROOT,
+    env: Mapping[str, str] | None = None,
+) -> None:
     printable = " ".join(command)
     print(f"\n> {printable}", flush=True)
-    completed = subprocess.run(command, cwd=cwd, check=False)
+    completed = subprocess.run(command, cwd=cwd, check=False, env=env)
     if completed.returncode != 0:
         raise HarnessError(f"command failed with exit code {completed.returncode}: {printable}")
 
@@ -42,6 +48,14 @@ def capture(command: Sequence[str], *, cwd: Path = ROOT) -> str:
             f"command failed with exit code {completed.returncode}: {' '.join(command)}"
         )
     return completed.stdout.strip()
+
+
+def python_environment() -> dict[str, str]:
+    env = os.environ.copy()
+    source_root = str(ROOT / "backend" / "src")
+    existing = env.get("PYTHONPATH")
+    env["PYTHONPATH"] = source_root if not existing else source_root + os.pathsep + existing
+    return env
 
 
 def uv_version() -> str:
@@ -95,7 +109,11 @@ def command_type() -> None:
 
 
 def command_test() -> None:
-    run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py", "-v"])
+    env = python_environment()
+    run(
+        [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py", "-v"],
+        env=env,
+    )
     run(["pnpm", "--dir", "frontend", "test"])
 
 

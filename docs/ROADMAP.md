@@ -36,39 +36,32 @@ These choices remain subject to evidence from real implementation and telemetry.
 
 Status: **Complete**
 
-Completed in Plan 002:
-
-- reproducible pinned environment;
-- lockfiles;
-- canonical commands;
-- CI;
-- format/lint/type/test loops;
-- docs checks;
-- architecture checks;
-- fixture checks;
-- project-owned fixture;
-- PR/self-review loop.
-
 See `docs/plans/completed/002-harness-bootstrap.md`.
 
 ## Phase 3 — Telemetry foundation
 
 Status: **Active**
 
-Current plan:
+Completed:
 
-- `docs/plans/active/003-ome-csv-import-foundation.md`
-
-First slice:
-
-- OME CSV Profile import;
+- Plan 003 — OME CSV Import Foundation;
 - source-preserving telemetry domain objects;
 - provenance/fingerprint;
-- import summary;
-- explicit import failures;
-- REQ-001 acceptance tests.
+- importer contract;
+- OME CSV v0.1;
+- REQ-001 acceptance-test mapping.
 
-Follow-on slices will add validation, normalization and Session / Run / Lap behavior without collapsing their responsibilities.
+Current plan:
+
+- `docs/plans/active/004-telemetry-validation-foundation.md`
+
+Next foundation slices will add:
+
+- non-destructive validation;
+- normalization;
+- Session / Run / Lap representation;
+
+without collapsing their responsibilities.
 
 ## Phase 4 — First external source
 

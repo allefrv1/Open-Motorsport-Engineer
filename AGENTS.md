@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 0.4.0
+Version: 0.5.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -149,10 +149,10 @@ For substantial work, report:
 
 ## Current project state
 
-Harness Bootstrap is complete.
+Plan 003 implemented the first OME CSV ingestion slice.
 
 The active product-code task is:
 
-`docs/plans/active/003-ome-csv-import-foundation.md`
+`docs/plans/active/004-telemetry-validation-foundation.md`
 
-Keep Plan 003 limited to REQ-001 OME CSV import. Do not pull validation, normalization, API or UI work into that slice.
+Keep validation non-destructive. Do not pull normalization, data repair, API/UI or invented signal-quality thresholds into this slice.

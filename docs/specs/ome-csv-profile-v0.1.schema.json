@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-motorsport-engineer.dev/schemas/ome-csv-profile-v0.1.schema.json",
+  "title": "OME CSV Exchange Profile sidecar v0.1",
+  "type": "object",
+  "required": ["ome_csv_version", "source", "channels"],
+  "properties": {
+    "ome_csv_version": {
+      "const": "0.1"
+    },
+    "source": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "system": {
+          "type": ["string", "null"]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "sample_rate_hz": {
+      "type": ["number", "null"],
+      "exclusiveMinimum": 0
+    },
+    "channels": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["source_name"],
+        "properties": {
+          "source_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": ["string", "null"]
+          },
+          "description": {
+            "type": ["string", "null"]
+          },
+          "data_type": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "context": {
+      "type": ["object", "null"]
+    },
+    "source_provenance": {
+      "type": ["object", "null"]
+    }
+  },
+  "additionalProperties": true
+}
