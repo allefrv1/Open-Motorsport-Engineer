@@ -10,6 +10,7 @@ from ome.ingestion.contracts import (
     TelemetryImporter,
 )
 from ome.ingestion.iracing_ibt import IRacingIBTImporter
+from ome.ingestion.motec_csv import MoTeCCSVImporter
 from ome.ingestion.ome_csv import OMECsvProfileImporter
 from ome.ingestion.service import TelemetryImportService
 
@@ -21,6 +22,7 @@ __all__ = [
     "ImportSuccess",
     "ImportSummary",
     "IRacingIBTImporter",
+    "MoTeCCSVImporter",
     "OMECsvProfileImporter",
     "TelemetryImporter",
     "TelemetryImportService",

@@ -352,11 +352,28 @@ This is used to prove import/validation responsibility separation.
 
 TRACE is synthetic.
 
-Before Plan 008 closes, OME should inspect at least one additional representative MoTeC CSV shape.
+An additional public representative export was inspected externally:
 
-Public examples show richer preambles and explicit sample rate.
+- repository: `Arcayik/motec-csv`;
+- path: `data/1hz.csv`;
+- Git blob: `55de91dbabaa04e4a8f5c37b8e5a3717fc9e3b9c`.
 
-A real race-team export with clear permission remains preferable when available.
+Observed structure:
+
+- standard MoTeC CSV signature;
+- richer 12-row metadata preamble;
+- venue/vehicle/driver/device/date/time/range/beacon metadata;
+- explicit `Sample Rate = 1.000 Hz`;
+- 15 source channels;
+- 305 data rows;
+- consistent row width;
+- finite, strictly increasing Time from 0 s through 304 s.
+
+The file is useful as an external format-compatibility cross-check.
+
+OME does not classify it as a licensed physical race-team telemetry fixture.
+
+A redistributable physical-car MoTeC export with clear permission remains an outreach/data gap.
 
 ## Safety rules
 
