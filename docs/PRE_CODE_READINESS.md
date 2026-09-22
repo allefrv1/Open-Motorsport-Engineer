@@ -13,7 +13,8 @@ The repository now has:
 1. a product/domain/architecture system of record;
 2. an executable agent feedback loop proven in CI;
 3. production slices for source-preserving OME CSV ingestion;
-4. production validation that is deterministic and non-destructive.
+4. production validation that is deterministic and non-destructive;
+5. explicit versioned normalization preserving source evidence.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -48,17 +49,27 @@ The architecture is still intentionally being proven one boundary at a time.
 - REQ-002 acceptance coverage;
 - architecture rule preventing validation from depending on ingestion/normalization/analysis/API.
 
+### Normalization — Plan 005
+
+- canonical concept identifiers;
+- explicit versioned mapping rules;
+- deterministic conversion metadata;
+- mapped/unmapped results with explicit reasons;
+- source identity and values preserved;
+- REQ-004 acceptance coverage;
+- architecture rule preventing normalization from depending on ingestion/validation implementation/analysis/API.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/005-telemetry-normalization-foundation.md`
+`docs/plans/active/006-session-run-lap-context-foundation.md`
 
 ### Guardrail
 
-Normalization must add source-independent engineering meaning **without replacing source evidence**.
+Session / Run / Lap organization must add operational context **without inventing boundaries or converting contextual metadata into telemetry channels**.
 
 The following remain separate responsibilities:
 
@@ -88,7 +99,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion and validation have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation and normalization have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
