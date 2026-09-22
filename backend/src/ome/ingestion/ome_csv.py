@@ -268,9 +268,7 @@ class OMECsvProfileImporter:
 
             data_type = raw_definition.get("data_type")
             if data_type is not None and not isinstance(data_type, str):
-                raise _InvalidProfile(
-                    f"Channel {identifier!r} data_type must be a string or null."
-                )
+                raise _InvalidProfile(f"Channel {identifier!r} data_type must be a string or null.")
 
             channels[identifier] = _ChannelDefinition(
                 source_name=source_name,
