@@ -2,11 +2,18 @@
 
 This directory contains OME product and system requirements.
 
+## Accepted foundation requirements
+
+- [REQ-001 — Import Telemetry Session](REQ-001-import-telemetry-session.md)
+- [REQ-002 — Validate Telemetry Dataset](REQ-002-validate-telemetry-dataset.md)
+- [REQ-003 — Organize Session, Run and Lap Context](REQ-003-organize-session-run-lap.md)
+- [REQ-004 — Normalize Telemetry Channels](REQ-004-normalize-telemetry-channels.md)
+- [REQ-005 — Compare Two Laps](REQ-005-compare-two-laps.md)
+- [REQ-006 — Preserve Analysis Evidence](REQ-006-analysis-evidence.md)
+
 ## Naming
 
 Use `REQ-XXX-short-name.md`.
-
-Example: `REQ-001-import-session.md`.
 
 ## Lifecycle
 
@@ -15,25 +22,12 @@ Example: `REQ-001-import-session.md`.
 - Implemented
 - Deprecated
 
-Only accepted requirements should be treated as committed project behavior.
+Only accepted requirements are committed project behavior.
 
-## Template
+## Requirement rule
 
-Each non-trivial requirement should include:
+Requirements define behavior and constraints.
 
-- ID
-- Title
-- Status
-- Actor / User
-- Problem
-- Goal
-- Preconditions
-- Main Flow
-- Alternative / Failure Flows
-- Expected Result
-- Acceptance Criteria
-- Relevant Domain Concepts
-- Quality Attributes
-- Open Questions
+They should not prescribe technology unless the technology itself is a product constraint.
 
-Requirements describe required behavior and constraints, not premature technology choices.
+Implementation work must reference the requirement it satisfies whenever practical.

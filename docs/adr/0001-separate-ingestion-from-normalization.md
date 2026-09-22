@@ -1,6 +1,6 @@
 # ADR-0001 — Separate source ingestion from telemetry normalization
 
-Status: **Proposed**
+Status: **Accepted**
 
 Date: 2026-09-22
 
@@ -24,7 +24,7 @@ That coupling would make provenance harder to preserve and could cause incorrect
 
 ## Decision
 
-Propose separating:
+Separate:
 
 1. **source ingestion**, whose responsibility is to read and preserve what the source contains;
 2. **validation**, whose responsibility is to assess the reliability and completeness of imported evidence;
@@ -112,12 +112,10 @@ The conceptual separation is easier to preserve from the start than to retrofit 
 
 ## Related requirements
 
-- Proposed REQ-001 — Import Telemetry Session
+- REQ-001 — Import Telemetry Session
+- REQ-002 — Validate Telemetry Dataset
+- REQ-004 — Normalize Telemetry Channels
 
-## Acceptance condition
+## Acceptance rationale
 
-This ADR should remain Proposed until:
-
-- the Telemetry Import Model has been reviewed;
-- at least one OME CSV fixture and one external source have been inspected against it;
-- the project confirms that the separation is useful rather than theoretical.
+The project now has an accepted Telemetry Import Model, explicit validation and normalization requirements, a controlled CSV profile, and reviewed source feasibility for iRacing and MoTeC workflows. The separation is therefore justified by concrete source diversity and evidence-preservation needs rather than by speculative abstraction.

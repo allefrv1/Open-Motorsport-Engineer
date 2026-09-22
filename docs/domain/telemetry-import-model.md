@@ -1,6 +1,6 @@
 # Telemetry Import Model
 
-Status: **Draft domain specification**
+Status: **Accepted domain foundation**
 
 ## Purpose
 
@@ -139,7 +139,7 @@ At minimum, the concept should be capable of carrying:
 
 Operational timestamps may also be recorded, but they must not be confused with source measurement time.
 
-The exact mandatory fields remain to be defined by requirement.
+Minimum provenance is defined in `docs/domain/provenance.md`.
 
 ## ImportIssue
 
@@ -157,7 +157,7 @@ ImportIssue is not the same as a validation failure.
 
 An import can potentially succeed with warnings if the readable evidence remains intact.
 
-Whether partial import is allowed for damaged sources is still an open requirement.
+The first version does not attempt partial recovery from structurally corrupted telemetry; see `docs/domain/data-quality.md`.
 
 ## Conceptual invariants
 
