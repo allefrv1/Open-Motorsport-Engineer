@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 0.3.0
+Version: 0.4.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -51,7 +51,7 @@ For non-trivial work:
 TASK
 -> RELEVANT REQUIREMENT
 -> RELEVANT DOMAIN / ADR
--> PLAN WHEN NEEDED
+-> ACTIVE PLAN WHEN NEEDED
 -> SMALLEST CORRECT CHANGE
 -> AUTOMATED VERIFICATION
 -> SELF-REVIEW
@@ -149,6 +149,10 @@ For substantial work, report:
 
 ## Current project state
 
-The executable harness bootstrap is the active engineering task.
+Harness Bootstrap is complete.
 
-Feature implementation must not begin before `docs/plans/active/002-harness-bootstrap.md` is completed, unless the maintainer explicitly overrides that gate.
+The active product-code task is:
+
+`docs/plans/active/003-ome-csv-import-foundation.md`
+
+Keep Plan 003 limited to REQ-001 OME CSV import. Do not pull validation, normalization, API or UI work into that slice.

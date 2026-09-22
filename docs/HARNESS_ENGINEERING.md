@@ -37,9 +37,9 @@ Detailed domain, specification and architecture knowledge belongs under `docs/`.
 
 ### Nested AGENTS.md
 
-Create nested instructions only after implementation modules exist and require local rules.
+Create nested instructions only when a module has meaningful local rules that the root map should not carry.
 
-Likely future examples:
+Likely examples:
 
 - ingestion — preserve source evidence;
 - analysis — deterministic calculations and metric provenance;
@@ -88,17 +88,17 @@ Durable discoveries must be promoted to requirements, ADRs, specs or domain docu
 
 ## Feedback loop
 
-The desired agent loop is:
+The operational agent loop is:
 
 ```text
 UNDERSTAND
 -> PLAN
 -> CHANGE
--> RUN CHECKS
+-> RUN FOCUSED CHECKS
 -> INSPECT RESULT
 -> SELF-REVIEW
 -> FIX
--> RE-RUN CHECKS
+-> RUN FULL VERIFY
 -> UPDATE DURABLE DOCS
 -> COMPLETE
 ```
@@ -107,73 +107,63 @@ A task is not complete because code was generated.
 
 ## Mechanical enforcement
 
-Once implementation begins, the harness must provide canonical commands and CI checks for at least:
+The repository provides canonical checks for:
 
 - formatting;
 - linting;
-- static/type checks;
+- static/type checking;
 - unit tests;
-- integration tests;
-- documentation-link/structure validation;
-- architecture dependency boundaries;
-- fixture metadata/licensing checks.
+- frontend runtime tests;
+- documentation links/status/indexes;
+- architecture dependency boundaries/cycles;
+- fixture metadata/licensing;
+- complete verification.
 
-Important architecture invariants should migrate from prose into executable checks when feasible.
+See `docs/DEVELOPMENT.md`.
+
+Important architecture invariants should continue migrating from prose into executable checks as implementation grows.
 
 ## Architecture legibility
 
 The code layout should allow an agent to infer responsibility from location.
 
-Forbidden patterns should eventually be mechanically detected, including:
+Initial forbidden dependency patterns are mechanically checked.
 
-- domain depending on API/framework layers;
-- source-adapter semantics leaking into domain entities;
-- deterministic analysis calling generative AI;
-- hidden telemetry mutation;
-- oversized catch-all utility modules.
+Future recurring violations should be converted into stronger structural rules rather than repeatedly corrected in review.
 
 ## Testability
 
-Every accepted requirement should eventually connect to executable evidence:
+Every accepted feature requirement should move toward:
 
 ```text
 Requirement
 -> acceptance criterion
--> test/check
+-> executable test/check
 -> CI result
 ```
 
+Plan 003 begins that requirement-to-test traceability for REQ-001.
+
 ## Fixtures as part of the harness
 
-Representative data is required for agent reliability.
+Fixtures record provenance/licensing and are mechanically checked.
 
-Fixtures must record:
+The repository contains:
 
-- origin;
-- licensing/redistribution status;
-- expected behavior;
-- purpose;
-- provenance;
-- size class.
+- project-owned synthetic OME data;
+- small licensed public data;
+- negative validation fixtures.
 
-The repository should contain small public/synthetic fixtures and define how private/large fixtures are used outside the public tree.
+Private/large fixtures may be used outside the public tree when redistribution is inappropriate.
 
 ## Quality and drift
 
-Agent-generated repositories accumulate pattern drift quickly.
+OME maintains:
 
-OME will maintain:
+- `docs/QUALITY_SCORE.md`;
+- `docs/plans/tech-debt-tracker.md`.
 
-- `docs/QUALITY_SCORE.md`
-- `docs/plans/tech-debt-tracker.md`
-
-Once code exists, recurring maintenance should convert repeated review feedback into:
-
-- tests;
-- linters;
-- templates;
-- documentation;
-- structural checks.
+Repeated agent mistakes are inputs to harness evolution.
 
 ## Autonomy boundary
 
@@ -190,6 +180,6 @@ Escalate when a task requires:
 
 ## Current readiness
 
-OME has a strong documentation foundation but does **not** yet have an executable harness.
+The initial executable harness is operational and proven by CI.
 
-The next implementation phase must therefore be **harness bootstrap**, before feature development.
+Feature work may proceed in narrow, requirement-linked plans while preserving the same verification loop.

@@ -2,7 +2,7 @@
 
 Date: 2026-09-22
 
-Status: **Baseline — updated after public-data validation**
+Status: **Harness bootstrap complete**
 
 Scale:
 
@@ -19,45 +19,47 @@ Scale:
 |---|---:|---|
 | Product intent | 4 | Mission, MVP and non-goals are explicit. |
 | Domain legibility | 4 | Core telemetry concepts and evidence distinctions are documented. |
-| Architecture legibility | 4 | Boundaries and ADRs are strong, but not mechanically enforced yet. |
-| Root agent instructions | 4 | Concise map after harness audit; must remain small as code grows. |
-| Documentation system of record | 4 | Structured and indexed; freshness checks are still manual. |
-| Requirement traceability | 3 | Requirements exist, but no executable requirement-to-test mapping yet. |
-| Plan lifecycle | 3 | Active/completed model defined during this audit; no execution history yet. |
-| Automated feedback | 0 | No formatter/linter/type/test/CI harness exists because code has not started. |
-| Architecture enforcement | 0 | No structural tests or dependency lints exist yet. |
-| Reproducible environment | 0 | No locked runtime/toolchain/bootstrap command exists yet. |
-| Representative fixtures | 2 | Small licensed CSV fixtures and a manifest are now committed; rich external iRacing/Formula SAE sources are identified, but full source coverage is still incomplete. |
-| Agent self-verification | 1 | Expectations are documented, but there are no canonical commands to run. |
-| Documentation drift control | 1 | Manual only; stale contradictions were already found in this audit. |
-| Technical-debt control | 2 | Tracker structure exists; recurring cleanup is not operational. |
-| Observability for agent debugging | 0 | Not applicable until an executable app exists. |
-| Security/permissions harness | 1 | General boundaries exist; concrete sandbox/dependency policies come with bootstrap. |
+| Architecture legibility | 4 | Boundaries and ADRs are clear and initial structural enforcement exists. |
+| Root agent instructions | 4 | Concise map plus real canonical commands. |
+| Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
+| Requirement traceability | 3 | Requirements exist; executable AC-to-test mapping starts with Plan 003. |
+| Plan lifecycle | 4 | Active/completed lifecycle is now exercised by completed Plans 001 and 002. |
+| Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
+| Architecture enforcement | 3 | Initial dependency/cycle checks exist and a deliberate forbidden dependency is tested. |
+| Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
+| Representative fixtures | 3 | Project-owned fixture plus licensed public/negative fixtures are mechanically checked; source coverage still needs expansion. |
+| Agent self-verification | 4 | AGENTS.md points to one canonical verify command used by CI. |
+| Documentation drift control | 3 | Links, IDs, statuses, indexes and plan placement receive automated checks. |
+| Technical-debt control | 3 | Explicit tracker exists and harness debt was converted into working guardrails. |
+| Observability for agent debugging | 0 | Deferred until an executable application exists. |
+| Security/permissions harness | 2 | CI is read-only and third-party actions are pinned; application security controls are not yet relevant. |
+
+## Harness Bootstrap exit criteria
+
+Required before REQ-001:
+
+- reproducible environment: 3+ — **met (4)**
+- automated feedback: 3+ — **met (4)**
+- architecture enforcement: 2+ — **met (3)**
+- representative fixtures: 2+ — **met (3)**
+- agent self-verification: 3+ — **met (4)**
+- documentation drift control: 2+ — **met (3)**
 
 ## Interpretation
 
-The repository is **documentation-mature but harness-immature**.
+OME now has an executable agent harness strong enough to begin the first small feature slice.
 
-This is expected before code, but it means the next phase cannot be ordinary feature development.
+This is not a claim that the harness is mature or complete forever.
 
-## Exit criteria for Harness Bootstrap
-
-Before REQ-001 implementation begins, reach at least:
-
-- reproducible environment: 3+
-- automated feedback: 3+
-- architecture enforcement: 2+
-- representative fixtures: 2+
-- agent self-verification: 3+
-- documentation drift control: 2+
+Every repeated agent failure should still be treated as evidence for a new guardrail.
 
 ## Review cadence
 
 Update this document:
 
-- after harness bootstrap;
 - after each major architecture phase;
 - when repeated agent mistakes reveal a missing guardrail;
-- when a new subsystem is introduced.
+- when a new subsystem is introduced;
+- when CI/checking strategy materially changes.
 
 Scores must be supported by repository evidence, not optimism.

@@ -12,6 +12,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 - [ARCHITECTURE.md](ARCHITECTURE.md) — top-level architecture map
 - [QUALITY_ATTRIBUTES.md](QUALITY_ATTRIBUTES.md) — architecture drivers
 - [HARNESS_ENGINEERING.md](HARNESS_ENGINEERING.md) — agent operating model
+- [DEVELOPMENT.md](DEVELOPMENT.md) — pinned environment and canonical verification commands
 - [QUALITY_SCORE.md](QUALITY_SCORE.md) — current harness maturity
 - [PRE_CODE_READINESS.md](PRE_CODE_READINESS.md) — go/no-go assessment
 - [ROADMAP.md](ROADMAP.md) — engineering sequence

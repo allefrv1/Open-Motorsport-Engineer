@@ -86,19 +86,20 @@ The system must be able to conclude that evidence is insufficient.
 
 The project has established:
 
-- initial domain terminology;
-- first vertical-slice scope;
-- functional requirements;
-- quality attributes;
-- architecture drivers;
-- data integrity/provenance rules;
+- domain terminology and first vertical-slice scope;
+- functional requirements and quality attributes;
+- provenance/data-integrity rules;
 - architecture and technology baseline;
-- testing strategy;
-- agent-first harness requirements.
+- accepted architecture decisions;
+- public/project-owned telemetry fixtures;
+- executable agent harness;
+- clean-runner CI with canonical verification.
 
-The next engineering phase is not feature implementation.
+The current engineering phase is the first product-code slice:
 
-It is the executable harness bootstrap defined in `docs/plans/active/002-harness-bootstrap.md`.
+`docs/plans/active/003-ome-csv-import-foundation.md`
+
+Its scope is intentionally limited to REQ-001 OME CSV ingestion.
 
 ## Long-term vision
 

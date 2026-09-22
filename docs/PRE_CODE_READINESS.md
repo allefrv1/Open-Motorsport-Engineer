@@ -2,119 +2,81 @@
 
 Date: 2026-09-22
 
-Status: **Documentation foundation complete — executable harness not ready**
+Status: **Executable harness ready — first feature slice unblocked**
 
 ## Executive conclusion
 
-OME has a strong product, domain and architecture knowledge base.
+OME now has both:
 
-A harness-engineering audit found that the earlier label **implementation-ready** was too strong.
+1. a product/domain/architecture system of record;
+2. an executable agent feedback loop proven on a clean CI runner.
 
-The repository does not yet provide the executable feedback loops required for reliable agent-led feature development.
+The earlier gap between "good documentation" and "agent-ready repository" has been closed sufficiently for the first narrow implementation slice.
 
-## What is ready
+This does not mean the full product architecture is proven. Real implementation and telemetry will continue to challenge assumptions.
 
-### Product
+## Ready foundations
 
-- mission and problem;
-- users and non-goals;
+### Product and domain
+
+- mission, users and non-goals;
 - first vertical slice;
-- long-term scope boundaries.
-
-### Domain
-
-- Event / Session / Run / Lap vocabulary;
-- telemetry import model;
+- telemetry import/domain vocabulary;
 - provenance;
-- validation concepts;
-- normalization boundary;
-- evidence hierarchy;
-- missing/unknown-data semantics.
+- validation and normalization boundaries;
+- evidence hierarchy.
 
-### Requirements
+### Requirements and architecture
 
-- REQ-001 through REQ-006 are defined and accepted as the initial baseline.
+- REQ-001 through REQ-006;
+- accepted architecture ADRs;
+- local modular-monolith baseline;
+- deterministic engineering-core boundary;
+- selected initial technology baseline.
 
-### Architecture
+### Executable harness
 
-- major responsibility boundaries exist;
-- local modular-monolith direction exists;
-- deterministic engineering-core boundary exists;
-- AI boundary exists;
-- data/storage/UI technology baseline exists;
-- first lap-comparison alignment approach exists.
+- exact Python/uv/Node/pnpm versions;
+- lockfiles and fresh-checkout setup;
+- canonical format/lint/type/test/docs/arch/fixture commands;
+- one full `verify` command;
+- pull-request CI using the same command;
+- documentation consistency checks;
+- dependency-boundary/cycle checks;
+- tests proving deliberate architecture/fixture/doc defects are detectable;
+- project-owned and licensed public fixtures.
 
-### Process documentation
+## Data readiness
 
-- test strategy exists;
-- ADR process exists;
-- active/completed execution-plan lifecycle exists;
-- harness operating model exists;
-- quality score and technical-debt tracker exist.
+Available:
 
-## What is not ready
+- OME-owned CSV Profile fixture;
+- licensed Traqmate real-vehicle CSV;
+- licensed MoTeC-style CSV fixtures;
+- negative timestamp fixture;
+- inspected external iRacing and Formula SAE data.
 
-### Executable feedback
+Still valuable but not blocking the first OME CSV implementation:
 
-Missing:
-
-- reproducible toolchain setup;
-- dependency lockfiles;
-- canonical repository commands;
-- formatter/linter/type checks;
-- test runner configuration;
-- CI;
-- documentation structure/link checks;
-- architecture dependency checks.
-
-### Data feedback
-
-Partially ready:
-
-- licensed public CSV fixtures are now committed;
-- fixture manifest and third-party license/provenance notices exist;
-- an external iRacing `.ibt` fixture has been inspected;
-- real Formula SAE public logs have been inspected;
-- MoTeC-style CSV validation fixtures exist.
-
-Still missing:
-
-- project-owned OME CSV fixture;
-- clearly redistributable full iRacing session, if legally appropriate;
-- clearly licensed real physical-car MoTeC export;
+- redistributable full iRacing session;
+- licensed real physical-car MoTeC export;
 - Brazilian Formula SAE full-session fixture with permission;
-- executable fixture-schema/licensing checks.
+- genuinely multi-rate physical-car acquisition fixture.
 
-### Agent feedback loop
-
-The repository tells an agent what good behavior looks like, but cannot yet mechanically prove that behavior.
-
-## Correct Go / No-Go
+## Go / No-Go
 
 ### Go
 
-Proceed to **Plan 002 — Agent Harness Bootstrap** when coding/configuration work is authorized.
+Proceed to **Plan 003 — OME CSV Import Foundation**.
 
-### No-Go
+### Guardrail
 
-Do not begin REQ-001 feature implementation before harness bootstrap exit criteria are met, unless the maintainer explicitly overrides the gate.
+Do not expand the first feature into generic CSV, validation, normalization, persistence, API or UI unless an accepted requirement forces the expansion.
 
-## Harness bootstrap exit gates
+## Evidence
 
-Before feature work:
+The harness bootstrap was not marked complete on configuration alone.
 
-- fresh-checkout environment setup is reproducible;
-- canonical verification commands exist;
-- PR CI runs those checks;
-- basic documentation checks exist;
-- initial architecture boundary checks exist;
-- at least initial fixtures exist;
-- `docs/QUALITY_SCORE.md` exit thresholds are met.
+Its CI failed on two real issues and was corrected until the complete canonical verification passed from a clean runner.
 
-## Why this correction matters
-
-Harness engineering treats repository context, tools and feedback loops as part of the product-development system.
-
-Good Markdown and public data alone are not a reliable harness.
-
-Public-data validation has strengthened the architecture evidence, but the next phase must still turn important repository rules into executable feedback.
+That feedback loop is now part of normal OME engineering.
