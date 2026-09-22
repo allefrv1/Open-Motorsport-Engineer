@@ -2,7 +2,7 @@
 
 Date: 2026-09-22
 
-Status: **Harness bootstrap complete**
+Status: **Operational harness — first product slice verified**
 
 Scale:
 
@@ -18,40 +18,29 @@ Scale:
 | Area | Score | Assessment |
 |---|---:|---|
 | Product intent | 4 | Mission, MVP and non-goals are explicit. |
-| Domain legibility | 4 | Core telemetry concepts and evidence distinctions are documented. |
+| Domain legibility | 4 | Core telemetry concepts and evidence distinctions are documented and now represented in the first production domain types. |
 | Architecture legibility | 4 | Boundaries and ADRs are clear and initial structural enforcement exists. |
-| Root agent instructions | 4 | Concise map plus real canonical commands. |
+| Root agent instructions | 4 | Concise map plus real canonical commands and a scoped ingestion AGENTS.md. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
-| Requirement traceability | 3 | Requirements exist; executable AC-to-test mapping starts with Plan 003. |
-| Plan lifecycle | 4 | Active/completed lifecycle is now exercised by completed Plans 001 and 002. |
+| Requirement traceability | 3 | REQ-001 now has executable AC-001…AC-010 mapping; remaining requirements gain mappings as their slices begin. |
+| Plan lifecycle | 4 | Plans 001–003 have completed history and Plan 004 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
-| Architecture enforcement | 3 | Initial dependency/cycle checks exist and a deliberate forbidden dependency is tested. |
+| Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
 | Representative fixtures | 3 | Project-owned fixture plus licensed public/negative fixtures are mechanically checked; source coverage still needs expansion. |
-| Agent self-verification | 4 | AGENTS.md points to one canonical verify command used by CI. |
+| Agent self-verification | 4 | The first product slice was iterated through CI failures to a green canonical verify. |
 | Documentation drift control | 3 | Links, IDs, statuses, indexes and plan placement receive automated checks. |
-| Technical-debt control | 3 | Explicit tracker exists and harness debt was converted into working guardrails. |
-| Observability for agent debugging | 0 | Deferred until an executable application exists. |
+| Technical-debt control | 3 | Explicit tracker exists and repeated defects are candidates for new guardrails. |
+| Observability for agent debugging | 0 | Deferred until an executable application process exists. |
 | Security/permissions harness | 2 | CI is read-only and third-party actions are pinned; application security controls are not yet relevant. |
-
-## Harness Bootstrap exit criteria
-
-Required before REQ-001:
-
-- reproducible environment: 3+ — **met (4)**
-- automated feedback: 3+ — **met (4)**
-- architecture enforcement: 2+ — **met (3)**
-- representative fixtures: 2+ — **met (3)**
-- agent self-verification: 3+ — **met (4)**
-- documentation drift control: 2+ — **met (3)**
 
 ## Interpretation
 
-OME now has an executable agent harness strong enough to begin the first small feature slice.
+The harness has now been used on real product code, not only on its own bootstrap.
 
-This is not a claim that the harness is mature or complete forever.
+It caught formatting and static-type defects before merge and supported direct acceptance-criterion traceability.
 
-Every repeated agent failure should still be treated as evidence for a new guardrail.
+The next maturity step is to repeat this discipline across validation and normalization, then strengthen guardrails when recurring failure patterns emerge.
 
 ## Review cadence
 

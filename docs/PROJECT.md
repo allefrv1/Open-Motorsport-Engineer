@@ -82,24 +82,24 @@ MEASUREMENT
 
 The system must be able to conclude that evidence is insufficient.
 
-## Foundation status
+## Current implementation state
 
-The project has established:
+Established:
 
 - domain terminology and first vertical-slice scope;
-- functional requirements and quality attributes;
-- provenance/data-integrity rules;
-- architecture and technology baseline;
-- accepted architecture decisions;
+- requirements and architecture baseline;
+- executable Codex harness and CI;
 - public/project-owned telemetry fixtures;
-- executable agent harness;
-- clean-runner CI with canonical verification.
+- source-independent import domain model;
+- OME CSV Exchange Profile v0.1 importer;
+- provenance and source fingerprinting;
+- executable REQ-001 acceptance mapping for the OME CSV source.
 
-The current engineering phase is the first product-code slice:
+Current engineering plan:
 
-`docs/plans/active/003-ome-csv-import-foundation.md`
+`docs/plans/active/004-telemetry-validation-foundation.md`
 
-Its scope is intentionally limited to REQ-001 OME CSV ingestion.
+The next responsibility is non-destructive validation. Normalization remains separate.
 
 ## Long-term vision
 

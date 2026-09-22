@@ -101,7 +101,7 @@ If the source cannot be safely read:
 - OME must not create a dataset that appears valid;
 - diagnostic information should be available to support troubleshooting.
 
-Whether partial recovery is supported is an open question and is not required by this version.
+The first version does not attempt partial recovery from structurally corrupted telemetry.
 
 ### Missing metadata
 
