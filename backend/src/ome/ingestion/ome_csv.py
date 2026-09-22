@@ -162,7 +162,7 @@ class OMECsvProfileImporter:
             for identifier, definition in sidecar.channels.items()
         )
 
-        source = TelemetrySource(
+        telemetry_source = TelemetrySource(
             source_type=OME_CSV_SOURCE_TYPE,
             original_name=path.name,
             location=str(path.resolve()),
@@ -183,7 +183,7 @@ class OMECsvProfileImporter:
             source_metadata=source_metadata,
         )
         dataset = ImportedTelemetryDataset(
-            source=source,
+            source=telemetry_source,
             provenance=provenance,
             channels=channels,
             issues=issues,
