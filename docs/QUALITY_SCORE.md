@@ -2,7 +2,7 @@
 
 Date: 2026-09-22
 
-Status: **Operational harness — first product slice verified**
+Status: **Operational harness — ingestion and validation slices verified**
 
 Scale:
 
@@ -20,10 +20,10 @@ Scale:
 | Product intent | 4 | Mission, MVP and non-goals are explicit. |
 | Domain legibility | 4 | Core telemetry concepts and evidence distinctions are documented and now represented in the first production domain types. |
 | Architecture legibility | 4 | Boundaries and ADRs are clear and initial structural enforcement exists. |
-| Root agent instructions | 4 | Concise map plus real canonical commands and a scoped ingestion AGENTS.md. |
+| Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation AGENTS.md files. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
-| Requirement traceability | 3 | REQ-001 now has executable AC-001…AC-010 mapping; remaining requirements gain mappings as their slices begin. |
-| Plan lifecycle | 4 | Plans 001–003 have completed history and Plan 004 is active. |
+| Requirement traceability | 3 | REQ-001 and REQ-002 now have executable acceptance-criterion mappings; remaining requirements gain mappings as their slices begin. |
+| Plan lifecycle | 4 | Plans 001–004 have completed history and Plan 005 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -36,11 +36,11 @@ Scale:
 
 ## Interpretation
 
-The harness has now been used on real product code, not only on its own bootstrap.
+The harness has now been used across ingestion and validation product code, not only on its own bootstrap.
 
-It caught formatting and static-type defects before merge and supported direct acceptance-criterion traceability.
+It has rejected real defects, preserved acceptance-criterion traceability and enforced architectural separation between ingestion, validation and downstream concerns.
 
-The next maturity step is to repeat this discipline across validation and normalization, then strengthen guardrails when recurring failure patterns emerge.
+The next maturity step is to repeat this discipline through normalization and Session / Run / Lap organization, strengthening guardrails when recurring failure patterns emerge.
 
 ## Review cadence
 

@@ -45,20 +45,22 @@ Status: **Active**
 Completed:
 
 - Plan 003 — OME CSV Import Foundation;
+- Plan 004 — Telemetry Validation Foundation;
 - source-preserving telemetry domain objects;
 - provenance/fingerprint;
 - importer contract;
 - OME CSV v0.1;
-- REQ-001 acceptance-test mapping.
+- REQ-001 acceptance-test mapping;
+- source-independent non-destructive validation;
+- REQ-002 acceptance-test mapping.
 
 Current plan:
 
-- `docs/plans/active/004-telemetry-validation-foundation.md`
+- `docs/plans/active/005-telemetry-normalization-foundation.md`
 
 Next foundation slices will add:
 
-- non-destructive validation;
-- normalization;
+- explicit traceable normalization;
 - Session / Run / Lap representation;
 
 without collapsing their responsibilities.

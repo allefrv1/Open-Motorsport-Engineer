@@ -1,50 +1,73 @@
-# OME Pre-Code Readiness Review
+# OME Implementation Readiness Review
 
 Date: 2026-09-22
 
-Status: **Executable harness ready — first feature slice unblocked**
+Status: **Executable harness operational — telemetry foundation in progress**
 
 ## Executive conclusion
 
-OME now has both:
+OME has moved beyond pre-code readiness.
+
+The repository now has:
 
 1. a product/domain/architecture system of record;
-2. an executable agent feedback loop proven on a clean CI runner.
+2. an executable agent feedback loop proven in CI;
+3. production slices for source-preserving OME CSV ingestion;
+4. production validation that is deterministic and non-destructive.
 
-The earlier gap between "good documentation" and "agent-ready repository" has been closed sufficiently for the first narrow implementation slice.
+The architecture is still intentionally being proven one boundary at a time.
 
-This does not mean the full product architecture is proven. Real implementation and telemetry will continue to challenge assumptions.
+## Completed implementation foundations
 
-## Ready foundations
-
-### Product and domain
-
-- mission, users and non-goals;
-- first vertical slice;
-- telemetry import/domain vocabulary;
-- provenance;
-- validation and normalization boundaries;
-- evidence hierarchy.
-
-### Requirements and architecture
-
-- REQ-001 through REQ-006;
-- accepted architecture ADRs;
-- local modular-monolith baseline;
-- deterministic engineering-core boundary;
-- selected initial technology baseline.
-
-### Executable harness
+### Harness
 
 - exact Python/uv/Node/pnpm versions;
-- lockfiles and fresh-checkout setup;
+- lockfiles and clean-runner setup;
 - canonical format/lint/type/test/docs/arch/fixture commands;
 - one full `verify` command;
-- pull-request CI using the same command;
+- PR CI using the same command;
 - documentation consistency checks;
 - dependency-boundary/cycle checks;
-- tests proving deliberate architecture/fixture/doc defects are detectable;
-- project-owned and licensed public fixtures.
+- fixture provenance/license checks.
+
+### Ingestion — Plan 003
+
+- source-independent telemetry domain types;
+- provenance/fingerprint;
+- importer protocol/service;
+- OME CSV Exchange Profile v0.1 importer;
+- REQ-001 OME CSV acceptance coverage.
+
+### Validation — Plan 004
+
+- ValidationSeverity / ValidationCategory / ValidationIssue / ValidationResult;
+- non-destructive structural/time checks;
+- explicit metadata/provenance issues;
+- missing/non-finite value warnings;
+- bounded aggregation of repeated defects;
+- REQ-002 acceptance coverage;
+- architecture rule preventing validation from depending on ingestion/normalization/analysis/API.
+
+## Current implementation gate
+
+### Go
+
+Proceed to:
+
+`docs/plans/active/005-telemetry-normalization-foundation.md`
+
+### Guardrail
+
+Normalization must add source-independent engineering meaning **without replacing source evidence**.
+
+The following remain separate responsibilities:
+
+- ingestion;
+- validation;
+- normalization;
+- Session / Run / Lap organization;
+- deterministic analysis;
+- AI explanation.
 
 ## Data readiness
 
@@ -56,27 +79,27 @@ Available:
 - negative timestamp fixture;
 - inspected external iRacing and Formula SAE data.
 
-Still valuable but not blocking the first OME CSV implementation:
+Still valuable for later source/scale validation:
 
 - redistributable full iRacing session;
 - licensed real physical-car MoTeC export;
 - Brazilian Formula SAE full-session fixture with permission;
 - genuinely multi-rate physical-car acquisition fixture.
 
-## Go / No-Go
-
-### Go
-
-Proceed to **Plan 003 — OME CSV Import Foundation**.
-
-### Guardrail
-
-Do not expand the first feature into generic CSV, validation, normalization, persistence, API or UI unless an accepted requirement forces the expansion.
-
 ## Evidence
 
-The harness bootstrap was not marked complete on configuration alone.
+Harness bootstrap, ingestion and validation have each been required to pass the same canonical GitHub Actions verification before merge.
 
-Its CI failed on two real issues and was corrected until the complete canonical verification passed from a clean runner.
+The current development model is therefore:
 
-That feedback loop is now part of normal OME engineering.
+```text
+requirement
+-> scoped plan
+-> implementation
+-> acceptance tests
+-> architecture checks
+-> canonical CI
+-> documentation/plan completion
+```
+
+That loop should continue for every foundation slice.
