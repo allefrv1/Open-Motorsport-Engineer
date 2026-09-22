@@ -297,9 +297,7 @@ class MoTeCCSVImporter:
                 ) from None
 
             if not math.isfinite(time_s):
-                raise _InvalidMoTeCCSV(
-                    f"MoTeC CSV data row {row_number} Time must be finite."
-                )
+                raise _InvalidMoTeCCSV(f"MoTeC CSV data row {row_number} Time must be finite.")
 
             timestamps.append(time_s)
 
@@ -353,8 +351,7 @@ class MoTeCCSVImporter:
             )
         ):
             values = tuple(
-                row[column_index] if row[column_index] != "" else None
-                for row in table.data_rows
+                row[column_index] if row[column_index] != "" else None for row in table.data_rows
             )
             channels.append(
                 SourceChannel(
