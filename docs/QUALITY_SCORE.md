@@ -40,7 +40,9 @@ The harness has now been used across ingestion, validation, normalization, opera
 
 It has rejected real defects, preserved acceptance-criterion traceability and enforced architectural separation between ingestion, validation and downstream concerns.
 
-The next maturity step is to make the lap-comparison reference/alignment decision explicit, then carry the same test-first discipline into deterministic delta-time analysis.
+The lap-comparison reference/alignment decision is now explicit in ADR-0009 and the v0.1 comparison spec.
+
+The next maturity step is to prove deterministic delta-time analysis and provenance through the same RED -> GREEN harness loop.
 
 ## Review cadence
 
