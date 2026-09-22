@@ -145,6 +145,17 @@ REQ-003 explicitly defers it and the domain model states it is not a strict syno
 
 ## Test strategy
 
+This plan follows TDD.
+
+Before adding Session / Run / Lap production types or organizer behavior:
+
+1. add focused tests expressing REQ-003 acceptance criteria;
+2. run CI/focused tests and confirm RED for the expected missing context API/behavior;
+3. implement the smallest domain/application surface required;
+4. run focused tests until GREEN;
+5. refactor only while tests stay green;
+6. run canonical verify before merge.
+
 Map REQ-003 acceptance criteria to executable tests.
 
 Tests must prove:
