@@ -45,6 +45,18 @@ Format,MoTeC CSV File
 
 Detection rules must be backed by fixtures/research before production code.
 
+### Adapter arbitration
+
+OME CSV and MoTeC CSV must coexist in `TelemetryImportService`.
+
+Their ownership rules are distinct:
+
+- OME CSV is claimed only when the required `.ome.json` sidecar is present;
+- MoTeC CSV is claimed only when verified MoTeC CSV structure/signature is present;
+- an arbitrary `.csv` with neither contract remains unsupported.
+
+Tests must prove that adapter order does not cause a MoTeC file to be interpreted as OME CSV or vice versa.
+
 ## Known fixture structure
 
 The licensed TRACE canonical fixture contains:
