@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 
-
 class CanonicalConcept(StrEnum):
     TIME_ELAPSED = "time.elapsed"
     LAP_DISTANCE = "lap.distance"
@@ -116,4 +115,3 @@ class NormalizationResult:
             for channel in self.unmapped_channels
             if channel.source_channel_identifier in selected
         )
-
