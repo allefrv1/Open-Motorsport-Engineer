@@ -171,6 +171,11 @@ class TelemetryNormalizer:
         if value is None:
             return None
 
+        if isinstance(value, tuple):
+            raise _ConversionFailure(
+                "Array source value cannot be converted by a scalar normalization rule."
+            )
+
         if kind is ConversionKind.INTEGER_IDENTITY:
             return _as_integer(value)
 
