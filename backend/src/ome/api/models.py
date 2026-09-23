@@ -17,13 +17,13 @@ from ome.analysis import (
 from ome.application import (
     ComparisonPreparationIssue,
     ComparisonReportNotReady,
+    ComparisonReportReadinessIssue,
     ComparisonReportRequest,
     ComparisonReportSuccess,
     ContinuousChannelPair,
     GearChannelPair,
 )
 from ome.domain import CanonicalConcept
-from ome.ingestion import ImportFailure
 from ome.evidence import (
     CanonicalSeriesEvidence,
     ComparisonProvenance,
@@ -35,6 +35,7 @@ from ome.evidence import (
     LapEvidenceContext,
     TransformationEvidence,
 )
+from ome.ingestion import ImportFailure
 
 
 class ApiModel(BaseModel):
@@ -618,11 +619,8 @@ class WorkflowIssueDto(ApiModel):
     @classmethod
     def from_report_issue(
         cls,
-        value: object,
+        value: ComparisonReportReadinessIssue,
     ) -> WorkflowIssueDto:
-        from ome.application import ComparisonReportReadinessIssue
-
-        assert isinstance(value, ComparisonReportReadinessIssue)
         return cls(
             code=value.code.value,
             message=value.message,
