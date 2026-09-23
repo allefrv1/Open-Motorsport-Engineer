@@ -174,9 +174,33 @@ TDD evidence:
 - RED: OME CI #103 — discrete gear overlay API absent;
 - GREEN: OME CI #108 — canonical verification successful.
 
+### Brake overlay traceability
+
+Plan 012 adds continuous brake comparison only when semantic compatibility is mechanically explicit.
+
+Test module:
+
+`tests/analysis/test_continuous_overlay.py`
+
+The Plan 012 tests prove:
+
+- matching `driver.brake.pedal_position_ratio [1]` evidence can be overlaid;
+- matching `driver.brake.pedal_force_ratio [1]` evidence can be overlaid;
+- pedal position and pedal force are not treated as equivalent;
+- missing semantic identity is explicit not-ready evidence;
+- unsupported hydraulic-pressure semantics are explicit not-ready evidence;
+- canonical ratio unit `1` is required;
+- brake provenance retains semantic ids;
+- continuous overlay still does not absorb discrete gear behavior;
+- no causal diagnosis is embedded.
+
+TDD evidence:
+
+- RED: OME CI #117;
+- GREEN: OME CI #121.
+
 REQ-005 remains partially open for:
 
-- brake comparison after semantic compatibility is mechanically explicit;
 - higher-level deterministic observations/reporting.
 
 ## Out of Scope
