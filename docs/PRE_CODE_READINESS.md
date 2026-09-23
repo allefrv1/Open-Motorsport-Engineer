@@ -29,7 +29,8 @@ The repository now has:
 17. a browser-usable OME CSV multipart source workflow that preserves import/preparation/report readiness semantics;
 18. a verified React/TypeScript investigation workspace with explicit evidence/provenance and accessible result states;
 19. synchronized telemetry investigation plots that consume server arrays without browser-side engineering recomputation;
-20. explicit Traqmate Trackvision V2 physical-car ingestion with preserved GPS/Lap evidence and no fabricated lap distance.
+20. explicit Traqmate Trackvision V2 physical-car ingestion with preserved GPS/Lap evidence and no fabricated lap distance;
+21. deterministic WGS84 horizontal GPS path-distance derivation with typed provenance and real physical-car validation.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -214,19 +215,30 @@ The architecture is still intentionally being proven one boundary at a time.
 - supported-path performance characterization;
 - recorded RED -> GREEN CI history.
 
+### GPS path distance — Plan 022
+
+- WGS84 inverse-geodesic path derivation;
+- GeographicLib 2.1 pinned/locked;
+- horizontal-only altitude policy;
+- no hidden filtering/smoothing/map matching;
+- typed source/provenance evidence;
+- licensed Traqmate characterization;
+- external Portland multi-lap path variation study;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/022-gps-path-distance-foundation.md`
+`docs/plans/active/023-common-track-reference-foundation.md`
 
 ### Guardrail
 
-Plan 022 may derive a deterministic GPS **path-distance** artifact from explicit latitude/longitude evidence, but must not silently equate that artifact with corrected/common `lap.distance` for comparison.
+Plan 023 may map GPS points onto one explicit trusted reference-lap geometry using the accepted common-reference specification.
 
-Any filtering, smoothing, point rejection, altitude use or track-reference correction must be explicit, versioned and testable.
+It must not silently select a reference lap, stretch candidate laps to fit, smooth projection distance, clamp local backtracking, or discard lateral/projection error evidence.
 
 ADR-0010 remains Proposed.
 
