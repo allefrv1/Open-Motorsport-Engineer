@@ -1,4 +1,5 @@
-"""API architecture boundary for OME.
+"""Local HTTP API boundary for OME."""
 
-This module is intentionally empty during Plan 002.
-"""
+from ome.api.app import create_app
+
+__all__ = ["create_app"]
