@@ -182,10 +182,34 @@ GPS path distance
 corrected/common lap comparison distance
 ```
 
+## External Portland multi-lap check
+
+The larger Apache-2.0 Portland source was inspected externally:
+
+- Git blob: `13fed5ffe15ad35dc668ea2b4df8acdc63ae7668`;
+- 97,980 telemetry rows;
+- 40 Hz;
+- source Lap markers 0–20.
+
+A research-only spherical great-circle calculation was used to compare marker-to-marker path lengths. This calculation is not the production Plan 022 WGS84 implementation.
+
+The stable complete-lap population, laps 2–18, showed:
+
+- mean path length ~3,151.87 m;
+- standard deviation ~4.10 m;
+- coefficient of variation ~0.13%;
+- range ~18.28 m.
+
+This is small relative to circuit length, but it is large enough to matter for same-position delta-time and channel overlays if independent accumulated path distance is treated as a common axis.
+
+The variation is also physically plausible because racing-line path length is not identical lap to lap.
+
 ## Conclusion
 
-The licensed Traqmate GPS is coherent enough to support a first deterministic WGS84 horizontal path-distance derivation.
+The licensed Traqmate GPS is coherent enough for deterministic WGS84 horizontal `gps.path_distance`.
 
-Plan 022 should implement that derived artifact first.
+The production derivation is now validated on the committed physical-car fixture.
 
-Promotion to canonical comparison `lap.distance` requires a separate evidence-backed decision.
+However, independent per-lap `gps.path_distance` is **not sufficient by itself** to satisfy ADR-0009's common positional-reference semantics.
+
+OME should next define a common reference trajectory/projection or corrected-distance transformation rather than silently aliasing GPS path distance to canonical `lap.distance`.
