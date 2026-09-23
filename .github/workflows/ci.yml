@@ -34,14 +34,6 @@ jobs:
           cache: true
           install: false
 
-      - name: Resolve API dependency lock bootstrap
-        run: |
-          uv lock
-          echo "OME_UV_LOCK_B64_START"
-          base64 -w0 uv.lock
-          echo
-          echo "OME_UV_LOCK_B64_END"
-
       - name: Sync Python environment
         run: uv sync --locked
 
