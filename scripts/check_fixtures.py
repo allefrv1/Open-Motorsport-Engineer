@@ -111,8 +111,7 @@ def check_ome_fixture(repo_root: Path = ROOT) -> list[str]:
                 continue
 
             if any(
-                current <= previous
-                for previous, current in zip(times, times[1:], strict=False)
+                current <= previous for previous, current in zip(times, times[1:], strict=False)
             ):
                 errors.append(f"{label}.csv time_s must be strictly increasing")
 
