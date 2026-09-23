@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 017 — OME CSV Comparison Upload HTTP Workflow](plans/active/017-ome-csv-comparison-upload-http-workflow.md)
+- [Plan 018 — MVP Investigation Frontend](plans/active/018-mvp-investigation-frontend.md)
 
 ## Verification and implementation guidance
 
