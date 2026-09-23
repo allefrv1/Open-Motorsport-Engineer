@@ -209,10 +209,7 @@ class GPSPathDistanceEngine:
         return (
             GPSPathDistanceReadinessIssue(
                 code=GPSPathDistanceIssueCode.INCOMPATIBLE_UNITS,
-                message=(
-                    "GPS path distance requires latitude/longitude in degrees "
-                    "and time in seconds."
-                ),
+                message="GPS path distance requires coordinates in degrees and time in seconds.",
             ),
         )
 
