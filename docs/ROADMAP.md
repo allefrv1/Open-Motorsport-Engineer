@@ -129,20 +129,32 @@ Completed:
 - direct preparation of `ComparisonReportRequest`;
 - complete controlled source-to-report evidence chain.
 
+Completed:
+
+- Plan 017 — OME CSV Comparison Upload HTTP Workflow;
+- browser-usable multipart source endpoint;
+- temporary/sanitized API-layer staging;
+- source upload -> import -> preparation -> report composition;
+- explicit import/preparation/report not-ready stages;
+- low-level report endpoint compatibility;
+- locked multipart runtime dependency.
+
 Current plan:
 
-- `docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
+- `docs/plans/active/018-mvp-investigation-frontend.md`
 
 Current work:
 
-- expose two OME CSV source bundles through a browser-usable multipart endpoint;
-- reuse importer -> preparation -> report behavior;
-- keep upload staging transport-local and temporary;
-- preserve explicit import/preparation/report not-ready stages.
+- implement the first real React/TypeScript/Vite investigation screen;
+- select two OME CSV lap bundles;
+- render deterministic delta, observations and supporting evidence;
+- keep Missing Evidence and provenance explicit;
+- establish frontend tests/typecheck/build in the canonical harness.
 
-After Plan 017:
+After Plan 018:
 
-- implement the real MVP investigation frontend against the simplified source workflow.
+- validate the full browser -> API -> deterministic report vertical slice;
+- decide the next product slice from evidence rather than adding speculative breadth.
 
 Containerization:
 
