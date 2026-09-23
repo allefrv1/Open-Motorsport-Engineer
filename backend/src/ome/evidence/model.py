@@ -42,6 +42,26 @@ class GPSPathDistanceProvenance:
 
 
 @dataclass(frozen=True, slots=True)
+class CommonTrackReferenceProvenance:
+    algorithm_id: str
+    algorithm_version: str
+    reference_dataset_fingerprint: str
+    candidate_dataset_fingerprint: str
+    reference_context: LapEvidenceContext
+    candidate_context: LapEvidenceContext
+    reference_latitude: SourceSeriesEvidence
+    reference_longitude: SourceSeriesEvidence
+    reference_elapsed_time: SourceSeriesEvidence
+    candidate_latitude: SourceSeriesEvidence
+    candidate_longitude: SourceSeriesEvidence
+    candidate_elapsed_time: SourceSeriesEvidence
+    reference_gps_path: GPSPathDistanceProvenance
+    origin_latitude_deg: float
+    origin_longitude_deg: float
+    reference_length_m: float
+
+
+@dataclass(frozen=True, slots=True)
 class CanonicalSeriesEvidence:
     dataset_fingerprint: str
     source_channel_identifier: str
