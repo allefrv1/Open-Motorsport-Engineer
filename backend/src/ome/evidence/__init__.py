@@ -7,8 +7,10 @@ from ome.evidence.model import (
     ContinuousOverlayProvenance,
     DeltaObservationProvenance,
     GearOverlayProvenance,
+    GPSPathDistanceProvenance,
     LapComparisonEvidence,
     LapEvidenceContext,
+    SourceSeriesEvidence,
     TransformationEvidence,
 )
 
@@ -19,7 +21,9 @@ __all__ = [
     "ContinuousOverlayProvenance",
     "DeltaObservationProvenance",
     "GearOverlayProvenance",
+    "GPSPathDistanceProvenance",
     "LapComparisonEvidence",
     "LapEvidenceContext",
+    "SourceSeriesEvidence",
     "TransformationEvidence",
 ]
