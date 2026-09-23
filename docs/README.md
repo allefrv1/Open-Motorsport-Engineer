@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 022 — GPS Path Distance Foundation](plans/active/022-gps-path-distance-foundation.md)
+- [Plan 023 — Common Track Reference Foundation](plans/active/023-common-track-reference-foundation.md)
 
 ## Verification and implementation guidance
 
