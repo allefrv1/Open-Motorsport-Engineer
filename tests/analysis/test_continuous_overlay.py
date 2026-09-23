@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 import unittest
+from dataclasses import replace
 
 from ome.analysis import (
     ContinuousOverlayEngine,
@@ -296,6 +297,127 @@ class Plan010ContinuousOverlayTests(unittest.TestCase):
         self.assertIn(
             ContinuousOverlayIssueCode.INCOMPATIBLE_UNIT,
             {issue.code for issue in wrong_unit.issues},
+        )
+
+    def test_incompatible_base_comparison_algorithm_returns_not_ready(self) -> None:
+        incompatible_base = replace(
+            self.base,
+            provenance=replace(
+                self.base.provenance,
+                algorithm_id="other.algorithm",
+            ),
+        )
+
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=incompatible_base,
+                canonical_concept=CanonicalConcept.VEHICLE_SPEED,
+                lap_a_channel=overlay_series(
+                    side="a",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, 10.0),
+                    values=(10.0, 30.0),
+                ),
+                lap_b_channel=overlay_series(
+                    side="b",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, 12.0),
+                    values=(11.0, 23.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            ContinuousOverlayIssueCode.INCOMPATIBLE_BASE_COMPARISON,
+            {issue.code for issue in outcome.issues},
+        )
+
+    def test_length_mismatch_and_insufficient_samples_are_explicit(self) -> None:
+        mismatched = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.VEHICLE_SPEED,
+                lap_a_channel=overlay_series(
+                    side="a",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, 5.0, 10.0),
+                    values=(10.0, 20.0),
+                ),
+                lap_b_channel=overlay_series(
+                    side="b",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, 12.0),
+                    values=(11.0, 23.0),
+                ),
+            )
+        )
+        insufficient = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.VEHICLE_SPEED,
+                lap_a_channel=overlay_series(
+                    side="a",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0,),
+                    values=(10.0,),
+                ),
+                lap_b_channel=overlay_series(
+                    side="b",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, 12.0),
+                    values=(11.0, 23.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(mismatched, ContinuousOverlayNotReady)
+        self.assertIsInstance(insufficient, ContinuousOverlayNotReady)
+        assert isinstance(mismatched, ContinuousOverlayNotReady)
+        assert isinstance(insufficient, ContinuousOverlayNotReady)
+        self.assertIn(
+            ContinuousOverlayIssueCode.LENGTH_MISMATCH,
+            {issue.code for issue in mismatched.issues},
+        )
+        self.assertIn(
+            ContinuousOverlayIssueCode.INSUFFICIENT_SAMPLES,
+            {issue.code for issue in insufficient.issues},
+        )
+
+    def test_non_finite_channel_time_returns_not_ready(self) -> None:
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.VEHICLE_SPEED,
+                lap_a_channel=overlay_series(
+                    side="a",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, math.inf),
+                    values=(10.0, 20.0),
+                ),
+                lap_b_channel=overlay_series(
+                    side="b",
+                    concept=CanonicalConcept.VEHICLE_SPEED,
+                    unit="m/s",
+                    timestamps_s=(0.0, 12.0),
+                    values=(11.0, 23.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            ContinuousOverlayIssueCode.NON_FINITE_TIME,
+            {issue.code for issue in outcome.issues},
         )
 
     def test_non_monotonic_channel_time_returns_not_ready_without_repair(self) -> None:
