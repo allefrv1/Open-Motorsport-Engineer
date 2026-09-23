@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–012 have completed history and Plan 013 is active. |
+| Plan lifecycle | 4 | Plans 001–013 have completed history and Plan 014 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -42,9 +42,9 @@ It has rejected real defects, preserved acceptance-criterion traceability and en
 
 The lap-comparison reference/alignment decision is now explicit in ADR-0009 and the v0.1 comparison spec.
 
-Deterministic delta-time, continuous overlays, discrete gear alignment and exact brake-semantic compatibility are proven through RED -> GREEN CI.
+Deterministic delta-time, continuous overlays, discrete gear alignment, exact brake-semantic compatibility and typed gain/loss/neutral observations are proven through RED -> GREEN CI.
 
-The next maturity step is the first typed Observation layer: deterministic gain/loss/neutral delta regions with full provenance and no causal claims.
+The next maturity step is to compose those independently verified artifacts into one stable application report that the local API and MVP interface can consume.
 
 ## Review cadence
 

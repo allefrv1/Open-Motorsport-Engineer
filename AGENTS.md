@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.5.0
+Version: 1.6.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -179,10 +179,10 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–012 implemented the telemetry/source foundations and the initial deterministic lap-comparison evidence stack, including safe brake semantic compatibility.
+Plans 003–013 implemented the telemetry/source foundations and the deterministic lap-comparison evidence stack through typed gain/loss observations.
 
 The active engineering task is:
 
-`docs/plans/active/013-lap-delta-observations.md`
+`docs/plans/active/014-lap-comparison-report-bundle.md`
 
-Follow `docs/specs/lap-delta-observations-v0.1.md` through TDD. Classify only the change in the accepted `delta_B_vs_A` metric into B gain/loss/neutral regions, preserve complete provenance, and never convert an observation into a cause, hypothesis, driver judgment or setup recommendation.
+Follow `docs/specs/lap-comparison-report-v0.1.md` through TDD. Compose existing deterministic engines at the application boundary; do not reimplement their math. Missing optional supporting channels must remain explicit, successful component provenance must stay inspectable, and the report must contain no causal engineering conclusions.

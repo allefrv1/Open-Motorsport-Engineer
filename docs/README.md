@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 013 — Lap Delta Gain/Loss Observations](plans/active/013-lap-delta-observations.md)
+- [Plan 014 — Lap Comparison Report Bundle](plans/active/014-lap-comparison-report-bundle.md)
 
 ## Verification and implementation guidance
 

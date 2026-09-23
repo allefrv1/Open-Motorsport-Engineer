@@ -88,6 +88,7 @@ Completed:
 - Plan 010 — Lap Continuous Channel Overlays;
 - Plan 011 — Discrete Gear Overlay;
 - Plan 012 — Brake Semantic Compatibility;
+- Plan 013 — Lap Delta Gain/Loss Observations;
 - explicit distance/time readiness;
 - common distance grid;
 - deterministic linear time-vs-distance interpolation;
@@ -97,22 +98,25 @@ Completed:
 - discrete transmission.gear sampling;
 - safe exact-semantic brake ratio overlays;
 - machine-readable brake semantic identity through normalization/evidence;
-- multi-rate evidence alignment with explicit provenance.
+- multi-rate evidence alignment with explicit provenance;
+- deterministic B-gain / B-loss / neutral observation regions;
+- typed observation provenance with no causal claims.
 
 Current plan:
 
-- `docs/plans/active/013-lap-delta-observations.md`
+- `docs/plans/active/014-lap-comparison-report-bundle.md`
 
 Current work:
 
-- classify adjacent delta-time changes as B gain, B loss or neutral;
-- merge contiguous same-kind intervals into deterministic distance regions;
-- preserve typed observation provenance to the complete base comparison;
-- keep observation distinct from hypothesis or causal interpretation.
+- compose the accepted comparison/observation/overlay artifacts into one deterministic application report;
+- preserve optional missing evidence without failing the whole report;
+- expose a stable six-channel supporting-evidence inventory;
+- preserve complete component provenance.
 
-Later Phase 5 increment:
+After Plan 014:
 
-- comparison report and supporting-channel evidence summaries.
+- local API contract for the report workflow;
+- minimum MVP frontend for import/compare/evidence inspection.
 
 ## Phase 6 — Expanded real-motorsport validation
 
