@@ -167,17 +167,27 @@ Completed:
 - external 15–20 MB benchmark sources identified;
 - GPS-to-distance derivation deliberately not introduced.
 
+Completed:
+
+- Plan 021 — Traqmate Trackvision CSV Adapter Foundation;
+- explicit Traqmate Trackvision V2 ingestion boundary;
+- licensed physical-car fixture import;
+- source Lap/GPS/speed evidence preserved;
+- CSV adapter arbitration proven;
+- supported-path performance characterized;
+- missing `lap.distance` kept explicit.
+
 Current plan:
 
-- `docs/plans/active/021-traqmate-trackvision-csv-adapter-foundation.md`
+- `docs/plans/active/022-gps-path-distance-foundation.md`
 
 Current work:
 
-- add the smallest explicit Traqmate Trackvision V2 ingestion boundary;
-- preserve source preamble/channels/Lap evidence;
-- prove CSV adapter arbitration;
-- keep missing `lap.distance` explicit;
-- measure supported-path performance before optimization.
+- characterize GPS quality in the licensed Traqmate fixture;
+- define deterministic WGS84 path-distance derivation;
+- preserve derivation provenance and quality issues;
+- keep GPS path distance distinct from corrected/common comparison distance;
+- decide whether an additional common-reference projection/correction plan is required.
 
 Later:
 

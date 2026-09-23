@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 021 — Traqmate Trackvision CSV Adapter Foundation](plans/active/021-traqmate-trackvision-csv-adapter-foundation.md)
+- [Plan 022 — GPS Path Distance Foundation](plans/active/022-gps-path-distance-foundation.md)
 
 ## Verification and implementation guidance
 
