@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 010 — Lap Continuous Channel Overlays](plans/active/010-lap-continuous-channel-overlays.md)
+- [Plan 011 — Discrete Gear Overlay](plans/active/011-discrete-gear-overlay.md)
 
 ## Verification and implementation guidance
 
