@@ -48,6 +48,7 @@ class NormalizationRule:
     conversion_kind: ConversionKind
     conversion_id: str
     conversion_version: str
+    semantic_id: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,6 +70,7 @@ class NormalizationMapping:
     conversion_id: str
     conversion_version: str
     series: NormalizedSeries
+    semantic_id: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
