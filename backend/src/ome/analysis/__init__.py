@@ -10,6 +10,16 @@ from ome.analysis.continuous_overlay import (
     ContinuousOverlaySeries,
     ContinuousOverlaySuccess,
 )
+from ome.analysis.discrete_gear_overlay import (
+    DiscreteGearOverlayEngine,
+    GearOverlayIssueCode,
+    GearOverlayNotReady,
+    GearOverlayOutcome,
+    GearOverlayReadinessIssue,
+    GearOverlayRequest,
+    GearOverlaySeries,
+    GearOverlaySuccess,
+)
 from ome.analysis.lap_comparison import (
     ComparisonIssueCode,
     ComparisonReadinessIssue,
@@ -23,6 +33,14 @@ from ome.analysis.lap_comparison import (
 )
 
 __all__ = [
+    "DiscreteGearOverlayEngine",
+    "GearOverlayIssueCode",
+    "GearOverlayNotReady",
+    "GearOverlayOutcome",
+    "GearOverlayReadinessIssue",
+    "GearOverlayRequest",
+    "GearOverlaySeries",
+    "GearOverlaySuccess",
     "ContinuousOverlayEngine",
     "ContinuousOverlayIssueCode",
     "ContinuousOverlayNotReady",
