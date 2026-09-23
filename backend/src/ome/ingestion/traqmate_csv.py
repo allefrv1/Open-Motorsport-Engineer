@@ -4,7 +4,7 @@ import csv
 import hashlib
 import io
 import math
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -377,7 +377,7 @@ class TraqmateTrackvisionCSVImporter:
     def _source_metadata(
         preamble_rows: tuple[tuple[str, ...], ...],
         sample_rate_hz: float | None,
-    ) -> object:
+    ) -> Mapping[str, object]:
         values: dict[str, object] = {
             "traqmate_preamble_rows": preamble_rows,
         }
