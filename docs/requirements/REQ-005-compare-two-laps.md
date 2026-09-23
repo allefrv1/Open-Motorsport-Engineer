@@ -148,11 +148,36 @@ TDD evidence:
 - RED: OME CI #91 — continuous overlay API absent;
 - GREEN: OME CI #96 — canonical verification successful.
 
+Plan 011 adds deterministic discrete gear alignment.
+
+### Discrete gear overlay traceability
+
+Test module:
+
+`tests/analysis/test_discrete_gear_overlay.py`
+
+The tests prove:
+
+- exact sample timestamps use the current gear state;
+- between samples, previous-sample hold is used;
+- no fractional gear values can be produced;
+- different gear sample cadences are supported;
+- missing/incompatible evidence is explicit;
+- non-integer canonical gear values are rejected;
+- non-monotonic/non-finite timestamps are rejected;
+- no temporal extrapolation occurs;
+- base comparison and source/transformation provenance remain inspectable;
+- no causal or recommendation fields are embedded.
+
+TDD evidence:
+
+- RED: OME CI #103 — discrete gear overlay API absent;
+- GREEN: OME CI #108 — canonical verification successful.
+
 REQ-005 remains partially open for:
 
 - brake comparison after semantic compatibility is mechanically explicit;
-- discrete gear alignment;
-- higher-level observations/reporting.
+- higher-level deterministic observations/reporting.
 
 ## Out of Scope
 
