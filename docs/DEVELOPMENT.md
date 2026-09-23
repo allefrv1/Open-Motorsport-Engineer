@@ -150,7 +150,8 @@ Run the frontend development server in a second terminal:
 pnpm --dir frontend dev
 ```
 
-Vite binds to `127.0.0.1:5173` for the local-first development baseline.
+Vite binds to `127.0.0.1:5173` for the local-first development baseline and
+proxies `/api` to `http://127.0.0.1:8000`.
 
 The default host is intentionally loopback-only for the local-first baseline.
 
