@@ -207,15 +207,13 @@ The architecture is still intentionally being proven one boundary at a time.
 
 Proceed to:
 
-`docs/plans/active/020-real-motorsport-validation-foundation.md`
+`docs/plans/active/021-traqmate-trackvision-csv-adapter-foundation.md`
 
 ### Guardrail
 
-Plan 020 validates the existing stack against physical-car telemetry before adding new engineering algorithms.
+Plan 020 proved the real Traqmate source is valid physical-car evidence and correctly unsupported by existing adapters.
 
-A correct not-ready result is success when trustworthy `lap.distance` evidence is absent.
-
-Do not derive GPS distance, silently claim generic CSV support, or optimize without measurements.
+Plan 021 may add only an explicit Traqmate Trackvision source adapter. It must not turn OME CSV into a generic parser, derive GPS distance, normalize mph, or collapse source Lap into generic context during ingestion.
 
 ADR-0010 remains Proposed.
 

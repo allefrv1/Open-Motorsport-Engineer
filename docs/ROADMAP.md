@@ -158,21 +158,31 @@ Containerization:
 
 Status: **Active**
 
+Completed:
+
+- Plan 020 — Real Motorsport Validation Foundation;
+- licensed Traqmate physical-car fixture characterization;
+- exact 10 Hz cadence / source lap-transition evidence;
+- explicit proof that current adapters refuse unsupported Traqmate CSV;
+- external 15–20 MB benchmark sources identified;
+- GPS-to-distance derivation deliberately not introduced.
+
 Current plan:
 
-- `docs/plans/active/020-real-motorsport-validation-foundation.md`
+- `docs/plans/active/021-traqmate-trackvision-csv-adapter-foundation.md`
 
 Current work:
 
-- characterize the licensed Traqmate physical-car fixture;
-- measure current import/validation/normalization/context readiness;
-- prove missing `lap.distance` remains explicit;
-- benchmark realistic source scale before optimization;
-- select the next engineering capability from observed evidence.
+- add the smallest explicit Traqmate Trackvision V2 ingestion boundary;
+- preserve source preamble/channels/Lap evidence;
+- prove CSV adapter arbitration;
+- keep missing `lap.distance` explicit;
+- measure supported-path performance before optimization.
 
 Later:
 
 - Formula Student / race-team data where shareable;
+- physical-car MoTeC fixture outreach;
 - revisit native `.ld` feasibility only when justified.
 
 ## Phase 7 — Domain analysis modules
