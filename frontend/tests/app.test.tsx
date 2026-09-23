@@ -3,6 +3,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { App } from "../src/App";
 
+vi.mock("plotly.js-dist-min", () => ({
+  default: {
+    react: vi.fn().mockResolvedValue(undefined),
+    purge: vi.fn(),
+  },
+}));
+
 type JsonBody = Record<string, unknown>;
 
 function mockResponse(body: JsonBody, status = 200): Response {
@@ -108,8 +115,22 @@ const successBody = {
         },
       ],
     },
-    continuous_overlays: [],
-    gear_overlay: null,
+    continuous_overlays: [
+      {
+        canonical_concept: "vehicle.speed",
+        unit: "m/s",
+        distance_grid_m: [0, 25, 50, 75, 100],
+        lap_a_values: [40, 42, 44, 43, 45],
+        lap_b_values: [39, 43, 45, 44, 46],
+      },
+    ],
+    gear_overlay: {
+      canonical_concept: "transmission.gear",
+      unit: "gear",
+      distance_grid_m: [0, 25, 50, 75, 100],
+      lap_a_gears: [2, 3, 3, 4, 4],
+      lap_b_gears: [2, 2, 3, 4, 4],
+    },
     supporting_evidence: [
       {
         canonical_concept: "vehicle.speed",
@@ -259,6 +280,21 @@ describe("MVP investigation frontend", () => {
     const chart = screen.getByRole("img", { name: "Delta time over distance" });
     expect(chart).toBeTruthy();
     expect(chart.getAttribute("data-point-count")).toBe("5");
+  });
+
+  it("integrates synchronized telemetry into the successful investigation flow", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockResponse(successBody)));
+    render(<App />);
+
+    selectSources();
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    expect(
+      await screen.findByRole("heading", { name: "Synchronized telemetry" }),
+    ).toBeTruthy();
+    expect(screen.getByText("vehicle.speed exact values")).toBeTruthy();
+    expect(screen.getByText("transmission.gear exact values")).toBeTruthy();
+    expect(screen.getByRole("img", { name: "Delta time over distance" })).toBeTruthy();
   });
 
   it("renders gain/loss as observations without a causal diagnosis", async () => {
