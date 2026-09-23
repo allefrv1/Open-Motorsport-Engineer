@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 2.0.0
+Version: 2.1.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -179,12 +179,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–017 implemented the deterministic telemetry/source/comparison stack and a browser-usable source-to-report HTTP workflow.
+Plans 003–018 implemented the deterministic telemetry/source/comparison stack, browser source workflow and first investigation frontend.
 
 The active engineering task is:
 
-`docs/plans/active/018-mvp-investigation-frontend-foundation.md`
+`docs/plans/active/019-synchronized-telemetry-investigation-plots.md`
 
-Load and follow the repository UX skill and OME interface principles. Use TDD for product behavior. The frontend must submit source bundles to the Plan 017 endpoint and render server evidence without recomputing engineering results. Keep Lap A reference, B-A sign, Missing Evidence, units and provenance discoverable. Do not add causal diagnosis, generic upload, routing, global state frameworks or rich Plotly overlays in Plan 018.
+Load and follow the repository UX skill and OME interface principles. Plotly must remain isolated behind the visualization adapter. The frontend may arrange server evidence for presentation but must not recalculate, smooth, resample or synthesize telemetry. Keep Lap A/reference, B-A sign, units, Missing Evidence, exact values and provenance discoverable.
 
 ADR-0010 remains Proposed.
