@@ -28,7 +28,8 @@ The repository now has:
 16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request;
 17. a browser-usable OME CSV multipart source workflow that preserves import/preparation/report readiness semantics;
 18. a verified React/TypeScript investigation workspace with explicit evidence/provenance and accessible result states;
-19. synchronized telemetry investigation plots that consume server arrays without browser-side engineering recomputation.
+19. synchronized telemetry investigation plots that consume server arrays without browser-side engineering recomputation;
+20. explicit Traqmate Trackvision V2 physical-car ingestion with preserved GPS/Lap evidence and no fabricated lap distance.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -201,19 +202,31 @@ The architecture is still intentionally being proven one boundary at a time.
 - mechanically isolated Plotly dependency;
 - no browser-side engineering recomputation.
 
+### Physical-car Traqmate ingestion — Plan 021
+
+- explicit Trackvision V2 source adapter;
+- licensed real-vehicle fixture import;
+- complete preamble/channel/unit/lexical-value preservation;
+- explicit Elapsed Time timestamps;
+- source Lap preservation;
+- OME/MoTeC/Traqmate arbitration;
+- no GPS-derived distance or hidden normalization;
+- supported-path performance characterization;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/021-traqmate-trackvision-csv-adapter-foundation.md`
+`docs/plans/active/022-gps-path-distance-foundation.md`
 
 ### Guardrail
 
-Plan 020 proved the real Traqmate source is valid physical-car evidence and correctly unsupported by existing adapters.
+Plan 022 may derive a deterministic GPS **path-distance** artifact from explicit latitude/longitude evidence, but must not silently equate that artifact with corrected/common `lap.distance` for comparison.
 
-Plan 021 may add only an explicit Traqmate Trackvision source adapter. It must not turn OME CSV into a generic parser, derive GPS distance, normalize mph, or collapse source Lap into generic context during ingestion.
+Any filtering, smoothing, point rejection, altitude use or track-reference correction must be explicit, versioned and testable.
 
 ADR-0010 remains Proposed.
 
