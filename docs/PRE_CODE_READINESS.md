@@ -205,15 +205,17 @@ The architecture is still intentionally being proven one boundary at a time.
 
 ### Go
 
-Complete and merge:
+Proceed to:
 
-`docs/plans/active/019-synchronized-telemetry-investigation-plots.md`
+`docs/plans/active/020-real-motorsport-validation-foundation.md`
 
 ### Guardrail
 
-Frontend visualization remains presentation-only. Server-returned distance, delta, continuous overlays and gear arrays are authoritative.
+Plan 020 validates the existing stack against physical-car telemetry before adding new engineering algorithms.
 
-Do not smooth, resample, repair, infer missing channels or convert plot shape into causal diagnosis.
+A correct not-ready result is success when trustworthy `lap.distance` evidence is absent.
+
+Do not derive GPS distance, silently claim generic CSV support, or optimize without measurements.
 
 ADR-0010 remains Proposed.
 
