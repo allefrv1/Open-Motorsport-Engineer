@@ -381,8 +381,7 @@ class LapComparisonEngine:
     @staticmethod
     def _strictly_increasing(values: tuple[float, ...]) -> bool:
         return all(
-            current > previous
-            for previous, current in zip(values, values[1:], strict=False)
+            current > previous for previous, current in zip(values, values[1:], strict=False)
         )
 
     @staticmethod
