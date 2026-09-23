@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.3.0
+Version: 1.4.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -167,10 +167,10 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–010 implemented the telemetry/source foundations, deterministic delta-time comparison and safe continuous channel overlays.
+Plans 003–011 implemented the telemetry/source foundations, deterministic delta-time comparison, safe continuous overlays and discrete gear alignment.
 
 The active engineering task is:
 
-`docs/plans/active/011-discrete-gear-overlay.md`
+`docs/plans/active/012-brake-semantic-compatibility.md`
 
-Follow `docs/specs/lap-discrete-gear-overlay-v0.1.md` through TDD. Reuse the exact base comparison grid; sample canonical gear with previous-sample hold in elapsed time; never linearly interpolate or reinterpret gear encoding; do not extrapolate beyond source evidence.
+Follow `docs/specs/brake-semantic-compatibility-v0.1.md` through TDD. Carry a stable semantic identity through normalization/evidence and allow continuous brake overlay only when both laps have the same supported semantic id and canonical unit. Never infer equivalence from a channel name alone.
