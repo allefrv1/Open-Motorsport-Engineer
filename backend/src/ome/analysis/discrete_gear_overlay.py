@@ -265,10 +265,7 @@ class DiscreteGearOverlayEngine:
                 )
             )
 
-        if any(
-            isinstance(value, bool) or not isinstance(value, int)
-            for value in series.values
-        ):
+        if any(isinstance(value, bool) or not isinstance(value, int) for value in series.values):
             issues.append(
                 GearOverlayReadinessIssue(
                     code=GearOverlayIssueCode.INVALID_GEAR_VALUE,
