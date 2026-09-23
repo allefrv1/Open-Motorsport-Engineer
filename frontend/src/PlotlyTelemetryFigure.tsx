@@ -76,8 +76,8 @@ export function PlotlyTelemetryFigure({
         traces.push({
           type: "scatter",
           mode: "lines",
-          x: panel.distanceM,
-          y: trace.values,
+          x: panel.distanceM as Data["x"],
+          y: trace.values as Data["y"],
           name:
             panel.kind === "delta"
               ? trace.name
