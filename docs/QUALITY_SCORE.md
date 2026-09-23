@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–010 have completed history and Plan 011 is active. |
+| Plan lifecycle | 4 | Plans 001–011 have completed history and Plan 012 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -42,7 +42,7 @@ It has rejected real defects, preserved acceptance-criterion traceability and en
 
 The lap-comparison reference/alignment decision is now explicit in ADR-0009 and the v0.1 comparison spec.
 
-Deterministic delta-time analysis and continuous multi-rate channel overlays are proven through RED -> GREEN CI. The next maturity step is a safe discrete gear overlay, followed by brake semantic compatibility.
+Deterministic delta-time, continuous overlays and discrete gear alignment are proven through RED -> GREEN CI. The next maturity step is machine-readable brake semantic compatibility so non-equivalent brake signals cannot be compared accidentally.
 
 ## Review cadence
 
