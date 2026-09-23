@@ -51,9 +51,11 @@ def lap(
     fingerprint = f"sha256:{label}"
     context = LapEvidenceContext(
         dataset_fingerprint=fingerprint,
-        session_identifier=session_identifier or f"session-{label}",
-        run_identifier=run_identifier or f"run-{label}",
-        lap_identifier=lap_identifier or f"lap-{label}",
+        session_identifier=(
+            f"session-{label}" if session_identifier is None else session_identifier
+        ),
+        run_identifier=f"run-{label}" if run_identifier is None else run_identifier,
+        lap_identifier=f"lap-{label}" if lap_identifier is None else lap_identifier,
     )
 
     distance_series = None
