@@ -22,4 +22,6 @@ A specification may define a file/profile contract, schema or other interoperabi
 - `lap-delta-observations-v0.1.md` — deterministic gain/loss observation regions;
 - `lap-comparison-report-v0.1.md` — application-level report bundle;
 - `local-comparison-report-http-api-v0.1.md` — local HTTP transport;
-- `mvp-comparison-preparation-v0.1.md` — source-evidence to report-request preparation workflow.
+- `mvp-comparison-preparation-v0.1.md` — source-evidence to report-request preparation workflow;
+- `ome-csv-comparison-upload-http-api-v0.1.md` — browser-usable OME CSV source upload to comparison-report transport;
+- `mvp-investigation-frontend-v0.1.md` — first evidence-oriented investigation workspace.
