@@ -450,8 +450,10 @@ class ComparisonPreparationService:
         run_raw = raw_context.get(profile.run_field)
         run_value = None if run_raw is None else self._marker_value(run_raw)
 
-        if session_value is None or lap_value is None or (
-            run_raw is not None and run_value is None
+        if (
+            session_value is None
+            or lap_value is None
+            or (run_raw is not None and run_value is None)
         ):
             return None, ComparisonPreparationIssue(
                 code=ComparisonPreparationIssueCode.INVALID_CONTEXT,
@@ -480,9 +482,7 @@ class ComparisonPreparationService:
                 source_identity=dataset.source.original_name,
                 session_marker=ContextMarker(
                     value=session_value,
-                    source_field=(
-                        f"{profile.context_metadata_key}.{profile.session_field}"
-                    ),
+                    source_field=(f"{profile.context_metadata_key}.{profile.session_field}"),
                 ),
                 run_marker=(
                     None
@@ -610,9 +610,7 @@ class ComparisonPreparationService:
 
         source_provenance = dataset.source.metadata.get("source_provenance")
         time_axis = (
-            source_provenance.get("time_axis")
-            if isinstance(source_provenance, Mapping)
-            else None
+            source_provenance.get("time_axis") if isinstance(source_provenance, Mapping) else None
         )
         if not isinstance(time_axis, Mapping) or (
             time_axis.get("field") != profile.time_axis_identifier
@@ -665,9 +663,10 @@ class ComparisonPreparationService:
         normalization_b: NormalizationResult,
     ) -> ComparisonPreparationIssue | None:
         for concept in (*CONTINUOUS_CONCEPTS, CanonicalConcept.TRANSMISSION_GEAR):
-            if len(normalization_a.mappings_for(concept)) > 1 or len(
-                normalization_b.mappings_for(concept)
-            ) > 1:
+            if (
+                len(normalization_a.mappings_for(concept)) > 1
+                or len(normalization_b.mappings_for(concept)) > 1
+            ):
                 return ComparisonPreparationIssue(
                     code=ComparisonPreparationIssueCode.INVALID_PROFILE,
                     message=f"Optional concept {concept.value} has ambiguous prepared evidence.",
