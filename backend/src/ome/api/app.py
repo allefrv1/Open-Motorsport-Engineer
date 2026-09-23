@@ -144,8 +144,7 @@ def create_app(
                 return OmeCsvComparisonNotReadyResponse(
                     stage="report",
                     issues=tuple(
-                        WorkflowIssueDto.from_report_issue(issue)
-                        for issue in report.issues
+                        WorkflowIssueDto.from_report_issue(issue) for issue in report.issues
                     ),
                 )
 
