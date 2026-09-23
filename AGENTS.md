@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.2.0
+Version: 1.3.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -167,10 +167,10 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–009 implemented the telemetry/source foundations and the deterministic distance-aligned delta-time comparison core.
+Plans 003–010 implemented the telemetry/source foundations, deterministic delta-time comparison and safe continuous channel overlays.
 
 The active engineering task is:
 
-`docs/plans/active/010-lap-continuous-channel-overlays.md`
+`docs/plans/active/011-discrete-gear-overlay.md`
 
-Follow `docs/specs/lap-continuous-overlay-v0.1.md` through TDD. Reuse the successful base comparison grid; project only supported continuous canonical channels through elapsed-time interpolation; never linearly interpolate gear; defer brake until semantic compatibility is explicit; do not mutate or reinterpret source evidence.
+Follow `docs/specs/lap-discrete-gear-overlay-v0.1.md` through TDD. Reuse the exact base comparison grid; sample canonical gear with previous-sample hold in elapsed time; never linearly interpolate or reinterpret gear encoding; do not extrapolate beyond source evidence.
