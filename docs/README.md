@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 011 — Discrete Gear Overlay](plans/active/011-discrete-gear-overlay.md)
+- [Plan 012 — Brake Semantic Compatibility](plans/active/012-brake-semantic-compatibility.md)
 
 ## Verification and implementation guidance
 
