@@ -4,12 +4,6 @@ from typing import Protocol
 
 from fastapi import FastAPI
 
-from ome.application import (
-    ComparisonReportOutcome,
-    ComparisonReportRequest,
-    ComparisonReportService,
-    ComparisonReportSuccess,
-)
 from ome.api.models import (
     ComparisonReportHttpResponse,
     ComparisonReportNotReadyResponse,
@@ -17,6 +11,12 @@ from ome.api.models import (
     ComparisonReportSuccessDto,
     ComparisonReportSuccessResponse,
     HealthResponse,
+)
+from ome.application import (
+    ComparisonReportOutcome,
+    ComparisonReportRequest,
+    ComparisonReportService,
+    ComparisonReportSuccess,
 )
 
 
