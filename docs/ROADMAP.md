@@ -119,21 +119,30 @@ Completed:
 - deterministic success/not-ready HTTP semantics;
 - mechanical FastAPI/Pydantic isolation from the engineering core.
 
+Completed:
+
+- Plan 016 — MVP Comparison Preparation Workflow Foundation;
+- controlled two-lap OME CSV source fixtures;
+- explicit versioned preparation/normalization profile;
+- traceable `time_s -> time.elapsed` evidence;
+- source validation/context/normalization orchestration;
+- direct preparation of `ComparisonReportRequest`;
+- complete controlled source-to-report evidence chain.
+
 Current plan:
 
-- `docs/plans/active/016-mvp-comparison-preparation-workflow.md`
+- `docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
 
 Current work:
 
-- connect import/validation/normalization/context into a report-ready application use case;
-- introduce controlled two-lap source fixtures with explicit distance/context;
-- preserve the full source-to-report evidence chain;
-- remove the need for callers/frontends to manually construct low-level canonical evidence.
+- expose two OME CSV source bundles through a browser-usable multipart endpoint;
+- reuse importer -> preparation -> report behavior;
+- keep upload staging transport-local and temporary;
+- preserve explicit import/preparation/report not-ready stages.
 
-After Plan 016:
+After Plan 017:
 
-- expose the simplified preparation/comparison workflow through HTTP;
-- implement the real MVP investigation frontend.
+- implement the real MVP investigation frontend against the simplified source workflow.
 
 Containerization:
 
