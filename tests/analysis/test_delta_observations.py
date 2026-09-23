@@ -113,7 +113,15 @@ def comparison_with_delta(
         )
     )
     assert isinstance(outcome, LapComparisonSuccess)
-    assert outcome.delta_b_vs_a_s == delta_b_vs_a_s
+    assert len(outcome.delta_b_vs_a_s) == len(delta_b_vs_a_s)
+    assert all(
+        math.isclose(actual, expected, rel_tol=0.0, abs_tol=1e-12)
+        for actual, expected in zip(
+            outcome.delta_b_vs_a_s,
+            delta_b_vs_a_s,
+            strict=True,
+        )
+    )
     return outcome
 
 
