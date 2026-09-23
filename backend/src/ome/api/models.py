@@ -15,6 +15,7 @@ from ome.analysis import (
     LapComparisonSeries,
 )
 from ome.application import (
+    ComparisonPreparationIssue,
     ComparisonReportNotReady,
     ComparisonReportRequest,
     ComparisonReportSuccess,
@@ -22,6 +23,7 @@ from ome.application import (
     GearChannelPair,
 )
 from ome.domain import CanonicalConcept
+from ome.ingestion import ImportFailure
 from ome.evidence import (
     CanonicalSeriesEvidence,
     ComparisonProvenance,
@@ -580,6 +582,62 @@ class ComparisonReportNotReadyResponse(ApiModel):
 
 
 ComparisonReportHttpResponse = ComparisonReportSuccessResponse | ComparisonReportNotReadyResponse
+
+
+class WorkflowIssueDto(ApiModel):
+    code: str
+    message: str
+    lap_side: str | None = None
+    canonical_concept: CanonicalConcept | None = None
+
+    @classmethod
+    def from_import_failure(
+        cls,
+        value: ImportFailure,
+        *,
+        lap_side: str,
+    ) -> WorkflowIssueDto:
+        return cls(
+            code=value.code.value,
+            message=value.message,
+            lap_side=lap_side,
+        )
+
+    @classmethod
+    def from_preparation_issue(
+        cls,
+        value: ComparisonPreparationIssue,
+    ) -> WorkflowIssueDto:
+        return cls(
+            code=value.code.value,
+            message=value.message,
+            lap_side=value.lap_side,
+            canonical_concept=value.canonical_concept,
+        )
+
+    @classmethod
+    def from_report_issue(
+        cls,
+        value: object,
+    ) -> WorkflowIssueDto:
+        from ome.application import ComparisonReportReadinessIssue
+
+        assert isinstance(value, ComparisonReportReadinessIssue)
+        return cls(
+            code=value.code.value,
+            message=value.message,
+        )
+
+
+class OmeCsvComparisonNotReadyResponse(ApiModel):
+    status: Literal["not_ready"] = "not_ready"
+    stage: Literal["import", "preparation", "report"]
+    issues: tuple[WorkflowIssueDto, ...]
+
+
+OmeCsvComparisonHttpResponse = (
+    ComparisonReportSuccessResponse | OmeCsvComparisonNotReadyResponse
+)
 
 
 class HealthResponse(ApiModel):
