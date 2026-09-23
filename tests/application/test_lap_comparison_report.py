@@ -42,6 +42,8 @@ ALL_REPORT_CONCEPTS = (
 )
 
 UNITS = {
+    CanonicalConcept.TIME_ELAPSED: "s",
+    CanonicalConcept.LAP_DISTANCE: "m",
     CanonicalConcept.VEHICLE_SPEED: "m/s",
     CanonicalConcept.DRIVER_THROTTLE: "1",
     CanonicalConcept.DRIVER_BRAKE: "1",
