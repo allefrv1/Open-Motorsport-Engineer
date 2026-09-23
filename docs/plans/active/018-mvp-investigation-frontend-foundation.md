@@ -171,6 +171,107 @@ Plan 018 completion requires:
 - root canonical `verify` green;
 - no backend/domain behavior changed merely for UI convenience.
 
+## TDD execution evidence
+
+### Frontend harness baseline
+
+Before product behavior was added:
+
+- OME CI #204 passed the complete repository verify;
+- React/Vite/Vitest/TypeScript dependencies were locked;
+- frontend tests, TypeScript checking and production build were part of the canonical harness.
+
+### Product behavioral RED
+
+A first test commit used unavailable jest-dom matchers and OME CI #205 failed at test typecheck. That run is **not** counted as behavioral RED.
+
+After the test harness was corrected without adding another assertion library:
+
+- OME CI #206 reached the React product tests;
+- expected failures were the absence of:
+  - `Compare laps`;
+  - `Lap A CSV`;
+  - the remaining source-workflow fields/result UI.
+
+This is the Plan 018 behavioral RED.
+
+### GREEN and harness feedback
+
+After the minimum product implementation:
+
+- OME CI #213 exposed missing Vite CSS module declarations;
+- OME CI #214 exposed evidence identifiers that were visually grouped rather than individually inspectable;
+- OME CI #215 passed the full canonical verify;
+- OME CI #217 passed after local Vite API proxy, grid-input guidance and evidence-legibility refinements.
+
+No engineering behavior test was removed or weakened to obtain GREEN.
+
+### Accessibility TDD increment
+
+The UX review found that the `not_ready` state was visible but not announced as a status.
+
+A first accessibility-test attempt in OME CI #218 accidentally matched the transient loading status and is not counted as behavioral RED.
+
+After targeting the not-ready block precisely:
+
+- OME CI #219 failed because `Comparison not ready` had no `role=status`;
+- the UI added `role=status` + `aria-live=polite`;
+- OME CI #220 passed the full canonical verify.
+
+## Implementation traceability
+
+Frontend executable harness:
+
+- `frontend/package.json`;
+- `frontend/tsconfig.json`;
+- `frontend/vite.config.ts`;
+- root `pnpm-lock.yaml`;
+- `scripts/harness.py`.
+
+Focused product tests:
+
+- `frontend/tests/app.test.tsx`;
+- `frontend/tests/react-harness.test.tsx`;
+- `frontend/tests/harness.test.mjs`.
+
+Product implementation:
+
+- `frontend/src/App.tsx`;
+- `frontend/src/api.ts`;
+- `frontend/src/DeltaChart.tsx`;
+- `frontend/src/styles.css`;
+- `frontend/src/main.tsx`.
+
+Executable coverage proves:
+
+- four source files gate the compare action;
+- exact Plan 017 multipart field names are used;
+- loading prevents duplicate submission;
+- the known controlled result renders +0.200 s from server evidence;
+- B-A sign semantics remain explicit;
+- observations remain non-causal;
+- Missing Evidence remains explicit;
+- provenance/method is progressively disclosed;
+- not-ready and network failures preserve source context;
+- source controls are semantically labelled;
+- not-ready is announced accessibly;
+- frontend typecheck and production build are part of canonical verify.
+
+## UX review
+
+Blocking review items are resolved:
+
+- **task success** — source selection -> compare -> investigate is one continuous workflow;
+- **information hierarchy** — source context, deterministic delta, observations, evidence, provenance;
+- **trust** — units, B-A convention, evidence status, source identifiers and dataset fingerprints remain discoverable;
+- **missing data** — not-ready and Missing Evidence are explicit rather than fabricated;
+- **accessibility** — semantic landmarks/labels, visible focus, loading/error/not-ready announcements, non-color status cues and accessible chart summary;
+- **responsive behavior** — source columns and investigation sections collapse deliberately at narrower widths;
+- **local integration** — Vite proxies `/api` to the loopback FastAPI process;
+- **scope discipline** — no router, state framework, component library or chart library was added.
+
+Rich synchronized telemetry overlays remain deliberately deferred to Plan 019.
+
 ## Completion criteria
 
 - toolchain locked;
