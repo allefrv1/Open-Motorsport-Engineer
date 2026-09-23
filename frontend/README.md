@@ -25,6 +25,9 @@ pnpm --dir frontend build
 pnpm --dir frontend dev
 ```
 
+During development, Vite proxies `/api` requests to the loopback FastAPI process at
+`http://127.0.0.1:8000`. Run the API and frontend in separate terminals.
+
 The canonical repository harness runs frontend test, typecheck and build before a substantial change is considered complete.
 
 ## Product scope
