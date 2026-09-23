@@ -8,6 +8,7 @@ import {
   submitComparison,
 } from "./api";
 import { DeltaChart } from "./DeltaChart";
+import { TelemetryInvestigationPlots } from "./TelemetryInvestigationPlots";
 
 interface SourceFileFieldProps {
   id: string;
@@ -179,6 +180,8 @@ function ComparisonResults({
           deltas={comparison.delta_b_vs_a_s}
         />
       </section>
+
+      <TelemetryInvestigationPlots report={report} />
 
       <section className="result-section" aria-labelledby="observations-heading">
         <h2 id="observations-heading">Observations</h2>
