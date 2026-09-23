@@ -1,5 +1,16 @@
 """Application services for OME."""
 
+from ome.application.comparison_preparation import (
+    ComparisonPreparationIssue,
+    ComparisonPreparationIssueCode,
+    ComparisonPreparationNotReady,
+    ComparisonPreparationOutcome,
+    ComparisonPreparationProfile,
+    ComparisonPreparationRequest,
+    ComparisonPreparationService,
+    ComparisonPreparationSuccess,
+    mvp_ome_csv_comparison_profile,
+)
 from ome.application.comparison_report import (
     ComparisonReportIssueCode,
     ComparisonReportNotReady,
@@ -17,6 +28,14 @@ from ome.application.comparison_report import (
 from ome.application.context import ContextOrganizer
 
 __all__ = [
+    "ComparisonPreparationIssue",
+    "ComparisonPreparationIssueCode",
+    "ComparisonPreparationNotReady",
+    "ComparisonPreparationOutcome",
+    "ComparisonPreparationProfile",
+    "ComparisonPreparationRequest",
+    "ComparisonPreparationService",
+    "ComparisonPreparationSuccess",
     "ComparisonReportIssueCode",
     "ComparisonReportNotReady",
     "ComparisonReportOutcome",
@@ -30,4 +49,5 @@ __all__ = [
     "SupportingEvidenceKind",
     "SupportingEvidenceStatus",
     "SupportingEvidenceSummary",
+    "mvp_ome_csv_comparison_profile",
 ]

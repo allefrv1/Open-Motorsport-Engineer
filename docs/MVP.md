@@ -78,6 +78,31 @@ The exact alignment algorithm must be specified before implementation.
 
 A comparison result must distinguish measured values, derived metrics and observations.
 
+### Preparation workflow
+
+Plan 016 adds the application-level bridge from imported source evidence to the accepted comparison/report stack.
+
+For the controlled first path:
+
+```text
+OME CSV source
+-> ImportedTelemetryDataset
+-> validation
+-> explicit versioned normalization profile
+-> explicit Session / Run / Lap context
+-> canonical distance/time/supporting evidence
+-> ComparisonReportRequest
+-> ComparisonReportService
+```
+
+Executable coverage:
+
+`tests/application/test_comparison_preparation.py`
+
+The workflow does not perform generic lap detection, fuzzy channel matching or source repair.
+
+It returns explicit not-ready/Missing Evidence when trustworthy preparation is impossible.
+
 ## Explicitly out of scope
 
 - live telemetry;
