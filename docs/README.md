@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 016 — MVP Comparison Preparation Workflow Foundation](plans/active/016-mvp-comparison-preparation-workflow.md)
+- [Plan 017 — OME CSV Comparison Upload HTTP Workflow](plans/active/017-ome-csv-comparison-upload-http-workflow.md)
 
 ## Verification and implementation guidance
 

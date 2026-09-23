@@ -24,7 +24,8 @@ The repository now has:
 12. exact brake-semantic compatibility with semantic identity preserved through normalization and evidence;
 13. deterministic gain/loss/neutral delta observations with complete base provenance;
 14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance;
-15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement.
+15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement;
+16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -172,23 +173,33 @@ The architecture is still intentionally being proven one boundary at a time.
 - mechanical FastAPI/Pydantic isolation from core layers;
 - recorded RED -> GREEN CI history.
 
+### Comparison preparation — Plan 016
+
+- controlled two-lap OME CSV source fixtures;
+- explicit versioned preparation profile and normalization rules;
+- source validation inside the application workflow;
+- explicit Session / Run / Lap context only;
+- traceable OME CSV `time_s` evidence;
+- canonical distance and supporting-channel evidence;
+- direct `ComparisonReportRequest` construction;
+- explicit not-ready behavior;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/016-mvp-comparison-preparation-workflow.md`
+`docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
 
 ### Guardrail
 
-Do not build a frontend that manually fabricates canonical evidence.
+The browser-facing transport must accept source bundles, not canonical engineering evidence.
 
-Plan 016 must connect the already verified import/validation/normalization/context/report capabilities through an explicit application preparation contract. Missing distance/context/mapping evidence remains not-ready rather than being synthesized.
+Keep multipart parsing and temporary staging inside the API adapter. Reuse the OME CSV importer, Plan 016 preparation service and report service. Import/preparation/report failures remain explicit normal application outcomes rather than being hidden or repaired.
 
-The current OME `basic-lap.csv` fixture is insufficient for this integration path because it has no lap-distance source channel; introduce dedicated controlled comparison fixtures rather than changing the truth of existing fixture data.
-
-ADR-0010 remains Proposed. Backend Docker packaging is now justified if accepted, but Docker Compose still lacks a real second application process.
+ADR-0010 remains Proposed. Plan 017 does not require Docker/Compose.
 
 The following remain separate responsibilities:
 
@@ -218,7 +229,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact and the local HTTP transport boundary have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport and source-to-report preparation workflow have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 

@@ -1,8 +1,10 @@
 # Plan 016 — MVP Comparison Preparation Workflow Foundation
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-23
+
+Completed: 2026-09-23
 
 ## Objective
 
@@ -256,6 +258,20 @@ Controlled fixtures:
 - complete source-to-report evidence chain executable;
 - no generic lap-detection inference introduced;
 - canonical verify GREEN.
+
+## Merge evidence
+
+PR #39 was squash-merged as:
+
+`60a7a7faeda28c88c80b2938e07e2ce33c1eb075`
+
+Final canonical verification before merge:
+
+- OME CI #177 — success.
+
+## Completion assessment
+
+All Plan 016 completion criteria are satisfied.
 
 ## Explicitly out of scope
 
