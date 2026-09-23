@@ -34,6 +34,7 @@ interface ExpectedFigureModel {
 
 const report = {
   comparison: {
+    time_unit: "s",
     distance_grid_m: distance,
     delta_b_vs_a_s: delta,
   },
