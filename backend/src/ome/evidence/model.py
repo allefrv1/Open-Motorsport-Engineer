@@ -61,3 +61,16 @@ class ComparisonProvenance:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
+
+
+@dataclass(frozen=True, slots=True)
+class ContinuousOverlayProvenance:
+    algorithm_id: str
+    algorithm_version: str
+    parameters: Mapping[str, object]
+    base_comparison: ComparisonProvenance
+    lap_a_channel: CanonicalSeriesEvidence
+    lap_b_channel: CanonicalSeriesEvidence
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
