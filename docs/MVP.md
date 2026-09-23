@@ -103,6 +103,30 @@ The workflow does not perform generic lap detection, fuzzy channel matching or s
 
 It returns explicit not-ready/Missing Evidence when trustworthy preparation is impossible.
 
+### Browser-source HTTP workflow
+
+Plan 017 exposes the controlled preparation path without requiring callers to construct canonical evidence JSON.
+
+For the first browser-usable source path:
+
+```text
+Lap A .csv + .ome.json
+Lap B .csv + .ome.json
+-> local multipart HTTP upload
+-> OME CSV import
+-> Plan 016 preparation
+-> ComparisonReportService
+-> structured success/not-ready response
+```
+
+The route is intentionally source-specific to OME CSV v0.1. It does not claim generic CSV, MoTeC or iRacing upload support.
+
+Transport staging is temporary and remains inside the API adapter.
+
+Executable coverage:
+
+`tests/api/test_ome_csv_upload_workflow.py`
+
 ## Explicitly out of scope
 
 - live telemetry;
