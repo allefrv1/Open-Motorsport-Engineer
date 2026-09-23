@@ -18,7 +18,8 @@ The repository now has:
 6. source-independent Session / Run / Lap context that does not invent missing boundaries;
 7. a verified iRacing IRSDK v2 adapter with grouped fixed-array source preservation;
 8. a MoTeC CSV professional-workflow adapter preserving preamble, units, lexical values and import/validation boundaries;
-9. deterministic distance-aligned lap delta-time analysis with typed provenance and readiness.
+9. deterministic distance-aligned lap delta-time analysis with typed provenance and readiness;
+10. continuous speed/throttle/steering/engine-speed overlays on the trusted comparison grid.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -106,21 +107,31 @@ The architecture is still intentionally being proven one boundary at a time.
 - explicit not-ready outcomes;
 - recorded RED -> GREEN CI history.
 
+### Continuous lap overlays — Plan 010
+
+- speed/throttle/steering/engine-speed continuous overlays;
+- exact base-grid reuse;
+- deterministic elapsed-time interpolation;
+- multi-rate channel support;
+- explicit no-extrapolation readiness;
+- typed overlay provenance linked to base comparison evidence;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/010-lap-continuous-channel-overlays.md`
+`docs/plans/active/011-discrete-gear-overlay.md`
 
 ### Guardrail
 
-The base lap delta comparison is implemented and verified.
+The base delta comparison and continuous overlays are implemented and verified.
 
-Plan 010 must reuse that exact grid/provenance and add only supported continuous canonical evidence according to `docs/specs/lap-continuous-overlay-v0.1.md`.
+Plan 011 must reuse the exact base grid/provenance and sample only canonical `transmission.gear` according to `docs/specs/lap-discrete-gear-overlay-v0.1.md`.
 
-Do not linearly interpolate gear. Do not overlay brake until semantic compatibility is mechanically explicit. Missing or insufficient channel evidence returns an overlay not-ready result without invalidating the valid base delta comparison.
+Gear is a discrete state: never linearly interpolate it, never reinterpret source encoding in analysis, and never extrapolate beyond source temporal coverage.
 
 The following remain separate responsibilities:
 
