@@ -77,6 +77,23 @@ Additional regression coverage verifies:
 
 The first implementation intentionally uses explicit caller-supplied rules rather than global channel-name inference.
 
+## Brake semantic identity traceability
+
+Plan 012 extends the explicit mapping contract with optional machine-readable `semantic_id`.
+
+The brake rule-to-mapping path is exercised by:
+
+`tests/normalization/test_normalization.py::Req004TelemetryNormalizationTests.test_plan012_brake_semantic_id_is_preserved_from_rule_to_mapping`
+
+For brake comparison, semantic identity is declared by the explicit normalization rule and preserved in `NormalizationMapping`.
+
+OME does not derive brake semantic identity from a source channel name alone.
+
+TDD evidence:
+
+- RED: OME CI #117 — `NormalizationRule` / `CanonicalSeriesEvidence` did not yet support `semantic_id`;
+- GREEN: OME CI #121 — semantic propagation and brake compatibility passed canonical verification.
+
 ## Out of Scope
 
 - resampling onto a common timeline;
