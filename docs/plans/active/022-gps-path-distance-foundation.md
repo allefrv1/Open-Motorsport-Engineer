@@ -218,6 +218,78 @@ It must not:
 - depend on UI state;
 - use AI for numerical distance.
 
+## TDD execution evidence
+
+Behavioral RED:
+
+- OME CI #266;
+- expected failure: `ImportError: cannot import name 'GPSPathDistanceEngine' from 'ome.analysis'`.
+
+Implementation feedback:
+
+- OME CI #270/#271 — formatting-only harness feedback.
+
+GREEN:
+
+- OME CI #272 — complete canonical verify passed with the WGS84 GeographicLib implementation.
+
+Real physical-car characterization:
+
+- OME CI #274 — complete canonical verify passed with the licensed Traqmate fixture characterization.
+
+No product test was removed or weakened to obtain GREEN.
+
+## Real-fixture result
+
+The committed licensed Traqmate fixture proves the derivation works on physical-car telemetry:
+
+- 1,962 samples derive successfully;
+- the whole-file WGS84 horizontal path is within the independently characterized ~947 m range;
+- source Lap 2 has 766 samples and derives a ~390 m closed path;
+- the Lap 2 start/end geographic closure is below 2 m;
+- GPS path distance and trapezoidal source-speed integration differ by less than 2%.
+
+## External multi-lap comparison-reference validation
+
+The Apache-2.0 Portland source was inspected externally without adding the ~20 MB file to OME:
+
+- repository: `djhedges/exit_speed`;
+- blob: `13fed5ffe15ad35dc668ea2b4df8acdc63ae7668`;
+- 97,980 telemetry rows;
+- 40 Hz declared sample rate;
+- source Lap markers 0–20.
+
+A research-only spherical great-circle characterization of marker-to-marker laps found:
+
+- laps 2–18 form the stable complete-lap population;
+- mean path length: ~3,151.87 m;
+- standard deviation: ~4.10 m;
+- coefficient of variation: ~0.13%;
+- minimum: ~3,144.45 m;
+- maximum: ~3,162.74 m;
+- range: ~18.28 m;
+- most start/end closure gaps are sub-metre;
+- path distance and source-speed integration are generally within about 0.2–0.3%.
+
+The external characterization approximation is not the production WGS84 algorithm.
+
+Its purpose is to test whether independent per-lap path accumulation is semantically stable enough to become a shared comparison axis.
+
+## Comparison-reference decision
+
+`gps.path_distance` is **not promoted directly to canonical `lap.distance`**.
+
+Reason:
+
+- path distance measures the actual trajectory travelled by each lap;
+- different racing lines legitimately produce different path lengths;
+- GPS measurement noise also contributes variation;
+- an equal cumulative path-distance value on two independently accumulated laps is therefore not guaranteed to represent the same physical track position.
+
+The Portland multi-lap evidence shows non-zero lap-length variation even across a stable run.
+
+The next plan must define a deterministic common track reference/projection or corrected-distance method before physical-car GPS telemetry can satisfy ADR-0009 comparison readiness.
+
 ## Completion criteria
 
 - licensed Traqmate GPS characterized;

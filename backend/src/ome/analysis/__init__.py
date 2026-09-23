@@ -31,6 +31,15 @@ from ome.analysis.discrete_gear_overlay import (
     GearOverlaySeries,
     GearOverlaySuccess,
 )
+from ome.analysis.gps_path_distance import (
+    GPSPathDistanceEngine,
+    GPSPathDistanceIssueCode,
+    GPSPathDistanceNotReady,
+    GPSPathDistanceOutcome,
+    GPSPathDistanceReadinessIssue,
+    GPSPathDistanceRequest,
+    GPSPathDistanceSuccess,
+)
 from ome.analysis.lap_comparison import (
     ComparisonIssueCode,
     ComparisonReadinessIssue,
@@ -53,6 +62,13 @@ __all__ = [
     "DeltaObservationSuccess",
     "DeltaRegion",
     "DeltaRegionKind",
+    "GPSPathDistanceEngine",
+    "GPSPathDistanceIssueCode",
+    "GPSPathDistanceNotReady",
+    "GPSPathDistanceOutcome",
+    "GPSPathDistanceReadinessIssue",
+    "GPSPathDistanceRequest",
+    "GPSPathDistanceSuccess",
     "DiscreteGearOverlayEngine",
     "GearOverlayIssueCode",
     "GearOverlayNotReady",
