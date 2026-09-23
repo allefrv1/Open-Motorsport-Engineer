@@ -382,7 +382,7 @@ class LapComparisonEngine:
 
     @staticmethod
     def _strictly_increasing(values: tuple[float, ...]) -> bool:
-        return all(current > previous for previous, current in zip(values, values[1:], strict=True))
+        return all(current > previous for previous, current in zip(values, values[1:]))
 
     @staticmethod
     def _distance_grid(
