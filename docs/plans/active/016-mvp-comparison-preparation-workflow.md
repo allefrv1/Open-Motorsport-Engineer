@@ -168,6 +168,83 @@ Current containerization conclusion remains:
 - backend Dockerfile is justified if ADR-0010 is accepted;
 - Docker Compose remains deferred until a real frontend or another required process exists.
 
+## Accepted preparation contract
+
+Authoritative specification:
+
+- `docs/specs/mvp-comparison-preparation-v0.1.md`
+
+Plan 016 uses an injected/versioned preparation profile rather than fuzzy source discovery.
+
+The controlled profile:
+
+- id: `ome.mvp-comparison.ome-csv`;
+- version: `0.1.0`;
+- source: OME CSV v0.1 controlled fixtures;
+- explicit normalization rules for distance/speed/throttle/brake/steering/RPM/gear;
+- explicit brake semantic identity;
+- explicit `time_s -> time.elapsed` evidence transformation;
+- explicit Session / Run / Lap metadata fields.
+
+## TDD execution evidence
+
+Pre-behavior harness cleanup:
+
+- OME CI #171 — fixture-checker formatting only.
+
+Behavioral RED:
+
+- OME CI #172;
+- expected failure: `ImportError: cannot import name 'ComparisonPreparationIssueCode' from 'ome.application'`.
+
+Post-implementation harness feedback:
+
+- OME CI #174 — production formatter feedback only.
+
+GREEN:
+
+- OME CI #175 — complete canonical `verify` passed.
+
+No preparation behavior test was weakened to obtain GREEN.
+
+## Implementation traceability
+
+Test module:
+
+`tests/application/test_comparison_preparation.py`
+
+The executable coverage proves:
+
+- controlled Lap A/Lap B OME CSV sources import successfully;
+- preparation validates both imported datasets;
+- blocking validation prevents preparation;
+- the normalization profile/rules are explicit and versioned;
+- `lap.distance` provenance reaches the comparison request;
+- `time_s` becomes traceable `time.elapsed` evidence without pretending to be a telemetry channel;
+- explicit Session / Run / Lap context reaches `LapEvidenceContext`;
+- brake semantic identity survives preparation;
+- missing lap distance returns not-ready rather than synthetic distance;
+- missing optional speed remains explicit Missing Evidence in the final report;
+- the generated `ComparisonReportRequest` is accepted directly by `ComparisonReportService`;
+- the controlled comparison produces the expected deterministic delta:
+  - 0 m -> 0.00 s;
+  - 25 m -> +0.05 s;
+  - 50 m -> +0.10 s;
+  - 75 m -> +0.15 s;
+  - 100 m -> +0.20 s;
+- imported datasets/source metadata remain unchanged.
+
+Production implementation:
+
+- `backend/src/ome/application/comparison_preparation.py`
+
+Controlled fixtures:
+
+- `fixtures/ome/mvp-comparison-lap-a.csv`;
+- `fixtures/ome/mvp-comparison-lap-a.ome.json`;
+- `fixtures/ome/mvp-comparison-lap-b.csv`;
+- `fixtures/ome/mvp-comparison-lap-b.ome.json`.
+
 ## Completion criteria
 
 - workflow/preparation contract documented;
