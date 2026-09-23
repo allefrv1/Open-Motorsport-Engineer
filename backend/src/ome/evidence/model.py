@@ -88,3 +88,14 @@ class GearOverlayProvenance:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
+
+
+@dataclass(frozen=True, slots=True)
+class DeltaObservationProvenance:
+    algorithm_id: str
+    algorithm_version: str
+    parameters: Mapping[str, object]
+    base_comparison: ComparisonProvenance
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
