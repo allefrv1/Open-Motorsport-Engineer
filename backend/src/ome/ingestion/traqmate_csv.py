@@ -126,9 +126,7 @@ class TraqmateTrackvisionCSVImporter:
             text = payload.decode("utf-8")
             rows = tuple(tuple(row) for row in csv.reader(io.StringIO(text), strict=True))
             table = self._parse_table(rows)
-            sample_rate_hz, issues, missing_metadata = self._sample_rate(
-                table.preamble_rows
-            )
+            sample_rate_hz, issues, missing_metadata = self._sample_rate(table.preamble_rows)
             timestamps = self._timestamps(table.data_rows)
             source_metadata = self._source_metadata(
                 table.preamble_rows,
@@ -244,9 +242,7 @@ class TraqmateTrackvisionCSVImporter:
 
         channel_names = rows[header_index]
         if not channel_names or channel_names[0] != "Elapsed Time":
-            raise _InvalidTraqmateCSV(
-                "Traqmate CSV first source channel must be Elapsed Time."
-            )
+            raise _InvalidTraqmateCSV("Traqmate CSV first source channel must be Elapsed Time.")
         if any(name == "" for name in channel_names):
             raise _InvalidTraqmateCSV("Traqmate CSV channel names must be non-empty.")
         if len(set(channel_names)) != len(channel_names):
@@ -260,9 +256,7 @@ class TraqmateTrackvisionCSVImporter:
             if not TraqmateTrackvisionCSVImporter._is_blank(row)
         )
         if not data_rows:
-            raise _InvalidTraqmateCSV(
-                "Traqmate CSV must contain at least one telemetry data row."
-            )
+            raise _InvalidTraqmateCSV("Traqmate CSV must contain at least one telemetry data row.")
 
         expected_fields = len(channel_names)
         for row_number, row in enumerate(data_rows, start=1):
@@ -315,8 +309,7 @@ class TraqmateTrackvisionCSVImporter:
 
         for column_index, original_name in enumerate(table.channel_names):
             values = tuple(
-                row[column_index] if row[column_index] != "" else None
-                for row in table.data_rows
+                row[column_index] if row[column_index] != "" else None for row in table.data_rows
             )
             channels.append(
                 SourceChannel(
