@@ -386,8 +386,14 @@ export function App() {
               step="any"
               value={gridStep}
               aria-invalid={!gridValid}
+              aria-describedby="grid-step-help"
               onChange={(event) => setGridStep(event.currentTarget.value)}
             />
+            <span id="grid-step-help" className="field-help">
+              {gridValid
+                ? "Distance spacing used by the deterministic comparison."
+                : "Grid step must be greater than zero."}
+            </span>
           </div>
 
           <button className="primary-action" type="submit" disabled={!canSubmit}>
