@@ -155,9 +155,7 @@ class ComparisonReportService:
         if observations.provenance.base_comparison != comparison.provenance:
             return self._inconsistent_provenance()
 
-        pair_by_concept = {
-            pair.canonical_concept: pair for pair in request.continuous_channels
-        }
+        pair_by_concept = {pair.canonical_concept: pair for pair in request.continuous_channels}
         continuous_overlays: list[ContinuousOverlaySuccess] = []
         summaries: list[SupportingEvidenceSummary] = []
 
@@ -216,9 +214,7 @@ class ComparisonReportService:
             requested_concepts=REPORT_CONCEPTS,
             base_comparison=comparison.provenance,
             delta_observation=observations.provenance,
-            continuous_overlays=tuple(
-                overlay.provenance for overlay in continuous_overlays
-            ),
+            continuous_overlays=tuple(overlay.provenance for overlay in continuous_overlays),
             gear_overlay=None if gear_overlay is None else gear_overlay.provenance,
         )
 
