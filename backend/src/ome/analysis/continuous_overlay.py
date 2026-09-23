@@ -192,12 +192,9 @@ class ContinuousOverlayEngine:
             return False
         if provenance.time_unit != "s":
             return False
-        return (
-            len(base.distance_grid_m)
-            == len(base.lap_a_elapsed_s)
-            == len(base.lap_b_elapsed_s)
-            and bool(base.distance_grid_m)
-        )
+        return len(base.distance_grid_m) == len(base.lap_a_elapsed_s) == len(
+            base.lap_b_elapsed_s
+        ) and bool(base.distance_grid_m)
 
     @staticmethod
     def _channel_issues(
@@ -213,9 +210,7 @@ class ContinuousOverlayEngine:
             return (
                 ContinuousOverlayReadinessIssue(
                     code=ContinuousOverlayIssueCode.MISSING_CHANNEL,
-                    message=(
-                        f"Lap {side} does not provide {required_concept.value} evidence."
-                    ),
+                    message=(f"Lap {side} does not provide {required_concept.value} evidence."),
                     lap_side=side,
                     required_concept=required_concept,
                 ),
@@ -229,8 +224,7 @@ class ContinuousOverlayEngine:
                 ContinuousOverlayReadinessIssue(
                     code=ContinuousOverlayIssueCode.INCOMPATIBLE_CONCEPT,
                     message=(
-                        f"Lap {side} channel evidence does not represent "
-                        f"{required_concept.value}."
+                        f"Lap {side} channel evidence does not represent {required_concept.value}."
                     ),
                     lap_side=side,
                     required_concept=required_concept,
@@ -242,8 +236,7 @@ class ContinuousOverlayEngine:
                 ContinuousOverlayReadinessIssue(
                     code=ContinuousOverlayIssueCode.INCOMPATIBLE_UNIT,
                     message=(
-                        f"Lap {side} {required_concept.value} evidence must use "
-                        f"{required_unit!r}."
+                        f"Lap {side} {required_concept.value} evidence must use {required_unit!r}."
                     ),
                     lap_side=side,
                     required_concept=required_concept,
@@ -354,8 +347,7 @@ class ContinuousOverlayEngine:
     @staticmethod
     def _strictly_increasing(values: tuple[float, ...]) -> bool:
         return all(
-            current > previous
-            for previous, current in zip(values, values[1:], strict=False)
+            current > previous for previous, current in zip(values, values[1:], strict=False)
         )
 
     @staticmethod
@@ -365,10 +357,7 @@ class ContinuousOverlayEngine:
     ) -> bool:
         if not target_times_s:
             return False
-        return (
-            timestamps_s[0] <= target_times_s[0]
-            and timestamps_s[-1] >= target_times_s[-1]
-        )
+        return timestamps_s[0] <= target_times_s[0] and timestamps_s[-1] >= target_times_s[-1]
 
     @staticmethod
     def _interpolate(
