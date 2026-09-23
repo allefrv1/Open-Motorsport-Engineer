@@ -19,7 +19,8 @@ The repository now has:
 7. a verified iRacing IRSDK v2 adapter with grouped fixed-array source preservation;
 8. a MoTeC CSV professional-workflow adapter preserving preamble, units, lexical values and import/validation boundaries;
 9. deterministic distance-aligned lap delta-time analysis with typed provenance and readiness;
-10. continuous speed/throttle/steering/engine-speed overlays on the trusted comparison grid.
+10. continuous speed/throttle/steering/engine-speed overlays on the trusted comparison grid;
+11. discrete transmission.gear overlay using previous-sample hold.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -117,21 +118,29 @@ The architecture is still intentionally being proven one boundary at a time.
 - typed overlay provenance linked to base comparison evidence;
 - recorded RED -> GREEN CI history.
 
+### Discrete gear overlay — Plan 011
+
+- canonical integer gear-state comparison;
+- previous-sample hold on base elapsed-time projections;
+- no linear interpolation;
+- multi-rate gear support;
+- explicit no-extrapolation readiness;
+- typed gear provenance linked to base comparison evidence;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/011-discrete-gear-overlay.md`
+`docs/plans/active/012-brake-semantic-compatibility.md`
 
 ### Guardrail
 
-The base delta comparison and continuous overlays are implemented and verified.
+Delta-time, continuous overlays and discrete gear are implemented and verified.
 
-Plan 011 must reuse the exact base grid/provenance and sample only canonical `transmission.gear` according to `docs/specs/lap-discrete-gear-overlay-v0.1.md`.
-
-Gear is a discrete state: never linearly interpolate it, never reinterpret source encoding in analysis, and never extrapolate beyond source temporal coverage.
+Brake comparison must not rely on the generic `driver.brake` concept alone. Plan 012 must carry a stable `semantic_id` through normalization/evidence and require exact supported semantic compatibility before the continuous overlay algorithm may compare brake values.
 
 The following remain separate responsibilities:
 
