@@ -21,6 +21,27 @@ class TransformationEvidence:
 
 
 @dataclass(frozen=True, slots=True)
+class SourceSeriesEvidence:
+    dataset_fingerprint: str
+    source_channel_identifier: str
+    source_original_name: str
+    unit: str
+    transformations: tuple[TransformationEvidence, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class GPSPathDistanceProvenance:
+    dataset_fingerprint: str
+    algorithm_id: str
+    algorithm_version: str
+    ellipsoid: str
+    altitude_policy: str
+    latitude: SourceSeriesEvidence
+    longitude: SourceSeriesEvidence
+    elapsed_time: SourceSeriesEvidence
+
+
+@dataclass(frozen=True, slots=True)
 class CanonicalSeriesEvidence:
     dataset_fingerprint: str
     source_channel_identifier: str
