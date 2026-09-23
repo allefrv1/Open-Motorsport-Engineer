@@ -177,17 +177,27 @@ Completed:
 - supported-path performance characterized;
 - missing `lap.distance` kept explicit.
 
+Completed:
+
+- Plan 022 — GPS Path Distance Foundation;
+- WGS84 horizontal `gps.path_distance`;
+- typed GPS derivation provenance;
+- licensed physical-car characterization;
+- external Portland multi-lap path-length study;
+- explicit rejection of direct `gps.path_distance -> lap.distance` aliasing.
+
 Current plan:
 
-- `docs/plans/active/022-gps-path-distance-foundation.md`
+- `docs/plans/active/023-common-track-reference-foundation.md`
 
 Current work:
 
-- characterize GPS quality in the licensed Traqmate fixture;
-- define deterministic WGS84 path-distance derivation;
-- preserve derivation provenance and quality issues;
-- keep GPS path distance distinct from corrected/common comparison distance;
-- decide whether an additional common-reference projection/correction plan is required.
+- project candidate GPS onto one explicit reference-lap trajectory;
+- use marker-aware circular seam unwrapping;
+- preserve lateral projection evidence;
+- enforce strict monotonic readiness without hidden clamping;
+- validate against Portland multi-lap telemetry;
+- establish an explicit preparation mapping to canonical `lap.distance` only when ready.
 
 Later:
 
