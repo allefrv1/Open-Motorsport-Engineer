@@ -1,4 +1,17 @@
-"""Evidence architecture boundary for OME.
+"""Typed evidence/provenance models for deterministic OME analysis."""
 
-This module is intentionally empty during Plan 002.
-"""
+from ome.evidence.model import (
+    CanonicalSeriesEvidence,
+    ComparisonProvenance,
+    LapComparisonEvidence,
+    LapEvidenceContext,
+    TransformationEvidence,
+)
+
+__all__ = [
+    "CanonicalSeriesEvidence",
+    "ComparisonProvenance",
+    "LapComparisonEvidence",
+    "LapEvidenceContext",
+    "TransformationEvidence",
+]
