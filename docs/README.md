@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 014 — Lap Comparison Report Bundle](plans/active/014-lap-comparison-report-bundle.md)
+- [Plan 015 — Local Comparison Report HTTP API](plans/active/015-local-comparison-report-http-api.md)
 
 ## Verification and implementation guidance
 

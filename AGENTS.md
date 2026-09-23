@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.6.0
+Version: 1.7.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -179,10 +179,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–013 implemented the telemetry/source foundations and the deterministic lap-comparison evidence stack through typed gain/loss observations.
+Plans 003–014 implemented the telemetry/source foundations, deterministic lap-comparison stack and integrated application comparison report.
 
 The active engineering task is:
 
-`docs/plans/active/014-lap-comparison-report-bundle.md`
+`docs/plans/active/015-local-comparison-report-http-api.md`
 
-Follow `docs/specs/lap-comparison-report-v0.1.md` through TDD. Compose existing deterministic engines at the application boundary; do not reimplement their math. Missing optional supporting channels must remain explicit, successful component provenance must stay inspectable, and the report must contain no causal engineering conclusions.
+Follow `docs/specs/local-comparison-report-http-api-v0.1.md` through TDD. FastAPI/Pydantic belong only in the API transport boundary. Delegate to `ComparisonReportService`; preserve success/not-ready evidence and provenance exactly; do not duplicate analysis math.
+
+ADR-0010 is Proposed. Do not add Docker Compose or speculative runtime services before executable application processes justify them.
