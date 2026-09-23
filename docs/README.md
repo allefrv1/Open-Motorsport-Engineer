@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 012 — Brake Semantic Compatibility](plans/active/012-brake-semantic-compatibility.md)
+- [Plan 013 — Lap Delta Gain/Loss Observations](plans/active/013-lap-delta-observations.md)
 
 ## Verification and implementation guidance
 
