@@ -102,21 +102,31 @@ Completed:
 - deterministic B-gain / B-loss / neutral observation regions;
 - typed observation provenance with no causal claims.
 
+Completed:
+
+- Plan 014 — Lap Comparison Report Bundle;
+- deterministic application-level report composition;
+- stable six-concept supporting-evidence inventory;
+- complete report provenance;
+- explicit optional Missing Evidence.
+
 Current plan:
 
-- `docs/plans/active/014-lap-comparison-report-bundle.md`
+- `docs/plans/active/015-local-comparison-report-http-api.md`
 
 Current work:
 
-- compose the accepted comparison/observation/overlay artifacts into one deterministic application report;
-- preserve optional missing evidence without failing the whole report;
-- expose a stable six-channel supporting-evidence inventory;
-- preserve complete component provenance.
+- executable local FastAPI boundary;
+- versioned comparison-report transport schema;
+- deterministic success/not-ready serialization;
+- health/OpenAPI contract;
+- transport-framework isolation from the engineering core.
 
-After Plan 014:
+Containerization:
 
-- local API contract for the report workflow;
-- minimum MVP frontend for import/compare/evidence inspection.
+- ADR-0010 is Proposed;
+- backend Docker packaging is evaluated after the executable API exists;
+- Docker Compose remains deferred until multiple real application processes exist, expected after the React/Vite frontend begins.
 
 ## Phase 6 — Expanded real-motorsport validation
 
