@@ -20,9 +20,17 @@ BASE_ALGORITHM_VERSION = "0.1.0"
 _SUPPORTED_UNITS = {
     CanonicalConcept.VEHICLE_SPEED: "m/s",
     CanonicalConcept.DRIVER_THROTTLE: "1",
+    CanonicalConcept.DRIVER_BRAKE: "1",
     CanonicalConcept.DRIVER_STEERING: "rad",
     CanonicalConcept.ENGINE_SPEED: "rad/s",
 }
+
+_SUPPORTED_BRAKE_SEMANTIC_IDS = frozenset(
+    {
+        "driver.brake.pedal_position_ratio",
+        "driver.brake.pedal_force_ratio",
+    }
+)
 
 
 class ContinuousOverlayIssueCode(StrEnum):
@@ -38,6 +46,9 @@ class ContinuousOverlayIssueCode(StrEnum):
     INSUFFICIENT_TIME_COVERAGE = "insufficient_time_coverage"
     MISSING_PROVENANCE = "missing_provenance"
     INCOMPATIBLE_BASE_COMPARISON = "incompatible_base_comparison"
+    MISSING_BRAKE_SEMANTIC_ID = "missing_brake_semantic_id"
+    INCOMPATIBLE_BRAKE_SEMANTIC_ID = "incompatible_brake_semantic_id"
+    UNSUPPORTED_BRAKE_SEMANTIC_ID = "unsupported_brake_semantic_id"
 
 
 @dataclass(frozen=True, slots=True)
@@ -140,6 +151,14 @@ class ContinuousOverlayEngine:
             )
         )
 
+        if request.canonical_concept is CanonicalConcept.DRIVER_BRAKE:
+            issues.extend(
+                self._brake_semantic_issues(
+                    request.lap_a_channel,
+                    request.lap_b_channel,
+                )
+            )
+
         if issues:
             return ContinuousOverlayNotReady(issues=tuple(issues))
 
@@ -176,6 +195,64 @@ class ContinuousOverlayEngine:
             lap_b_values=lap_b_values,
             provenance=provenance,
         )
+
+    @staticmethod
+    def _brake_semantic_issues(
+        lap_a_channel: ContinuousOverlaySeries | None,
+        lap_b_channel: ContinuousOverlaySeries | None,
+    ) -> tuple[ContinuousOverlayReadinessIssue, ...]:
+        issues: list[ContinuousOverlayReadinessIssue] = []
+        supported_by_side: dict[str, str] = {}
+
+        for side, channel in (("A", lap_a_channel), ("B", lap_b_channel)):
+            if channel is None:
+                continue
+            if channel.evidence.canonical_concept is not CanonicalConcept.DRIVER_BRAKE:
+                continue
+
+            semantic_id = channel.evidence.semantic_id
+            if semantic_id is None or not semantic_id.strip():
+                issues.append(
+                    ContinuousOverlayReadinessIssue(
+                        code=ContinuousOverlayIssueCode.MISSING_BRAKE_SEMANTIC_ID,
+                        message=f"Lap {side} brake evidence is missing semantic identity.",
+                        lap_side=side,
+                        required_concept=CanonicalConcept.DRIVER_BRAKE,
+                    )
+                )
+                continue
+
+            if semantic_id not in _SUPPORTED_BRAKE_SEMANTIC_IDS:
+                issues.append(
+                    ContinuousOverlayReadinessIssue(
+                        code=ContinuousOverlayIssueCode.UNSUPPORTED_BRAKE_SEMANTIC_ID,
+                        message=(
+                            f"Lap {side} brake semantic {semantic_id!r} is not supported "
+                            "for continuous comparison."
+                        ),
+                        lap_side=side,
+                        required_concept=CanonicalConcept.DRIVER_BRAKE,
+                    )
+                )
+                continue
+
+            supported_by_side[side] = semantic_id
+
+        semantic_a = supported_by_side.get("A")
+        semantic_b = supported_by_side.get("B")
+        if semantic_a is not None and semantic_b is not None and semantic_a != semantic_b:
+            issues.append(
+                ContinuousOverlayReadinessIssue(
+                    code=ContinuousOverlayIssueCode.INCOMPATIBLE_BRAKE_SEMANTIC_ID,
+                    message=(
+                        "Lap A and Lap B brake evidence have different supported "
+                        "semantic identities."
+                    ),
+                    required_concept=CanonicalConcept.DRIVER_BRAKE,
+                )
+            )
+
+        return tuple(issues)
 
     @staticmethod
     def _base_is_compatible(base: LapComparisonSuccess) -> bool:

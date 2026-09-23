@@ -95,6 +95,48 @@ It must not:
 - mutate source telemetry;
 - use AI.
 
+## TDD execution evidence
+
+Behavioral RED:
+
+- OME CI #117;
+- expected failures:
+  - `NormalizationRule.__init__()` did not accept `semantic_id`;
+  - `CanonicalSeriesEvidence.__init__()` did not accept `semantic_id`.
+
+This demonstrated the missing semantic contract directly.
+
+GREEN:
+
+- OME CI #121;
+- complete canonical verification passed after the minimum semantic propagation and compatibility gate.
+
+Tests were not weakened to obtain GREEN.
+
+## Implementation traceability
+
+Normalization test:
+
+`tests/normalization/test_normalization.py::Req004TelemetryNormalizationTests.test_plan012_brake_semantic_id_is_preserved_from_rule_to_mapping`
+
+Analysis test class:
+
+`tests/analysis/test_continuous_overlay.py::Plan012BrakeSemanticCompatibilityTests`
+
+The executable contract now proves:
+
+- rule -> mapping semantic-id propagation;
+- canonical evidence semantic-id retention;
+- exact-match pedal-position ratio overlay;
+- exact-match pedal-force ratio overlay;
+- position/force incompatibility;
+- missing semantic rejection;
+- unsupported pressure-semantic rejection;
+- unit compatibility;
+- provenance retention;
+- gear remains outside continuous interpolation;
+- no causal diagnosis.
+
 ## Completion criteria
 
 - semantic compatibility spec accepted;

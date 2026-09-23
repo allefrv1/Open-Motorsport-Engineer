@@ -122,6 +122,29 @@ def overlay_series(
     )
 
 
+def brake_overlay_series(
+    *,
+    side: str,
+    semantic_id: str | None,
+    unit: str = "1",
+    timestamps_s: tuple[float, ...] = (0.0, 5.0, 10.0),
+    values: tuple[float, ...] = (0.0, 0.5, 1.0),
+) -> ContinuousOverlaySeries:
+    series = overlay_series(
+        side=side,
+        concept=CanonicalConcept.DRIVER_BRAKE,
+        unit=unit,
+        timestamps_s=timestamps_s,
+        values=values,
+    )
+    if semantic_id is None:
+        return series
+    return replace(
+        series,
+        evidence=replace(series.evidence, semantic_id=semantic_id),
+    )
+
+
 class Plan010ContinuousOverlayTests(unittest.TestCase):
     def setUp(self) -> None:
         self.engine = ContinuousOverlayEngine()
@@ -221,27 +244,22 @@ class Plan010ContinuousOverlayTests(unittest.TestCase):
         self.assertEqual(issue.lap_side, "A")
         self.assertIs(issue.required_concept, CanonicalConcept.VEHICLE_SPEED)
 
-    def test_brake_and_gear_are_explicitly_unsupported_by_continuous_overlay(self) -> None:
-        for concept in (
-            CanonicalConcept.DRIVER_BRAKE,
-            CanonicalConcept.TRANSMISSION_GEAR,
-        ):
-            with self.subTest(concept=concept):
-                outcome = self.engine.overlay(
-                    ContinuousOverlayRequest(
-                        base_comparison=self.base,
-                        canonical_concept=concept,
-                        lap_a_channel=None,
-                        lap_b_channel=None,
-                    )
-                )
+    def test_gear_is_explicitly_unsupported_by_continuous_overlay(self) -> None:
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.TRANSMISSION_GEAR,
+                lap_a_channel=None,
+                lap_b_channel=None,
+            )
+        )
 
-                self.assertIsInstance(outcome, ContinuousOverlayNotReady)
-                assert isinstance(outcome, ContinuousOverlayNotReady)
-                self.assertIn(
-                    ContinuousOverlayIssueCode.UNSUPPORTED_CONCEPT,
-                    {issue.code for issue in outcome.issues},
-                )
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            ContinuousOverlayIssueCode.UNSUPPORTED_CONCEPT,
+            {issue.code for issue in outcome.issues},
+        )
 
     def test_mismatched_concept_and_unit_are_not_compared(self) -> None:
         wrong_concept = self.engine.overlay(
@@ -613,6 +631,204 @@ class Plan010ContinuousOverlayTests(unittest.TestCase):
                     unit="m/s",
                     timestamps_s=(0.0, 12.0),
                     values=(11.0, 23.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlaySuccess)
+        assert isinstance(outcome, ContinuousOverlaySuccess)
+        self.assertFalse(hasattr(outcome, "cause"))
+        self.assertFalse(hasattr(outcome, "hypothesis"))
+        self.assertFalse(hasattr(outcome, "engineering_interpretation"))
+
+
+class Plan012BrakeSemanticCompatibilityTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.engine = ContinuousOverlayEngine()
+        self.base = base_comparison()
+
+    def test_canonical_series_evidence_can_retain_brake_semantic_id(self) -> None:
+        evidence = replace(
+            canonical_evidence(
+                dataset_fingerprint="sha256:a",
+                concept=CanonicalConcept.DRIVER_BRAKE,
+                unit="1",
+                source_channel_identifier="brake-a",
+                source_original_name="Brake A",
+            ),
+            semantic_id="driver.brake.pedal_position_ratio",
+        )
+
+        self.assertEqual(
+            evidence.semantic_id,
+            "driver.brake.pedal_position_ratio",
+        )
+
+    def test_matching_pedal_position_ratios_can_be_overlaid(self) -> None:
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(
+                    side="a",
+                    semantic_id="driver.brake.pedal_position_ratio",
+                ),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id="driver.brake.pedal_position_ratio",
+                    timestamps_s=(0.0, 6.0, 12.0),
+                    values=(0.0, 0.6, 1.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlaySuccess)
+        assert isinstance(outcome, ContinuousOverlaySuccess)
+        self.assertIs(outcome.canonical_concept, CanonicalConcept.DRIVER_BRAKE)
+        self.assertEqual(outcome.unit, "1")
+        self.assertEqual(outcome.distance_grid_m, self.base.distance_grid_m)
+
+    def test_matching_pedal_force_ratios_can_be_overlaid(self) -> None:
+        semantic = "driver.brake.pedal_force_ratio"
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(side="a", semantic_id=semantic),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id=semantic,
+                    timestamps_s=(0.0, 6.0, 12.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlaySuccess)
+
+    def test_pedal_position_and_pedal_force_are_not_compatible(self) -> None:
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(
+                    side="a",
+                    semantic_id="driver.brake.pedal_position_ratio",
+                ),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id="driver.brake.pedal_force_ratio",
+                    timestamps_s=(0.0, 6.0, 12.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            "incompatible_brake_semantic_id",
+            {issue.code.value for issue in outcome.issues},
+        )
+
+    def test_missing_brake_semantic_id_is_not_ready(self) -> None:
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(side="a", semantic_id=None),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id="driver.brake.pedal_position_ratio",
+                    timestamps_s=(0.0, 6.0, 12.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            "missing_brake_semantic_id",
+            {issue.code.value for issue in outcome.issues},
+        )
+
+    def test_unsupported_pressure_semantic_is_not_ready(self) -> None:
+        semantic = "driver.brake.hydraulic_pressure"
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(side="a", semantic_id=semantic),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id=semantic,
+                    timestamps_s=(0.0, 6.0, 12.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            "unsupported_brake_semantic_id",
+            {issue.code.value for issue in outcome.issues},
+        )
+
+    def test_brake_overlay_requires_canonical_ratio_unit(self) -> None:
+        semantic = "driver.brake.pedal_position_ratio"
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(
+                    side="a",
+                    semantic_id=semantic,
+                    unit="%",
+                ),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id=semantic,
+                    timestamps_s=(0.0, 6.0, 12.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlayNotReady)
+        assert isinstance(outcome, ContinuousOverlayNotReady)
+        self.assertIn(
+            ContinuousOverlayIssueCode.INCOMPATIBLE_UNIT,
+            {issue.code for issue in outcome.issues},
+        )
+
+    def test_brake_provenance_retains_semantic_ids(self) -> None:
+        semantic = "driver.brake.pedal_position_ratio"
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(side="a", semantic_id=semantic),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id=semantic,
+                    timestamps_s=(0.0, 6.0, 12.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(outcome, ContinuousOverlaySuccess)
+        assert isinstance(outcome, ContinuousOverlaySuccess)
+        self.assertEqual(outcome.provenance.lap_a_channel.semantic_id, semantic)
+        self.assertEqual(outcome.provenance.lap_b_channel.semantic_id, semantic)
+
+    def test_brake_overlay_does_not_embed_causal_diagnosis(self) -> None:
+        semantic = "driver.brake.pedal_force_ratio"
+        outcome = self.engine.overlay(
+            ContinuousOverlayRequest(
+                base_comparison=self.base,
+                canonical_concept=CanonicalConcept.DRIVER_BRAKE,
+                lap_a_channel=brake_overlay_series(side="a", semantic_id=semantic),
+                lap_b_channel=brake_overlay_series(
+                    side="b",
+                    semantic_id=semantic,
+                    timestamps_s=(0.0, 6.0, 12.0),
                 ),
             )
         )

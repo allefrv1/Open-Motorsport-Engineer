@@ -132,3 +132,37 @@ TDD evidence:
 
 - RED: OME CI #103;
 - GREEN: OME CI #108.
+
+
+## Brake semantic evidence traceability
+
+Plan 012 extends canonical-series evidence with optional `semantic_id` so a shared canonical concept does not erase materially different brake meanings.
+
+For `driver.brake`, the continuous overlay accepts only the supported exact-match semantics:
+
+- `driver.brake.pedal_position_ratio`;
+- `driver.brake.pedal_force_ratio`.
+
+The resulting `ContinuousOverlayProvenance` retains the full Lap A and Lap B canonical evidence objects, including their semantic ids.
+
+Relevant executable coverage:
+
+- `test_canonical_series_evidence_can_retain_brake_semantic_id`;
+- `test_brake_provenance_retains_semantic_ids`;
+- incompatible/missing/unsupported semantic tests in `Plan012BrakeSemanticCompatibilityTests`.
+
+This preserves the distinction:
+
+```text
+canonical concept: driver.brake
++ semantic identity
++ canonical unit
++ transformation/source provenance
+```
+
+rather than treating all brake-shaped channels as equivalent.
+
+TDD evidence:
+
+- RED: OME CI #117;
+- GREEN: OME CI #121.

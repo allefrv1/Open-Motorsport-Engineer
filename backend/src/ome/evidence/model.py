@@ -28,6 +28,7 @@ class CanonicalSeriesEvidence:
     canonical_concept: CanonicalConcept
     unit: str
     transformations: tuple[TransformationEvidence, ...] = ()
+    semantic_id: str | None = None
 
 
 @dataclass(frozen=True, slots=True)

@@ -143,6 +143,7 @@ class TelemetryNormalizer:
                         timestamps_s=channel.series.timestamps_s,
                         values=normalized_values,
                     ),
+                    semantic_id=rule.semantic_id,
                 )
             )
 
