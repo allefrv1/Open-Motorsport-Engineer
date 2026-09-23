@@ -4,13 +4,13 @@ import unittest
 
 from fastapi.testclient import TestClient
 
+from ome.api import create_app
 from ome.application import (
     ComparisonReportIssueCode,
     ComparisonReportNotReady,
     ComparisonReportReadinessIssue,
     ComparisonReportRequest,
 )
-from ome.api import create_app
 
 
 def _evidence(
