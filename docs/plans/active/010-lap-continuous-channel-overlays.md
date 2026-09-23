@@ -119,6 +119,56 @@ They must not:
 - use AI;
 - generate causal interpretation.
 
+## TDD execution evidence
+
+Behavior tests were committed before production overlay APIs.
+
+Behavioral RED:
+
+- OME CI #91;
+- expected failure:
+  `ImportError: cannot import name 'ContinuousOverlayEngine' from 'ome.analysis'`.
+
+Additional readiness tests were committed while the branch remained RED.
+
+Implementation feedback:
+
+- CI #93–#95 exercised incomplete implementation/formatting states;
+- those runs are not separate behavioral RED cycles.
+
+GREEN:
+
+- OME CI #96;
+- the complete canonical `verify` passed with the minimum continuous overlay implementation.
+
+No acceptance test was weakened to obtain GREEN.
+
+## Delivered foundation
+
+The overlay implementation now provides:
+
+- `ContinuousOverlayEngine`;
+- typed continuous overlay request/success/not-ready results;
+- typed overlay readiness issue codes;
+- supported canonical concepts:
+  - `vehicle.speed [m/s]`;
+  - `driver.throttle [1]`;
+  - `driver.steering [rad]`;
+  - `engine.speed [rad/s]`;
+- reuse of the exact base comparison distance grid;
+- deterministic linear channel interpolation in elapsed time;
+- support for different channel sample cadences;
+- explicit no-extrapolation time-coverage checks;
+- finite/strictly-increasing channel readiness;
+- dataset/source/transformation provenance checks;
+- typed overlay provenance linking back to base comparison provenance;
+- explicit unsupported results for brake and gear;
+- no causal diagnosis fields.
+
+Test module:
+
+`tests/analysis/test_continuous_overlay.py`
+
 ## Completion criteria
 
 - overlay spec accepted;

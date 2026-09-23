@@ -115,7 +115,44 @@ Additional deterministic coverage proves:
 
 This is the **delta-time/reference foundation**, not the complete REQ-005 feature.
 
-Speed/throttle/brake/steering/RPM overlays and the discrete gear comparison rule remain later increments of the accepted requirement.
+Plan 010 adds the first continuous measured-channel overlays.
+
+### Continuous overlay traceability
+
+Test module:
+
+`tests/analysis/test_continuous_overlay.py`
+
+Implemented continuous concepts:
+
+- vehicle speed;
+- throttle;
+- steering;
+- engine speed / RPM after explicit normalization to `rad/s`.
+
+The tests prove:
+
+- deterministic projection onto the exact base comparison grid;
+- different source/normalized sample cadences;
+- canonical concept/unit compatibility;
+- explicit missing evidence;
+- no temporal extrapolation;
+- non-monotonic/non-finite input rejection;
+- source/transformation provenance;
+- base comparison provenance preservation;
+- unsupported brake and gear remain explicit;
+- no causal diagnosis is embedded in the deterministic overlay result.
+
+TDD evidence:
+
+- RED: OME CI #91 — continuous overlay API absent;
+- GREEN: OME CI #96 — canonical verification successful.
+
+REQ-005 remains partially open for:
+
+- brake comparison after semantic compatibility is mechanically explicit;
+- discrete gear alignment;
+- higher-level observations/reporting.
 
 ## Out of Scope
 

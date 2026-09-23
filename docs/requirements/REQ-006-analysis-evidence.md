@@ -74,3 +74,32 @@ Missing provenance produces an explicit not-ready issue rather than an opaque me
 The deterministic result intentionally contains no cause, hypothesis or engineering-interpretation field.
 
 This implements the REQ-006 evidence capability for the Plan 009 delta-time metric; broader findings/observations remain future work.
+
+
+## Continuous overlay evidence traceability
+
+Plan 010 extends the evidence chain from delta-time into aligned continuous measured evidence.
+
+`ContinuousOverlayProvenance` references:
+
+- overlay algorithm identity/version;
+- overlay parameters;
+- the complete base comparison provenance;
+- Lap A canonical channel evidence;
+- Lap B canonical channel evidence;
+- each channel's source identifier/original name;
+- each channel's normalization/transformation evidence;
+- original dataset fingerprints through the base comparison and channel evidence.
+
+The chain is exercised by:
+
+`tests/analysis/test_continuous_overlay.py::Plan010ContinuousOverlayTests.test_channel_provenance_and_base_comparison_provenance_remain_inspectable`
+
+A dataset/provenance mismatch returns explicit not-ready evidence rather than an aligned series.
+
+The continuous overlay result remains a deterministic derived artifact and contains no cause, hypothesis or engineering-interpretation fields.
+
+TDD evidence:
+
+- RED: OME CI #91;
+- GREEN: OME CI #96.
