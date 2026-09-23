@@ -3,6 +3,7 @@
 from ome.evidence.model import (
     CanonicalSeriesEvidence,
     ComparisonProvenance,
+    ContinuousOverlayProvenance,
     LapComparisonEvidence,
     LapEvidenceContext,
     TransformationEvidence,
@@ -11,6 +12,7 @@ from ome.evidence.model import (
 __all__ = [
     "CanonicalSeriesEvidence",
     "ComparisonProvenance",
+    "ContinuousOverlayProvenance",
     "LapComparisonEvidence",
     "LapEvidenceContext",
     "TransformationEvidence",
