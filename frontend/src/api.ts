@@ -74,11 +74,29 @@ export interface SupportingEvidence {
   messages: string[];
 }
 
+export interface ContinuousOverlay {
+  canonical_concept: string;
+  unit: string;
+  distance_grid_m: number[];
+  lap_a_values: number[];
+  lap_b_values: number[];
+}
+
+export interface GearOverlay {
+  canonical_concept: string;
+  unit: string;
+  distance_grid_m: number[];
+  lap_a_gears: number[];
+  lap_b_gears: number[];
+}
+
 export interface ComparisonReport {
   comparison: LapComparisonReport;
   observations: {
     regions: DeltaRegion[];
   };
+  continuous_overlays: ContinuousOverlay[];
+  gear_overlay: GearOverlay | null;
   supporting_evidence: SupportingEvidence[];
   provenance: {
     assembler_id: string;
