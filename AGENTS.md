@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.9.0
+Version: 2.0.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -179,12 +179,14 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–016 implemented the telemetry/source foundations, deterministic comparison/report stack, local FastAPI boundary and the source-evidence-to-report preparation workflow.
+Plans 003–017 implemented the telemetry/source foundations, deterministic comparison/report stack, source-to-report preparation workflow and browser-usable OME CSV upload API.
 
 The active engineering task is:
 
-`docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
+`docs/plans/active/018-mvp-investigation-frontend-foundation.md`
 
-Use TDD to expose the controlled OME CSV preparation workflow through a multipart local HTTP endpoint. Keep UploadFile/multipart/temp staging inside `ome.api`; reuse import, preparation and report services rather than reconstructing engineering evidence in transport code. Do not turn this into a generic CSV upload API.
+For frontend work, follow `docs/specs/mvp-investigation-ui-v0.1.md`, `skills/ux-design/SKILL.md` and the OME interface principles.
 
-ADR-0010 is Proposed. No Docker/Compose change is part of Plan 017.
+Use TDD for user-observable behavior. The frontend collects files, calls the accepted API and renders authoritative evidence. It must not parse telemetry semantics, recalculate delta time, infer context, normalize channels or fabricate missing evidence.
+
+ADR-0010 remains Proposed. Do not add Docker Compose or a desktop wrapper as part of Plan 018.
