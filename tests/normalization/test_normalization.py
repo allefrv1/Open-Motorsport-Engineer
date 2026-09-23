@@ -323,6 +323,28 @@ class Req004TelemetryNormalizationTests(unittest.TestCase):
         self.assertIs(speed[0].reason, UnmappedReason.CONVERSION_FAILED)
         self.assertEqual(dataset.channel("speed_src").series.values[0], "not-a-number")
 
+    def test_plan012_brake_semantic_id_is_preserved_from_rule_to_mapping(self) -> None:
+        rules = list(fixture_rules())
+        brake_index = next(
+            index
+            for index, candidate in enumerate(rules)
+            if candidate.canonical_concept is CanonicalConcept.DRIVER_BRAKE
+        )
+        rules[brake_index] = replace(
+            rules[brake_index],
+            semantic_id="driver.brake.pedal_position_ratio",
+        )
+
+        result = TelemetryNormalizer(rules).normalize(self.dataset, self.validation)
+        mapping = result.mapping_for_source("brake_src")
+
+        self.assertEqual(
+            mapping.semantic_id,
+            "driver.brake.pedal_position_ratio",
+        )
+        self.assertIs(mapping.canonical_concept, CanonicalConcept.DRIVER_BRAKE)
+        self.assertEqual(mapping.target_unit, "1")
+
     def test_validation_result_must_belong_to_dataset(self) -> None:
         other_validation = replace(
             self.validation,
