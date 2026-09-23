@@ -82,6 +82,41 @@ ADR-0009 and `docs/specs/lap-comparison-v0.1.md` resolve the initial comparison 
 
 The v0.1 spec defines a default 1.0 m grid step and conservative readiness requirements for the first implementation.
 
+## Delta-time foundation traceability
+
+Plan 009 maps the first deterministic delta-time foundation to:
+
+`tests/analysis/test_lap_comparison.py`
+
+Acceptance mapping for this increment:
+
+- AC-001 — `test_ac001_result_declares_explicit_distance_reference`
+- AC-002 — `test_ac002_known_delta_is_deterministic_with_documented_sign`
+- AC-003 — `test_ac003_missing_distance_returns_not_ready_with_missing_evidence`
+- AC-004 — `test_ac004_result_does_not_embed_causal_diagnosis`
+- AC-005 / AC-006 — `test_ac005_and_ac006_provenance_preserves_context_channels_and_algorithm`
+
+Additional deterministic coverage proves:
+
+- equal laps produce zero delta;
+- the exact common endpoint is retained when grid spacing does not land on it;
+- partial overlap is restricted to the common distance interval;
+- incompatible reference concepts return not-ready;
+- non-monotonic distance/time is not repaired;
+- non-finite input returns not-ready;
+- no common distance returns not-ready;
+- invalid grid step returns not-ready;
+- missing context provenance returns not-ready.
+
+### TDD evidence
+
+- RED: OME CI #79 — comparison API absent after test-helper correction;
+- GREEN: OME CI #85 — canonical verification successful.
+
+This is the **delta-time/reference foundation**, not the complete REQ-005 feature.
+
+Speed/throttle/brake/steering/RPM overlays and the discrete gear comparison rule remain later increments of the accepted requirement.
+
 ## Out of Scope
 
 - automatic setup recommendation;
