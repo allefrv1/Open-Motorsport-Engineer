@@ -1,0 +1,396 @@
+@layer reset, base, components;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    background: #101216;
+    color: #eef1f6;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 12% -10%, #29354d 0, transparent 34rem),
+      #101216;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button:focus-visible,
+  input:focus-visible,
+  summary:focus-visible {
+    outline: 3px solid #b6cdfd;
+    outline-offset: 3px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@layer components {
+  .app-shell {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px 0 64px;
+  }
+
+  .eyebrow {
+    margin: 0 0 6px;
+    color: #a9b7cc;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1;
+  }
+
+  .page-header p {
+    max-width: 760px;
+    margin: 14px 0 0;
+    color: #b9c2d0;
+    line-height: 1.6;
+  }
+
+  .source-form {
+    margin-top: 28px;
+    border-block: 1px solid #303743;
+    padding-block: 24px;
+  }
+
+  .source-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .source-group {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #353d49;
+    border-radius: 12px;
+    background: #171b22;
+  }
+
+  .source-group legend {
+    padding: 0 8px;
+    font-weight: 800;
+  }
+
+  .source-group__role {
+    margin: -4px 0 14px;
+    color: #9facbf;
+    font-size: 0.86rem;
+  }
+
+  .file-field {
+    display: grid;
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .file-field label,
+  .grid-field label {
+    color: #d7dde7;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .file-field input[type="file"],
+  .grid-field input {
+    width: 100%;
+    min-height: 42px;
+    color: #dfe5ee;
+  }
+
+  .file-name {
+    min-height: 1.2rem;
+    overflow: hidden;
+    color: #99a9bd;
+    font-size: 0.83rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .grid-field {
+    display: grid;
+    gap: 7px;
+    width: 180px;
+  }
+
+  .grid-field input {
+    padding: 8px 10px;
+    border: 1px solid #3c4654;
+    border-radius: 8px;
+    background: #11151b;
+    color: inherit;
+  }
+
+  .primary-action {
+    min-height: 44px;
+    padding: 9px 18px;
+    border: 0;
+    border-radius: 8px;
+    background: #e8edf7;
+    color: #11151b;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .primary-action:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .status-line,
+  .error-panel,
+  .not-ready {
+    margin-top: 22px;
+    padding: 14px 16px;
+    border-left: 4px solid #8fa8d5;
+    background: #171b22;
+  }
+
+  .error-panel {
+    border-left-color: #e0a5a5;
+  }
+
+  .not-ready {
+    border-left-color: #dbc37b;
+  }
+
+  .not-ready h2,
+  .result-section h2 {
+    margin-top: 0;
+  }
+
+  .issue-list {
+    display: grid;
+    gap: 12px;
+    padding-left: 20px;
+  }
+
+  .issue-meta {
+    color: #aeb9c8;
+    font-size: 0.85rem;
+  }
+
+  .results {
+    margin-top: 30px;
+  }
+
+  .comparison-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: end;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #303743;
+  }
+
+  .comparison-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    color: #aeb9c8;
+    font-size: 0.9rem;
+  }
+
+  .delta-value {
+    margin: 0;
+    font-size: clamp(2.3rem, 6vw, 4.8rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    line-height: 0.95;
+    text-align: right;
+  }
+
+  .delta-interpretation {
+    max-width: 390px;
+    margin: 8px 0 0 auto;
+    color: #bcc6d4;
+    text-align: right;
+  }
+
+  .result-section {
+    padding-block: 24px;
+    border-bottom: 1px solid #303743;
+  }
+
+  .result-section h2 {
+    margin-bottom: 14px;
+    font-size: 1.05rem;
+  }
+
+  .delta-chart {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .delta-chart svg {
+    display: block;
+    width: 100%;
+    min-width: 560px;
+    border: 1px solid #303743;
+    border-radius: 10px;
+    background: #12161c;
+  }
+
+  .delta-chart text {
+    fill: #93a2b7;
+    font-size: 11px;
+  }
+
+  .delta-chart__zero {
+    stroke: #667386;
+    stroke-dasharray: 5 5;
+    stroke-width: 1;
+  }
+
+  .delta-chart__line {
+    stroke: #dbe5f7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.5;
+  }
+
+  .observation-list,
+  .evidence-list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .observation-item,
+  .evidence-item {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.5fr);
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid #272e38;
+  }
+
+  .observation-item:first-child,
+  .evidence-item:first-child {
+    border-top: 0;
+  }
+
+  .observation-kind,
+  .evidence-status {
+    font-weight: 800;
+  }
+
+  .evidence-concept {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .evidence-detail {
+    color: #aeb9c8;
+  }
+
+  .provenance summary {
+    cursor: pointer;
+    font-weight: 800;
+  }
+
+  .provenance-grid {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 8px 16px;
+    margin-top: 16px;
+  }
+
+  .provenance-grid dt {
+    color: #93a2b7;
+  }
+
+  .provenance-grid dd {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (max-width: 760px) {
+    .app-shell {
+      width: min(100% - 22px, 1180px);
+      padding-top: 22px;
+    }
+
+    .source-grid,
+    .comparison-header {
+      grid-template-columns: 1fr;
+    }
+
+    .delta-value,
+    .delta-interpretation {
+      text-align: left;
+    }
+
+    .observation-item,
+    .evidence-item {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .provenance-grid {
+      grid-template-columns: 1fr;
+      gap: 3px;
+    }
+
+    .provenance-grid dd {
+      margin-bottom: 9px;
+    }
+  }
+}
