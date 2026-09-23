@@ -142,6 +142,18 @@ Do not write production behavior first and add tests afterward unless the task i
 
 A failing test is useful only when the failure demonstrates the missing behavior rather than an unrelated harness/configuration defect.
 
+## Interface skill
+
+For interface, dashboard, frontend UX, interaction design, accessibility, information architecture or usability work, load and follow:
+
+`skills/ux-design/SKILL.md`
+
+Also load its OME-specific reference when the interface belongs to this project:
+
+`skills/ux-design/references/ome-interface-principles.md`
+
+Do not use the UX skill to change backend/domain semantics merely to simplify presentation.
+
 ## Change discipline
 
 - Inspect affected files before editing.
