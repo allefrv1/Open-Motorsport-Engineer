@@ -58,7 +58,9 @@ class TraqmateGPSPathCharacterizationTests(unittest.TestCase):
         assert isinstance(path, GPSPathDistanceSuccess)
 
         time_values = self._float_values("Elapsed Time", start, stop)
-        speed_mps = tuple(value * 0.44704 for value in self._float_values("Velocity (MPH)", start, stop))
+        speed_mps = tuple(
+            value * 0.44704 for value in self._float_values("Velocity (MPH)", start, stop)
+        )
 
         integrated_m = 0.0
         for index in range(1, len(time_values)):
