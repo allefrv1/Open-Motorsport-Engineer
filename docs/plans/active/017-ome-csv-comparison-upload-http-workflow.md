@@ -268,7 +268,7 @@ ADR-0010 remains Proposed.
 
 Pre-behavior test cleanup:
 
-- OME CI #182 — test syntax defect only; not behavioral RED.
+- OME CI #181–#184 — test syntax/format cleanup only; none counted as behavioral RED.
 
 Behavioral RED:
 
@@ -279,12 +279,12 @@ Behavioral RED:
 
 Post-implementation harness feedback:
 
-- OME CI #191 — malformed manual `uv.lock` package entry;
-- OME CI #193 — Ruff formatter feedback only.
+- OME CI #191–#195 — dependency-lock and Ruff format/import-order feedback only.
 
 GREEN:
 
-- OME CI #196 — complete canonical `verify` passed.
+- OME CI #196 — first complete canonical `verify` passed;
+- OME CI #197, #198 and #199 — successive verified heads remained GREEN after cleanup and TDD documentation.
 
 No workflow behavior test was weakened to obtain GREEN.
 
