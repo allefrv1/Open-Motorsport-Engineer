@@ -157,6 +157,71 @@ After the executable FastAPI process exists and is verified, evaluate the propos
 - SQLite/application data remains a local mounted volume/file, not a database container;
 - `compose.yaml` remains deferred until the React/Vite frontend is executable, unless a concrete multi-process development need appears sooner.
 
+## TDD execution evidence
+
+Dependency/bootstrap setup:
+
+- CI #151 resolved the first FastAPI/Uvicorn/httpx lock state in a controlled CI bootstrap;
+- CI #153 proved the repository had returned to strict `uv sync --locked` before behavior tests.
+
+Pre-behavior harness cleanup:
+
+- CI #154 exposed test import ordering only.
+
+Behavioral RED:
+
+- CI #155;
+- expected failure: `ImportError: cannot import name 'create_app' from 'ome.api'`.
+
+Post-implementation harness feedback:
+
+- CI #156 / #158 / #159 exposed formatter/lint issues in the new transport code;
+- CI #160 reached static analysis and exposed an internal gear-type alias that should not have become part of the public analysis API.
+
+GREEN:
+
+- CI #161;
+- the full canonical `verify` passed for the FastAPI app factory, health/report routes, transport validation, OpenAPI and application delegation.
+
+Final architecture/documentation verification:
+
+- CI #163;
+- transport-framework isolation was mechanically enforced in `architecture.toml` and the documented local Uvicorn command remained compatible with the locked environment.
+
+No deterministic analysis/application test was weakened to obtain GREEN.
+
+## Implementation traceability
+
+Test module:
+
+`tests/api/test_local_http_api.py`
+
+Coverage proves:
+
+- `GET /healthz` exact local-process health contract;
+- successful deterministic comparison-report serialization;
+- application-level not-ready remains a normal HTTP 200 outcome;
+- invalid transport payloads return 422;
+- OpenAPI exposes the intended v0.1 routes;
+- injected service delegation converts DTOs into `ComparisonReportRequest`;
+- report provenance/algorithm identity remains visible at the transport boundary.
+
+Architecture enforcement additionally prevents FastAPI/Pydantic imports in application/domain/analysis/evidence/ingestion/validation/normalization layers.
+
+## Containerization checkpoint result
+
+The checkpoint was revisited after the executable FastAPI boundary became GREEN.
+
+Result:
+
+- a backend Dockerfile is now technically justified because a real process and health route exist;
+- `GET /healthz` is suitable for a container healthcheck;
+- the runtime can remain a single local API process with SQLite/project files mounted later as data;
+- a `compose.yaml` is still premature because the repository does not yet contain an executable React/Vite product application or another required long-running service;
+- Redis/PostgreSQL/MySQL/reverse-proxy containers remain unjustified.
+
+ADR-0010 remains **Proposed** pending maintainer acceptance.
+
 ## Completion criteria
 
 - HTTP transport spec accepted;
