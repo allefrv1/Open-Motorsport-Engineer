@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 1.7.0
+Version: 1.8.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -179,12 +179,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–014 implemented the telemetry/source foundations, deterministic lap-comparison stack and integrated application comparison report.
+Plans 003–015 implemented the telemetry/source foundations, deterministic lap-comparison stack, integrated report and first local FastAPI boundary.
 
 The active engineering task is:
 
-`docs/plans/active/015-local-comparison-report-http-api.md`
+`docs/plans/active/016-mvp-comparison-preparation-workflow.md`
 
-Follow `docs/specs/local-comparison-report-http-api-v0.1.md` through TDD. FastAPI/Pydantic belong only in the API transport boundary. Delegate to `ComparisonReportService`; preserve success/not-ready evidence and provenance exactly; do not duplicate analysis math.
+Use TDD to connect explicit source evidence through validation, normalization and trustworthy context into a `ComparisonReportRequest`. Do not hide mapping choices, invent lap distance/context, or make a future frontend construct low-level canonical evidence by hand.
 
-ADR-0010 is Proposed. Do not add Docker Compose or speculative runtime services before executable application processes justify them.
+ADR-0010 is Proposed. A backend Dockerfile is now technically justified if that ADR is accepted. Do not add Docker Compose until a real multi-process application lifecycle exists.

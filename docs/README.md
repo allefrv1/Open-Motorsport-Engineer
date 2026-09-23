@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 015 — Local Comparison Report HTTP API](plans/active/015-local-comparison-report-http-api.md)
+- [Plan 016 — MVP Comparison Preparation Workflow Foundation](plans/active/016-mvp-comparison-preparation-workflow.md)
 
 ## Verification and implementation guidance
 
