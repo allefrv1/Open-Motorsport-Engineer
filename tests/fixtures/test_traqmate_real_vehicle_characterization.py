@@ -74,6 +74,25 @@ class TraqmateRealVehicleCharacterizationTests(unittest.TestCase):
         self.assertEqual(laps.count("2"), 766)
         self.assertEqual(laps.count("3"), 479)
 
+        time_steps = tuple(
+            round(current - previous, 10)
+            for previous, current in zip(times, times[1:])
+        )
+        self.assertEqual(set(time_steps), {0.1})
+
+        transitions = tuple(
+            (laps[index - 1], laps[index], times[index])
+            for index in range(1, len(laps))
+            if laps[index] != laps[index - 1]
+        )
+        self.assertEqual(
+            transitions,
+            (
+                ("1", "2", 71.7),
+                ("2", "3", 148.3),
+            ),
+        )
+
     def test_fixture_has_gps_and_velocity_but_no_distance_channel(self) -> None:
         _preamble, header, _data_rows = self.read_source()
 
