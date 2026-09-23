@@ -238,7 +238,10 @@ class GPSPathDistanceEngine:
                         message="GPS source evidence must reference the same source dataset.",
                     ),
                 )
-            if not evidence.source_channel_identifier.strip() or not evidence.source_original_name.strip():
+            if (
+                not evidence.source_channel_identifier.strip()
+                or not evidence.source_original_name.strip()
+            ):
                 return (
                     GPSPathDistanceReadinessIssue(
                         code=GPSPathDistanceIssueCode.MISSING_PROVENANCE,
