@@ -25,7 +25,8 @@ The repository now has:
 13. deterministic gain/loss/neutral delta observations with complete base provenance;
 14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance;
 15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement;
-16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request.
+16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request;
+17. a browser-usable multipart OME CSV source workflow preserving import/preparation/report boundaries and provenance.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -185,21 +186,33 @@ The architecture is still intentionally being proven one boundary at a time.
 - explicit not-ready behavior;
 - recorded RED -> GREEN CI history.
 
+### Browser source workflow — Plan 017
+
+- multipart OME CSV comparison endpoint;
+- temporary sanitized upload staging;
+- source bundle import through the existing importer;
+- direct reuse of Plan 016 preparation and report services;
+- explicit import/preparation/report not-ready stages;
+- existing low-level report endpoint compatibility;
+- OpenAPI multipart contract;
+- pinned multipart runtime dependency;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
+`docs/plans/active/018-mvp-investigation-frontend-foundation.md`
 
 ### Guardrail
 
-The browser-facing transport must accept source bundles, not canonical engineering evidence.
+The frontend must remain a presentation adapter over the accepted source workflow.
 
-Keep multipart parsing and temporary staging inside the API adapter. Reuse the OME CSV importer, Plan 016 preparation service and report service. Import/preparation/report failures remain explicit normal application outcomes rather than being hidden or repaired.
+It may collect files, submit FormData and render returned evidence. It must not parse OME CSV semantics, perform normalization, calculate delta time, infer Session / Run / Lap context, classify observations or synthesize missing channels.
 
-ADR-0010 remains Proposed. Plan 017 does not require Docker/Compose.
+Follow the accepted MVP investigation UI specification and OME UX/accessibility rules. ADR-0010 remains Proposed; no Docker Compose or native wrapper is required for Plan 018.
 
 The following remain separate responsibilities:
 
@@ -229,7 +242,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport and source-to-report preparation workflow have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport, source-to-report preparation workflow and browser-source upload workflow have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
