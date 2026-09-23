@@ -2,7 +2,7 @@
 
 Date: 2026-09-23
 
-Status: **Operational harness — physical-car source gap characterized; explicit Traqmate ingestion active**
+Status: **Operational harness — physical-car ingestion verified; GPS distance derivation active**
 
 Scale:
 
@@ -23,11 +23,11 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–020 have completed history and Plan 021 is active. |
+| Plan lifecycle | 4 | Plans 001–021 have completed history and Plan 022 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
-| Representative fixtures | 3 | Project-owned CSV/binary fixtures and licensed public MoTeC/negative fixtures are mechanically checked; a redistributable physical-car MoTeC session remains a useful data gap. |
+| Representative fixtures | 3 | Project-owned CSV/binary fixtures plus licensed MoTeC, negative and Traqmate physical-car fixtures are mechanically checked; a redistributable physical-car MoTeC session remains a useful data gap. |
 | Agent self-verification | 4 | The first product slice was iterated through CI failures to a green canonical verify. |
 | Documentation drift control | 3 | Links, IDs, statuses, indexes and plan placement receive automated checks. |
 | Technical-debt control | 3 | Explicit tracker exists and repeated defects are candidates for new guardrails. |
@@ -54,7 +54,9 @@ The controlled first vertical slice now runs end to end through synchronized tel
 
 Plan 020 validated those assumptions against licensed physical-car telemetry and found a concrete source-ingestion gap without fabricating compatibility.
 
-The next maturity step is an explicit Traqmate Trackvision adapter followed by supported-path scale measurement.
+Plan 021 closed that gap with an explicit Traqmate Trackvision adapter and supported-path performance characterization.
+
+The next maturity step is to derive GPS path distance deterministically while keeping it semantically distinct from a corrected/common lap-comparison reference.
 
 ## Review cadence
 
