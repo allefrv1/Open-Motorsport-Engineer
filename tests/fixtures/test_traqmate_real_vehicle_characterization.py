@@ -101,7 +101,7 @@ class TraqmateRealVehicleCharacterizationTests(unittest.TestCase):
         self.assertIn("Velocity (MPH)", header)
         self.assertFalse(any("distance" in name.lower() for name in header))
 
-    def test_existing_importers_do_not_silently_claim_traqmate_csv(self) -> None:
+    def test_pre_plan021_importers_do_not_silently_claim_traqmate_csv(self) -> None:
         importers = (
             OMECsvProfileImporter(),
             MoTeCCSVImporter(),
