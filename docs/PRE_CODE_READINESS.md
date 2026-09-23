@@ -20,7 +20,8 @@ The repository now has:
 8. a MoTeC CSV professional-workflow adapter preserving preamble, units, lexical values and import/validation boundaries;
 9. deterministic distance-aligned lap delta-time analysis with typed provenance and readiness;
 10. continuous speed/throttle/steering/engine-speed overlays on the trusted comparison grid;
-11. discrete transmission.gear overlay using previous-sample hold.
+11. discrete transmission.gear overlay using previous-sample hold;
+12. exact brake-semantic compatibility with semantic identity preserved through normalization and evidence.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -128,19 +129,29 @@ The architecture is still intentionally being proven one boundary at a time.
 - typed gear provenance linked to base comparison evidence;
 - recorded RED -> GREEN CI history.
 
+### Brake semantic compatibility — Plan 012
+
+- optional machine-readable semantic identity in normalization/evidence;
+- exact supported semantic matching for brake comparison;
+- pedal-position ratio and pedal-force ratio kept distinct;
+- pressure/unknown semantics explicitly unsupported;
+- canonical ratio-unit enforcement;
+- semantic identity retained in comparison provenance;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/012-brake-semantic-compatibility.md`
+`docs/plans/active/013-lap-delta-observations.md`
 
 ### Guardrail
 
-Delta-time, continuous overlays and discrete gear are implemented and verified.
+Delta-time and all initial comparison channels are now implemented with explicit readiness/provenance, including exact brake semantic compatibility.
 
-Brake comparison must not rely on the generic `driver.brake` concept alone. Plan 012 must carry a stable `semantic_id` through normalization/evidence and require exact supported semantic compatibility before the continuous overlay algorithm may compare brake values.
+Plan 013 may now add the first deterministic Observation layer. It may describe how the accepted delta metric changes over distance, but it must not attribute that change to driver technique, vehicle behavior or setup.
 
 The following remain separate responsibilities:
 
@@ -170,7 +181,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters and the first deterministic lap delta analysis have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters and deterministic comparison work through brake semantic compatibility have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 

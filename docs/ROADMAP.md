@@ -87,6 +87,7 @@ Completed:
 - Plan 009 — Lap Comparison Reference and Delta-Time Foundation;
 - Plan 010 — Lap Continuous Channel Overlays;
 - Plan 011 — Discrete Gear Overlay;
+- Plan 012 — Brake Semantic Compatibility;
 - explicit distance/time readiness;
 - common distance grid;
 - deterministic linear time-vs-distance interpolation;
@@ -94,22 +95,24 @@ Completed:
 - typed comparison provenance/evidence;
 - continuous speed/throttle/steering/engine-speed overlays;
 - discrete transmission.gear sampling;
+- safe exact-semantic brake ratio overlays;
+- machine-readable brake semantic identity through normalization/evidence;
 - multi-rate evidence alignment with explicit provenance.
 
 Current plan:
 
-- `docs/plans/active/012-brake-semantic-compatibility.md`
+- `docs/plans/active/013-lap-delta-observations.md`
 
 Current work:
 
-- carry machine-readable brake semantic identity through normalization/evidence;
-- enable only exactly compatible continuous brake ratios;
-- keep pressure/force/binary semantics explicit and unsupported when not safely comparable.
+- classify adjacent delta-time changes as B gain, B loss or neutral;
+- merge contiguous same-kind intervals into deterministic distance regions;
+- preserve typed observation provenance to the complete base comparison;
+- keep observation distinct from hypothesis or causal interpretation.
 
-Later Phase 5 increments:
+Later Phase 5 increment:
 
-- observation/evidence layer;
-- comparison report.
+- comparison report and supporting-channel evidence summaries.
 
 ## Phase 6 — Expanded real-motorsport validation
 
