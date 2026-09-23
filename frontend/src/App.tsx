@@ -114,10 +114,7 @@ function WorkflowIssues({
                 <span>Lap {issue.lap_side.toUpperCase()}</span>
               ) : null}
               {issue.canonical_concept !== null ? (
-                <span>
-                  {issue.lap_side !== null ? " · " : ""}
-                  {issue.canonical_concept}
-                </span>
+                <code>{issue.canonical_concept}</code>
               ) : null}
             </div>
           </li>
@@ -255,7 +252,13 @@ function ComparisonResults({
             <dd>{provenance.lap_b.context.dataset_fingerprint}</dd>
 
             <dt>Source channels</dt>
-            <dd>{sourceChannels.join(" · ")}</dd>
+            <dd>
+              <ul className="provenance-list">
+                {sourceChannels.map((channel) => (
+                  <li key={channel}>{channel}</li>
+                ))}
+              </ul>
+            </dd>
           </dl>
         </details>
       </section>
