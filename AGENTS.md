@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 2.2.0
+Version: 2.3.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -179,12 +179,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–019 implemented the controlled end-to-end MVP path from source import through synchronized browser investigation.
+Plans 003–020 implemented the controlled MVP path and characterized the first licensed physical-car Traqmate dataset.
 
 The active engineering task is:
 
-`docs/plans/active/020-real-motorsport-validation-foundation.md`
+`docs/plans/active/021-traqmate-trackvision-csv-adapter-foundation.md`
 
-Plan 020 is characterization-first. Use real physical-car telemetry to test existing assumptions before adding behavior. Do not make unsupported data look compatible: missing `lap.distance` must remain explicit, generic GPS-to-distance derivation requires a separate accepted decision, and performance work must be measurement-driven.
+Use TDD. Add only an explicit Traqmate Trackvision V2 ingestion boundary. Preserve preamble, original channels, lexical values, source Lap and provenance. Do not create generic CSV guessing, GPS-derived distance, unit normalization or Session/Run/Lap organization inside ingestion. Measure performance only after the supported path is GREEN.
 
 ADR-0010 remains Proposed.
