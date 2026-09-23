@@ -103,3 +103,32 @@ TDD evidence:
 
 - RED: OME CI #91;
 - GREEN: OME CI #96.
+
+
+## Discrete gear overlay evidence traceability
+
+Plan 011 extends the same evidence chain to the discrete `transmission.gear` comparison.
+
+`GearOverlayProvenance` references:
+
+- gear overlay algorithm identity/version;
+- discrete sampling parameters;
+- the complete base comparison provenance;
+- Lap A canonical gear evidence;
+- Lap B canonical gear evidence;
+- source channel identifiers/original names;
+- normalization/transformation identity/version;
+- original dataset fingerprints through both base and gear evidence.
+
+The chain is exercised by:
+
+`tests/analysis/test_discrete_gear_overlay.py::Plan011DiscreteGearOverlayTests.test_provenance_preserves_base_and_gear_channel_evidence`
+
+A dataset/provenance mismatch returns explicit not-ready evidence.
+
+The result is a deterministic derived artifact and contains no cause, recommendation or engineering-interpretation fields.
+
+TDD evidence:
+
+- RED: OME CI #103;
+- GREEN: OME CI #108.

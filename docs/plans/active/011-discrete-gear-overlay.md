@@ -123,6 +123,51 @@ It must not:
 - use AI;
 - generate causal interpretation.
 
+## TDD execution evidence
+
+Behavior tests were committed before production gear-overlay APIs.
+
+Behavioral RED:
+
+- OME CI #103;
+- expected failure:
+  `ImportError: cannot import name 'DiscreteGearOverlayEngine' from 'ome.analysis'`.
+
+Implementation feedback:
+
+- OME CI #107 stopped at formatter feedback before behavioral verification.
+
+GREEN:
+
+- OME CI #108;
+- the complete canonical `verify` passed with the minimum discrete gear implementation.
+
+No acceptance test was weakened to obtain GREEN.
+
+## Delivered foundation
+
+The implementation now provides:
+
+- `DiscreteGearOverlayEngine`;
+- typed gear overlay request/success/not-ready results;
+- typed gear readiness issue codes;
+- canonical `transmission.gear` / unitless compatibility checks;
+- integer-only canonical gear values;
+- exact base comparison grid reuse;
+- previous-sample hold in elapsed time;
+- exact sample timestamps selecting the current sample;
+- support for different gear sample cadences;
+- no linear interpolation;
+- explicit no-extrapolation temporal coverage;
+- timestamp/shape/provenance readiness checks;
+- typed `GearOverlayProvenance`;
+- base comparison and source/transformation evidence linkage;
+- no causal or recommendation fields.
+
+Test module:
+
+`tests/analysis/test_discrete_gear_overlay.py`
+
 ## Completion criteria
 
 - discrete gear spec accepted;
