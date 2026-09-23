@@ -20,9 +20,7 @@ from ome.ingestion import (
 from ome.validation import TelemetryValidator
 
 ROOT = Path(__file__).resolve().parents[2]
-TRAQMATE_FIXTURE = (
-    ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-parking-lot.csv"
-)
+TRAQMATE_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-parking-lot.csv"
 MOTEC_FIXTURE = ROOT / "fixtures" / "public" / "trace" / "motec-canonical.csv"
 OME_FIXTURE = ROOT / "fixtures" / "ome" / "basic-lap.csv"
 FIXED_TIME = datetime(2026, 9, 23, 12, 0, tzinfo=UTC)
@@ -95,9 +93,7 @@ class Plan021TraqmateTrackvisionCSVImporterTests(unittest.TestCase):
             tuple(channel.metadata.unit for channel in channels),
             ("s", "deg", "deg", "m", "mph", ""),
         )
-        self.assertTrue(
-            all(channel.metadata.sample_rate_hz == 10.0 for channel in channels)
-        )
+        self.assertTrue(all(channel.metadata.sample_rate_hz == 10.0 for channel in channels))
 
     def test_elapsed_time_drives_timestamps_and_source_cells_remain_lexical(self) -> None:
         outcome = self.import_fixture()
@@ -133,10 +129,7 @@ class Plan021TraqmateTrackvisionCSVImporterTests(unittest.TestCase):
         self.assertEqual(TRAQMATE_FIXTURE.read_bytes(), before)
 
     def test_provenance_fingerprint_is_deterministic(self) -> None:
-        expected = (
-            "sha256:"
-            + hashlib.sha256(TRAQMATE_FIXTURE.read_bytes()).hexdigest()
-        )
+        expected = "sha256:" + hashlib.sha256(TRAQMATE_FIXTURE.read_bytes()).hexdigest()
 
         first = self.importer.import_source(
             TRAQMATE_FIXTURE,
@@ -235,9 +228,7 @@ Elapsed Time,Velocity (MPH),Lap
 
         self.assertIsInstance(outcome, ImportSuccess)
         assert isinstance(outcome, ImportSuccess)
-        self.assertIsNone(
-            outcome.dataset.channel("Velocity (MPH)").metadata.sample_rate_hz
-        )
+        self.assertIsNone(outcome.dataset.channel("Velocity (MPH)").metadata.sample_rate_hz)
         self.assertIn("sample_rate_hz", outcome.summary.missing_metadata)
         self.assertIn(
             "missing_sample_rate",
@@ -262,11 +253,7 @@ Elapsed Time,Velocity (MPH),Lap
         validation = self.validator.validate(outcome.dataset)
 
         self.assertTrue(validation.has_blocking_issues)
-        issue = next(
-            issue
-            for issue in validation.issues
-            if issue.code == "decreasing_timestamp"
-        )
+        issue = next(issue for issue in validation.issues if issue.code == "decreasing_timestamp")
         self.assertEqual(issue.severity, ValidationSeverity.BLOCKING)
 
     def test_wrong_row_width_fails_explicitly(self) -> None:
