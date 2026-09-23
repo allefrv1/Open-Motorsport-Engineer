@@ -1,4 +1,25 @@
-"""Analysis architecture boundary for OME.
+"""Deterministic analysis APIs for OME."""
 
-This module is intentionally empty during Plan 002.
-"""
+from ome.analysis.lap_comparison import (
+    ComparisonIssueCode,
+    ComparisonReadinessIssue,
+    LapComparisonEngine,
+    LapComparisonLap,
+    LapComparisonNotReady,
+    LapComparisonOutcome,
+    LapComparisonRequest,
+    LapComparisonSeries,
+    LapComparisonSuccess,
+)
+
+__all__ = [
+    "ComparisonIssueCode",
+    "ComparisonReadinessIssue",
+    "LapComparisonEngine",
+    "LapComparisonLap",
+    "LapComparisonNotReady",
+    "LapComparisonOutcome",
+    "LapComparisonRequest",
+    "LapComparisonSeries",
+    "LapComparisonSuccess",
+]
