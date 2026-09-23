@@ -21,7 +21,8 @@ The repository now has:
 9. deterministic distance-aligned lap delta-time analysis with typed provenance and readiness;
 10. continuous speed/throttle/steering/engine-speed overlays on the trusted comparison grid;
 11. discrete transmission.gear overlay using previous-sample hold;
-12. exact brake-semantic compatibility with semantic identity preserved through normalization and evidence.
+12. exact brake-semantic compatibility with semantic identity preserved through normalization and evidence;
+13. deterministic gain/loss/neutral delta observations with complete base provenance.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -139,19 +140,29 @@ The architecture is still intentionally being proven one boundary at a time.
 - semantic identity retained in comparison provenance;
 - recorded RED -> GREEN CI history.
 
+### Delta observations — Plan 013
+
+- B gain / B loss / neutral deterministic region classification;
+- contiguous region merging;
+- explicit numerical-zero tolerance;
+- structured not-ready outcomes;
+- complete base-comparison provenance;
+- strict separation between Observation and cause/hypothesis/interpretation;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/013-lap-delta-observations.md`
+`docs/plans/active/014-lap-comparison-report-bundle.md`
 
 ### Guardrail
 
-Delta-time and all initial comparison channels are now implemented with explicit readiness/provenance, including exact brake semantic compatibility.
+Delta-time, all initial comparison channels and deterministic gain/loss observations now exist as separately verified artifacts.
 
-Plan 013 may now add the first deterministic Observation layer. It may describe how the accepted delta metric changes over distance, but it must not attribute that change to driver technique, vehicle behavior or setup.
+Plan 014 may compose those artifacts at the application boundary. It must not duplicate numerical analysis or hide missing optional evidence. The resulting report is the stable backend contract that should precede HTTP/API and frontend work.
 
 The following remain separate responsibilities:
 
@@ -181,7 +192,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters and deterministic comparison work through brake semantic compatibility have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters and deterministic comparison work through typed delta observations have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
