@@ -2,7 +2,7 @@
 
 Date: 2026-09-23
 
-Status: **Operational harness — source-to-report preparation verified; browser-source HTTP workflow active**
+Status: **Operational harness — browser source workflow verified; MVP frontend active**
 
 Scale:
 
@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–016 have completed history and Plan 017 is active. |
+| Plan lifecycle | 4 | Plans 001–017 have completed history and Plan 018 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -48,7 +48,7 @@ The integrated application report and first local FastAPI boundary are now verif
 
 The source-to-report preparation workflow is now verified with controlled fixtures and a complete provenance chain.
 
-The next maturity step is to expose that workflow through a browser-usable source upload boundary without leaking multipart/filesystem concerns into the deterministic core.
+The browser source workflow is verified. The next maturity step is the first real React/TypeScript investigation UI with explicit evidence, missing-data and provenance states.
 
 ## Review cadence
 
