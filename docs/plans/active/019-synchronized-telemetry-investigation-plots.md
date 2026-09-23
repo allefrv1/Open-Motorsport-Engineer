@@ -103,6 +103,94 @@ Verify:
 - zoom/pan does not change source evidence;
 - narrow-width behavior remains usable.
 
+## TDD execution evidence
+
+### Tooling baseline
+
+Before product plot behavior:
+
+- OME CI #225 passed the complete canonical verify;
+- `plotly.js-dist-min` 4.1.1 was locked with no transitive dependencies;
+- existing frontend tests, TypeScript and production build remained green.
+
+### Pure figure model
+
+OME CI #226 exposed both the intended missing module and test-type noise, so it is not counted as the behavioral RED.
+
+After isolating the test contract:
+
+- OME CI #227 — valid RED: `telemetryFigureModel` did not exist;
+- OME CI #228 — implementation reached tests; the test fixture omitted the server `time_unit` field;
+- OME CI #229 — GREEN after correcting the fixture contract, with the pure figure model unchanged.
+
+The figure model proves:
+
+- delta remains first;
+- continuous overlays use deterministic preferred ordering;
+- missing overlays are not synthesized;
+- server arrays are passed through by reference;
+- Lap A/B have redundant solid/dashed identities;
+- gear is marked as discrete step data;
+- units remain attached to concepts.
+
+### Plotly adapter and exact-value fallback
+
+- OME CI #230 — valid RED: `TelemetryInvestigationPlots` did not exist;
+- OME CI #231/#232 — TypeScript feedback at the readonly-array / Plotly type boundary;
+- OME CI #233 — GREEN after the minimum isolated Plotly adapter and semantic exact-value tables.
+
+No source arrays are copied, smoothed, re-interpolated or numerically modified.
+
+### Application integration
+
+- OME CI #234 — valid RED: successful comparison flow did not yet expose the `Synchronized telemetry` investigation section;
+- OME CI #237 — GREEN after integrating the new plots below the deterministic delta summary while preserving all Plan 018 workflow tests;
+- OME CI #238 — GREEN after adding a structural guardrail proving only `PlotlyTelemetryFigure.tsx` imports Plotly.
+
+## Implementation traceability
+
+Tooling:
+
+- `frontend/package.json`;
+- `pnpm-lock.yaml`.
+
+Pure presentation model:
+
+- `frontend/src/telemetryFigureModel.ts`;
+- `frontend/tests/telemetryFigureModel.test.ts`.
+
+Visualization boundary:
+
+- `frontend/src/PlotlyTelemetryFigure.tsx`;
+- `frontend/src/TelemetryInvestigationPlots.tsx`;
+- `frontend/tests/telemetryInvestigationPlots.test.tsx`.
+
+Application integration:
+
+- `frontend/src/App.tsx`;
+- `frontend/src/styles.css`;
+- `frontend/tests/app.test.tsx`.
+
+Architecture guardrail:
+
+- `frontend/tests/harness.test.mjs`.
+
+## UX / accessibility review
+
+Resolved blocking items:
+
+- **comparison meaning** — Lap A remains solid/reference; Lap B dashed/comparison; delta stays explicitly B - A;
+- **synchronization** — all panels share the server distance basis and unified horizontal interaction;
+- **units** — channel identity and exact tables keep units adjacent;
+- **missing evidence** — unavailable concepts are not synthesized and remain visible in the existing Supporting Evidence section;
+- **precision** — collapsed semantic tables expose exact server values without requiring hover;
+- **discrete gear** — rendered with step-shaped traces rather than linear interpolation;
+- **browser responsibility** — no smoothing, resampling, canonicalization or engineering calculation was added;
+- **responsive behavior** — engineering-readable plot width is preserved inside horizontal overflow at narrow widths;
+- **architecture** — Plotly is mechanically isolated behind one visualization adapter.
+
+Plotly controls enhance investigation but are never the sole path to evidence.
+
 ## Completion criteria
 
 - Plotly dependency locked;
