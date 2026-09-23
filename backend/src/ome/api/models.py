@@ -90,8 +90,7 @@ class CanonicalSeriesEvidenceDto(ApiModel):
             canonical_concept=value.canonical_concept,
             unit=value.unit,
             transformations=tuple(
-                TransformationEvidenceDto.from_domain(item)
-                for item in value.transformations
+                TransformationEvidenceDto.from_domain(item) for item in value.transformations
             ),
             semantic_id=value.semantic_id,
         )
@@ -141,9 +140,7 @@ class LapComparisonLapDto(ApiModel):
         return LapComparisonLap(
             context=self.context.to_domain(),
             distance=None if self.distance is None else self.distance.to_domain(),
-            elapsed_time=(
-                None if self.elapsed_time is None else self.elapsed_time.to_domain()
-            ),
+            elapsed_time=(None if self.elapsed_time is None else self.elapsed_time.to_domain()),
         )
 
 
@@ -181,12 +178,8 @@ class ContinuousChannelPairDto(ApiModel):
     def to_domain(self) -> ContinuousChannelPair:
         return ContinuousChannelPair(
             canonical_concept=self.canonical_concept,
-            lap_a_channel=(
-                None if self.lap_a_channel is None else self.lap_a_channel.to_domain()
-            ),
-            lap_b_channel=(
-                None if self.lap_b_channel is None else self.lap_b_channel.to_domain()
-            ),
+            lap_a_channel=(None if self.lap_a_channel is None else self.lap_a_channel.to_domain()),
+            lap_b_channel=(None if self.lap_b_channel is None else self.lap_b_channel.to_domain()),
         )
 
 
@@ -222,9 +215,7 @@ class ComparisonReportRequestDto(ApiModel):
     def to_domain(self) -> ComparisonReportRequest:
         return ComparisonReportRequest(
             comparison=self.comparison.to_domain(),
-            continuous_channels=tuple(
-                pair.to_domain() for pair in self.continuous_channels
-            ),
+            continuous_channels=tuple(pair.to_domain() for pair in self.continuous_channels),
             gear=None if self.gear is None else self.gear.to_domain(),
         )
 
@@ -251,10 +242,7 @@ class LapComparisonNotReadyDto(ApiModel):
     @classmethod
     def from_domain(cls, value: LapComparisonNotReady) -> LapComparisonNotReadyDto:
         return cls(
-            issues=tuple(
-                ComparisonReadinessIssueDto.from_domain(issue)
-                for issue in value.issues
-            )
+            issues=tuple(ComparisonReadinessIssueDto.from_domain(issue) for issue in value.issues)
         )
 
 
@@ -360,9 +348,7 @@ class DeltaObservationProvenanceDto(ApiModel):
             algorithm_id=value.algorithm_id,
             algorithm_version=value.algorithm_version,
             parameters=dict(value.parameters),
-            base_comparison=ComparisonProvenanceDto.from_domain(
-                value.base_comparison
-            ),
+            base_comparison=ComparisonProvenanceDto.from_domain(value.base_comparison),
         )
 
 
@@ -409,15 +395,9 @@ class ContinuousOverlayProvenanceDto(ApiModel):
             algorithm_id=value.algorithm_id,
             algorithm_version=value.algorithm_version,
             parameters=dict(value.parameters),
-            base_comparison=ComparisonProvenanceDto.from_domain(
-                value.base_comparison
-            ),
-            lap_a_channel=CanonicalSeriesEvidenceDto.from_domain(
-                value.lap_a_channel
-            ),
-            lap_b_channel=CanonicalSeriesEvidenceDto.from_domain(
-                value.lap_b_channel
-            ),
+            base_comparison=ComparisonProvenanceDto.from_domain(value.base_comparison),
+            lap_a_channel=CanonicalSeriesEvidenceDto.from_domain(value.lap_a_channel),
+            lap_b_channel=CanonicalSeriesEvidenceDto.from_domain(value.lap_b_channel),
         )
 
 
@@ -440,9 +420,7 @@ class ContinuousOverlaySuccessDto(ApiModel):
             distance_grid_m=value.distance_grid_m,
             lap_a_values=value.lap_a_values,
             lap_b_values=value.lap_b_values,
-            provenance=ContinuousOverlayProvenanceDto.from_domain(
-                value.provenance
-            ),
+            provenance=ContinuousOverlayProvenanceDto.from_domain(value.provenance),
         )
 
 
@@ -518,12 +496,8 @@ class ComparisonReportProvenanceDto(ApiModel):
             assembler_id=value.assembler_id,
             assembler_version=value.assembler_version,
             requested_concepts=value.requested_concepts,
-            base_comparison=ComparisonProvenanceDto.from_domain(
-                value.base_comparison
-            ),
-            delta_observation=DeltaObservationProvenanceDto.from_domain(
-                value.delta_observation
-            ),
+            base_comparison=ComparisonProvenanceDto.from_domain(value.base_comparison),
+            delta_observation=DeltaObservationProvenanceDto.from_domain(value.delta_observation),
             continuous_overlays=tuple(
                 ContinuousOverlayProvenanceDto.from_domain(item)
                 for item in value.continuous_overlays
@@ -550,8 +524,7 @@ class ComparisonReportSuccessDto(ApiModel):
             comparison=LapComparisonSuccessDto.from_domain(value.comparison),
             observations=DeltaObservationSuccessDto.from_domain(value.observations),
             continuous_overlays=tuple(
-                ContinuousOverlaySuccessDto.from_domain(item)
-                for item in value.continuous_overlays
+                ContinuousOverlaySuccessDto.from_domain(item) for item in value.continuous_overlays
             ),
             gear_overlay=(
                 None
@@ -609,9 +582,7 @@ class ComparisonReportNotReadyResponse(ApiModel):
         )
 
 
-ComparisonReportHttpResponse = (
-    ComparisonReportSuccessResponse | ComparisonReportNotReadyResponse
-)
+ComparisonReportHttpResponse = ComparisonReportSuccessResponse | ComparisonReportNotReadyResponse
 
 
 class HealthResponse(ApiModel):
