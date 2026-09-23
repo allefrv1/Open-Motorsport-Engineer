@@ -77,10 +77,7 @@ class DeltaObservationEngine:
     def observe(self, request: DeltaObservationRequest) -> DeltaObservationOutcome:
         issues: list[DeltaObservationReadinessIssue] = []
 
-        if (
-            not math.isfinite(request.zero_tolerance_s)
-            or request.zero_tolerance_s < 0.0
-        ):
+        if not math.isfinite(request.zero_tolerance_s) or request.zero_tolerance_s < 0.0:
             issues.append(
                 DeltaObservationReadinessIssue(
                     code=DeltaObservationIssueCode.INVALID_ZERO_TOLERANCE,
@@ -148,10 +145,7 @@ class DeltaObservationEngine:
                     message="Base comparison distance grid contains a non-finite value.",
                 )
             )
-        elif (
-            len(base.distance_grid_m) >= 2
-            and not self._strictly_increasing(base.distance_grid_m)
-        ):
+        elif len(base.distance_grid_m) >= 2 and not self._strictly_increasing(base.distance_grid_m):
             issues.append(
                 DeltaObservationReadinessIssue(
                     code=DeltaObservationIssueCode.DISTANCE_NOT_STRICTLY_INCREASING,
@@ -231,8 +225,7 @@ class DeltaObservationEngine:
     @staticmethod
     def _strictly_increasing(values: tuple[float, ...]) -> bool:
         return all(
-            current > previous
-            for previous, current in zip(values, values[1:], strict=False)
+            current > previous for previous, current in zip(values, values[1:], strict=False)
         )
 
     @staticmethod
@@ -263,8 +256,7 @@ class DeltaObservationEngine:
 
         for interval_index in range(1, len(distance_grid_m) - 1):
             next_kind = cls._classify(
-                delta_b_vs_a_s[interval_index + 1]
-                - delta_b_vs_a_s[interval_index],
+                delta_b_vs_a_s[interval_index + 1] - delta_b_vs_a_s[interval_index],
                 zero_tolerance_s,
             )
             if next_kind is current_kind:
