@@ -5,6 +5,7 @@ description = "Open Motorsport Engineer harness and application workspace"
 requires-python = "==3.13.*"
 dependencies = [
   "fastapi==0.140.3",
+  "python-multipart==0.0.32",
   "uvicorn==0.53.0",
 ]
 

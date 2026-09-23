@@ -264,6 +264,65 @@ No Docker/Compose change is required.
 
 ADR-0010 remains Proposed.
 
+## TDD execution evidence
+
+Pre-behavior test cleanup:
+
+- OME CI #182 — test syntax defect only; not behavioral RED.
+
+Behavioral RED:
+
+- OME CI #185;
+- expected failure: source-workflow route absent;
+- multipart requests returned HTTP `404`;
+- OpenAPI did not contain `/api/v1/ome-csv/comparison-reports`.
+
+Post-implementation harness feedback:
+
+- OME CI #191 — malformed manual `uv.lock` package entry;
+- OME CI #193 — Ruff formatter feedback only.
+
+GREEN:
+
+- OME CI #196 — complete canonical `verify` passed.
+
+No workflow behavior test was weakened to obtain GREEN.
+
+## Implementation traceability
+
+Transport specification:
+
+- `docs/specs/ome-csv-comparison-upload-http-api-v0.1.md`.
+
+Focused tests:
+
+- `tests/api/test_ome_csv_upload_workflow.py`;
+- existing `tests/api/test_local_http_api.py` remains the compatibility regression suite.
+
+Production transport:
+
+- `backend/src/ome/api/app.py`;
+- `backend/src/ome/api/models.py`;
+- `backend/src/ome/api/upload_workflow.py`.
+
+Dependency:
+
+- `python-multipart==0.0.32`;
+- pinned in `pyproject.toml` and `uv.lock`.
+
+Executable coverage proves:
+
+- four controlled OME CSV upload parts produce the known deterministic report;
+- final delta is +0.20 s on the controlled case;
+- source-to-report provenance/context survives multipart transport;
+- missing lap distance returns `status=not_ready`, `stage=preparation`;
+- invalid OME sidecar returns `stage=import`;
+- missing multipart input and invalid form scalar return HTTP 422;
+- client path components are sanitized before staging;
+- temporary paths are not serialized;
+- the low-level `/api/v1/comparison-reports` contract remains registered and covered;
+- OpenAPI exposes the new multipart route.
+
 ## Completion criteria
 
 - workflow HTTP contract documented;

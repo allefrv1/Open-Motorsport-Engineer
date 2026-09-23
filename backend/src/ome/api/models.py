@@ -15,7 +15,9 @@ from ome.analysis import (
     LapComparisonSeries,
 )
 from ome.application import (
+    ComparisonPreparationIssue,
     ComparisonReportNotReady,
+    ComparisonReportReadinessIssue,
     ComparisonReportRequest,
     ComparisonReportSuccess,
     ContinuousChannelPair,
@@ -33,6 +35,7 @@ from ome.evidence import (
     LapEvidenceContext,
     TransformationEvidence,
 )
+from ome.ingestion import ImportFailure
 
 
 class ApiModel(BaseModel):
@@ -580,6 +583,57 @@ class ComparisonReportNotReadyResponse(ApiModel):
 
 
 ComparisonReportHttpResponse = ComparisonReportSuccessResponse | ComparisonReportNotReadyResponse
+
+
+class WorkflowIssueDto(ApiModel):
+    code: str
+    message: str
+    lap_side: str | None = None
+    canonical_concept: CanonicalConcept | None = None
+
+    @classmethod
+    def from_import_failure(
+        cls,
+        value: ImportFailure,
+        *,
+        lap_side: str,
+    ) -> WorkflowIssueDto:
+        return cls(
+            code=value.code.value,
+            message=value.message,
+            lap_side=lap_side,
+        )
+
+    @classmethod
+    def from_preparation_issue(
+        cls,
+        value: ComparisonPreparationIssue,
+    ) -> WorkflowIssueDto:
+        return cls(
+            code=value.code.value,
+            message=value.message,
+            lap_side=value.lap_side,
+            canonical_concept=value.canonical_concept,
+        )
+
+    @classmethod
+    def from_report_issue(
+        cls,
+        value: ComparisonReportReadinessIssue,
+    ) -> WorkflowIssueDto:
+        return cls(
+            code=value.code.value,
+            message=value.message,
+        )
+
+
+class OmeCsvComparisonNotReadyResponse(ApiModel):
+    status: Literal["not_ready"] = "not_ready"
+    stage: Literal["import", "preparation", "report"]
+    issues: tuple[WorkflowIssueDto, ...]
+
+
+OmeCsvComparisonHttpResponse = ComparisonReportSuccessResponse | OmeCsvComparisonNotReadyResponse
 
 
 class HealthResponse(ApiModel):
