@@ -15,9 +15,11 @@ The accepted application architecture will eventually contain:
 - SQLite metadata;
 - local telemetry/project files.
 
-The repository currently does not yet contain an executable FastAPI server or React/Vite application.
+At proposal time the repository did not yet contain an executable FastAPI server or React/Vite application.
 
-Adding Docker and Docker Compose now could improve environment reproducibility, but it could also create artificial services and duplicate lifecycle/configuration before there is anything real to run.
+Plan 015 has since produced a verified local FastAPI process and `/healthz` route. The React/Vite product application still does not exist.
+
+Adding Docker can now package a real backend boundary. Adding Docker Compose would still create an artificial multi-service topology before there is a second executable application process.
 
 ## Proposed decision
 
@@ -121,6 +123,22 @@ When images are implemented:
 - do not bake secrets or user telemetry into images;
 - use explicit writable volumes;
 - keep published ports local-only by default.
+
+## Plan 015 checkpoint — 2026-09-23
+
+Executable evidence now supports the backend-image half of this proposal:
+
+- FastAPI app factory exists;
+- Uvicorn is locked as a runtime dependency;
+- `GET /healthz` is verified;
+- the canonical native run command binds to loopback by default;
+- transport-framework isolation is mechanically enforced.
+
+Therefore:
+
+- **backend Dockerfile: justified once this ADR is accepted**;
+- **Docker Compose: continue to defer** until the React/Vite application or another required long-running process exists;
+- **database/cache containers: not justified** under the current SQLite/local-first architecture.
 
 ## Reversibility
 
