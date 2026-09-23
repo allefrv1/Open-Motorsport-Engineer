@@ -220,8 +220,22 @@
   }
 
   .issue-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    margin-top: 5px;
     color: #aeb9c8;
     font-size: 0.85rem;
+  }
+
+  .issue-meta code {
+    color: #d4ddea;
+  }
+
+  .field-help {
+    color: #93a2b7;
+    font-size: 0.78rem;
+    line-height: 1.4;
   }
 
   .results {
@@ -360,6 +374,14 @@
     margin: 0;
     overflow-wrap: anywhere;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .provenance-list {
+    display: grid;
+    gap: 3px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   @media (max-width: 760px) {
