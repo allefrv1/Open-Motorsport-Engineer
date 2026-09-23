@@ -85,27 +85,29 @@ Status: **Active**
 Completed:
 
 - Plan 009 — Lap Comparison Reference and Delta-Time Foundation;
+- Plan 010 — Lap Continuous Channel Overlays;
 - explicit distance/time readiness;
 - common distance grid;
 - deterministic linear time-vs-distance interpolation;
 - `delta_B_vs_A`;
-- typed comparison provenance/evidence.
+- typed comparison provenance/evidence;
+- continuous speed/throttle/steering/engine-speed overlays;
+- multi-rate time interpolation with explicit provenance.
 
 Current plan:
 
-- `docs/plans/active/010-lap-continuous-channel-overlays.md`
+- `docs/plans/active/011-discrete-gear-overlay.md`
 
 Current work:
 
-- project continuous canonical channels onto the existing distance grid;
-- support different source/normalized channel cadences;
-- preserve overlay provenance;
-- keep unsupported/missing evidence explicit.
+- project canonical `transmission.gear` onto the existing distance grid;
+- use previous-sample hold instead of interpolation;
+- preserve discrete gear provenance;
+- reject missing/invalid/insufficient evidence explicitly.
 
 Later Phase 5 increments:
 
 - brake semantic-compatibility contract;
-- discrete gear alignment rule;
 - observation/evidence layer;
 - comparison report.
 
