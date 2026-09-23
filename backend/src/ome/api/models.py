@@ -438,9 +438,7 @@ class GearOverlayProvenanceDto(ApiModel):
             algorithm_id=value.algorithm_id,
             algorithm_version=value.algorithm_version,
             parameters=dict(value.parameters),
-            base_comparison=ComparisonProvenanceDto.from_domain(
-                value.base_comparison
-            ),
+            base_comparison=ComparisonProvenanceDto.from_domain(value.base_comparison),
             lap_a_gear=CanonicalSeriesEvidenceDto.from_domain(value.lap_a_gear),
             lap_b_gear=CanonicalSeriesEvidenceDto.from_domain(value.lap_b_gear),
         )
