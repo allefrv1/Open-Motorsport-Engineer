@@ -1,0 +1,58 @@
+{
+  "ome_csv_version": "0.1",
+  "source": {
+    "system": "OME",
+    "description": "Synthetic MVP comparison fixture Lap B; not measured telemetry"
+  },
+  "sample_rate_hz": 2.0,
+  "channels": {
+    "lap_distance_src": {
+      "source_name": "Synthetic Lap Distance",
+      "unit": "m",
+      "data_type": "float"
+    },
+    "speed_src": {
+      "source_name": "Synthetic Vehicle Speed",
+      "unit": "m/s",
+      "data_type": "float"
+    },
+    "throttle_src": {
+      "source_name": "Synthetic Throttle Position",
+      "unit": "%",
+      "data_type": "float"
+    },
+    "brake_src": {
+      "source_name": "Synthetic Brake Pedal Position",
+      "unit": "%",
+      "data_type": "float"
+    },
+    "steering_src": {
+      "source_name": "Synthetic Steering Angle",
+      "unit": "rad",
+      "data_type": "float"
+    },
+    "rpm_src": {
+      "source_name": "Synthetic Engine Speed",
+      "unit": "rpm",
+      "data_type": "float"
+    },
+    "gear_src": {
+      "source_name": "Synthetic Gear",
+      "unit": "",
+      "data_type": "integer"
+    }
+  },
+  "context": {
+    "session": "MVP synthetic comparison session",
+    "run": "MVP run B",
+    "lap": "MVP lap B",
+    "lap_number": 2
+  },
+  "source_provenance": {
+    "time_axis": {
+      "field": "time_s",
+      "semantics": "elapsed_time_from_lap_reference",
+      "unit": "s"
+    }
+  }
+}
