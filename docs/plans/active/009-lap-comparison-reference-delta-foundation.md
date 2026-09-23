@@ -131,6 +131,52 @@ It must not:
 - mutate source telemetry;
 - silently choose between competing position channels.
 
+## TDD execution evidence
+
+Behavior tests were committed before the comparison/evidence production APIs.
+
+Behavioral RED:
+
+- OME CI #78 — comparison API absent;
+- the test helper was then corrected to preserve an explicitly empty Lap identifier rather than replacing it with a default;
+- OME CI #79 confirmed the same valid behavioral RED:
+  `ImportError: cannot import name 'ComparisonIssueCode' from 'ome.analysis'`.
+
+Implementation feedback:
+
+- CI #81–#84 exposed implementation/style feedback while the tests remained unchanged;
+- those runs are not treated as new behavioral RED cycles.
+
+GREEN:
+
+- OME CI #85 — the complete canonical verify passed with the minimum deterministic comparison implementation.
+
+No acceptance test was weakened to obtain GREEN.
+
+## Delivered foundation
+
+The first comparison foundation now provides:
+
+- typed canonical-series evidence;
+- typed Session / Run / Lap evidence context;
+- typed transformation evidence;
+- typed comparison provenance;
+- structured comparison-readiness issues;
+- explicit `lap.distance [m]` and `time.elapsed [s]` requirements;
+- conservative finite/strictly-increasing readiness;
+- common-overlap calculation;
+- deterministic parameterized distance grid;
+- exact common-end inclusion;
+- linear elapsed-time-vs-distance interpolation;
+- `delta_B_vs_A = time_B - time_A`;
+- explicit not-ready results instead of repair/guessing;
+- algorithm identity/version `ome.lap-comparison.distance-linear / 0.1.0`;
+- no causal diagnosis fields in the deterministic result.
+
+Test module:
+
+`tests/analysis/test_lap_comparison.py`
+
 ## Completion criteria
 
 - positional/alignment decision documented and accepted;
