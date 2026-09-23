@@ -71,40 +71,58 @@ def check_public_fixtures(repo_root: Path = ROOT) -> list[str]:
 
 
 def check_ome_fixture(repo_root: Path = ROOT) -> list[str]:
-    csv_path = repo_root / "fixtures" / "ome" / "basic-lap.csv"
-    sidecar_path = repo_root / "fixtures" / "ome" / "basic-lap.ome.json"
+    fixture_root = repo_root / "fixtures" / "ome"
     errors: list[str] = []
+    sidecars = sorted(fixture_root.glob("*.ome.json"))
 
-    if not csv_path.is_file():
-        return ["fixtures/ome/basic-lap.csv is missing"]
-    if not sidecar_path.is_file():
-        return ["fixtures/ome/basic-lap.ome.json is missing"]
+    if not sidecars:
+        return ["fixtures/ome must contain at least one .ome.json fixture sidecar"]
 
-    sidecar = load_json(sidecar_path)
-    if sidecar.get("ome_csv_version") != "0.1":
-        errors.append("OME fixture must declare ome_csv_version 0.1")
+    for sidecar_path in sidecars:
+        stem = sidecar_path.name.removesuffix(".ome.json")
+        csv_path = sidecar_path.with_name(f"{stem}.csv")
+        label = f"fixtures/ome/{stem}"
 
-    with csv_path.open(newline="", encoding="utf-8") as handle:
-        reader = csv.DictReader(handle)
-        if reader.fieldnames is None or not reader.fieldnames:
-            return errors + ["OME CSV fixture has no header"]
-        if reader.fieldnames[0] != "time_s":
-            errors.append("OME CSV first column must be time_s")
+        if not csv_path.is_file():
+            errors.append(f"{label}.csv is missing")
+            continue
 
-        rows = list(reader)
-        times = [float(row["time_s"]) for row in rows]
-        if not rows:
-            errors.append("OME CSV fixture must contain data rows")
-        if any(current <= previous for previous, current in zip(times, times[1:], strict=False)):
-            errors.append("OME CSV time_s must be strictly increasing")
+        sidecar = load_json(sidecar_path)
+        if sidecar.get("ome_csv_version") != "0.1":
+            errors.append(f"{label}.ome.json must declare ome_csv_version 0.1")
 
-        channel_defs = sidecar.get("channels", {})
-        csv_channels = set(reader.fieldnames[1:])
-        if set(channel_defs) != csv_channels:
-            errors.append(
-                "OME sidecar channel keys must exactly match non-time CSV columns "
-                f"(csv={sorted(csv_channels)}, sidecar={sorted(channel_defs)})"
-            )
+        with csv_path.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            if reader.fieldnames is None or not reader.fieldnames:
+                errors.append(f"{label}.csv has no header")
+                continue
+            if reader.fieldnames[0] != "time_s":
+                errors.append(f"{label}.csv first column must be time_s")
+
+            rows = list(reader)
+            if not rows:
+                errors.append(f"{label}.csv must contain data rows")
+                continue
+
+            try:
+                times = [float(row["time_s"]) for row in rows]
+            except (TypeError, ValueError):
+                errors.append(f"{label}.csv time_s values must be decimal numbers")
+                continue
+
+            if any(
+                current <= previous
+                for previous, current in zip(times, times[1:], strict=False)
+            ):
+                errors.append(f"{label}.csv time_s must be strictly increasing")
+
+            channel_defs = sidecar.get("channels", {})
+            csv_channels = set(reader.fieldnames[1:])
+            if set(channel_defs) != csv_channels:
+                errors.append(
+                    f"{label} sidecar channel keys must exactly match non-time CSV columns "
+                    f"(csv={sorted(csv_channels)}, sidecar={sorted(channel_defs)})"
+                )
 
     return errors
 
