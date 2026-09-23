@@ -23,7 +23,8 @@ The repository now has:
 11. discrete transmission.gear overlay using previous-sample hold;
 12. exact brake-semantic compatibility with semantic identity preserved through normalization and evidence;
 13. deterministic gain/loss/neutral delta observations with complete base provenance;
-14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance.
+14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance;
+15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -160,21 +161,34 @@ The architecture is still intentionally being proven one boundary at a time.
 - complete typed report provenance;
 - recorded RED -> GREEN CI history.
 
+### Local HTTP boundary — Plan 015
+
+- pinned FastAPI/Uvicorn/httpx dependency set;
+- explicit request/response DTOs;
+- local app factory and health endpoint;
+- deterministic comparison-report HTTP endpoint;
+- success/not-ready/422 transport semantics;
+- OpenAPI contract;
+- mechanical FastAPI/Pydantic isolation from core layers;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/015-local-comparison-report-http-api.md`
+`docs/plans/active/016-mvp-comparison-preparation-workflow.md`
 
 ### Guardrail
 
-The application report is now stable enough to expose through ADR-0008's local HTTP boundary.
+Do not build a frontend that manually fabricates canonical evidence.
 
-Plan 015 may introduce FastAPI/Pydantic only inside the API/transport layer. It must not leak transport types into analysis/application/domain modules or reimplement deterministic calculations.
+Plan 016 must connect the already verified import/validation/normalization/context/report capabilities through an explicit application preparation contract. Missing distance/context/mapping evidence remains not-ready rather than being synthesized.
 
-ADR-0010 is Proposed: Docker packaging should follow an executable API process; Docker Compose remains deferred until there is a real multi-process application lifecycle.
+The current OME `basic-lap.csv` fixture is insufficient for this integration path because it has no lap-distance source channel; introduce dedicated controlled comparison fixtures rather than changing the truth of existing fixture data.
+
+ADR-0010 remains Proposed. Backend Docker packaging is now justified if accepted, but Docker Compose still lacks a real second application process.
 
 The following remain separate responsibilities:
 
@@ -204,7 +218,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines and the integrated comparison-report application artifact have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact and the local HTTP transport boundary have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
