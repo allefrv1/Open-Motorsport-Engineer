@@ -69,6 +69,14 @@ uv run --locked python scripts/harness.py type
 uv run --locked python scripts/harness.py test
 ```
 
+### Frontend build
+
+```text
+uv run --locked python scripts/harness.py build
+```
+
+The full verify also runs frontend TypeScript checking and a production Vite build.
+
 ### Documentation
 
 ```text
@@ -92,6 +100,22 @@ uv run --locked python scripts/harness.py fixtures
 ```text
 uv run --locked python scripts/harness.py verify
 ```
+
+## Frontend dependencies
+
+Plan 018 introduces the locked React application toolchain:
+
+- React 19.3.0;
+- React DOM 19.3.0;
+- TypeScript 7.0.2;
+- Vite 8.3.0;
+- official Vite React plugin 6.1.1;
+- Vitest 5.0.1;
+- React Testing Library 16.3.3;
+- DOM Testing Library 10.4.2;
+- jsdom 30.0.1.
+
+Frontend dependency resolution is stored in `pnpm-lock.yaml`.
 
 ## Application dependencies
 
@@ -117,7 +141,17 @@ Local endpoints:
 
 - `GET http://127.0.0.1:8000/healthz`
 - `POST http://127.0.0.1:8000/api/v1/comparison-reports`
+- `POST http://127.0.0.1:8000/api/v1/ome-csv/comparison-reports`
 - `GET http://127.0.0.1:8000/openapi.json`
+
+Run the frontend development server in a second terminal:
+
+```text
+pnpm --dir frontend dev
+```
+
+Vite binds to `127.0.0.1:5173` for the local-first development baseline and
+proxies `/api` to `http://127.0.0.1:8000`.
 
 The default host is intentionally loopback-only for the local-first baseline.
 
