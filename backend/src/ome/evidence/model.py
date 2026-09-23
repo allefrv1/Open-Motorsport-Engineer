@@ -74,3 +74,16 @@ class ContinuousOverlayProvenance:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
+
+
+@dataclass(frozen=True, slots=True)
+class GearOverlayProvenance:
+    algorithm_id: str
+    algorithm_version: str
+    parameters: Mapping[str, object]
+    base_comparison: ComparisonProvenance
+    lap_a_gear: CanonicalSeriesEvidence
+    lap_b_gear: CanonicalSeriesEvidence
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
