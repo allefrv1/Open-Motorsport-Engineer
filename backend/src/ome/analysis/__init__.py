@@ -10,6 +10,17 @@ from ome.analysis.continuous_overlay import (
     ContinuousOverlaySeries,
     ContinuousOverlaySuccess,
 )
+from ome.analysis.delta_observations import (
+    DeltaObservationEngine,
+    DeltaObservationIssueCode,
+    DeltaObservationNotReady,
+    DeltaObservationOutcome,
+    DeltaObservationReadinessIssue,
+    DeltaObservationRequest,
+    DeltaObservationSuccess,
+    DeltaRegion,
+    DeltaRegionKind,
+)
 from ome.analysis.discrete_gear_overlay import (
     DiscreteGearOverlayEngine,
     GearOverlayIssueCode,
@@ -33,6 +44,15 @@ from ome.analysis.lap_comparison import (
 )
 
 __all__ = [
+    "DeltaObservationEngine",
+    "DeltaObservationIssueCode",
+    "DeltaObservationNotReady",
+    "DeltaObservationOutcome",
+    "DeltaObservationReadinessIssue",
+    "DeltaObservationRequest",
+    "DeltaObservationSuccess",
+    "DeltaRegion",
+    "DeltaRegionKind",
     "DiscreteGearOverlayEngine",
     "GearOverlayIssueCode",
     "GearOverlayNotReady",
