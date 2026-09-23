@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { App } from "../src/App";
@@ -159,6 +159,7 @@ function selectSources() {
 }
 
 afterEach(() => {
+  cleanup();
   vi.unstubAllGlobals();
 });
 
@@ -269,7 +270,7 @@ describe("MVP investigation frontend", () => {
 
     expect(await screen.findByRole("heading", { name: "Observations" })).toBeTruthy();
     expect(screen.getByText("Lap B loss")).toBeTruthy();
-    expect(screen.getByText("0–100 m")).toBeTruthy();
+    expect(screen.getByText("Distance 0–100 m")).toBeTruthy();
     expect(screen.queryByText(/because/i)).toBeNull();
     expect(screen.queryByText(/cause/i)).toBeNull();
   });
