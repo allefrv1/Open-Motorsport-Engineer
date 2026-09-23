@@ -106,6 +106,7 @@ def command_lint() -> None:
 
 def command_type() -> None:
     ty("check", "backend/src", "scripts")
+    run(["pnpm", "--dir", "frontend", "typecheck"])
 
 
 def command_test() -> None:
@@ -115,6 +116,10 @@ def command_test() -> None:
         env=env,
     )
     run(["pnpm", "--dir", "frontend", "test"])
+
+
+def command_build() -> None:
+    run(["pnpm", "--dir", "frontend", "build"])
 
 
 def command_docs() -> None:
@@ -135,6 +140,7 @@ def command_verify() -> None:
     command_lint()
     command_type()
     command_test()
+    command_build()
     command_docs()
     command_arch()
     command_fixtures()
@@ -145,7 +151,18 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="OME canonical engineering harness")
     parser.add_argument(
         "command",
-        choices=["format", "lint", "type", "test", "docs", "arch", "fixtures", "verify", "env"],
+        choices=[
+            "format",
+            "lint",
+            "type",
+            "test",
+            "build",
+            "docs",
+            "arch",
+            "fixtures",
+            "verify",
+            "env",
+        ],
     )
     args = parser.parse_args()
 
@@ -154,6 +171,7 @@ def main() -> int:
         "lint": command_lint,
         "type": command_type,
         "test": command_test,
+        "build": command_build,
         "docs": command_docs,
         "arch": command_arch,
         "fixtures": command_fixtures,
