@@ -255,9 +255,7 @@ class Plan013DeltaObservationTests(unittest.TestCase):
             ),
         )
 
-        outcome = self.engine.observe(
-            DeltaObservationRequest(base_comparison=incompatible)
-        )
+        outcome = self.engine.observe(DeltaObservationRequest(base_comparison=incompatible))
 
         self.assertIsInstance(outcome, DeltaObservationNotReady)
         assert isinstance(outcome, DeltaObservationNotReady)
@@ -280,9 +278,7 @@ class Plan013DeltaObservationTests(unittest.TestCase):
             delta_b_vs_a_s=(0.0,),
         )
 
-        mismatch_outcome = self.engine.observe(
-            DeltaObservationRequest(base_comparison=mismatched)
-        )
+        mismatch_outcome = self.engine.observe(DeltaObservationRequest(base_comparison=mismatched))
         insufficient_outcome = self.engine.observe(
             DeltaObservationRequest(base_comparison=insufficient)
         )
@@ -308,21 +304,15 @@ class Plan013DeltaObservationTests(unittest.TestCase):
 
         outcomes = (
             (
-                self.engine.observe(
-                    DeltaObservationRequest(base_comparison=non_monotonic)
-                ),
+                self.engine.observe(DeltaObservationRequest(base_comparison=non_monotonic)),
                 DeltaObservationIssueCode.DISTANCE_NOT_STRICTLY_INCREASING,
             ),
             (
-                self.engine.observe(
-                    DeltaObservationRequest(base_comparison=non_finite_distance)
-                ),
+                self.engine.observe(DeltaObservationRequest(base_comparison=non_finite_distance)),
                 DeltaObservationIssueCode.NON_FINITE_DISTANCE,
             ),
             (
-                self.engine.observe(
-                    DeltaObservationRequest(base_comparison=non_finite_delta)
-                ),
+                self.engine.observe(DeltaObservationRequest(base_comparison=non_finite_delta)),
                 DeltaObservationIssueCode.NON_FINITE_DELTA,
             ),
         )
