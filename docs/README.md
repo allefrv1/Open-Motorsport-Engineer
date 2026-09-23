@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 018 — MVP Investigation Frontend Foundation](plans/active/018-mvp-investigation-frontend-foundation.md)
+- [Plan 020 — Real Motorsport Validation Foundation](plans/active/020-real-motorsport-validation-foundation.md)
 
 ## Verification and implementation guidance
 
