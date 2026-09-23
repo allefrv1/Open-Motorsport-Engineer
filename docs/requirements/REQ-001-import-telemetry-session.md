@@ -276,6 +276,38 @@ GREEN:
 
 - OME CI #67 — canonical verification successful with the minimum adapter.
 
+## Traqmate Trackvision CSV implementation traceability
+
+Plan 021 extends the implemented REQ-001 ingestion boundary to licensed physical-car Traqmate Trackvision V2 telemetry through:
+
+`tests/ingestion/test_traqmate_trackvision_csv_import.py`
+
+The adapter verifies:
+
+- AC-001 — the supported real Traqmate fixture produces an imported telemetry dataset;
+- AC-002 — source bytes remain unchanged;
+- AC-003 — source identity, importer identity/version and SHA-256 fingerprint are retained;
+- AC-004 — all discovered source columns remain source channels with their exact original names;
+- AC-005 — verified units and declared 10 Hz acquisition metadata are preserved;
+- AC-006 — absent Sample Rate remains unknown and visible rather than inferred from timestamp spacing;
+- AC-007 — arbitrary CSV remains unsupported;
+- AC-008 — unsupported version and structurally invalid Traqmate CSV fail explicitly;
+- AC-009 — lexical source values remain unnormalized, including mph and source Lap values;
+- AC-010 — equivalent source bytes produce equivalent semantic channel content and fingerprint.
+
+The adapter deliberately does not create `lap.distance`, derive distance from GPS, normalize mph, or organize source `Lap` values into canonical context during ingestion.
+
+### TDD evidence
+
+Behavioral RED:
+
+- OME CI #252 — `TraqmateTrackvisionCSVImporter` absent.
+
+GREEN:
+
+- OME CI #255 — canonical verification successful with the minimum adapter;
+- OME CI #256 — canonical verification successful with supported-path performance characterization.
+
 ## Relevant Domain Concepts
 
 - Telemetry Dataset
