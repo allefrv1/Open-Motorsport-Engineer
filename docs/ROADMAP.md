@@ -136,20 +136,17 @@ Completed:
 - explicit import/preparation/report not-ready stages;
 - source-safe temporary staging.
 
-Current plan:
+Completed:
 
-- `docs/plans/active/018-mvp-investigation-frontend-foundation.md`
+- Plan 018 — MVP Investigation Frontend Foundation;
+- Plan 019 — Synchronized Telemetry Investigation Plots;
+- browser source-selection workflow;
+- deterministic delta/observation/evidence/provenance investigation UI;
+- synchronized Plotly telemetry panels;
+- accessible exact-value fallbacks;
+- mechanically isolated visualization boundary.
 
-Current work:
-
-- bootstrap the accepted React/TypeScript/Vite UI;
-- implement the two-lap controlled source workflow;
-- render deterministic delta/gain-loss/evidence/provenance;
-- preserve progressive disclosure and accessibility.
-
-Next frontend increment:
-
-- synchronized rich telemetry overlays with Plotly after the end-to-end workflow is proven.
+The first controlled end-to-end MVP vertical slice is complete.
 
 Containerization:
 
@@ -159,11 +156,24 @@ Containerization:
 
 ## Phase 6 — Expanded real-motorsport validation
 
-Future.
+Status: **Active**
+
+Current plan:
+
+- `docs/plans/active/020-real-motorsport-validation-foundation.md`
+
+Current work:
+
+- characterize the licensed Traqmate physical-car fixture;
+- measure current import/validation/normalization/context readiness;
+- prove missing `lap.distance` remains explicit;
+- benchmark realistic source scale before optimization;
+- select the next engineering capability from observed evidence.
+
+Later:
 
 - Formula Student / race-team data where shareable;
-- validate performance and metadata assumptions;
-- revisit native `.ld` feasibility.
+- revisit native `.ld` feasibility only when justified.
 
 ## Phase 7 — Domain analysis modules
 
