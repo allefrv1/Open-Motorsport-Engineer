@@ -25,7 +25,8 @@ The repository now has:
 13. deterministic gain/loss/neutral delta observations with complete base provenance;
 14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance;
 15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement;
-16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request.
+16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request;
+17. a browser-usable OME CSV multipart source workflow that preserves import/preparation/report readiness semantics.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -191,15 +192,15 @@ The architecture is still intentionally being proven one boundary at a time.
 
 Proceed to:
 
-`docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
+`docs/plans/active/018-mvp-investigation-frontend-foundation.md`
 
 ### Guardrail
 
-The browser-facing transport must accept source bundles, not canonical engineering evidence.
+The frontend must consume the accepted source-oriented HTTP workflow and preserve engineering meaning rather than reconstructing it.
 
-Keep multipart parsing and temporary staging inside the API adapter. Reuse the OME CSV importer, Plan 016 preparation service and report service. Import/preparation/report failures remain explicit normal application outcomes rather than being hidden or repaired.
+Use the OME UX rules: make Lap A reference, B-A sign, units, Missing Evidence and provenance discoverable. Keep causal diagnosis out of the first UI.
 
-ADR-0010 remains Proposed. Plan 017 does not require Docker/Compose.
+ADR-0010 remains Proposed. Frontend implementation does not require Docker/Compose.
 
 The following remain separate responsibilities:
 
@@ -229,7 +230,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport and source-to-report preparation workflow have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport, source-to-report preparation and browser-source upload workflow have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
