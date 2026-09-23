@@ -199,9 +199,29 @@ TDD evidence:
 - RED: OME CI #117;
 - GREEN: OME CI #121.
 
+### Delta-region observation traceability
+
+Plan 013 implements the first higher-level deterministic observation above the accepted delta metric.
+
+Test module:
+
+`tests/analysis/test_delta_observations.py`
+
+The tests prove:
+
+- AC-004 — measured delta change is classified as B gain, B loss or neutral without causal diagnosis;
+- AC-005 — observation provenance retains the complete base comparison provenance;
+- AC-006 — Session / Run / Lap context remains reachable through that base provenance;
+- malformed or incompatible metric evidence produces explicit not-ready results rather than a plausible observation.
+
+TDD evidence:
+
+- RED: OME CI #128 — observation API absent;
+- GREEN: OME CI #135 — canonical verification successful.
+
 REQ-005 remains partially open for:
 
-- higher-level deterministic observations/reporting.
+- comparison report/supporting-channel evidence summaries.
 
 ## Out of Scope
 

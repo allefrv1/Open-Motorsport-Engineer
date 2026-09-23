@@ -81,6 +81,47 @@ It must not:
 - recommend setup changes;
 - use AI.
 
+## TDD execution evidence
+
+Pre-behavior harness cleanup:
+
+- CI #127 — test formatting only.
+
+Behavioral RED:
+
+- CI #128;
+- expected failure: `ImportError: cannot import name 'DeltaObservationEngine' from 'ome.analysis'`.
+
+Post-implementation harness feedback:
+
+- CI #129–#134 exposed formatting and exact-float test-fixture assertions;
+- production semantics were not weakened to resolve those failures.
+
+GREEN:
+
+- CI #135;
+- the complete canonical `verify` passed with deterministic gain/loss/neutral regions and typed observation provenance.
+
+## Implementation traceability
+
+Test module:
+
+`tests/analysis/test_delta_observations.py`
+
+Coverage proves:
+
+- positive delta change -> B loss;
+- negative delta change -> B gain;
+- unchanged delta -> neutral;
+- contiguous same-kind intervals merge;
+- merged-region delta change is end minus start;
+- numerical zero tolerance is explicit/deterministic;
+- invalid tolerance is not-ready;
+- missing/incompatible base comparison is not-ready;
+- malformed/non-monotonic/non-finite base data is not repaired;
+- observation provenance retains the complete base comparison;
+- the result exposes no cause, hypothesis, engineering interpretation or recommendation.
+
 ## Completion criteria
 
 - observation spec accepted;

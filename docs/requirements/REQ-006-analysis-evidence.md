@@ -166,3 +166,29 @@ TDD evidence:
 
 - RED: OME CI #117;
 - GREEN: OME CI #121.
+
+
+## Delta-region observation evidence traceability
+
+Plan 013 adds the first typed `Observation` artifact above the deterministic lap-delta metric.
+
+`DeltaObservationProvenance` references:
+
+- observation algorithm identity/version;
+- explicit numerical-zero tolerance parameter;
+- the complete base `ComparisonProvenance`;
+- through that base evidence, both laps' Session / Run / Lap context;
+- canonical time/distance series;
+- transformation/source-channel identity;
+- original dataset fingerprints.
+
+Executable coverage:
+
+`tests/analysis/test_delta_observations.py::Plan013DeltaObservationTests.test_provenance_retains_complete_base_comparison`
+
+The observation result is deliberately limited to deterministic gain/loss/neutral regions and contains no cause, hypothesis, engineering interpretation or recommendation fields.
+
+TDD evidence:
+
+- RED: OME CI #128;
+- GREEN: OME CI #135.
