@@ -6,6 +6,7 @@ from fastapi import FastAPI
 
 from ome.application import (
     ComparisonReportOutcome,
+    ComparisonReportRequest,
     ComparisonReportService,
     ComparisonReportSuccess,
 )
@@ -20,7 +21,7 @@ from ome.api.models import (
 
 
 class ReportBuilder(Protocol):
-    def build(self, request: object) -> ComparisonReportOutcome: ...
+    def build(self, request: ComparisonReportRequest) -> ComparisonReportOutcome: ...
 
 
 def create_app(
