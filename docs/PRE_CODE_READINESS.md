@@ -25,7 +25,8 @@ The repository now has:
 13. deterministic gain/loss/neutral delta observations with complete base provenance;
 14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance;
 15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement;
-16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request.
+16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request;
+17. a browser-usable local OME CSV multipart workflow connecting source files to the accepted report service without leaking transport details into the deterministic core.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -185,21 +186,31 @@ The architecture is still intentionally being proven one boundary at a time.
 - explicit not-ready behavior;
 - recorded RED -> GREEN CI history.
 
+### Browser source workflow — Plan 017
+
+- multipart OME CSV source bundles;
+- sanitized temporary API-layer staging;
+- explicit import/preparation/report not-ready stages;
+- existing low-level report endpoint preserved;
+- OpenAPI source route;
+- locked `python-multipart` dependency;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/017-ome-csv-comparison-upload-http-workflow.md`
+`docs/plans/active/018-mvp-investigation-frontend.md`
 
 ### Guardrail
 
-The browser-facing transport must accept source bundles, not canonical engineering evidence.
+The frontend must remain an evidence-oriented investigation workspace.
 
-Keep multipart parsing and temporary staging inside the API adapter. Reuse the OME CSV importer, Plan 016 preparation service and report service. Import/preparation/report failures remain explicit normal application outcomes rather than being hidden or repaired.
+Use the repository UX skill and accepted frontend spec. Consume report DTOs rather than recomputing engineering results. Keep Missing Evidence explicit, distinguish derived metrics from observations, preserve units/reference/provenance and test critical accessibility states.
 
-ADR-0010 remains Proposed. Plan 017 does not require Docker/Compose.
+ADR-0010 remains Proposed. Plan 018 does not require Docker Compose.
 
 The following remain separate responsibilities:
 
@@ -229,7 +240,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport and source-to-report preparation workflow have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, report composition, local HTTP transport, source preparation and multipart browser-source workflow have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
