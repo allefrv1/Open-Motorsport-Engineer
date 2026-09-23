@@ -142,7 +142,7 @@ class Plan013DeltaObservationTests(unittest.TestCase):
         self.assertEqual(region.start_distance_m, 0.0)
         self.assertEqual(region.end_distance_m, 20.0)
         self.assertEqual(region.start_delta_s, 0.0)
-        self.assertEqual(region.end_delta_s, 0.3)
+        self.assertAlmostEqual(region.end_delta_s, 0.3)
         self.assertAlmostEqual(region.total_delta_change_s, 0.3)
         self.assertEqual(region.interval_count, 2)
 
@@ -166,7 +166,7 @@ class Plan013DeltaObservationTests(unittest.TestCase):
         assert isinstance(outcome, DeltaObservationSuccess)
         self.assertEqual(len(outcome.regions), 1)
         self.assertIs(outcome.regions[0].kind, DeltaRegionKind.NEUTRAL)
-        self.assertEqual(outcome.regions[0].total_delta_change_s, 0.0)
+        self.assertAlmostEqual(outcome.regions[0].total_delta_change_s, 0.0)
 
     def test_contiguous_same_kind_intervals_are_merged(self) -> None:
         base = comparison_with_delta((0.0, 0.1, 0.2, 0.2, 0.1, 0.0))
