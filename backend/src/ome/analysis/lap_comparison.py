@@ -357,9 +357,7 @@ class LapComparisonEngine:
             return False
         if not context.lap_identifier.strip():
             return False
-        if context.run_identifier is not None and not context.run_identifier.strip():
-            return False
-        return True
+        return context.run_identifier is None or bool(context.run_identifier.strip())
 
     @staticmethod
     def _series_provenance_is_complete(
@@ -382,7 +380,10 @@ class LapComparisonEngine:
 
     @staticmethod
     def _strictly_increasing(values: tuple[float, ...]) -> bool:
-        return all(current > previous for previous, current in zip(values, values[1:]))
+        return all(
+            current > previous
+            for previous, current in zip(values, values[1:], strict=False)
+        )
 
     @staticmethod
     def _distance_grid(
