@@ -153,7 +153,7 @@ class Plan017OmeCsvUploadApiTests(unittest.TestCase):
         self.assertEqual(response.json()["status"], "success")
         serialized = response.text
         self.assertNotIn("../", serialized)
-        self.assertNotIn(r"..\", serialized)
+        self.assertNotIn("..\\\\", serialized)
         self.assertNotIn("/tmp/", serialized)
 
     def test_openapi_contains_source_workflow_route(self) -> None:
