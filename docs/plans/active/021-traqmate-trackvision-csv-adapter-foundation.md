@@ -213,6 +213,85 @@ Do not add a flaky CI wall-clock threshold.
 
 Use measurements to update TD-005.
 
+## TDD execution evidence
+
+Pre-behavior harness cleanup:
+
+- OME CI #251 — test formatting only; not counted as behavioral RED.
+
+Behavioral RED:
+
+- OME CI #252;
+- expected failure: `ImportError: cannot import name 'TraqmateTrackvisionCSVImporter' from 'ome.ingestion'`.
+
+Implementation harness feedback:
+
+- OME CI #254 — production-file formatting only.
+
+GREEN:
+
+- OME CI #255 — complete canonical verify passed after the minimum explicit Traqmate importer was implemented;
+- OME CI #256 — complete canonical verify passed after non-binding supported-path performance characterization was added.
+
+No product test was removed or weakened to obtain GREEN.
+
+## Implementation traceability
+
+Focused test module:
+
+`tests/ingestion/test_traqmate_trackvision_csv_import.py`
+
+Coverage proves:
+
+- licensed physical-car Traqmate Trackvision V2 import;
+- source signature/version identity;
+- complete preamble preservation;
+- original channel names/order/units;
+- explicit `Elapsed Time` timestamps while source cells remain lexical;
+- source `Lap` preservation;
+- absence of synthesized `lap.distance`;
+- source immutability;
+- deterministic SHA-256 provenance;
+- OME CSV / MoTeC CSV / Traqmate arbitration independent of registration order;
+- arbitrary CSV rejection;
+- unsupported-version rejection;
+- missing sample rate remains explicit and unknown;
+- decreasing time imports unchanged and is blocked later by validation;
+- row-width and elapsed-time structural failures.
+
+## Supported-path performance baseline
+
+OME CI #256 recorded the committed physical-car fixture on the canonical runner:
+
+```text
+bytes=116688
+rows=1962
+import_ms=3.396
+validation_ms=2.507
+validation_issues=0
+```
+
+This is a characterization baseline, not a public SLA and not a CI threshold.
+
+No optimization is justified from this fixture.
+
+### External scale benchmark procedure
+
+The two larger Apache-2.0 upstream blobs remain external:
+
+- full: `13fed5ffe15ad35dc668ea2b4df8acdc63ae7668` — 20,282,259 bytes;
+- stripped: `499762a9044ea0b09a698509e84681877baf7897` — 15,439,942 bytes.
+
+When benchmarking:
+
+1. obtain the exact upstream blob;
+2. write it to a temporary `.csv` path without modifying contents;
+3. run `TraqmateTrackvisionCSVImporter.import_source`;
+4. run `TelemetryValidator.validate` on the imported dataset;
+5. record file size, row count, import time, validation time and memory observations;
+6. repeat enough times to distinguish warm-up/noise from stable behavior;
+7. do not add a hard CI timing threshold unless a product performance requirement is accepted.
+
 ## Completion criteria
 
 - tests committed before production adapter behavior;
