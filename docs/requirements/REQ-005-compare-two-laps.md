@@ -219,9 +219,31 @@ TDD evidence:
 - RED: OME CI #128 — observation API absent;
 - GREEN: OME CI #135 — canonical verification successful.
 
-REQ-005 remains partially open for:
+### Integrated comparison-report traceability
 
-- comparison report/supporting-channel evidence summaries.
+Plan 014 composes the accepted deterministic comparison capabilities into one application-level artifact.
+
+Test module:
+
+`tests/application/test_lap_comparison_report.py`
+
+The tests prove:
+
+- AC-001 / AC-002 — the report contains the accepted deterministic base comparison rather than recalculating it;
+- AC-003 — optional missing/incompatible supporting evidence is preserved explicitly without fabrication;
+- AC-004 — observations remain non-causal and the report exposes no causal conclusion fields;
+- AC-005 — report provenance retains base comparison, observation and every successful overlay provenance;
+- AC-006 — Session / Run / Lap context remains reachable through the retained base comparison provenance;
+- the initial speed/throttle/brake/steering/RPM/gear evidence inventory is presented in deterministic stable order.
+
+TDD evidence:
+
+- RED: OME CI #141 — report application contract absent;
+- GREEN: OME CI #145 — canonical verification successful.
+
+The deterministic **backend** scope of REQ-005 is now implemented for the first vertical slice.
+
+REQ-005 remains Accepted rather than Implemented until the user-facing API/UI workflow makes the comparison selectable and inspectable end to end.
 
 ## Out of Scope
 
