@@ -317,6 +317,93 @@
     stroke-width: 2.5;
   }
 
+  .telemetry-investigation {
+    padding-block: 24px;
+    border-bottom: 1px solid #303743;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .section-heading > p {
+    max-width: 560px;
+    margin: 0;
+    color: #aeb9c8;
+    line-height: 1.5;
+  }
+
+  .telemetry-plot-scroll {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #303743;
+    border-radius: 10px;
+    background: #12161c;
+  }
+
+  .telemetry-plot {
+    width: 100%;
+    min-width: 720px;
+    min-height: 720px;
+  }
+
+  .exact-values-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .exact-values {
+    border-top: 1px solid #272e38;
+    padding-top: 8px;
+  }
+
+  .exact-values summary {
+    cursor: pointer;
+    color: #d7dde7;
+    font-weight: 700;
+  }
+
+  .table-scroll {
+    margin-top: 10px;
+    overflow-x: auto;
+  }
+
+  .exact-values table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.84rem;
+  }
+
+  .exact-values th,
+  .exact-values td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #272e38;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .exact-values th:first-child,
+  .exact-values td:first-child {
+    text-align: left;
+  }
+
+  .exact-values th {
+    color: #aeb9c8;
+    font-weight: 700;
+  }
+
   .observation-list,
   .evidence-list {
     display: grid;
@@ -393,6 +480,15 @@
     .source-grid,
     .comparison-header {
       grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 8px;
+    }
+
+    .telemetry-plot {
+      min-width: 680px;
     }
 
     .delta-value,

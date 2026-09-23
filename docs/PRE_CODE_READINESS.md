@@ -26,7 +26,9 @@ The repository now has:
 14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance;
 15. a versioned local FastAPI report boundary with explicit DTOs, OpenAPI and framework-isolation enforcement;
 16. a deterministic comparison-preparation workflow connecting imported source evidence through validation, explicit normalization and context into the accepted report request;
-17. a browser-usable OME CSV multipart source workflow that preserves import/preparation/report readiness semantics.
+17. a browser-usable OME CSV multipart source workflow that preserves import/preparation/report readiness semantics;
+18. a verified React/TypeScript investigation workspace with explicit evidence/provenance and accessible result states;
+19. synchronized telemetry investigation plots that consume server arrays without browser-side engineering recomputation.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -186,21 +188,34 @@ The architecture is still intentionally being proven one boundary at a time.
 - explicit not-ready behavior;
 - recorded RED -> GREEN CI history.
 
+### Investigation frontend — Plans 018–019
+
+- React/TypeScript/Vite investigation workspace;
+- source upload workflow over the accepted local API;
+- success/not-ready/error/loading states;
+- deterministic delta summary and observations;
+- explicit Supporting Evidence and provenance;
+- synchronized Plotly delta/continuous/gear panels;
+- exact-value semantic tables;
+- redundant Lap A/B line styles;
+- mechanically isolated Plotly dependency;
+- no browser-side engineering recomputation.
+
 ## Current implementation gate
 
 ### Go
 
-Proceed to:
+Complete and merge:
 
-`docs/plans/active/018-mvp-investigation-frontend-foundation.md`
+`docs/plans/active/019-synchronized-telemetry-investigation-plots.md`
 
 ### Guardrail
 
-The frontend must consume the accepted source-oriented HTTP workflow and preserve engineering meaning rather than reconstructing it.
+Frontend visualization remains presentation-only. Server-returned distance, delta, continuous overlays and gear arrays are authoritative.
 
-Use the OME UX rules: make Lap A reference, B-A sign, units, Missing Evidence and provenance discoverable. Keep causal diagnosis out of the first UI.
+Do not smooth, resample, repair, infer missing channels or convert plot shape into causal diagnosis.
 
-ADR-0010 remains Proposed. Frontend implementation does not require Docker/Compose.
+ADR-0010 remains Proposed.
 
 The following remain separate responsibilities:
 
@@ -230,7 +245,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport, source-to-report preparation and browser-source upload workflow have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines, the integrated report artifact, local HTTP transport, source-to-report preparation, browser-source upload, the investigation frontend and synchronized plot increments have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
