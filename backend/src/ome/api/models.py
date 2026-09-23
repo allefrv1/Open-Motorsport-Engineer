@@ -8,7 +8,6 @@ from pydantic import BaseModel, ConfigDict
 from ome.analysis import (
     ComparisonReadinessIssue,
     ContinuousOverlaySeries,
-    GearInputValue,
     GearOverlaySeries,
     LapComparisonLap,
     LapComparisonNotReady,
@@ -185,7 +184,7 @@ class ContinuousChannelPairDto(ApiModel):
 
 class GearOverlaySeriesDto(ApiModel):
     timestamps_s: tuple[float, ...]
-    values: tuple[GearInputValue, ...]
+    values: tuple[int | float | bool | str | None, ...]
     evidence: CanonicalSeriesEvidenceDto
 
     def to_domain(self) -> GearOverlaySeries:
