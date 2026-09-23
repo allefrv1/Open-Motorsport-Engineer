@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import tempfile
+import time
 import unittest
 from datetime import UTC, datetime
 from pathlib import Path
@@ -297,6 +298,30 @@ Elapsed Time,Velocity (MPH),Lap
                 self.assertIsInstance(outcome, ImportFailure)
                 assert isinstance(outcome, ImportFailure)
                 self.assertEqual(outcome.code, ImportFailureCode.INVALID_PROFILE)
+
+    def test_supported_fixture_performance_is_characterized_without_threshold(self) -> None:
+        import_started = time.perf_counter()
+        outcome = self.importer.import_source(
+            TRAQMATE_FIXTURE,
+            imported_at=FIXED_TIME,
+        )
+        import_elapsed_ms = (time.perf_counter() - import_started) * 1000.0
+
+        self.assertIsInstance(outcome, ImportSuccess)
+        assert isinstance(outcome, ImportSuccess)
+
+        validation_started = time.perf_counter()
+        validation = self.validator.validate(outcome.dataset)
+        validation_elapsed_ms = (time.perf_counter() - validation_started) * 1000.0
+
+        print(
+            "TRAQMATE_PERF "
+            f"bytes={TRAQMATE_FIXTURE.stat().st_size} "
+            f"rows={len(outcome.dataset.channel('Elapsed Time').series.values)} "
+            f"import_ms={import_elapsed_ms:.3f} "
+            f"validation_ms={validation_elapsed_ms:.3f} "
+            f"validation_issues={len(validation.issues)}"
+        )
 
     def test_empty_data_table_fails_explicitly(self) -> None:
         source = """Format,Traqmate Trackvision,V2
