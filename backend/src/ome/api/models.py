@@ -635,9 +635,7 @@ class OmeCsvComparisonNotReadyResponse(ApiModel):
     issues: tuple[WorkflowIssueDto, ...]
 
 
-OmeCsvComparisonHttpResponse = (
-    ComparisonReportSuccessResponse | OmeCsvComparisonNotReadyResponse
-)
+OmeCsvComparisonHttpResponse = ComparisonReportSuccessResponse | OmeCsvComparisonNotReadyResponse
 
 
 class HealthResponse(ApiModel):
