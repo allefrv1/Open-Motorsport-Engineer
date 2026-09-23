@@ -167,7 +167,7 @@ describe("MVP investigation frontend", () => {
     render(<App />);
 
     const compare = screen.getByRole("button", { name: "Compare laps" });
-    expect(compare).toBeDisabled();
+    expect((compare as HTMLButtonElement).disabled).toBe(true);
 
     fireEvent.change(screen.getByLabelText("Lap A CSV"), {
       target: { files: [file("lap-a.csv", "text/csv")] },
@@ -178,12 +178,12 @@ describe("MVP investigation frontend", () => {
     fireEvent.change(screen.getByLabelText("Lap B CSV"), {
       target: { files: [file("lap-b.csv", "text/csv")] },
     });
-    expect(compare).toBeDisabled();
+    expect((compare as HTMLButtonElement).disabled).toBe(true);
 
     fireEvent.change(screen.getByLabelText("Lap B sidecar"), {
       target: { files: [file("lap-b.ome.json", "application/json")] },
     });
-    expect(compare).toBeEnabled();
+    expect((compare as HTMLButtonElement).disabled).toBe(false);
   });
 
   it("submits the exact Plan 017 multipart field names", async () => {
@@ -227,8 +227,8 @@ describe("MVP investigation frontend", () => {
     const compare = screen.getByRole("button", { name: "Compare laps" });
     fireEvent.click(compare);
 
-    expect(await screen.findByRole("status")).toHaveTextContent("Comparing laps");
-    expect(compare).toBeDisabled();
+    expect((await screen.findByRole("status")).textContent).toContain("Comparing laps");
+    expect((compare as HTMLButtonElement).disabled).toBe(true);
 
     fireEvent.click(compare);
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -247,17 +247,17 @@ describe("MVP investigation frontend", () => {
     });
     fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
 
-    expect(await screen.findByText("+0.200 s")).toBeInTheDocument();
-    expect(screen.getByText("Lap B is slower at the end of the common interval.")).toBeInTheDocument();
-    expect(screen.getByText("Lap A = reference")).toBeInTheDocument();
-    expect(screen.getByText("Delta = Lap B - Lap A")).toBeInTheDocument();
-    expect(screen.getByText("0–100 m")).toBeInTheDocument();
-    expect(screen.getByText("lap-a.csv")).toBeInTheDocument();
-    expect(screen.getByText("lap-b.csv")).toBeInTheDocument();
+    expect(await screen.findByText("+0.200 s")).toBeTruthy();
+    expect(screen.getByText("Lap B is slower at the end of the common interval.")).toBeTruthy();
+    expect(screen.getByText("Lap A = reference")).toBeTruthy();
+    expect(screen.getByText("Delta = Lap B - Lap A")).toBeTruthy();
+    expect(screen.getByText("0–100 m")).toBeTruthy();
+    expect(screen.getByText("lap-a.csv")).toBeTruthy();
+    expect(screen.getByText("lap-b.csv")).toBeTruthy();
 
     const chart = screen.getByRole("img", { name: "Delta time over distance" });
-    expect(chart).toBeInTheDocument();
-    expect(chart).toHaveAttribute("data-point-count", "5");
+    expect(chart).toBeTruthy();
+    expect(chart.getAttribute("data-point-count")).toBe("5");
   });
 
   it("renders gain/loss as observations without a causal diagnosis", async () => {
@@ -267,11 +267,11 @@ describe("MVP investigation frontend", () => {
     selectSources();
     fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
 
-    expect(await screen.findByRole("heading", { name: "Observations" })).toBeInTheDocument();
-    expect(screen.getByText("Lap B loss")).toBeInTheDocument();
-    expect(screen.getByText("0–100 m")).toBeInTheDocument();
-    expect(screen.queryByText(/because/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/cause/i)).not.toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Observations" })).toBeTruthy();
+    expect(screen.getByText("Lap B loss")).toBeTruthy();
+    expect(screen.getByText("0–100 m")).toBeTruthy();
+    expect(screen.queryByText(/because/i)).toBeNull();
+    expect(screen.queryByText(/cause/i)).toBeNull();
   });
 
   it("keeps Missing Evidence explicit", async () => {
@@ -281,12 +281,12 @@ describe("MVP investigation frontend", () => {
     selectSources();
     fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
 
-    expect(await screen.findByRole("heading", { name: "Supporting evidence" })).toBeInTheDocument();
-    expect(screen.getByText("vehicle.speed")).toBeInTheDocument();
-    expect(screen.getByText("Available")).toBeInTheDocument();
-    expect(screen.getByText("driver.brake")).toBeInTheDocument();
-    expect(screen.getByText("Missing evidence")).toBeInTheDocument();
-    expect(screen.getByText("Brake evidence is unavailable for Lap B.")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Supporting evidence" })).toBeTruthy();
+    expect(screen.getByText("vehicle.speed")).toBeTruthy();
+    expect(screen.getByText("Available")).toBeTruthy();
+    expect(screen.getByText("driver.brake")).toBeTruthy();
+    expect(screen.getByText("Missing evidence")).toBeTruthy();
+    expect(screen.getByText("Brake evidence is unavailable for Lap B.")).toBeTruthy();
   });
 
   it("makes provenance discoverable through progressive disclosure", async () => {
@@ -298,15 +298,15 @@ describe("MVP investigation frontend", () => {
     await screen.findByText("+0.200 s");
 
     const summary = screen.getByText("Method and provenance");
-    expect(summary).toBeInTheDocument();
+    expect(summary).toBeTruthy();
 
     fireEvent.click(summary);
-    expect(screen.getByText("ome.lap-comparison.distance-linear")).toBeInTheDocument();
-    expect(screen.getByText("0.1.0")).toBeInTheDocument();
-    expect(screen.getByText("lap_distance_src")).toBeInTheDocument();
-    expect(screen.getByText("time_s")).toBeInTheDocument();
-    expect(screen.getByText("sha256:lap-a")).toBeInTheDocument();
-    expect(screen.getByText("sha256:lap-b")).toBeInTheDocument();
+    expect(screen.getByText("ome.lap-comparison.distance-linear")).toBeTruthy();
+    expect(screen.getByText("0.1.0")).toBeTruthy();
+    expect(screen.getByText("lap_distance_src")).toBeTruthy();
+    expect(screen.getByText("time_s")).toBeTruthy();
+    expect(screen.getByText("sha256:lap-a")).toBeTruthy();
+    expect(screen.getByText("sha256:lap-b")).toBeTruthy();
   });
 
   it("renders not-ready issues and retains the selected files", async () => {
@@ -328,14 +328,14 @@ describe("MVP investigation frontend", () => {
     selectSources();
     fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
 
-    expect(await screen.findByText("Comparison not ready")).toBeInTheDocument();
-    expect(screen.getByText("Preparation")).toBeInTheDocument();
+    expect(await screen.findByText("Comparison not ready")).toBeTruthy();
+    expect(screen.getByText("Preparation")).toBeTruthy();
     expect(
       screen.getByText("Lap B does not provide trustworthy lap distance evidence."),
-    ).toBeInTheDocument();
-    expect(screen.getByText("lap.distance")).toBeInTheDocument();
-    expect(screen.getByText("lap-a.csv")).toBeInTheDocument();
-    expect(screen.getByText("lap-b.csv")).toBeInTheDocument();
+    ).toBeTruthy();
+    expect(screen.getByText("lap.distance")).toBeTruthy();
+    expect(screen.getByText("lap-a.csv")).toBeTruthy();
+    expect(screen.getByText("lap-b.csv")).toBeTruthy();
   });
 
   it("shows a recoverable network error and keeps source selection", async () => {
@@ -345,23 +345,25 @@ describe("MVP investigation frontend", () => {
     selectSources();
     fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
 
-    expect(await screen.findByRole("alert")).toHaveTextContent(
+    expect((await screen.findByRole("alert")).textContent).toContain(
       "Could not reach the local OME API",
     );
-    expect(screen.getByText("lap-a.csv")).toBeInTheDocument();
-    expect(screen.getByText("lap-b.csv")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Compare laps" })).toBeEnabled();
+    expect(screen.getByText("lap-a.csv")).toBeTruthy();
+    expect(screen.getByText("lap-b.csv")).toBeTruthy();
+    expect(
+      (screen.getByRole("button", { name: "Compare laps" }) as HTMLButtonElement).disabled,
+    ).toBe(false);
   });
 
   it("uses semantic labels for the core source workflow", () => {
     render(<App />);
 
-    expect(screen.getByRole("main")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Compare two laps" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Lap A CSV")).toHaveAttribute("type", "file");
-    expect(screen.getByLabelText("Lap A sidecar")).toHaveAttribute("type", "file");
-    expect(screen.getByLabelText("Lap B CSV")).toHaveAttribute("type", "file");
-    expect(screen.getByLabelText("Lap B sidecar")).toHaveAttribute("type", "file");
-    expect(screen.getByLabelText("Grid step (m)")).toHaveAttribute("type", "number");
+    expect(screen.getByRole("main")).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Compare two laps" })).toBeTruthy();
+    expect(screen.getByLabelText("Lap A CSV").getAttribute("type")).toBe("file");
+    expect(screen.getByLabelText("Lap A sidecar").getAttribute("type")).toBe("file");
+    expect(screen.getByLabelText("Lap B CSV").getAttribute("type")).toBe("file");
+    expect(screen.getByLabelText("Lap B sidecar").getAttribute("type")).toBe("file");
+    expect(screen.getByLabelText("Grid step (m)").getAttribute("type")).toBe("number");
   });
 });
