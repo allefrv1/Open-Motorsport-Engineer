@@ -99,3 +99,14 @@ class DeltaObservationProvenance:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "parameters", freeze_metadata(self.parameters))
+
+
+@dataclass(frozen=True, slots=True)
+class ComparisonReportProvenance:
+    assembler_id: str
+    assembler_version: str
+    requested_concepts: tuple[CanonicalConcept, ...]
+    base_comparison: ComparisonProvenance
+    delta_observation: DeltaObservationProvenance
+    continuous_overlays: tuple[ContinuousOverlayProvenance, ...]
+    gear_overlay: GearOverlayProvenance | None

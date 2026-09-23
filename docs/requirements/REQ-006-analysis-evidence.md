@@ -192,3 +192,30 @@ TDD evidence:
 
 - RED: OME CI #128;
 - GREEN: OME CI #135.
+
+
+## Integrated comparison-report evidence traceability
+
+Plan 014 adds `ComparisonReportProvenance` as the application-level evidence composition for the first vertical slice.
+
+It retains:
+
+- report assembler identity/version;
+- the fixed requested canonical concept set;
+- complete base `ComparisonProvenance`;
+- complete `DeltaObservationProvenance`;
+- all successful `ContinuousOverlayProvenance` artifacts;
+- successful `GearOverlayProvenance` when available.
+
+Optional not-ready supporting evidence is preserved separately as deterministic issue codes/messages instead of being invented or silently omitted.
+
+Executable coverage:
+
+`tests/application/test_lap_comparison_report.py::Plan014ComparisonReportTests.test_report_provenance_retains_every_successful_component`
+
+The report still distinguishes derived metric, Observation and Missing Evidence, and contains no hypothesis/causal interpretation/recommendation fields.
+
+TDD evidence:
+
+- RED: OME CI #141;
+- GREEN: OME CI #145.
