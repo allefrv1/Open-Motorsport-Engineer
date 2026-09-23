@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 020 — Real Motorsport Validation Foundation](plans/active/020-real-motorsport-validation-foundation.md)
+- [Plan 021 — Traqmate Trackvision CSV Adapter Foundation](plans/active/021-traqmate-trackvision-csv-adapter-foundation.md)
 
 ## Verification and implementation guidance
 
