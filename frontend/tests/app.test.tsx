@@ -329,8 +329,8 @@ describe("MVP investigation frontend", () => {
     selectSources();
     fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
 
-    const notReadyStatus = await screen.findByRole("status");
-    expect(notReadyStatus.textContent).toContain("Comparison not ready");
+    const notReadyHeading = await screen.findByText("Comparison not ready");
+    expect(notReadyHeading.closest('[role="status"]')).not.toBeNull();
     expect(screen.getByText("Preparation")).toBeTruthy();
     expect(
       screen.getByText("Lap B does not provide trustworthy lap distance evidence."),
