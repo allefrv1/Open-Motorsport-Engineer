@@ -17,6 +17,7 @@ from ome.api.models import (
     OmeCsvComparisonNotReadyResponse,
     WorkflowIssueDto,
 )
+from ome.api.upload_workflow import stage_ome_csv_bundle
 from ome.application import (
     ComparisonPreparationNotReady,
     ComparisonPreparationRequest,
@@ -29,7 +30,6 @@ from ome.application import (
     ComparisonReportSuccess,
     mvp_ome_csv_comparison_profile,
 )
-from ome.api.upload_workflow import stage_ome_csv_bundle
 from ome.ingestion import ImportFailure, ImportSuccess, OMECsvProfileImporter
 
 
