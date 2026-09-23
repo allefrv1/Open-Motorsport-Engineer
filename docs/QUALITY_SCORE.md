@@ -2,7 +2,7 @@
 
 Date: 2026-09-23
 
-Status: **Operational harness — physical-car ingestion verified; GPS distance derivation active**
+Status: **Operational harness — GPS path derivation verified; common track reference active**
 
 Scale:
 
@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–021 have completed history and Plan 022 is active. |
+| Plan lifecycle | 4 | Plans 001–022 have completed history and Plan 023 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -56,7 +56,9 @@ Plan 020 validated those assumptions against licensed physical-car telemetry and
 
 Plan 021 closed that gap with an explicit Traqmate Trackvision adapter and supported-path performance characterization.
 
-The next maturity step is to derive GPS path distance deterministically while keeping it semantically distinct from a corrected/common lap-comparison reference.
+Plan 022 now provides deterministic WGS84 path distance with typed provenance and real physical-car validation.
+
+The next maturity step is a common physical reference trajectory that maps GPS laps onto the same along-track coordinate without hidden stretch, smoothing or point repair.
 
 ## Review cadence
 
