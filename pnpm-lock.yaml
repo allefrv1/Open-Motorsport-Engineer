@@ -16,6 +16,9 @@ importers:
       react-dom:
         specifier: 19.3.0
         version: 19.3.0(react@19.3.0)
+      plotly.js-dist-min:
+        specifier: 4.1.1
+        version: 4.1.1
     devDependencies:
       '@testing-library/dom':
         specifier: 10.4.2
@@ -674,6 +677,9 @@ packages:
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
+  plotly.js-dist-min@4.1.1:
+    resolution: {integrity: sha512-4Jg6n9FKcn5WBuqHESZmueEBYOLjGlsz8ivzMCl03WCX+GAAOgIALvdONwIi54JDMq0tkxbu+vs5Yj7QSPQtgg==}
+
   react@19.3.0:
     resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
     engines: {node: '>=0.10.0'}
@@ -1312,6 +1318,8 @@ snapshots:
       scheduler: 0.28.0
 
   react-is@17.0.2: {}
+
+  plotly.js-dist-min@4.1.1: {}
 
   react@19.3.0: {}
 
