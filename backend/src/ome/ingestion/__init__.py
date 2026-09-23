@@ -13,6 +13,7 @@ from ome.ingestion.iracing_ibt import IRacingIBTImporter
 from ome.ingestion.motec_csv import MoTeCCSVImporter
 from ome.ingestion.ome_csv import OMECsvProfileImporter
 from ome.ingestion.service import TelemetryImportService
+from ome.ingestion.traqmate_csv import TraqmateTrackvisionCSVImporter
 
 __all__ = [
     "ChannelSummary",
@@ -26,4 +27,5 @@ __all__ = [
     "OMECsvProfileImporter",
     "TelemetryImporter",
     "TelemetryImportService",
+    "TraqmateTrackvisionCSVImporter",
 ]
