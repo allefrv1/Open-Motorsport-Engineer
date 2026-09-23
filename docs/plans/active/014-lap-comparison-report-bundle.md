@@ -99,6 +99,42 @@ It must not:
 - render UI;
 - use AI.
 
+## TDD execution evidence
+
+Behavioral RED:
+
+- CI #141;
+- expected failure: the comparison-report application contract was absent from `ome.application`.
+
+Post-implementation harness feedback:
+
+- CI #142–#144 exposed formatter and test-fixture setup defects;
+- no deterministic engine contract was weakened.
+
+GREEN:
+
+- CI #145;
+- the complete canonical `verify` passed with integrated report composition, optional missing evidence and typed report provenance.
+
+## Implementation traceability
+
+Test module:
+
+`tests/application/test_lap_comparison_report.py`
+
+Coverage proves:
+
+- base comparison failure makes the whole report not ready;
+- a complete request produces one integrated deterministic report;
+- the fixed six-concept evidence inventory is stable;
+- optional missing speed/gear evidence does not destroy the report;
+- incompatible brake semantics remain explicit missing evidence;
+- successful continuous/gear overlays reuse the accepted base grid;
+- duplicate/unsupported report declarations fail explicitly;
+- report provenance retains every successful component provenance;
+- equivalent requests produce equal reports;
+- the report contains no cause/hypothesis/engineering interpretation/recommendation fields.
+
 ## Completion criteria
 
 - report spec accepted;
