@@ -22,7 +22,8 @@ The repository now has:
 10. continuous speed/throttle/steering/engine-speed overlays on the trusted comparison grid;
 11. discrete transmission.gear overlay using previous-sample hold;
 12. exact brake-semantic compatibility with semantic identity preserved through normalization and evidence;
-13. deterministic gain/loss/neutral delta observations with complete base provenance.
+13. deterministic gain/loss/neutral delta observations with complete base provenance;
+14. an integrated application comparison report with explicit optional Missing Evidence and full component provenance.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -150,19 +151,30 @@ The architecture is still intentionally being proven one boundary at a time.
 - strict separation between Observation and cause/hypothesis/interpretation;
 - recorded RED -> GREEN CI history.
 
+### Integrated comparison report — Plan 014
+
+- deterministic application composition;
+- stable six-concept evidence inventory;
+- successful component reuse without numerical duplication;
+- optional missing/incompatible evidence remains explicit;
+- complete typed report provenance;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/014-lap-comparison-report-bundle.md`
+`docs/plans/active/015-local-comparison-report-http-api.md`
 
 ### Guardrail
 
-Delta-time, all initial comparison channels and deterministic gain/loss observations now exist as separately verified artifacts.
+The application report is now stable enough to expose through ADR-0008's local HTTP boundary.
 
-Plan 014 may compose those artifacts at the application boundary. It must not duplicate numerical analysis or hide missing optional evidence. The resulting report is the stable backend contract that should precede HTTP/API and frontend work.
+Plan 015 may introduce FastAPI/Pydantic only inside the API/transport layer. It must not leak transport types into analysis/application/domain modules or reimplement deterministic calculations.
+
+ADR-0010 is Proposed: Docker packaging should follow an executable API process; Docker Compose remains deferred until there is a real multi-process application lifecycle.
 
 The following remain separate responsibilities:
 
@@ -192,7 +204,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, source adapters and deterministic comparison work through typed delta observations have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters, deterministic comparison engines and the integrated comparison-report application artifact have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
