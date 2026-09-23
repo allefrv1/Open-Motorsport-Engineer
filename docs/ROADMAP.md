@@ -110,23 +110,36 @@ Completed:
 - complete report provenance;
 - explicit optional Missing Evidence.
 
+Completed:
+
+- Plan 015 — Local Comparison Report HTTP API;
+- executable local FastAPI boundary;
+- versioned report transport DTOs;
+- health/OpenAPI contract;
+- deterministic success/not-ready HTTP semantics;
+- mechanical FastAPI/Pydantic isolation from the engineering core.
+
 Current plan:
 
-- `docs/plans/active/015-local-comparison-report-http-api.md`
+- `docs/plans/active/016-mvp-comparison-preparation-workflow.md`
 
 Current work:
 
-- executable local FastAPI boundary;
-- versioned comparison-report transport schema;
-- deterministic success/not-ready serialization;
-- health/OpenAPI contract;
-- transport-framework isolation from the engineering core.
+- connect import/validation/normalization/context into a report-ready application use case;
+- introduce controlled two-lap source fixtures with explicit distance/context;
+- preserve the full source-to-report evidence chain;
+- remove the need for callers/frontends to manually construct low-level canonical evidence.
+
+After Plan 016:
+
+- expose the simplified preparation/comparison workflow through HTTP;
+- implement the real MVP investigation frontend.
 
 Containerization:
 
-- ADR-0010 is Proposed;
-- backend Docker packaging is evaluated after the executable API exists;
-- Docker Compose remains deferred until multiple real application processes exist, expected after the React/Vite frontend begins.
+- ADR-0010 remains Proposed;
+- a backend Dockerfile is now technically justified if the ADR is accepted;
+- Docker Compose remains deferred until at least the real frontend process exists.
 
 ## Phase 6 — Expanded real-motorsport validation
 
