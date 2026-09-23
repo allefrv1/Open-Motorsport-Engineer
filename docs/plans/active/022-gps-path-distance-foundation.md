@@ -59,9 +59,31 @@ Motorsport practice cross-check:
 - corrected distance can compensate for lap-length variation;
 - GPS itself has acquisition delay/quality considerations.
 
+## Reviewed characterization and accepted v0.1 contract
+
+Reviewed source characterization:
+
+- `docs/research/traqmate-gps-path-characterization.md`
+
+Accepted Plan 022 numerical contract:
+
+- `docs/specs/gps-path-distance-v0.1.md`
+
+Key v0.1 decisions:
+
+- derived concept: `gps.path_distance`;
+- WGS84 inverse geodesic between consecutive latitude/longitude samples;
+- 2D horizontal distance only;
+- altitude preserved separately and excluded from distance;
+- no smoothing, filtering, map matching or point deletion;
+- duplicate coordinates remain valid zero-distance segments;
+- source timestamps must be strictly increasing;
+- result retains algorithm/provenance evidence;
+- no automatic promotion to canonical `lap.distance`.
+
 ## Phase A — source GPS characterization
 
-Before deriving distance, characterize the licensed Traqmate fixture:
+Completed characterization of the licensed Traqmate fixture covered:
 
 - latitude/longitude finite range;
 - sample cadence;
@@ -73,13 +95,15 @@ Before deriving distance, characterize the licensed Traqmate fixture:
 - approximate raw geodesic path length;
 - relation between source velocity and geodesic incremental speed.
 
-This phase is characterization only.
+This phase is complete and did not mutate source data.
 
-It must not mutate source data.
+The fixture shows a coherent 10 Hz GPS path and one clearly complete source lap, with no obvious geometric jumps in the characterized data.
 
 ## Phase B — deterministic GPS path-distance contract
 
-Define a source-independent derived artifact with:
+The v0.1 contract is accepted for Plan 022.
+
+The source-independent derived artifact contains:
 
 - algorithm id/version;
 - ellipsoid/model identity;
@@ -91,11 +115,11 @@ Define a source-independent derived artifact with:
 - source dataset/lap context;
 - quality/readiness issues.
 
-Initial candidate:
+Selected baseline:
 
-`WGS84 inverse geodesic between consecutive accepted GPS samples`
+`WGS84 inverse geodesic between consecutive source GPS samples`
 
-using a deterministic, documented geodesic implementation.
+using GeographicLib-compatible ellipsoidal geodesic semantics.
 
 ## Altitude policy
 
