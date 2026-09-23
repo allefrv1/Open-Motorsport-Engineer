@@ -12,18 +12,23 @@ forbid = [
   "ome.normalization",
   "ome.analysis",
   "fastapi",
+  "pydantic",
   "polars",
   "pyarrow",
   "sqlalchemy",
 ]
 
+[layers.application]
+path = "application"
+forbid = ["ome.api", "fastapi", "pydantic"]
+
 [layers.analysis]
 path = "analysis"
-forbid = ["ome.api", "ome.ai", "fastapi"]
+forbid = ["ome.api", "ome.ai", "fastapi", "pydantic"]
 
 [layers.ingestion]
 path = "ingestion"
-forbid = ["ome.api", "ome.analysis"]
+forbid = ["ome.api", "ome.analysis", "fastapi", "pydantic"]
 
 [layers.validation]
 path = "validation"
@@ -32,6 +37,8 @@ forbid = [
   "ome.analysis",
   "ome.ingestion",
   "ome.normalization",
+  "fastapi",
+  "pydantic",
 ]
 
 [layers.normalization]
@@ -41,8 +48,10 @@ forbid = [
   "ome.analysis",
   "ome.ingestion",
   "ome.validation",
+  "fastapi",
+  "pydantic",
 ]
 
 [layers.evidence]
 path = "evidence"
-forbid = ["ome.api", "fastapi"]
+forbid = ["ome.api", "fastapi", "pydantic"]

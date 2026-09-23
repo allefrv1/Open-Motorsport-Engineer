@@ -219,3 +219,32 @@ TDD evidence:
 
 - RED: OME CI #141;
 - GREEN: OME CI #145.
+
+
+## Local HTTP evidence transport traceability
+
+Plan 015 proves that the accepted evidence chain survives the first HTTP transport boundary.
+
+The API DTO layer preserves:
+
+- dataset fingerprints;
+- Session / Run / Lap context;
+- source channel identifiers/original names;
+- canonical concept/unit/semantic identity;
+- transformation identity/version/parameters;
+- base comparison algorithm identity/version/parameters;
+- observation and overlay provenance;
+- report assembler identity/version;
+- explicit Missing Evidence/readiness issues.
+
+Executable coverage:
+
+`tests/api/test_local_http_api.py`
+
+TDD evidence:
+
+- RED: OME CI #155;
+- GREEN: OME CI #161;
+- final transport-isolation verification: OME CI #163.
+
+FastAPI/Pydantic are mechanically forbidden from the deterministic core through `architecture.toml`, so evidence transport remains an adapter concern rather than a domain dependency.

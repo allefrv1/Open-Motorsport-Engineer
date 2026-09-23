@@ -93,13 +93,35 @@ uv run --locked python scripts/harness.py fixtures
 uv run --locked python scripts/harness.py verify
 ```
 
-## Dependency policy
+## Application dependencies
 
-The application currently has no production dependencies because feature development has not started.
+The first executable local HTTP boundary introduces pinned Python application dependencies:
 
-Harness tools that are useful as standalone binaries are invoked at explicit versions through `uvx`.
+- FastAPI 0.140.3;
+- Uvicorn 0.53.0;
+- httpx 0.28.1 in the development/test dependency group.
 
-When application dependencies are introduced, they belong in the appropriate lockfile and must be installed from the locked state in CI.
+They are resolved in `uv.lock` and installed through the same locked environment as the rest of the project.
+
+Harness tools that are useful as standalone binaries remain invoked at explicit versions through `uvx`.
+
+## Run the local API
+
+From the repository root after `uv sync --locked`:
+
+```text
+uv run --locked uvicorn --app-dir backend/src ome.api:create_app --factory --host 127.0.0.1 --port 8000
+```
+
+Local endpoints:
+
+- `GET http://127.0.0.1:8000/healthz`
+- `POST http://127.0.0.1:8000/api/v1/comparison-reports`
+- `GET http://127.0.0.1:8000/openapi.json`
+
+The default host is intentionally loopback-only for the local-first baseline.
+
+Docker is not required to run this API. ADR-0010 defines the proposed incremental containerization direction.
 
 ## CI parity
 

@@ -243,7 +243,29 @@ TDD evidence:
 
 The deterministic **backend** scope of REQ-005 is now implemented for the first vertical slice.
 
-REQ-005 remains Accepted rather than Implemented until the user-facing API/UI workflow makes the comparison selectable and inspectable end to end.
+### Local HTTP comparison-report traceability
+
+Plan 015 exposes the accepted deterministic report through the first versioned local HTTP boundary.
+
+Test module:
+
+`tests/api/test_local_http_api.py`
+
+The tests prove:
+
+- AC-001 / AC-002 — the API serializes the already accepted deterministic base comparison rather than recalculating it;
+- AC-003 — application Missing Evidence/not-ready outcomes remain explicit structured HTTP data;
+- AC-004 — transport does not add causal diagnosis fields;
+- AC-005 — assembler/base algorithm provenance remains visible in JSON;
+- AC-006 — the request/response evidence model retains dataset and Session / Run / Lap identifiers.
+
+TDD evidence:
+
+- RED: OME CI #155 — `create_app` absent;
+- GREEN: OME CI #161 — canonical verification successful;
+- final architecture/docs verification: CI #163.
+
+REQ-005 remains Accepted rather than Implemented until the user-facing UI workflow makes the comparison selectable and inspectable end to end.
 
 ## Out of Scope
 
