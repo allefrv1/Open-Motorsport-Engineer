@@ -84,7 +84,9 @@ export function TelemetryInvestigationPlots({
         </p>
       </div>
 
-      <PlotlyTelemetryFigure model={model} />
+      <div className="telemetry-plot-scroll">
+        <PlotlyTelemetryFigure model={model} />
+      </div>
 
       <div className="exact-values-list">
         {model.panels.map((panel) => (
