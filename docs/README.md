@@ -19,7 +19,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 009 — Lap Comparison Reference and Delta-Time Foundation](plans/active/009-lap-comparison-reference-delta-foundation.md)
+- [Plan 010 — Lap Continuous Channel Overlays](plans/active/010-lap-continuous-channel-overlays.md)
 
 ## Verification and implementation guidance
 

@@ -82,24 +82,29 @@ Completed:
 
 Status: **Active**
 
+Completed:
+
+- Plan 009 — Lap Comparison Reference and Delta-Time Foundation;
+- explicit distance/time readiness;
+- common distance grid;
+- deterministic linear time-vs-distance interpolation;
+- `delta_B_vs_A`;
+- typed comparison provenance/evidence.
+
 Current plan:
 
-- `docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
-
-The numerical baseline is resolved by ADR-0009 and `docs/specs/lap-comparison-v0.1.md`.
+- `docs/plans/active/010-lap-continuous-channel-overlays.md`
 
 Current work:
 
-- implement readiness checks;
-- construct the common 1.0 m default distance grid;
-- linearly interpolate elapsed time vs distance;
-- calculate `delta_B_vs_A`;
-- preserve comparison provenance/evidence;
-- prove behavior with TDD.
+- project continuous canonical channels onto the existing distance grid;
+- support different source/normalized channel cadences;
+- preserve overlay provenance;
+- keep unsupported/missing evidence explicit.
 
 Later Phase 5 increments:
 
-- key channel overlays;
+- brake semantic-compatibility contract;
 - discrete gear alignment rule;
 - observation/evidence layer;
 - comparison report.

@@ -17,7 +17,8 @@ The repository now has:
 5. explicit versioned normalization preserving source evidence;
 6. source-independent Session / Run / Lap context that does not invent missing boundaries;
 7. a verified iRacing IRSDK v2 adapter with grouped fixed-array source preservation;
-8. a MoTeC CSV professional-workflow adapter preserving preamble, units, lexical values and import/validation boundaries.
+8. a MoTeC CSV professional-workflow adapter preserving preamble, units, lexical values and import/validation boundaries;
+9. deterministic distance-aligned lap delta-time analysis with typed provenance and readiness.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -95,21 +96,31 @@ The architecture is still intentionally being proven one boundary at a time.
 - external representative MoTeC-format validation;
 - recorded RED -> GREEN CI cycle.
 
+### Lap delta analysis — Plan 009
+
+- explicit `lap.distance` / `time.elapsed` readiness;
+- common-overlap distance grid;
+- deterministic linear time-vs-distance interpolation;
+- `delta_B_vs_A` sign contract;
+- typed source/transformation/context provenance;
+- explicit not-ready outcomes;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/009-lap-comparison-reference-delta-foundation.md`
+`docs/plans/active/010-lap-continuous-channel-overlays.md`
 
 ### Guardrail
 
-Lap comparison must be deterministic and evidence-backed.
+The base lap delta comparison is implemented and verified.
 
-ADR-0009 and `docs/specs/lap-comparison-v0.1.md` now define the positional reference, 1.0 m default grid, linear time-vs-distance interpolation, delta sign, readiness rules and provenance contract.
+Plan 010 must reuse that exact grid/provenance and add only supported continuous canonical evidence according to `docs/specs/lap-continuous-overlay-v0.1.md`.
 
-Production comparison code may proceed only through TDD against that contract. Missing or incompatible evidence must produce an explicit not-ready result rather than a plausible-looking comparison.
+Do not linearly interpolate gear. Do not overlay brake until semantic compatibility is mechanically explicit. Missing or insufficient channel evidence returns an overlay not-ready result without invalidating the valid base delta comparison.
 
 The following remain separate responsibilities:
 
@@ -139,7 +150,7 @@ Still valuable for later source/scale validation:
 
 ## Evidence
 
-Harness bootstrap, ingestion, validation, normalization, operational context, iRacing ingestion and MoTeC CSV ingestion have each been required to pass the same canonical GitHub Actions verification before merge.
+Harness bootstrap, ingestion, validation, normalization, operational context, source adapters and the first deterministic lap delta analysis have each been required to pass the same canonical GitHub Actions verification before merge.
 
 The current development model is therefore:
 
