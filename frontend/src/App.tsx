@@ -102,7 +102,12 @@ function WorkflowIssues({
   issues: WorkflowIssue[];
 }) {
   return (
-    <section className="not-ready" aria-labelledby="not-ready-heading">
+    <section
+      className="not-ready"
+      role="status"
+      aria-live="polite"
+      aria-labelledby="not-ready-heading"
+    >
       <p className="eyebrow">{stageLabel(stage)}</p>
       <h2 id="not-ready-heading">Comparison not ready</h2>
       <ul className="issue-list">
