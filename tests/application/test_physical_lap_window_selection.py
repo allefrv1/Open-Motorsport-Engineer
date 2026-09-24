@@ -254,6 +254,70 @@ class Plan025PhysicalCarLapWindowSelectionTests(unittest.TestCase):
             (SourceLapWindowIssueCode.MISSING_PROVENANCE,),
         )
 
+    def test_inconsistent_lap_and_time_lengths_are_not_ready(self) -> None:
+        elapsed = self.dataset.channel("Elapsed Time")
+        shorter_elapsed = replace(
+            elapsed,
+            series=SampleSeries(
+                timestamps_s=elapsed.series.timestamps_s[:-1],
+                values=elapsed.series.values[:-1],
+            ),
+        )
+        dataset = replace(
+            self.dataset,
+            channels=tuple(
+                shorter_elapsed if channel.identifier == "Elapsed Time" else channel
+                for channel in self.dataset.channels
+            ),
+        )
+
+        outcome = self.selector.select(
+            SourceLapWindowRequest(
+                dataset=dataset,
+                source_lap_number=4,
+            )
+        )
+
+        self.assertIsInstance(outcome, SourceLapWindowNotReady)
+        assert isinstance(outcome, SourceLapWindowNotReady)
+        self.assertEqual(
+            tuple(issue.code for issue in outcome.issues),
+            (SourceLapWindowIssueCode.INCONSISTENT_SOURCE_EVIDENCE,),
+        )
+
+    def test_non_numeric_closing_boundary_time_is_not_ready(self) -> None:
+        elapsed = self.dataset.channel("Elapsed Time")
+        values = list(elapsed.series.values)
+        values[3618] = "invalid"
+        invalid_elapsed = replace(
+            elapsed,
+            series=SampleSeries(
+                timestamps_s=elapsed.series.timestamps_s,
+                values=tuple(values),
+            ),
+        )
+        dataset = replace(
+            self.dataset,
+            channels=tuple(
+                invalid_elapsed if channel.identifier == "Elapsed Time" else channel
+                for channel in self.dataset.channels
+            ),
+        )
+
+        outcome = self.selector.select(
+            SourceLapWindowRequest(
+                dataset=dataset,
+                source_lap_number=4,
+            )
+        )
+
+        self.assertIsInstance(outcome, SourceLapWindowNotReady)
+        assert isinstance(outcome, SourceLapWindowNotReady)
+        self.assertEqual(
+            tuple(issue.code for issue in outcome.issues),
+            (SourceLapWindowIssueCode.INVALID_BOUNDARY_TIME,),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
