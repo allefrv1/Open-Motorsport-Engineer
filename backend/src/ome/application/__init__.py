@@ -26,6 +26,9 @@ from ome.application.comparison_report import (
     SupportingEvidenceSummary,
 )
 from ome.application.context import ContextOrganizer
+from ome.application.track_reference_preparation import (
+    prepare_track_reference_lap_distance,
+)
 
 __all__ = [
     "ComparisonPreparationIssue",
@@ -50,4 +53,5 @@ __all__ = [
     "SupportingEvidenceStatus",
     "SupportingEvidenceSummary",
     "mvp_ome_csv_comparison_profile",
+    "prepare_track_reference_lap_distance",
 ]

@@ -1,5 +1,15 @@
 """Deterministic analysis APIs for OME."""
 
+from ome.analysis.common_track_reference import (
+    CommonTrackReferenceEngine,
+    CommonTrackReferenceIssueCode,
+    CommonTrackReferenceNotReady,
+    CommonTrackReferenceOutcome,
+    CommonTrackReferenceReadinessIssue,
+    CommonTrackReferenceRequest,
+    CommonTrackReferenceSuccess,
+    TrackReferenceLap,
+)
 from ome.analysis.continuous_overlay import (
     ContinuousOverlayEngine,
     ContinuousOverlayIssueCode,
@@ -53,6 +63,14 @@ from ome.analysis.lap_comparison import (
 )
 
 __all__ = [
+    "CommonTrackReferenceEngine",
+    "CommonTrackReferenceIssueCode",
+    "CommonTrackReferenceNotReady",
+    "CommonTrackReferenceOutcome",
+    "CommonTrackReferenceReadinessIssue",
+    "CommonTrackReferenceRequest",
+    "CommonTrackReferenceSuccess",
+    "TrackReferenceLap",
     "DeltaObservationEngine",
     "DeltaObservationIssueCode",
     "DeltaObservationNotReady",

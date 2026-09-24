@@ -162,6 +162,12 @@ A closed circuit makes values near 0 and near L physically adjacent.
 
 Candidate sample order and source lap boundary provide topological continuity.
 
+Circular seam unwrap applies when the reference geometry is closed.
+
+Analytic open polylines used to verify projection geometry do not have circular seam topology; for those cases, projected along-reference distance remains the raw monotonic polyline coordinate.
+
+Production lap-reference preparation is still expected to provide an explicit lap boundary and closed circuit geometry when circular seam behavior is required.
+
 ### Initial branch
 
 For first raw projected value `s0`:

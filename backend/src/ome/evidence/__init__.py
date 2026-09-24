@@ -2,6 +2,7 @@
 
 from ome.evidence.model import (
     CanonicalSeriesEvidence,
+    CommonTrackReferenceProvenance,
     ComparisonProvenance,
     ComparisonReportProvenance,
     ContinuousOverlayProvenance,
@@ -18,6 +19,7 @@ __all__ = [
     "CanonicalSeriesEvidence",
     "ComparisonProvenance",
     "ComparisonReportProvenance",
+    "CommonTrackReferenceProvenance",
     "ContinuousOverlayProvenance",
     "DeltaObservationProvenance",
     "GearOverlayProvenance",
