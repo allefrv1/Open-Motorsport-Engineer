@@ -106,10 +106,9 @@ class TraqmateLapWindowSelector:
                 "Lap and Elapsed Time source channels must have the same sample count.",
             )
 
-        if (
-            len(lap_channel.series.timestamps_s) != len(lap_values)
-            or len(time_channel.series.timestamps_s) != len(elapsed_values)
-        ):
+        if len(lap_channel.series.timestamps_s) != len(lap_values) or len(
+            time_channel.series.timestamps_s
+        ) != len(elapsed_values):
             return self._not_ready(
                 SourceLapWindowIssueCode.INCONSISTENT_SOURCE_EVIDENCE,
                 "Source channel timestamp/value lengths are inconsistent.",
@@ -230,6 +229,4 @@ class TraqmateLapWindowSelector:
         code: SourceLapWindowIssueCode,
         message: str,
     ) -> SourceLapWindowNotReady:
-        return SourceLapWindowNotReady(
-            issues=(SourceLapWindowIssue(code=code, message=message),)
-        )
+        return SourceLapWindowNotReady(issues=(SourceLapWindowIssue(code=code, message=message),))
