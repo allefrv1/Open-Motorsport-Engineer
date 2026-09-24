@@ -50,6 +50,7 @@ class TrackReferenceLap:
     longitude_evidence: SourceSeriesEvidence
     time_evidence: SourceSeriesEvidence
     gps_path_distance: GPSPathDistanceSuccess | None = None
+    is_closed: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -173,7 +174,10 @@ class CommonTrackReferenceEngine:
         )
 
         raw_distance_m = tuple(projection.raw_distance_m for projection in projections)
-        reference_is_closed = self._same_point(reference_points[0], reference_points[-1])
+        reference_is_closed = reference.is_closed or self._same_point(
+            reference_points[0],
+            reference_points[-1],
+        )
         reference_distance_m = (
             self._unwrap(
                 raw_distance_m,
@@ -214,6 +218,7 @@ class CommonTrackReferenceEngine:
             origin_latitude_deg=origin_latitude_deg,
             origin_longitude_deg=origin_longitude_deg,
             reference_length_m=reference_path.total_distance_m,
+            reference_is_closed=reference_is_closed,
         )
 
         return CommonTrackReferenceSuccess(
