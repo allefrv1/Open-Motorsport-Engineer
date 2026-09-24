@@ -117,8 +117,11 @@ Apache-2.0 at repository level.
 
 OME use:
 
-- small file vendored under `fixtures/public/exit-speed/`;
-- larger track data retained as an external benchmark candidate.
+- parking-lot file vendored under `fixtures/public/exit-speed/`;
+- Portland Laps 4–5 compact derivative slice vendored from stripped blob `499762a9044ea0b09a698509e84681877baf7897`;
+- full 15–20 MB Portland sources remain external benchmark/research artifacts.
+
+The Portland slice preserves the real 28-column Trackvision V2 header and sparse source Lap boundary semantics.
 
 Classification: public telemetry fixture / real vehicle data.
 
