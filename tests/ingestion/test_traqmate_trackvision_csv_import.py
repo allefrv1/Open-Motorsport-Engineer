@@ -22,13 +22,7 @@ from ome.validation import TelemetryValidator
 
 ROOT = Path(__file__).resolve().parents[2]
 TRAQMATE_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-parking-lot.csv"
-PORTLAND_FIXTURE = (
-    ROOT
-    / "fixtures"
-    / "public"
-    / "exit-speed"
-    / "traqmate-portland-laps-4-5.csv"
-)
+PORTLAND_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-portland-laps-4-5.csv"
 MOTEC_FIXTURE = ROOT / "fixtures" / "public" / "trace" / "motec-canonical.csv"
 OME_FIXTURE = ROOT / "fixtures" / "ome" / "basic-lap.csv"
 FIXED_TIME = datetime(2026, 9, 23, 12, 0, tzinfo=UTC)
@@ -420,12 +414,15 @@ class Plan024PortlandExtendedTrackvisionTests(unittest.TestCase):
         raw_header = outcome.dataset.source.metadata["traqmate_raw_header_row"]
 
         self.assertEqual(len(raw_header), 28)
-        self.assertEqual(raw_header[:4], (
-            "GPS Reading",
-            " GPS Time",
-            " GPS Weeks",
-            " Elapsed Time",
-        ))
+        self.assertEqual(
+            raw_header[:4],
+            (
+                "GPS Reading",
+                " GPS Time",
+                " GPS Weeks",
+                " Elapsed Time",
+            ),
+        )
         self.assertEqual(outcome.dataset.channels[3].original_name, "Elapsed Time")
 
     def test_sparse_lap_boundary_cells_remain_source_evidence(self) -> None:
