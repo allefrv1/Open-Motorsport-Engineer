@@ -26,6 +26,16 @@ from ome.application.comparison_report import (
     SupportingEvidenceSummary,
 )
 from ome.application.context import ContextOrganizer
+from ome.application.lap_window import (
+    SourceLapWindow,
+    SourceLapWindowIssue,
+    SourceLapWindowIssueCode,
+    SourceLapWindowNotReady,
+    SourceLapWindowOutcome,
+    SourceLapWindowRequest,
+    SourceLapWindowSuccess,
+    TraqmateLapWindowSelector,
+)
 from ome.application.track_reference_preparation import (
     prepare_track_reference_lap_distance,
 )
@@ -47,6 +57,14 @@ __all__ = [
     "ComparisonReportService",
     "ComparisonReportSuccess",
     "ContextOrganizer",
+    "SourceLapWindow",
+    "SourceLapWindowIssue",
+    "SourceLapWindowIssueCode",
+    "SourceLapWindowNotReady",
+    "SourceLapWindowOutcome",
+    "SourceLapWindowRequest",
+    "SourceLapWindowSuccess",
+    "TraqmateLapWindowSelector",
     "ContinuousChannelPair",
     "GearChannelPair",
     "SupportingEvidenceKind",
