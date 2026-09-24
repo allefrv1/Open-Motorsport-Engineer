@@ -27,6 +27,28 @@ License:
 
 Apache License 2.0. See `licenses/exit-speed-Apache-2.0.txt`.
 
+### exit-speed / Portland Traqmate laps 4–5
+
+Path:
+
+`exit-speed/traqmate-portland-laps-4-5.csv`
+
+Purpose:
+
+- real Portland physical-car telemetry;
+- extended 28-column Trackvision V2 layout;
+- 40 Hz source cadence;
+- sparse Lap boundary markers;
+- complete source Laps 4 and 5.
+
+This is a contiguous derived slice of upstream blob
+`499762a9044ea0b09a698509e84681877baf7897`.
+The original preamble/header and selected source cells are preserved.
+
+License:
+
+Apache License 2.0. See `licenses/exit-speed-Apache-2.0.txt`.
+
 ### TRACE / MoTeC CSV fixtures
 
 Paths:
