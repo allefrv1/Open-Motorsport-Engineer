@@ -260,6 +260,54 @@ class Plan023CommonTrackReferenceTests(unittest.TestCase):
         )
         self.assertEqual(outcome.algorithm_version, "0.2.0")
 
+    def test_explicit_closed_reference_unwraps_seam_without_exact_endpoint_equality(
+        self,
+    ) -> None:
+        reference = TrackReferenceLap(
+            context=context("sha256:ref", "ref"),
+            timestamps_s=(0.0, 1.0, 2.0, 3.0, 4.0),
+            latitudes_deg=(0.0, 0.0, 0.001, 0.001, 0.00001),
+            longitudes_deg=(0.0, 0.001, 0.001, 0.0, 0.0),
+            latitude_evidence=source_evidence("sha256:ref", "Lat", "deg"),
+            longitude_evidence=source_evidence("sha256:ref", "Lon", "deg"),
+            time_evidence=source_evidence("sha256:ref", "Time", "s"),
+            gps_path_distance=gps_path(
+                "sha256:ref",
+                (0.0, 1.0, 2.0, 3.0, 4.0),
+                (0.0, 0.0, 0.001, 0.001, 0.00001),
+                (0.0, 0.001, 0.001, 0.0, 0.0),
+            ),
+            is_closed=True,
+        )
+        candidate = lap(
+            fingerprint="sha256:candidate",
+            lap_id="candidate",
+            timestamps_s=(0.0, 1.0, 2.0),
+            latitudes_deg=(0.00002, 0.0, 0.0),
+            longitudes_deg=(0.0, 0.00001, 0.0001),
+            include_path=False,
+        )
+
+        outcome = self.engine.project(
+            CommonTrackReferenceRequest(reference=reference, candidate=candidate)
+        )
+
+        self.assertIsInstance(outcome, CommonTrackReferenceSuccess)
+        assert isinstance(outcome, CommonTrackReferenceSuccess)
+        self.assertTrue(outcome.provenance.reference_is_closed)
+        self.assertLess(outcome.reference_distance_m[0], 0.0)
+        self.assertGreater(outcome.reference_distance_m[1], 0.0)
+        self.assertTrue(
+            all(
+                current >= previous
+                for previous, current in zip(
+                    outcome.reference_distance_m,
+                    outcome.reference_distance_m[1:],
+                    strict=False,
+                )
+            )
+        )
+
     def test_local_backtrack_is_not_clamped_or_repaired(self) -> None:
         reference = lap(
             fingerprint="sha256:ref",
