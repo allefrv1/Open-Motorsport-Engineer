@@ -245,10 +245,7 @@ class PhysicalTrackReferencePreparationService:
                 message="Reference and candidate context must reference the supplied dataset.",
             )
 
-        if (
-            request.reference_window.source_lap_number
-            == request.candidate_window.source_lap_number
-        ):
+        if request.reference_window.source_lap_number == request.candidate_window.source_lap_number:
             return PhysicalTrackReferencePreparationIssue(
                 code=PhysicalTrackReferencePreparationIssueCode.SAME_LAP_WINDOW,
                 message="Reference and candidate must be different explicit source laps.",
@@ -272,8 +269,7 @@ class PhysicalTrackReferencePreparationService:
     def _required_channels(
         dataset: ImportedTelemetryDataset,
     ) -> (
-        tuple[SourceChannel, SourceChannel, SourceChannel]
-        | PhysicalTrackReferencePreparationIssue
+        tuple[SourceChannel, SourceChannel, SourceChannel] | PhysicalTrackReferencePreparationIssue
     ):
         channels: list[SourceChannel] = []
         for identifier in (_TIME_CHANNEL, _LATITUDE_CHANNEL, _LONGITUDE_CHANNEL):
