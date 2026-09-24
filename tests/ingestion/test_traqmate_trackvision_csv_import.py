@@ -430,9 +430,7 @@ class Plan024PortlandExtendedTrackvisionTests(unittest.TestCase):
         lap = outcome.dataset.channel("Lap")
 
         non_missing = tuple(
-            (index, value)
-            for index, value in enumerate(lap.series.values)
-            if value is not None
+            (index, value) for index, value in enumerate(lap.series.values) if value is not None
         )
         self.assertEqual(
             non_missing,
