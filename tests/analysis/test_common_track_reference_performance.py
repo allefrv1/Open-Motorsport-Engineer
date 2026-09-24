@@ -35,15 +35,9 @@ def _circular_lap(
     center_longitude_deg = -122.0
     radius_deg = 0.001
 
-    angles = tuple(
-        2.0 * math.pi * index / (sample_count - 1) for index in range(sample_count)
-    )
-    latitudes_deg = tuple(
-        center_latitude_deg + radius_deg * math.sin(angle) for angle in angles
-    )
-    longitudes_deg = tuple(
-        center_longitude_deg + radius_deg * math.cos(angle) for angle in angles
-    )
+    angles = tuple(2.0 * math.pi * index / (sample_count - 1) for index in range(sample_count))
+    latitudes_deg = tuple(center_latitude_deg + radius_deg * math.sin(angle) for angle in angles)
+    longitudes_deg = tuple(center_longitude_deg + radius_deg * math.cos(angle) for angle in angles)
     timestamps_s = tuple(index * 0.025 for index in range(sample_count))
 
     latitude_evidence = _evidence(fingerprint, "Lat", "deg")
@@ -119,10 +113,7 @@ class Plan023CommonTrackReferencePerformanceTests(unittest.TestCase):
         print(
             "COMMON_TRACK_REFERENCE_PERF "
             + " ".join(
-                (
-                    f"n={sample_count},segment_checks={segment_checks},"
-                    f"elapsed_s={elapsed_s:.6f}"
-                )
+                (f"n={sample_count},segment_checks={segment_checks},elapsed_s={elapsed_s:.6f}")
                 for sample_count, segment_checks, elapsed_s in observations
             )
         )
