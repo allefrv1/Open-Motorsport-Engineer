@@ -32,7 +32,8 @@ The repository now has:
 20. explicit Traqmate Trackvision V2 physical-car ingestion with preserved GPS/Lap evidence and no fabricated lap distance;
 21. deterministic WGS84 horizontal GPS path-distance derivation with typed provenance and real physical-car validation;
 22. deterministic explicit-reference GPS projection with typed provenance, canonical `lap.distance` preparation and characterized direct-search scaling;
-23. a traceable Portland two-complete-lap physical-car fixture and extended Trackvision V2 ingestion preserving sparse Lap-boundary evidence.
+23. a traceable Portland two-complete-lap physical-car fixture and extended Trackvision V2 ingestion preserving sparse Lap-boundary evidence;
+24. deterministic explicit physical-car source-lap windows with separate closing-boundary evidence.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -251,19 +252,29 @@ The architecture is still intentionally being proven one boundary at a time.
 - regression-proven legacy Trackvision compatibility;
 - recorded behavioral RED, rejected regression and final GREEN CI history.
 
+### Physical-car lap windows — Plan 025
+
+- explicit caller-requested source lap selection;
+- exact Portland Lap 4 and Lap 5 windows;
+- separate closing-boundary index owned by the next source lap;
+- incomplete/ambiguous/missing marker readiness;
+- source/provenance consistency checks;
+- imported dataset and sparse Lap evidence remain unchanged;
+- recorded behavioral RED and final GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/025-physical-car-lap-window-selection-foundation.md`
+`docs/plans/active/026-physical-car-track-reference-preparation-foundation.md`
 
 ### Guardrail
 
-Plan 025 may interpret preserved sparse Traqmate Lap boundary markers only enough to select an explicitly requested complete source lap window.
+Plan 026 may compose explicitly selected source-lap windows with accepted GPS path/common-track-reference engines.
 
-The next marker closes the current lap window but remains a sample of the next lap. Preserve it separately as closing-boundary evidence. Do not fill sparse markers, auto-select laps, derive GPS distance or build comparison/report logic in this slice.
+The next marker remains owned by the next source lap; it may be appended only as boundary evidence for derived trajectory closure. Generic `gps.path_distance -> lap.distance` aliasing remains prohibited. Only the caller-selected reference path may use the explicit reference-path mapping defined by the Plan 026 spec. Do not auto-select laps, infer Session/Run context, normalize supporting vehicle channels or build comparison/report logic in this slice.
 
 ADR-0010 remains Proposed.
 
