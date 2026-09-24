@@ -194,7 +194,89 @@ class Plan026PhysicalTrackReferencePreparationTests(unittest.TestCase):
         self.assertIs(dataset.channels, channels_before)
 
     def test_portland_lap_four_reference_lap_five_candidate_prepares(self) -> None:
-        outcome = self.service.prepare(self.request_for(self.portland))
+        request = self.request_for(self.portland)
+        outcome = self.service.prepare(request)
+
+        if isinstance(outcome, PhysicalTrackReferencePreparationNotReady):
+            time_channel, latitude_channel, longitude_channel = self.service._required_channels(
+                self.portland
+            )
+            reference = self.service._trajectory(
+                self.portland,
+                request.reference_window,
+                time_channel,
+                latitude_channel,
+                longitude_channel,
+            )
+            candidate = self.service._trajectory(
+                self.portland,
+                request.candidate_window,
+                time_channel,
+                latitude_channel,
+                longitude_channel,
+            )
+            assert not hasattr(reference, "code")
+            assert not hasattr(candidate, "code")
+
+            from ome.analysis import GPSPathDistanceEngine, GPSPathDistanceRequest
+
+            reference_path = GPSPathDistanceEngine().derive(
+                GPSPathDistanceRequest(
+                    dataset_fingerprint=self.portland.provenance.content_fingerprint,
+                    timestamps_s=reference.timestamps_s,
+                    latitudes_deg=reference.latitudes_deg,
+                    longitudes_deg=reference.longitudes_deg,
+                    latitude_evidence=reference.latitude_evidence,
+                    longitude_evidence=reference.longitude_evidence,
+                    time_evidence=reference.time_evidence,
+                )
+            )
+            assert hasattr(reference_path, "path_distance_m")
+
+            from ome.analysis.common_track_reference import CommonTrackReferenceEngine
+
+            engine = CommonTrackReferenceEngine()
+            origin_lat = reference.latitudes_deg[0]
+            origin_lon = reference.longitudes_deg[0]
+            reference_points = tuple(
+                engine._local_point(origin_lat, origin_lon, lat, lon)
+                for lat, lon in zip(
+                    reference.latitudes_deg,
+                    reference.longitudes_deg,
+                    strict=True,
+                )
+            )
+            candidate_points = tuple(
+                engine._local_point(origin_lat, origin_lon, lat, lon)
+                for lat, lon in zip(
+                    candidate.latitudes_deg,
+                    candidate.longitudes_deg,
+                    strict=True,
+                )
+            )
+            raw = tuple(
+                engine._nearest_projection(
+                    point,
+                    reference_points,
+                    reference_path.path_distance_m,
+                ).raw_distance_m
+                for point in candidate_points
+            )
+            unwrapped = engine._unwrap(raw, reference_path.total_distance_m)
+            decreases = tuple(
+                (index, previous, current, current - previous)
+                for index, (previous, current) in enumerate(
+                    zip(unwrapped, unwrapped[1:], strict=False),
+                    start=1,
+                )
+                if current <= previous
+            )
+            self.fail(
+                "Portland projection not ready; "
+                f"decreases={decreases[:10]!r}; "
+                f"last_values={unwrapped[-5:]!r}; "
+                f"reference_length={reference_path.total_distance_m!r}"
+            )
 
         self.assertIsInstance(outcome, PhysicalTrackReferencePreparationSuccess)
         assert isinstance(outcome, PhysicalTrackReferencePreparationSuccess)
