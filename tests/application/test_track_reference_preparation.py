@@ -134,7 +134,7 @@ class Plan023TrackReferencePreparationTests(unittest.TestCase):
             projection.transformation_id,
             "ome.track-reference.explicit-lap-projection",
         )
-        self.assertEqual(projection.transformation_version, "0.1.0")
+        self.assertEqual(projection.transformation_version, "0.2.0")
         self.assertEqual(
             projection.parameters["reference_dataset_fingerprint"],
             "sha256:reference",
