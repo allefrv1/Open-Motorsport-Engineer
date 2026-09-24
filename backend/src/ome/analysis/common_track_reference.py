@@ -14,7 +14,7 @@ from ome.evidence import (
 )
 
 ALGORITHM_ID = "ome.track-reference.explicit-lap-projection"
-ALGORITHM_VERSION = "0.1.0"
+ALGORITHM_VERSION = "0.2.0"
 
 
 class CommonTrackReferenceIssueCode(StrEnum):
@@ -31,6 +31,7 @@ class CommonTrackReferenceIssueCode(StrEnum):
     INVALID_REFERENCE_PATH_DISTANCE = "invalid_reference_path_distance"
     REFERENCE_SELF_INTERSECTION = "reference_self_intersection"
     PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING = "projected_distance_not_strictly_increasing"
+    PROJECTED_DISTANCE_DECREASES = "projected_distance_decreases"
 
 
 @dataclass(frozen=True, slots=True)
@@ -182,16 +183,14 @@ class CommonTrackReferenceEngine:
             else raw_distance_m
         )
 
-        if not self._strictly_increasing(reference_distance_m):
+        if not self._non_decreasing(reference_distance_m):
             return CommonTrackReferenceNotReady(
                 issues=(
                     CommonTrackReferenceReadinessIssue(
-                        code=(
-                            CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING
-                        ),
+                        code=CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_DECREASES,
                         message=(
-                            "Projected common-track reference distance must be strictly "
-                            "increasing after circular seam unwrap."
+                            "Projected common-track reference distance must not decrease "
+                            "after circular seam unwrap. Exact plateaus are preserved."
                         ),
                     ),
                 )
