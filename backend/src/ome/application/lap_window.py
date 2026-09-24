@@ -192,7 +192,7 @@ class TraqmateLapWindowSelector:
 
     @staticmethod
     def _parse_lap_number(value: SourceValue) -> int | None:
-        if isinstance(value, bool) or isinstance(value, tuple):
+        if isinstance(value, (bool, tuple)):
             return None
         if isinstance(value, int):
             return value
@@ -211,7 +211,7 @@ class TraqmateLapWindowSelector:
 
     @staticmethod
     def _finite_number(value: SourceValue) -> float | None:
-        if isinstance(value, bool) or isinstance(value, tuple) or value is None:
+        if isinstance(value, (bool, tuple)) or value is None:
             return None
         if isinstance(value, (int, float)):
             number = float(value)
