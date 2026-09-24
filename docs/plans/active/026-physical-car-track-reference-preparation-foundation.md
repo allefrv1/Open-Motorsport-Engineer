@@ -31,7 +31,7 @@ Follow:
 - `docs/specs/physical-car-reference-preparation-v0.1.md`;
 - `docs/specs/traqmate-lap-window-v0.1.md`;
 - `docs/specs/gps-path-distance-v0.1.md`;
-- `docs/specs/common-track-reference-v0.1.md`;
+- `docs/specs/common-track-reference-v0.2.md`;
 - ADR-0009.
 
 ## Explicit reference choice
@@ -105,7 +105,8 @@ Before production implementation, tests should prove:
 11. same reference/candidate window is not-ready;
 12. mismatched dataset fingerprint/context is not-ready;
 13. missing/invalid GPS/time evidence is not-ready;
-14. downstream GPS/common-reference not-ready outcomes are surfaced, not repaired.
+14. exact common-reference plateaus are preserved without repair;
+15. true projected-distance decreases remain downstream not-ready outcomes.
 
 ## Architecture boundary
 
