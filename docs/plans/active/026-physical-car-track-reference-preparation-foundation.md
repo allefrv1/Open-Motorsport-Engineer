@@ -168,7 +168,7 @@ CONTEXT READY         = yes
 MATERIAL DECISION GAP = no
 BEHAVIOR CHANGE       = yes
 TESTABLE CONTRACT     = yes
-NEXT STATE            = tests -> RED
+NEXT STATE            = completion -> final verify
 ```
 
 Human gate reopens if implementation would need to:
@@ -178,6 +178,70 @@ Human gate reopens if implementation would need to:
 - repair non-monotonic projection;
 - discard GPS points;
 - equate arbitrary GPS path with canonical lap distance.
+
+## TDD execution evidence
+
+Initial application behavior:
+
+- CI #326 — harness formatting only; not counted as behavioral RED;
+- CI #327 — behavioral RED: `ome.application.physical_track_reference` did not exist;
+- CI #328 / #329 — implementation formatting/lint cleanup;
+- CI #330 — real Portland behavior exposed a common-reference readiness failure instead of being hidden.
+
+Physical-data characterization:
+
+- CI #332 characterized the Portland Lap 5 projection;
+- there was no true local backtracking after seam unwrap;
+- exactly two equal-distance plateaus were observed:
+  - projected index 495 at 564.4733986564207 m;
+  - projected index 512 at 575.6433508713768 m;
+- the end of the projected trajectory remained forward and close to the reference length.
+
+Common-reference v0.2 TDD increment:
+
+- CI #336 — RED: exact plateaus were still rejected, the decrease-specific issue code was absent and provenance still reported algorithm v0.1;
+- the accepted `docs/specs/common-track-reference-v0.2.md` contract was introduced before changing production behavior;
+- v0.2 preserves equal projected distances exactly and rejects only true decreases;
+- no epsilon, clamp, smoothing, deletion or reordering was introduced.
+
+Explicit closed-topology TDD increment:
+
+- physical Portland reference endpoints are not required to have identical GPS coordinates;
+- lap closure comes from trusted source-lap boundary evidence;
+- CI #341 — RED: `TrackReferenceLap.is_closed` and topology provenance were absent;
+- production now carries explicit closed-reference topology and records `reference_is_closed` in common-reference provenance;
+- exact endpoint equality remains only a compatibility fallback for existing synthetic fixtures.
+
+GREEN:
+
+- CI #343 — full canonical verification passed after v0.2 plateau/topology implementation;
+- CI #344 — final clean verification passed after removing temporary characterization code and retaining the Portland plateau regression.
+
+Tests were not weakened to obtain GREEN.
+
+## Implementation traceability
+
+Primary Plan 026 coverage:
+
+`tests/application/test_physical_track_reference_preparation.py`
+
+Supporting common-reference v0.2 coverage:
+
+`tests/analysis/test_common_track_reference.py`
+
+The final tests prove:
+
+- explicit Portland Lap 4 reference / Lap 5 candidate preparation;
+- exactly one closing-boundary evidence point per derived physical trajectory;
+- source windows and source telemetry remain immutable;
+- explicit selected-reference `gps.path_distance -> lap.distance` mapping;
+- candidate common-reference projection and canonical mapping;
+- deterministic repeatability;
+- source/context/window mismatch failures;
+- missing/invalid physical source evidence failures;
+- explicit closed-lap topology;
+- exact projection plateaus preserved;
+- true projected-distance decreases remain not-ready.
 
 ## Completion criteria
 
