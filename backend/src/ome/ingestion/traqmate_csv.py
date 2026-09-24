@@ -32,6 +32,12 @@ TRAQMATE_SOURCE_TYPE = "traqmate-trackvision-csv"
 TRAQMATE_SOURCE_SYSTEM = "Traqmate Trackvision"
 TRAQMATE_VERSION = "V2"
 TRAQMATE_SIGNATURE = ("Format", TRAQMATE_SOURCE_SYSTEM, TRAQMATE_VERSION)
+_REQUIRED_HEADER_COLUMNS = (
+    "Elapsed Time",
+    "Lat (Degrees)",
+    "Lon (Degrees)",
+    "Lap",
+)
 
 _KNOWN_UNITS: dict[str, str] = {
     "Elapsed Time": "s",
@@ -56,7 +62,9 @@ class _SourceState:
 @dataclass(frozen=True, slots=True)
 class _ParsedTable:
     preamble_rows: tuple[tuple[str, ...], ...]
+    raw_header_row: tuple[str, ...]
     channel_names: tuple[str, ...]
+    elapsed_time_index: int
     data_rows: tuple[tuple[str, ...], ...]
 
 
@@ -75,7 +83,7 @@ class TraqmateTrackvisionCSVImporter:
                 for row in reader:
                     if self._is_blank(row):
                         continue
-                    return tuple(row[:3]) == TRAQMATE_SIGNATURE
+                    return tuple(cell.strip() for cell in row[:3]) == TRAQMATE_SIGNATURE
         except (OSError, UnicodeDecodeError, csv.Error):
             return False
 
@@ -127,10 +135,14 @@ class TraqmateTrackvisionCSVImporter:
             rows = tuple(tuple(row) for row in csv.reader(io.StringIO(text), strict=True))
             table = self._parse_table(rows)
             sample_rate_hz, issues, missing_metadata = self._sample_rate(table.preamble_rows)
-            timestamps = self._timestamps(table.data_rows)
+            timestamps = self._timestamps(
+                table.data_rows,
+                table.elapsed_time_index,
+            )
             source_metadata = self._source_metadata(
                 table.preamble_rows,
                 sample_rate_hz,
+                table.raw_header_row,
             )
             channels = self._channels(
                 table,
@@ -218,7 +230,8 @@ class TraqmateTrackvisionCSVImporter:
             raise _InvalidTraqmateCSV("Traqmate CSV source is empty.")
 
         signature = rows[first_non_blank]
-        if len(signature) < 3 or tuple(signature[:3]) != TRAQMATE_SIGNATURE:
+        normalized_signature = tuple(cell.strip() for cell in signature[:3])
+        if len(signature) < 3 or normalized_signature != TRAQMATE_SIGNATURE:
             raise _InvalidTraqmateCSV(
                 "Unsupported Traqmate Trackvision signature/version; expected V2."
             )
@@ -230,7 +243,9 @@ class TraqmateTrackvisionCSVImporter:
             row = rows[index]
             if TraqmateTrackvisionCSVImporter._is_blank(row):
                 continue
-            if row and row[0] == "Elapsed Time":
+
+            normalized = tuple(cell.strip() for cell in row)
+            if "Elapsed Time" in normalized:
                 header_index = index
                 break
             preamble.append(row)
@@ -240,15 +255,23 @@ class TraqmateTrackvisionCSVImporter:
                 "Traqmate CSV does not contain a supported Elapsed Time telemetry table."
             )
 
-        channel_names = rows[header_index]
-        if not channel_names or channel_names[0] != "Elapsed Time":
-            raise _InvalidTraqmateCSV("Traqmate CSV first source channel must be Elapsed Time.")
+        raw_header_row = rows[header_index]
+        channel_names = tuple(cell.strip() for cell in raw_header_row)
+
         if any(name == "" for name in channel_names):
             raise _InvalidTraqmateCSV("Traqmate CSV channel names must be non-empty.")
         if len(set(channel_names)) != len(channel_names):
             raise _InvalidTraqmateCSV(
                 "Traqmate CSV duplicate source channel names are unsupported in this slice."
             )
+
+        for required in _REQUIRED_HEADER_COLUMNS:
+            if channel_names.count(required) != 1:
+                raise _InvalidTraqmateCSV(
+                    f"Traqmate CSV telemetry header must contain exactly one {required!r} column."
+                )
+
+        elapsed_time_index = channel_names.index("Elapsed Time")
 
         data_rows = tuple(
             row
@@ -268,16 +291,21 @@ class TraqmateTrackvisionCSVImporter:
 
         return _ParsedTable(
             preamble_rows=tuple(preamble),
-            channel_names=tuple(channel_names),
+            raw_header_row=tuple(raw_header_row),
+            channel_names=channel_names,
+            elapsed_time_index=elapsed_time_index,
             data_rows=data_rows,
         )
 
     @staticmethod
-    def _timestamps(data_rows: Sequence[tuple[str, ...]]) -> tuple[float, ...]:
+    def _timestamps(
+        data_rows: Sequence[tuple[str, ...]],
+        elapsed_time_index: int,
+    ) -> tuple[float, ...]:
         timestamps: list[float] = []
 
         for row_number, row in enumerate(data_rows, start=1):
-            raw_time = row[0]
+            raw_time = row[elapsed_time_index]
             if raw_time == "":
                 raise _InvalidTraqmateCSV(
                     f"Traqmate CSV data row {row_number} has an empty Elapsed Time value."
@@ -322,6 +350,7 @@ class TraqmateTrackvisionCSVImporter:
                         source_attributes=freeze_metadata(
                             {
                                 "traqmate_column_index": column_index,
+                                "traqmate_raw_header_name": table.raw_header_row[column_index],
                                 "traqmate_version": TRAQMATE_VERSION,
                             }
                         ),
@@ -370,9 +399,11 @@ class TraqmateTrackvisionCSVImporter:
     def _source_metadata(
         preamble_rows: tuple[tuple[str, ...], ...],
         sample_rate_hz: float | None,
+        raw_header_row: tuple[str, ...],
     ) -> Mapping[str, object]:
         values: dict[str, object] = {
             "traqmate_preamble_rows": preamble_rows,
+            "traqmate_raw_header_row": raw_header_row,
         }
         selected_keys = {
             "Track": "track",
