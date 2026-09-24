@@ -27,6 +27,23 @@ License:
 
 Apache License 2.0. See `licenses/exit-speed-Apache-2.0.txt`.
 
+### exit-speed / Portland Traqmate multi-lap slice
+
+Path:
+
+`exit-speed/traqmate-portland-laps-4-5.csv`
+
+Purpose:
+
+- real Portland physical-car telemetry;
+- extended 28-column Trackvision V2 layout;
+- 40 Hz source metadata;
+- sparse Lap boundary markers;
+- two complete source laps (4 and 5) plus the first boundary sample of Lap 6;
+- GPS/vehicle evidence for common-reference preparation.
+
+The fixture is a direct row slice of the Apache-2.0 upstream stripped recording. Source row bounds and Git blob provenance are recorded in `manifest.json` and `THIRD_PARTY_NOTICES.md`.
+
 ### TRACE / MoTeC CSV fixtures
 
 Paths:
