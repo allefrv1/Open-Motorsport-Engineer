@@ -230,6 +230,36 @@ class Plan023CommonTrackReferenceTests(unittest.TestCase):
             )
         )
 
+    def test_exact_projection_plateau_is_preserved_without_repair(self) -> None:
+        reference = lap(
+            fingerprint="sha256:ref",
+            lap_id="ref",
+            timestamps_s=(0.0, 1.0, 2.0),
+            latitudes_deg=(0.0, 0.0, 0.0),
+            longitudes_deg=(0.0, 0.001, 0.002),
+            include_path=True,
+        )
+        candidate = lap(
+            fingerprint="sha256:candidate",
+            lap_id="candidate",
+            timestamps_s=(0.0, 1.0, 2.0),
+            latitudes_deg=(0.0001, 0.0001, 0.0001),
+            longitudes_deg=(0.0005, 0.001, 0.001),
+            include_path=False,
+        )
+
+        outcome = self.engine.project(
+            CommonTrackReferenceRequest(reference=reference, candidate=candidate)
+        )
+
+        self.assertIsInstance(outcome, CommonTrackReferenceSuccess)
+        assert isinstance(outcome, CommonTrackReferenceSuccess)
+        self.assertEqual(
+            outcome.reference_distance_m[1],
+            outcome.reference_distance_m[2],
+        )
+        self.assertEqual(outcome.algorithm_version, "0.2.0")
+
     def test_local_backtrack_is_not_clamped_or_repaired(self) -> None:
         reference = lap(
             fingerprint="sha256:ref",
@@ -255,7 +285,7 @@ class Plan023CommonTrackReferenceTests(unittest.TestCase):
         self.assertIsInstance(outcome, CommonTrackReferenceNotReady)
         assert isinstance(outcome, CommonTrackReferenceNotReady)
         self.assertIn(
-            CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING,
+            CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_DECREASES,
             {issue.code for issue in outcome.issues},
         )
 
@@ -345,7 +375,7 @@ class Plan023CommonTrackReferenceTests(unittest.TestCase):
         self.assertEqual(outcome.derived_concept, "track.reference_distance")
         self.assertEqual(outcome.unit, "m")
         self.assertEqual(outcome.algorithm_id, "ome.track-reference.explicit-lap-projection")
-        self.assertEqual(outcome.algorithm_version, "0.1.0")
+        self.assertEqual(outcome.algorithm_version, "0.2.0")
         self.assertEqual(outcome.provenance.reference_context.lap_identifier, "lap:ref")
         self.assertEqual(
             outcome.provenance.candidate_context.lap_identifier,
