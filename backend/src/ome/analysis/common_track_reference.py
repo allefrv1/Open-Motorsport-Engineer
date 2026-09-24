@@ -184,8 +184,7 @@ class CommonTrackReferenceEngine:
                 issues=(
                     CommonTrackReferenceReadinessIssue(
                         code=(
-                            CommonTrackReferenceIssueCode
-                            .PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING
+                            CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING
                         ),
                         message=(
                             "Projected common-track reference distance must be strictly "
@@ -505,9 +504,7 @@ class CommonTrackReferenceEngine:
         return tuple(result)
 
     @staticmethod
-    def _has_material_self_intersection(
-        points: tuple[_Point, ...],
-    ) -> bool:
+    def _has_material_self_intersection(points: tuple[_Point, ...]) -> bool:
         segment_count = len(points) - 1
         for first_index in range(segment_count):
             a = points[first_index]
