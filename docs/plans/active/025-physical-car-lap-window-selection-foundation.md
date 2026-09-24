@@ -180,6 +180,53 @@ Human gate reopens if implementation would need to:
 - automatically select reference/best laps;
 - combine this slice with comparison orchestration.
 
+## TDD execution evidence
+
+Tests were committed before production selector behavior.
+
+Behavioral RED:
+
+- OME CI #315;
+- expected failure: `ModuleNotFoundError: No module named 'ome.application.lap_window'`.
+
+Implementation feedback:
+
+- OME CI #317 — Ruff formatting only;
+- OME CI #318 — Ruff lint simplification only.
+
+GREEN:
+
+- OME CI #319 — canonical verify passed with the minimum selector implementation;
+- OME CI #320 — canonical verify passed after characterization/regression coverage for inconsistent source evidence and invalid boundary time.
+
+The behavioral tests were not weakened to obtain GREEN.
+
+## Implementation traceability
+
+Production application module:
+
+`backend/src/ome/application/lap_window.py`
+
+Test module:
+
+`tests/application/test_physical_lap_window_selection.py`
+
+Verified behavior includes:
+
+- exact Portland Lap 4 and Lap 5 windows;
+- explicit incomplete Lap 6;
+- missing and duplicated source-lap markers;
+- deterministic repeated selection;
+- source dataset immutability;
+- preservation of sparse Lap cells;
+- unsupported source rejection;
+- missing provenance;
+- missing Lap / Elapsed Time evidence;
+- inconsistent Lap/time evidence lengths;
+- invalid closing-boundary time.
+
+The closing boundary remains outside the selected telemetry sample interval and is preserved separately through `closing_boundary_index`.
+
 ## Completion criteria
 
 - Plan 024 archived;
