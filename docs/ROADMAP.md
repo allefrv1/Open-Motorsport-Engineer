@@ -206,16 +206,27 @@ Completed:
 - sparse source Lap boundary preservation;
 - legacy Trackvision compatibility retained.
 
+Completed:
+
+- Plan 025 — Physical-Car Lap Window Selection Foundation;
+- explicit source-lap window selection from sparse markers;
+- separate closing-boundary evidence;
+- exact Portland Lap 4 / Lap 5 windows;
+- incomplete/ambiguous source windows remain explicit;
+- source telemetry remains immutable.
+
 Current plan:
 
-- `docs/plans/active/025-physical-car-lap-window-selection-foundation.md`
+- `docs/plans/active/026-physical-car-track-reference-preparation-foundation.md`
 
 Current work:
 
-- select an explicitly requested complete source lap from sparse boundary markers;
-- preserve the next marker as a separate closing-boundary index;
-- keep source telemetry immutable;
-- return explicit not-ready evidence for missing/incomplete/ambiguous windows.
+- extract explicit GPS/time evidence from selected windows;
+- append the closing point only as boundary evidence;
+- derive the caller-selected reference GPS path;
+- explicitly promote only the selected reference path to canonical `lap.distance`;
+- project the candidate onto that common reference;
+- preserve complete typed provenance.
 
 Later:
 
