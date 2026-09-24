@@ -120,6 +120,8 @@ class Plan026PhysicalTrackReferencePreparationTests(unittest.TestCase):
         self.assertEqual(prepared.dataset_fingerprint, dataset.provenance.content_fingerprint)
         self.assertEqual(len(prepared.reference_lap.timestamps_s), 4)
         self.assertEqual(len(prepared.candidate_lap.timestamps_s), 4)
+        self.assertTrue(prepared.reference_lap.is_closed)
+        self.assertTrue(prepared.candidate_lap.is_closed)
         self.assertEqual(prepared.reference_lap.timestamps_s[-1], 3.0)
         self.assertEqual(prepared.candidate_lap.timestamps_s[-1], 6.0)
 
