@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 2.5.0
+Version: 2.6.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -17,6 +17,7 @@ Before substantial work, read only the documents relevant to the task:
 - `docs/ARCHITECTURE.md` — system boundaries and architecture baseline
 - `docs/QUALITY_ATTRIBUTES.md` — architecture drivers
 - `docs/CORE_BELIEFS.md` — durable engineering principles
+- `docs/AGENT_ENGINEERING_MODEL.md` — Prompt -> Context -> Harness -> Loop -> Graph operating model
 - `docs/requirements/` — required behavior
 - `docs/adr/` — accepted/proposed architecture decisions
 - `docs/domain/` — domain semantics
@@ -61,6 +62,18 @@ TASK
 Do not invent missing product or engineering rules.
 
 If a material decision is missing, propose the smallest explicit decision artifact instead of burying the choice in code.
+
+For substantial agent work, route execution through:
+
+```text
+PROMPT
+-> CONTEXT
+-> HARNESS
+-> LOOP
+-> GRAPH / DECISION GATES
+```
+
+Fix failures at the highest layer where they originate. Do not compensate for missing context or decisions by changing lower-layer code/tests.
 
 ## Architecture invariants
 
