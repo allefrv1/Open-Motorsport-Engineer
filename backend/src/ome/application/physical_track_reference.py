@@ -260,7 +260,9 @@ class PhysicalTrackReferencePreparationService:
             ):
                 return PhysicalTrackReferencePreparationIssue(
                     code=PhysicalTrackReferencePreparationIssueCode.INVALID_WINDOW,
-                    message="Source lap window indexes are inconsistent with the accepted contract.",
+                    message=(
+                        "Source lap window indexes are inconsistent with the accepted contract."
+                    ),
                 )
 
         return None
