@@ -308,6 +308,30 @@ GREEN:
 - OME CI #255 — canonical verification successful with the minimum adapter;
 - OME CI #256 — canonical verification successful with supported-path performance characterization.
 
+### Portland extended Trackvision traceability
+
+Plan 024 extends the same REQ-001 importer contract to a licensed 28-column Portland physical-car source without creating a new ingestion boundary.
+
+Coverage:
+
+- AC-001 — the compact Portland two-lap slice imports successfully;
+- AC-002 — source bytes remain unchanged;
+- AC-003 — upstream/derived fixture identity and runtime SHA-256 provenance remain explicit;
+- AC-004 — all 28 source channels are exposed in source order;
+- AC-005 — declared 40 Hz acquisition metadata is preserved;
+- AC-009 — GPS, speed, gear, brake, sparse Lap markers and other source cells remain unnormalized;
+- AC-010 — equivalent Portland bytes produce reproducible semantic channel content/fingerprint.
+
+Structural header padding is normalized only for source-field identity/recognition; the raw header row remains available in source metadata.
+
+Sparse source Lap markers remain measured source evidence. Import does not infer canonical LapContext or fill missing Lap cells.
+
+TDD evidence:
+
+- OME CI #305 — behavioral RED against the prior first-column/signature assumption;
+- OME CI #306 — regression caught an over-broad extended-header rule;
+- OME CI #307 — canonical GREEN with Portland and legacy Trackvision coverage.
+
 ## Relevant Domain Concepts
 
 - Telemetry Dataset
