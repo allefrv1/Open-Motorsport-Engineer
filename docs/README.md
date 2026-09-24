@@ -20,7 +20,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 023 — Common Track Reference Foundation](plans/active/023-common-track-reference-foundation.md)
+- [Plan 024 — Traqmate Portland Multi-Lap Evidence & Layout Foundation](plans/active/024-traqmate-portland-multilap-evidence-foundation.md)
 
 ## Verification and implementation guidance
 

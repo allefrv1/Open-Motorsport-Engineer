@@ -186,18 +186,27 @@ Completed:
 - external Portland multi-lap path-length study;
 - explicit rejection of direct `gps.path_distance -> lap.distance` aliasing.
 
+Completed:
+
+- Plan 023 — Common Track Reference Foundation;
+- explicit reference-lap geometric projection;
+- closed-loop seam unwrap;
+- strict monotonic readiness without repair;
+- lateral/projection evidence;
+- explicit `track.reference_distance -> lap.distance` preparation;
+- direct-search performance characterization.
+
 Current plan:
 
-- `docs/plans/active/023-common-track-reference-foundation.md`
+- `docs/plans/active/024-traqmate-portland-multilap-evidence-foundation.md`
 
 Current work:
 
-- project candidate GPS onto one explicit reference-lap trajectory;
-- use marker-aware circular seam unwrapping;
-- preserve lateral projection evidence;
-- enforce strict monotonic readiness without hidden clamping;
-- validate against Portland multi-lap telemetry;
-- establish an explicit preparation mapping to canonical `lap.distance` only when ready.
+- commit a compact two-complete-lap Portland physical-car fixture;
+- preserve upstream Apache-2.0 provenance;
+- support real extended Trackvision V2 column layout;
+- preserve sparse source Lap boundary markers;
+- generalize timestamp lookup without moving lap inference into ingestion.
 
 Later:
 
