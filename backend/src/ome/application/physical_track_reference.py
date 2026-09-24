@@ -166,6 +166,7 @@ class PhysicalTrackReferencePreparationService:
             longitude_evidence=reference.longitude_evidence,
             time_evidence=reference.time_evidence,
             gps_path_distance=reference_path,
+            is_closed=True,
         )
         candidate_lap = TrackReferenceLap(
             context=request.candidate_context,
@@ -176,6 +177,7 @@ class PhysicalTrackReferencePreparationService:
             longitude_evidence=candidate.longitude_evidence,
             time_evidence=candidate.time_evidence,
             gps_path_distance=None,
+            is_closed=True,
         )
 
         projection_outcome = CommonTrackReferenceEngine().project(
