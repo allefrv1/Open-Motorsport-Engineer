@@ -82,7 +82,7 @@ class Plan023CommonTrackReferencePerformanceTests(unittest.TestCase):
         engine = CommonTrackReferenceEngine()
         observations: list[tuple[int, int, float]] = []
 
-        for sample_count in (100, 200, 400):
+        for sample_count in (100, 200, 400, 800):
             reference = _circular_lap(
                 fingerprint=f"sha256:reference:{sample_count}",
                 sample_count=sample_count,
