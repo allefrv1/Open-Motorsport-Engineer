@@ -1,6 +1,6 @@
 {
-  "manifest_version": "0.2",
-  "verified_date": "2026-09-22",
+  "manifest_version": "0.3",
+  "verified_date": "2026-09-24",
   "fixtures": [
     {
       "id": "exit-speed-traqmate-parking-lot",
@@ -20,6 +20,33 @@
         "velocity",
         "lap identifier",
         "single-rate telemetry"
+      ]
+    },
+    {
+      "id": "exit-speed-traqmate-portland-laps-4-5",
+      "path": "exit-speed/traqmate-portland-laps-4-5.csv",
+      "kind": "real_vehicle_derived_slice",
+      "format_family": "Traqmate Trackvision CSV",
+      "source_repository": "https://github.com/djhedges/exit_speed",
+      "source_path": "exit_speed/testdata/2019-08-18_Portland_CORRADO_DJ_R03_stripped.csv",
+      "source_git_blob_sha": "499762a9044ea0b09a698509e84681877baf7897",
+      "source_data_row_start_zero_based": 11360,
+      "source_data_row_end_inclusive_zero_based": 18609,
+      "source_lap_markers": [
+        "4",
+        "5",
+        "6"
+      ],
+      "derivation": "original preamble and 28-column header plus contiguous source data rows 11360..18609 inclusive; source cells unchanged",
+      "license": "Apache-2.0",
+      "license_path": "fixtures/public/licenses/exit-speed-Apache-2.0.txt",
+      "redistribution": "approved_by_upstream_repository_license",
+      "purpose": [
+        "extended Trackvision V2 layout",
+        "40 Hz physical-car telemetry",
+        "sparse lap boundary markers",
+        "complete Portland laps 4 and 5",
+        "future physical-car comparison preparation"
       ]
     },
     {
