@@ -27,24 +27,16 @@ def prepare_track_reference_lap_distance(
             "candidate_session_identifier": provenance.candidate_context.session_identifier,
             "candidate_run_identifier": provenance.candidate_context.run_identifier,
             "candidate_lap_identifier": provenance.candidate_context.lap_identifier,
-            "reference_latitude_channel": (
-                provenance.reference_latitude.source_channel_identifier
-            ),
+            "reference_latitude_channel": (provenance.reference_latitude.source_channel_identifier),
             "reference_longitude_channel": (
                 provenance.reference_longitude.source_channel_identifier
             ),
-            "reference_time_channel": (
-                provenance.reference_elapsed_time.source_channel_identifier
-            ),
-            "candidate_latitude_channel": (
-                provenance.candidate_latitude.source_channel_identifier
-            ),
+            "reference_time_channel": (provenance.reference_elapsed_time.source_channel_identifier),
+            "candidate_latitude_channel": (provenance.candidate_latitude.source_channel_identifier),
             "candidate_longitude_channel": (
                 provenance.candidate_longitude.source_channel_identifier
             ),
-            "candidate_time_channel": (
-                provenance.candidate_elapsed_time.source_channel_identifier
-            ),
+            "candidate_time_channel": (provenance.candidate_elapsed_time.source_channel_identifier),
             "reference_gps_path_algorithm_id": provenance.reference_gps_path.algorithm_id,
             "reference_gps_path_algorithm_version": (
                 provenance.reference_gps_path.algorithm_version
