@@ -253,10 +253,15 @@ The importer must:
 
 - preserve all source columns;
 - preserve their source order;
+- treat surrounding ASCII whitespace in structural/header tokens as Trackvision CSV delimiter padding;
+- expose normalized channel identities such as `Elapsed Time`, not ` Elapsed Time`;
+- preserve the raw source header row in source metadata for auditability;
 - use the located `Elapsed Time` index for timestamps;
 - keep source values lexical/None exactly as today;
 - keep sparse `Lap` blanks as None;
 - retain sample-rate metadata from the preamble.
+
+Do not trim or rewrite telemetry data cells. The whitespace rule applies only to structural/preamble/header token recognition.
 
 Do not convert `GPS Time`, `GPS Weeks`, speed, gear or brake during ingestion.
 
