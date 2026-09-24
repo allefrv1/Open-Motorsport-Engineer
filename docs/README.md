@@ -9,6 +9,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 - [PROJECT.md](PROJECT.md) — mission, users, scope and current phase
 - [MVP.md](MVP.md) — first vertical slice
 - [CORE_BELIEFS.md](CORE_BELIEFS.md) — durable engineering principles
+- [AGENT_ENGINEERING_MODEL.md](AGENT_ENGINEERING_MODEL.md) — Prompt / Context / Harness / Loop / Graph operating model
 - [ARCHITECTURE.md](ARCHITECTURE.md) — top-level architecture map
 - [QUALITY_ATTRIBUTES.md](QUALITY_ATTRIBUTES.md) — architecture drivers
 - [HARNESS_ENGINEERING.md](HARNESS_ENGINEERING.md) — agent operating model
@@ -23,6 +24,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Verification and implementation guidance
 
+- [prompts/codex-task-template.md](prompts/codex-task-template.md) — compact coding-agent task contract
+- [context/task-context-packet.md](context/task-context-packet.md) — context-readiness template
+- [graphs/engineering-task-graph.md](graphs/engineering-task-graph.md) — task routing and decision gates
 - [TEST_STRATEGY.md](TEST_STRATEGY.md)
 - [PLANNED_REPOSITORY_STRUCTURE.md](PLANNED_REPOSITORY_STRUCTURE.md)
 

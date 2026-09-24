@@ -80,7 +80,11 @@ Preferred conceptual representation:
 - WGS84 reference origin;
 - azimuthal-equidistant/local geodesic coordinates in metres.
 
-Plan 023 must specify the exact numerical transformation before production code.
+The exact numerical transformation is accepted in:
+
+`docs/specs/common-track-reference-v0.1.md`
+
+Production behavior must follow that specification.
 
 No raw latitude/longitude Euclidean distance is allowed.
 
@@ -195,9 +199,108 @@ Portland characterization found p95 local disagreement of roughly 2–4 m betwee
 
 That is material for precise telemetry event alignment.
 
+## Layered execution packet
+
+### Prompt Engineering
+
+Objective:
+
+> Implement the smallest deterministic common-track-reference transformation defined by `docs/specs/common-track-reference-v0.1.md`.
+
+Success requires:
+
+- accepted analytic geometry behavior;
+- explicit reference/candidate provenance;
+- circular seam handling only as specified;
+- strict monotonic readiness after unwrap;
+- lateral/projection evidence retained;
+- no source mutation;
+- Portland characterization;
+- canonical verify green.
+
+Do not implement:
+
+- automatic reference selection;
+- centerline generation;
+- GPS smoothing;
+- cumulative-max monotonic repair;
+- track-width rejection thresholds;
+- AI geometry.
+
+### Context Engineering
+
+Normative context:
+
+1. `docs/specs/common-track-reference-v0.1.md`
+2. ADR-0009
+3. GPS Path Distance Specification v0.1
+4. this Plan 023
+
+Evidence/research context:
+
+- `docs/research/portland-common-reference-characterization.md`
+- `docs/research/traqmate-gps-path-characterization.md`
+
+Affected implementation context must be loaded progressively from the existing deterministic analysis/transformation boundary and its tests.
+
+Context readiness: **ready for TDD implementation**.
+
+The numerical transform, seam rule, readiness behavior and evidence requirements are already specified.
+
+### Harness Engineering
+
+Focused checks must cover the new analysis tests first.
+
+Completion still requires:
+
+```text
+uv run --locked python scripts/harness.py verify
+```
+
+No architecture or evidence check may be disabled to obtain GREEN.
+
+### Loop Engineering
+
+Use:
+
+```text
+analytic test
+-> expected behavioral RED
+-> minimum implementation
+-> focused GREEN
+-> refactor
+-> Portland characterization
+-> full verify
+```
+
+Classify non-behavior failures before editing production code.
+
+Real Portland evidence that contradicts the accepted numerical contract is an `EVIDENCE_FAILURE`, not a reason to patch around the fixture silently.
+
+### Graph Engineering
+
+Current graph state:
+
+```text
+PROMPT READY          = yes
+CONTEXT READY         = yes
+MATERIAL DECISION GAP = no
+BEHAVIOR CHANGE       = yes
+TESTABLE CONTRACT     = yes
+NEXT STATE            = write analytic tests -> behavioral RED
+```
+
+Human/decision gate reopens if implementation would require:
+
+- changing the accepted projection/seam algorithm;
+- adding smoothing or repair;
+- inventing a hard lateral-error threshold;
+- changing reference-selection policy;
+- weakening evidence/provenance guarantees.
+
 ## TDD rule
 
-After the numerical contract is accepted:
+The numerical contract is accepted:
 
 ```text
 ACCEPTED COMMON-REFERENCE SPEC

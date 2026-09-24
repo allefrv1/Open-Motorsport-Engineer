@@ -8,6 +8,24 @@ OME is intended to be built primarily with coding agents such as Codex.
 
 The engineering problem is therefore not only to design the software. It is also to design the environment, context, constraints and feedback loops that let an agent modify the repository reliably.
 
+## Relationship to the layered model
+
+Harness Engineering is one layer in the broader OME agent operating model:
+
+`docs/AGENT_ENGINEERING_MODEL.md`
+
+The model separates:
+
+```text
+Prompt Engineering
+-> Context Engineering
+-> Harness Engineering
+-> Loop Engineering
+-> Graph Engineering
+```
+
+Harness failures must not be confused with behavior failures. A formatter, environment or CI problem is not a behavioral RED.
+
 ## Harness goals
 
 A coding agent should be able to answer, from the repository alone:
@@ -107,6 +125,18 @@ UNDERSTAND
 For documentation-only, build, tooling or characterization work, use the closest equivalent feedback loop without manufacturing a meaningless failing test.
 
 A task is not complete because code was generated.
+
+Before fixing a failed loop iteration, classify the failure using the layered model:
+
+- PROMPT_GAP;
+- CONTEXT_GAP;
+- DECISION_GAP;
+- HARNESS_FAILURE;
+- BEHAVIOR_FAILURE;
+- REGRESSION_FAILURE;
+- EVIDENCE_FAILURE.
+
+Route the task back to the highest layer that owns the failure.
 
 ## Mechanical enforcement
 

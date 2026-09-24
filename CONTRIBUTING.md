@@ -7,10 +7,13 @@ Before contributing, read:
 - `AGENTS.md`
 - `docs/PROJECT.md`
 - `docs/ARCHITECTURE.md`
+- `docs/AGENT_ENGINEERING_MODEL.md`
 - `docs/HARNESS_ENGINEERING.md`
 - `docs/DEVELOPMENT.md`
 
 Then read requirements, ADRs and domain documentation relevant to your change.
+
+For substantial agent tasks, use `docs/prompts/codex-task-template.md` as a compact task contract and `docs/context/task-context-packet.md` to verify that context is ready before production edits.
 
 ## Setup
 
@@ -53,6 +56,8 @@ RED -> GREEN -> REFACTOR
 ```
 
 Do not create artificial failing tests for documentation-only or tooling-only changes.
+
+When a loop fails, classify the failure before changing code. Fix prompt/context/decision/harness failures in their owning layer rather than forcing production changes to make the pipeline green.
 
 ## Principles
 
