@@ -2,7 +2,7 @@
 
 Date: 2026-09-23
 
-Status: **Operational harness — GPS path derivation verified; common track reference active**
+Status: **Operational harness — common physical reference verified; Portland layout foundation active**
 
 Scale:
 
@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–022 have completed history and Plan 023 is active. |
+| Plan lifecycle | 4 | Plans 001–023 have completed history and Plan 024 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -56,9 +56,11 @@ Plan 020 validated those assumptions against licensed physical-car telemetry and
 
 Plan 021 closed that gap with an explicit Traqmate Trackvision adapter and supported-path performance characterization.
 
-Plan 022 now provides deterministic WGS84 path distance with typed provenance and real physical-car validation.
+Plan 022 provides deterministic WGS84 path distance with typed provenance and real physical-car validation.
 
-The next maturity step is a common physical reference trajectory that maps GPS laps onto the same along-track coordinate without hidden stretch, smoothing or point repair.
+Plan 023 now provides a deterministic common physical reference trajectory, explicit `lap.distance` promotion, strict readiness and measured direct-search scaling.
+
+The next maturity step is to make the real Portland multi-lap Trackvision layout a compact reproducible fixture and supported ingestion path without inventing lap context.
 
 ## Review cadence
 
