@@ -1,6 +1,6 @@
 {
   "manifest_version": "0.2",
-  "verified_date": "2026-09-22",
+  "verified_date": "2026-09-24",
   "fixtures": [
     {
       "id": "exit-speed-traqmate-parking-lot",
@@ -21,6 +21,40 @@
         "lap identifier",
         "single-rate telemetry"
       ]
+    },
+    {
+      "id": "exit-speed-traqmate-portland-laps-4-5",
+      "path": "exit-speed/traqmate-portland-laps-4-5.csv",
+      "kind": "real_vehicle_multilap_slice",
+      "format_family": "Traqmate Trackvision CSV",
+      "source_repository": "https://github.com/djhedges/exit_speed",
+      "source_path": "exit_speed/testdata/2019-08-18_Portland_CORRADO_DJ_R03_stripped.csv",
+      "source_git_blob_sha": "499762a9044ea0b09a698509e84681877baf7897",
+      "source_data_row_index_zero_based": [
+        11360,
+        18609
+      ],
+      "source_csv_file_lines_one_based": [
+        11378,
+        18627
+      ],
+      "selected_data_rows": 7250,
+      "selected_lap_markers": [
+        4,
+        5,
+        6
+      ],
+      "license": "Apache-2.0",
+      "license_path": "fixtures/public/licenses/exit-speed-Apache-2.0.txt",
+      "redistribution": "approved_by_upstream_repository_license",
+      "purpose": [
+        "real Portland physical-car telemetry",
+        "extended 28-column Trackvision V2 layout",
+        "sparse source lap-boundary markers",
+        "two complete source laps 4 and 5",
+        "GPS and vehicle-channel evidence for common-reference preparation"
+      ],
+      "fixture_git_blob_sha": "0c9c5f134ba9237a36329ec165b07ec37d63fbcd"
     },
     {
       "id": "trace-motec-canonical",

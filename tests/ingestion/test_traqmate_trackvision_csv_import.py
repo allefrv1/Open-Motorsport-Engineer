@@ -22,6 +22,7 @@ from ome.validation import TelemetryValidator
 
 ROOT = Path(__file__).resolve().parents[2]
 TRAQMATE_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-parking-lot.csv"
+PORTLAND_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-portland-laps-4-5.csv"
 MOTEC_FIXTURE = ROOT / "fixtures" / "public" / "trace" / "motec-canonical.csv"
 OME_FIXTURE = ROOT / "fixtures" / "ome" / "basic-lap.csv"
 FIXED_TIME = datetime(2026, 9, 23, 12, 0, tzinfo=UTC)
@@ -336,6 +337,156 @@ Elapsed Time,Velocity (MPH),Lap
         assert isinstance(outcome, ImportFailure)
         self.assertEqual(outcome.code, ImportFailureCode.INVALID_PROFILE)
         self.assertIn("data row", outcome.message.lower())
+
+
+class Plan024PortlandExtendedTrackvisionTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.importer = TraqmateTrackvisionCSVImporter()
+
+    def import_portland(self) -> ImportSuccess:
+        outcome = self.importer.import_source(
+            PORTLAND_FIXTURE,
+            imported_at=FIXED_TIME,
+        )
+        self.assertIsInstance(outcome, ImportSuccess)
+        assert isinstance(outcome, ImportSuccess)
+        return outcome
+
+    def test_extended_portland_layout_is_claimed_and_imports(self) -> None:
+        self.assertTrue(self.importer.supports(PORTLAND_FIXTURE))
+
+        outcome = self.import_portland()
+
+        self.assertEqual(outcome.dataset.source.source_type, "traqmate-trackvision-csv")
+        self.assertEqual(outcome.dataset.source.metadata["sample_rate_hz"], 40.0)
+        self.assertEqual(len(outcome.dataset.channels), 28)
+
+    def test_elapsed_time_at_column_three_drives_all_channel_timestamps(self) -> None:
+        outcome = self.import_portland()
+        elapsed = outcome.dataset.channel("Elapsed Time")
+        gps_reading = outcome.dataset.channel("GPS Reading")
+
+        self.assertEqual(len(elapsed.series.timestamps_s), 7250)
+        self.assertEqual(elapsed.series.timestamps_s[0], 885.9)
+        self.assertEqual(elapsed.series.timestamps_s[3618], 976.35)
+        self.assertEqual(elapsed.series.timestamps_s[-1], 1067.125)
+        self.assertIs(gps_reading.series.timestamps_s, elapsed.series.timestamps_s)
+
+    def test_all_extended_source_channels_remain_in_original_order(self) -> None:
+        outcome = self.import_portland()
+
+        self.assertEqual(
+            tuple(channel.original_name for channel in outcome.dataset.channels),
+            (
+                "GPS Reading",
+                "GPS Time",
+                "GPS Weeks",
+                "Elapsed Time",
+                "Lat (Degrees)",
+                "Lon (Degrees)",
+                "Lat (feet)",
+                "Lon (feet)",
+                "Altitude (feet)",
+                "Temperature (degrees F)",
+                "EastVel",
+                "NorthVel",
+                "VertVel",
+                "Velocity (MPH)",
+                "Heading(Deg)",
+                "XGs",
+                "YGs",
+                "RPMs",
+                "D4",
+                "D5",
+                "A0",
+                "A1",
+                "A2",
+                "A3",
+                "Gear",
+                "Brake (calc)",
+                "Accel (calc)",
+                "Lap",
+            ),
+        )
+
+    def test_raw_header_padding_is_auditable_but_not_channel_identity(self) -> None:
+        outcome = self.import_portland()
+        raw_header = outcome.dataset.source.metadata["traqmate_raw_header_row"]
+
+        self.assertEqual(len(raw_header), 28)
+        self.assertEqual(
+            raw_header[:4],
+            (
+                "GPS Reading",
+                " GPS Time",
+                " GPS Weeks",
+                " Elapsed Time",
+            ),
+        )
+        self.assertEqual(outcome.dataset.channels[3].original_name, "Elapsed Time")
+
+    def test_sparse_lap_boundary_cells_remain_source_evidence(self) -> None:
+        outcome = self.import_portland()
+        lap = outcome.dataset.channel("Lap")
+
+        non_missing = tuple(
+            (index, value) for index, value in enumerate(lap.series.values) if value is not None
+        )
+        self.assertEqual(
+            non_missing,
+            (
+                (0, "4"),
+                (3618, "5"),
+                (7249, "6"),
+            ),
+        )
+        self.assertIsNone(lap.series.values[1])
+        self.assertIsNone(lap.series.values[3617])
+        self.assertIsNone(lap.series.values[3619])
+
+    def test_portland_import_does_not_modify_source_bytes(self) -> None:
+        before = PORTLAND_FIXTURE.read_bytes()
+
+        self.import_portland()
+
+        self.assertEqual(PORTLAND_FIXTURE.read_bytes(), before)
+
+    def test_portland_fingerprint_is_deterministic(self) -> None:
+        expected = "sha256:" + hashlib.sha256(PORTLAND_FIXTURE.read_bytes()).hexdigest()
+
+        first = self.importer.import_source(PORTLAND_FIXTURE, imported_at=FIXED_TIME)
+        second = self.importer.import_source(
+            PORTLAND_FIXTURE,
+            imported_at=datetime(2026, 9, 24, 13, 0, tzinfo=UTC),
+        )
+
+        self.assertIsInstance(first, ImportSuccess)
+        self.assertIsInstance(second, ImportSuccess)
+        assert isinstance(first, ImportSuccess)
+        assert isinstance(second, ImportSuccess)
+        self.assertEqual(first.dataset.provenance.content_fingerprint, expected)
+        self.assertEqual(second.dataset.provenance.content_fingerprint, expected)
+        self.assertEqual(first.dataset.channels, second.dataset.channels)
+
+    def test_portland_adapter_arbitration_remains_explicit(self) -> None:
+        adapters = (
+            OMECsvProfileImporter(),
+            MoTeCCSVImporter(),
+            TraqmateTrackvisionCSVImporter(),
+            IRacingIBTImporter(),
+        )
+        reverse_adapters = tuple(reversed(adapters))
+
+        for configured in (adapters, reverse_adapters):
+            service = TelemetryImportService(configured)
+            outcome = service.import_file(PORTLAND_FIXTURE, imported_at=FIXED_TIME)
+
+            self.assertIsInstance(outcome, ImportSuccess)
+            assert isinstance(outcome, ImportSuccess)
+            self.assertEqual(
+                outcome.dataset.source.source_type,
+                "traqmate-trackvision-csv",
+            )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # OME External Source Registry
 
-Last verified: **2026-09-22**
+Last verified: **2026-09-24**
 
 ## Agent/harness engineering
 
@@ -109,6 +109,7 @@ URL: https://github.com/djhedges/exit_speed
 Verified artifacts:
 
 - small Traqmate parking-lot telemetry CSV;
+- compact Portland laps 4–5 Trackvision slice;
 - larger Portland International Raceway telemetry logs.
 
 License:
@@ -117,8 +118,9 @@ Apache-2.0 at repository level.
 
 OME use:
 
-- small file vendored under `fixtures/public/exit-speed/`;
-- larger track data retained as an external benchmark candidate.
+- small parking-lot file vendored under `fixtures/public/exit-speed/`;
+- Portland laps 4–5 direct row slice vendored under `fixtures/public/exit-speed/` with upstream blob/row provenance;
+- larger full Portland recordings retained as external benchmark/reference sources.
 
 Classification: public telemetry fixture / real vehicle data.
 
