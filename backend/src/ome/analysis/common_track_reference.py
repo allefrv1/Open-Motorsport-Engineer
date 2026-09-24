@@ -172,9 +172,14 @@ class CommonTrackReferenceEngine:
         )
 
         raw_distance_m = tuple(projection.raw_distance_m for projection in projections)
-        reference_distance_m = self._unwrap(
-            raw_distance_m,
-            reference_path.total_distance_m,
+        reference_is_closed = self._same_point(reference_points[0], reference_points[-1])
+        reference_distance_m = (
+            self._unwrap(
+                raw_distance_m,
+                reference_path.total_distance_m,
+            )
+            if reference_is_closed
+            else raw_distance_m
         )
 
         if not self._strictly_increasing(reference_distance_m):
