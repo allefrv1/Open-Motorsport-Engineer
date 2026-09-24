@@ -20,7 +20,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 025 — Physical-Car Lap Window Selection Foundation](plans/active/025-physical-car-lap-window-selection-foundation.md)
+- [Plan 026 — Physical-Car Track Reference Preparation Foundation](plans/active/026-physical-car-track-reference-preparation-foundation.md)
 
 ## Verification and implementation guidance
 
