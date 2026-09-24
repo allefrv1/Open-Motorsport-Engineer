@@ -59,6 +59,7 @@ class CommonTrackReferenceProvenance:
     origin_latitude_deg: float
     origin_longitude_deg: float
     reference_length_m: float
+    reference_is_closed: bool
 
 
 @dataclass(frozen=True, slots=True)
