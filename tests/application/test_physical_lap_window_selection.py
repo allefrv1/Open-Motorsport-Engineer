@@ -16,13 +16,7 @@ from ome.domain import SampleSeries
 from ome.ingestion import ImportSuccess, OMECsvProfileImporter, TraqmateTrackvisionCSVImporter
 
 ROOT = Path(__file__).resolve().parents[2]
-PORTLAND_FIXTURE = (
-    ROOT
-    / "fixtures"
-    / "public"
-    / "exit-speed"
-    / "traqmate-portland-laps-4-5.csv"
-)
+PORTLAND_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-portland-laps-4-5.csv"
 OME_FIXTURE = ROOT / "fixtures" / "ome" / "basic-lap.csv"
 FIXED_TIME = datetime(2026, 9, 24, 12, 0, tzinfo=UTC)
 
@@ -167,9 +161,7 @@ class Plan025PhysicalCarLapWindowSelectionTests(unittest.TestCase):
         self.assertIs(self.dataset.channel("Lap").series.values, lap_values_before)
         self.assertEqual(
             tuple(
-                (index, value)
-                for index, value in enumerate(lap_values_before)
-                if value is not None
+                (index, value) for index, value in enumerate(lap_values_before) if value is not None
             ),
             (
                 (0, "4"),
@@ -221,9 +213,7 @@ class Plan025PhysicalCarLapWindowSelectionTests(unittest.TestCase):
         dataset = replace(
             self.dataset,
             channels=tuple(
-                channel
-                for channel in self.dataset.channels
-                if channel.identifier != "Elapsed Time"
+                channel for channel in self.dataset.channels if channel.identifier != "Elapsed Time"
             ),
         )
 
