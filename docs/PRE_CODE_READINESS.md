@@ -30,7 +30,8 @@ The repository now has:
 18. a verified React/TypeScript investigation workspace with explicit evidence/provenance and accessible result states;
 19. synchronized telemetry investigation plots that consume server arrays without browser-side engineering recomputation;
 20. explicit Traqmate Trackvision V2 physical-car ingestion with preserved GPS/Lap evidence and no fabricated lap distance;
-21. deterministic WGS84 horizontal GPS path-distance derivation with typed provenance and real physical-car validation.
+21. deterministic WGS84 horizontal GPS path-distance derivation with typed provenance and real physical-car validation;
+22. deterministic explicit-reference GPS projection with typed provenance, canonical `lap.distance` preparation and characterized direct-search scaling.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -226,19 +227,31 @@ The architecture is still intentionally being proven one boundary at a time.
 - external Portland multi-lap path variation study;
 - recorded RED -> GREEN CI history.
 
+### Common track reference — Plan 023
+
+- explicit trusted reference-lap geometry;
+- deterministic nearest-segment projection;
+- closed-reference seam unwrap;
+- strict monotonic readiness without clamping/smoothing;
+- lateral projection evidence;
+- complete reference/candidate provenance;
+- explicit `track.reference_distance -> lap.distance` preparation;
+- direct-search performance characterization;
+- recorded RED -> GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/023-common-track-reference-foundation.md`
+`docs/plans/active/024-traqmate-portland-multilap-evidence-foundation.md`
 
 ### Guardrail
 
-Plan 023 may map GPS points onto one explicit trusted reference-lap geometry using the accepted common-reference specification.
+Plan 024 may generalize Traqmate Trackvision V2 ingestion only enough to preserve the real Portland extended layout and sparse source Lap markers.
 
-It must not silently select a reference lap, stretch candidate laps to fit, smooth projection distance, clamp local backtracking, or discard lateral/projection error evidence.
+It must not infer lap completion/context during ingestion, rewrite source values, or pull physical-car comparison orchestration into the adapter.
 
 ADR-0010 remains Proposed.
 
