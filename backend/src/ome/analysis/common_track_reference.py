@@ -30,9 +30,7 @@ class CommonTrackReferenceIssueCode(StrEnum):
     MISSING_REFERENCE_PATH_DISTANCE = "missing_reference_path_distance"
     INVALID_REFERENCE_PATH_DISTANCE = "invalid_reference_path_distance"
     REFERENCE_SELF_INTERSECTION = "reference_self_intersection"
-    PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING = (
-        "projected_distance_not_strictly_increasing"
-    )
+    PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING = "projected_distance_not_strictly_increasing"
 
 
 @dataclass(frozen=True, slots=True)
@@ -225,9 +223,7 @@ class CommonTrackReferenceEngine:
             timestamps_s=candidate.timestamps_s,
             raw_reference_distance_m=raw_distance_m,
             reference_distance_m=reference_distance_m,
-            reference_segment_index=tuple(
-                projection.segment_index for projection in projections
-            ),
+            reference_segment_index=tuple(projection.segment_index for projection in projections),
             segment_fraction=tuple(projection.fraction for projection in projections),
             lateral_error_m=lateral_error_m,
             max_lateral_error_m=max(lateral_error_m),
@@ -269,17 +265,14 @@ class CommonTrackReferenceEngine:
 
         reference = request.reference
         if (
-            reference_path.provenance.dataset_fingerprint
-            != reference.context.dataset_fingerprint
+            reference_path.provenance.dataset_fingerprint != reference.context.dataset_fingerprint
             or reference_path.timestamps_s != reference.timestamps_s
             or len(reference_path.path_distance_m) != len(reference.timestamps_s)
             or reference_path.derived_concept != "gps.path_distance"
             or reference_path.unit != "m"
             or not math.isfinite(reference_path.total_distance_m)
             or reference_path.total_distance_m <= 0.0
-            or not CommonTrackReferenceEngine._non_decreasing(
-                reference_path.path_distance_m
-            )
+            or not CommonTrackReferenceEngine._non_decreasing(reference_path.path_distance_m)
         ):
             issues.append(
                 CommonTrackReferenceReadinessIssue(
@@ -379,10 +372,7 @@ class CommonTrackReferenceEngine:
                 )
             )
 
-        if any(
-            longitude < -180.0 or longitude > 180.0
-            for longitude in lap.longitudes_deg
-        ):
+        if any(longitude < -180.0 or longitude > 180.0 for longitude in lap.longitudes_deg):
             issues.append(
                 CommonTrackReferenceReadinessIssue(
                     code=CommonTrackReferenceIssueCode.INVALID_LONGITUDE,
@@ -398,10 +388,7 @@ class CommonTrackReferenceEngine:
         if not fingerprint.strip():
             return False
 
-        if (
-            not lap.context.session_identifier.strip()
-            or not lap.context.lap_identifier.strip()
-        ):
+        if not lap.context.session_identifier.strip() or not lap.context.lap_identifier.strip():
             return False
 
         for evidence in (
@@ -554,23 +541,18 @@ class CommonTrackReferenceEngine:
     @staticmethod
     def _same_point(first: _Point, second: _Point) -> bool:
         tolerance_m = 1e-9
-        return (
-            abs(first.x - second.x) <= tolerance_m
-            and abs(first.y - second.y) <= tolerance_m
-        )
+        return abs(first.x - second.x) <= tolerance_m and abs(first.y - second.y) <= tolerance_m
 
     @staticmethod
     def _strictly_increasing(values: tuple[float, ...]) -> bool:
         return all(
-            current > previous
-            for previous, current in zip(values, values[1:], strict=False)
+            current > previous for previous, current in zip(values, values[1:], strict=False)
         )
 
     @staticmethod
     def _non_decreasing(values: tuple[float, ...]) -> bool:
         return all(
-            current >= previous
-            for previous, current in zip(values, values[1:], strict=False)
+            current >= previous for previous, current in zip(values, values[1:], strict=False)
         )
 
     @staticmethod
