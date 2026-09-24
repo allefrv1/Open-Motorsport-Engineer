@@ -36,6 +36,16 @@ from ome.application.lap_window import (
     SourceLapWindowSuccess,
     TraqmateLapWindowSelector,
 )
+from ome.application.physical_track_reference import (
+    PhysicalTrackReferencePreparation,
+    PhysicalTrackReferencePreparationIssue,
+    PhysicalTrackReferencePreparationIssueCode,
+    PhysicalTrackReferencePreparationNotReady,
+    PhysicalTrackReferencePreparationOutcome,
+    PhysicalTrackReferencePreparationRequest,
+    PhysicalTrackReferencePreparationService,
+    PhysicalTrackReferencePreparationSuccess,
+)
 from ome.application.track_reference_preparation import (
     prepare_track_reference_lap_distance,
 )
@@ -65,6 +75,14 @@ __all__ = [
     "SourceLapWindowRequest",
     "SourceLapWindowSuccess",
     "TraqmateLapWindowSelector",
+    "PhysicalTrackReferencePreparation",
+    "PhysicalTrackReferencePreparationIssue",
+    "PhysicalTrackReferencePreparationIssueCode",
+    "PhysicalTrackReferencePreparationNotReady",
+    "PhysicalTrackReferencePreparationOutcome",
+    "PhysicalTrackReferencePreparationRequest",
+    "PhysicalTrackReferencePreparationService",
+    "PhysicalTrackReferencePreparationSuccess",
     "ContinuousChannelPair",
     "GearChannelPair",
     "SupportingEvidenceKind",
