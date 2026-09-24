@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 
-Status: **Operational harness — physical lap windows verified; track-reference preparation active**
+Status: **Operational harness — physical common reference verified; plateau-aware comparison active**
 
 Scale:
 
@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–025 have completed history and Plan 026 is active. |
+| Plan lifecycle | 4 | Plans 001–026 have completed history and Plan 027 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -64,7 +64,9 @@ Plan 024 adds a compact licensed Portland two-lap fixture and supports its real 
 
 Plan 025 now converts explicit sparse boundary markers into deterministic complete source-lap windows without moving context inference back into ingestion.
 
-The next maturity step is to prepare those explicitly selected physical laps onto one common canonical track reference while preserving boundary ownership and provenance.
+Plan 026 now prepares the selected Portland physical laps onto one canonical common reference and preserves exact projection plateaus without fabricated motion.
+
+The next maturity step is to make base time-vs-distance comparison explicitly plateau-aware while preserving dwell time and rejecting true backtracking.
 
 ## Review cadence
 
