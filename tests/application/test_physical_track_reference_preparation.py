@@ -42,12 +42,8 @@ def context(dataset: ImportedTelemetryDataset, lap_number: int) -> LapEvidenceCo
 
 def selected_windows(dataset: ImportedTelemetryDataset):
     selector = TraqmateLapWindowSelector()
-    reference = selector.select(
-        SourceLapWindowRequest(dataset=dataset, source_lap_number=4)
-    )
-    candidate = selector.select(
-        SourceLapWindowRequest(dataset=dataset, source_lap_number=5)
-    )
+    reference = selector.select(SourceLapWindowRequest(dataset=dataset, source_lap_number=4))
+    candidate = selector.select(SourceLapWindowRequest(dataset=dataset, source_lap_number=5))
     assert hasattr(reference, "window")
     assert hasattr(candidate, "window")
     return reference.window, candidate.window
@@ -151,7 +147,9 @@ class Plan026PhysicalTrackReferencePreparationTests(unittest.TestCase):
             prepared.candidate_projection.reference_distance_m,
         )
 
-    def test_reference_mapping_is_explicit_and_candidate_projection_keeps_both_identities(self) -> None:
+    def test_reference_mapping_is_explicit_and_candidate_projection_keeps_both_identities(
+        self,
+    ) -> None:
         dataset = compact_dataset(self.portland)
         outcome = self.service.prepare(self.request_for(dataset))
 
@@ -294,9 +292,7 @@ class Plan026PhysicalTrackReferencePreparationTests(unittest.TestCase):
         dataset = replace(
             dataset,
             channels=tuple(
-                channel
-                for channel in dataset.channels
-                if channel.identifier != "Lat (Degrees)"
+                channel for channel in dataset.channels if channel.identifier != "Lat (Degrees)"
             ),
         )
         reference_window, candidate_window = selected_windows(dataset)
