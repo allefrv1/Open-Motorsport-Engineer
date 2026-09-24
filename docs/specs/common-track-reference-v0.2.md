@@ -25,6 +25,23 @@ The end of the candidate trajectory remains forward and close to the reference l
 
 Therefore the observed condition is an exact projection plateau, not backtracking.
 
+## Explicit closed-reference topology
+
+Physical lap closure is operational evidence, not a geometric-equality test.
+
+v0.2 allows `TrackReferenceLap` to declare that the supplied ordered reference trajectory represents one explicitly bounded closed lap.
+
+When `is_closed=true`:
+
+- circular seam unwrap is applied even when the first and final GPS coordinates are not exactly equal;
+- the flag must come from trusted lap-boundary preparation, not from a distance tolerance guess;
+- source coordinates remain unchanged;
+- no synthetic closing coordinate is created.
+
+Exact first/last geometric equality may remain a compatibility fallback for existing synthetic/reference fixtures, but physical preparation should supply explicit topology.
+
+The result provenance must record whether the reference was treated as closed.
+
 ## Readiness change
 
 After circular seam unwrap, v0.2 requires projected reference distance to be **non-decreasing**:
@@ -92,7 +109,9 @@ The historical v0.1 issue name may remain available for compatibility, but v0.2 
 
 All existing v0.1 provenance remains required.
 
-The algorithm version in result/provenance makes the plateau policy inspectable.
+v0.2 additionally preserves the effective closed-reference topology used by the projection.
+
+The algorithm version in result/provenance makes the plateau and topology policy inspectable.
 
 No source sample or source coordinate is changed.
 
