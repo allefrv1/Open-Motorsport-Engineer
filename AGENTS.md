@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 2.9.0
+Version: 3.0.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -192,12 +192,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–025 implemented the controlled MVP path through real Portland physical-car lap-window selection.
+Plans 003–026 implemented the controlled MVP and the physical Portland path through canonical common-reference `lap.distance`.
 
 The active engineering task is:
 
-`docs/plans/active/026-physical-car-track-reference-preparation-foundation.md`
+`docs/plans/active/027-lap-comparison-plateau-semantics-foundation.md`
 
-Follow `docs/specs/physical-car-reference-preparation-v0.1.md`. Use only explicitly selected source-lap windows and explicit trusted LapEvidenceContext. The closing boundary may be appended only as boundary evidence for geometry/time closure. Do not auto-select a reference lap, infer Session/Run context, repair GPS/reference geometry, normalize supporting vehicle channels or build comparison/report output in this slice.
+Follow `docs/specs/lap-comparison-v0.2.md`. Preserve non-decreasing physical distance plateaus exactly, model their time interval deterministically, and reject true distance decreases. Do not insert epsilon distance, clamp, smooth, delete/reorder samples, normalize Traqmate supporting channels or build the physical report request in this slice.
 
 ADR-0010 remains Proposed.
