@@ -32,7 +32,7 @@ TRAQMATE_SOURCE_TYPE = "traqmate-trackvision-csv"
 TRAQMATE_SOURCE_SYSTEM = "Traqmate Trackvision"
 TRAQMATE_VERSION = "V2"
 TRAQMATE_SIGNATURE = ("Format", TRAQMATE_SOURCE_SYSTEM, TRAQMATE_VERSION)
-_REQUIRED_HEADER_COLUMNS = (
+_REQUIRED_EXTENDED_HEADER_COLUMNS = (
     "Elapsed Time",
     "Lat (Degrees)",
     "Lon (Degrees)",
@@ -265,11 +265,18 @@ class TraqmateTrackvisionCSVImporter:
                 "Traqmate CSV duplicate source channel names are unsupported in this slice."
             )
 
-        for required in _REQUIRED_HEADER_COLUMNS:
-            if channel_names.count(required) != 1:
-                raise _InvalidTraqmateCSV(
-                    f"Traqmate CSV telemetry header must contain exactly one {required!r} column."
-                )
+        if channel_names.count("Elapsed Time") != 1:
+            raise _InvalidTraqmateCSV(
+                "Traqmate CSV telemetry header must contain exactly one 'Elapsed Time' column."
+            )
+
+        if "GPS Reading" in channel_names:
+            for required in _REQUIRED_EXTENDED_HEADER_COLUMNS:
+                if channel_names.count(required) != 1:
+                    raise _InvalidTraqmateCSV(
+                        "Extended Traqmate CSV telemetry header must contain exactly one "
+                        f"{required!r} column."
+                    )
 
         elapsed_time_index = channel_names.index("Elapsed Time")
 
