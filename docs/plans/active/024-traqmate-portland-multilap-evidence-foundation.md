@@ -93,24 +93,34 @@ Portland uses sparse boundary markers:
 - a lap number appears at the first sample of the lap;
 - subsequent rows leave the `Lap` cell empty until the next boundary.
 
-Observed in the stripped source:
+Observed in the stripped source using zero-based data-row indices:
 
 - Lap 4 marker at source data row 11,360 / elapsed 885.900 s;
 - Lap 5 marker at row 14,978 / elapsed 976.350 s;
 - Lap 6 marker at row 18,609 / elapsed 1067.125 s.
 
-Thus rows 11,360 through 18,609 inclusive contain:
+Equivalent one-based CSV file lines, including the 17-line preamble/header, are:
+
+- 11,378;
+- 14,996;
+- 18,627.
+
+Thus zero-based source data rows 11,360 through 18,609 inclusive contain:
 
 - complete Lap 4;
 - complete Lap 5;
 - first boundary sample of Lap 6.
 
-Exact slice shape:
+Exact committed slice shape:
 
 - 7,250 selected data rows;
 - 7,267 lines including original preamble/header;
-- approximately 1,505,516 characters before Git transport encoding;
-- elapsed span 181.225 s.
+- 28 source channels;
+- original CRLF line endings preserved;
+- 1,512,783 ASCII bytes/characters with CRLF;
+- 1,505,516 characters when carriage returns are excluded;
+- elapsed span 181.225 s;
+- OME fixture Git blob `0c9c5f134ba9237a36329ec165b07ec37d63fbcd`.
 
 ## Fixture target
 
@@ -283,6 +293,61 @@ Before production parser changes, tests should prove:
 8. source bytes remain unchanged;
 9. fingerprint is deterministic;
 10. OME/MoTeC/iRacing/Traqmate adapter arbitration remains explicit.
+
+## TDD execution evidence
+
+Fixture/provenance work was completed before production behavior.
+
+Pre-behavior harness failures:
+
+- OME CI #303 — formatting only;
+- OME CI #304 — formatting only.
+
+These are not counted as behavioral RED.
+
+Behavioral RED:
+
+- OME CI #305;
+- fixture characterization passed;
+- eight Portland importer tests failed because the existing Trackvision importer did not claim the padded V2 signature / extended header and returned unsupported or invalid-profile outcomes.
+
+First implementation attempt:
+
+- OME CI #306;
+- Portland behavior progressed, but regression tests caught an over-broad rule requiring GPS/Lat/Lon columns for every legacy Trackvision V2 file;
+- the harness correctly rejected that change.
+
+Final GREEN:
+
+- OME CI #307;
+- Portland extended layout passed;
+- legacy Plan 021 Trackvision tests passed unchanged;
+- fixture/provenance checks passed;
+- canonical verify completed successfully.
+
+The final compatibility rule is intentionally narrow:
+
+- every supported Trackvision table must expose exactly one `Elapsed Time`;
+- the Portland/GPS extended shape additionally requires the verified `Lat (Degrees)`, `Lon (Degrees)` and `Lap` structural columns;
+- older minimal Trackvision V2 layouts remain supported.
+
+## Implemented evidence
+
+Executable coverage is split between:
+
+- `tests/fixtures/test_traqmate_portland_characterization.py`;
+- `tests/ingestion/test_traqmate_trackvision_csv_import.py`.
+
+The implementation preserves:
+
+- raw header cells in `traqmate_raw_header_row`;
+- normalized structural channel identities;
+- all 28 channels in source order;
+- sparse Lap cells as lexical value / `None`;
+- explicit 40 Hz preamble metadata;
+- source bytes and deterministic SHA-256 provenance.
+
+No Session / Run / Lap context is inferred during ingestion.
 
 ## Completion criteria
 
