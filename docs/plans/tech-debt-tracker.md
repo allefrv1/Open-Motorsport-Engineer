@@ -14,6 +14,7 @@ It is not a substitute for issues or execution plans. High-impact items should r
 | TD-005 | Technology | The 116,688-byte / 1,962-row supported Traqmate fixture measures ~3.4 ms import + ~2.5 ms validation on CI #256; realistic 15–20 MB external blobs are identified but not yet benchmarked | Medium | Run exact-blob external benchmarks before any optimization; keep CI free of machine-sensitive timing thresholds |
 | TD-006 | MoTeC | Native `.ld` integration feasibility remains unresolved | Low for MVP | Deferred |
 | TD-007 | Packaging | Consumer desktop packaging is unresolved | Low for MVP | Revisit after local-web validation |
+| TD-008 | Analysis performance | Common-track reference v0.1 uses exact direct segment search; CI #297 measures ~1.15 s at 800×799 projection checks and confirms quadratic scaling | Medium | Keep numerical contract; define representative latency/scale target before selecting exact spatial acceleration |
 
 ## Resolved by Plan 002
 
