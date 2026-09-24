@@ -185,7 +185,7 @@ Return explicit not-ready evidence for at least:
 - non-numeric/non-finite selected GPS/time values;
 - length inconsistency;
 - reference GPS-path derivation not-ready;
-- common-track-reference projection not-ready.
+- common-track-reference projection not-ready due to a true projected-distance decrease or other blocking geometry issue.
 
 Do not repair or guess.
 
@@ -215,7 +215,7 @@ After Plan 026, a separate application composition slice may combine prepared ph
 - Plan 025 — Physical-Car Lap Window Selection Foundation
 - Traqmate Source Lap Window Specification v0.1
 - GPS Path Distance Specification v0.1
-- Common Track Reference Specification v0.1
+- Common Track Reference Specification v0.2
 - ADR-0009 — distance-aligned lap comparison
 - REQ-005 — Compare Two Laps
 - REQ-006 — Preserve Analysis Evidence

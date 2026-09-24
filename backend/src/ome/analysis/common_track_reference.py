@@ -14,7 +14,7 @@ from ome.evidence import (
 )
 
 ALGORITHM_ID = "ome.track-reference.explicit-lap-projection"
-ALGORITHM_VERSION = "0.1.0"
+ALGORITHM_VERSION = "0.2.0"
 
 
 class CommonTrackReferenceIssueCode(StrEnum):
@@ -31,6 +31,7 @@ class CommonTrackReferenceIssueCode(StrEnum):
     INVALID_REFERENCE_PATH_DISTANCE = "invalid_reference_path_distance"
     REFERENCE_SELF_INTERSECTION = "reference_self_intersection"
     PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING = "projected_distance_not_strictly_increasing"
+    PROJECTED_DISTANCE_DECREASES = "projected_distance_decreases"
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,6 +50,7 @@ class TrackReferenceLap:
     longitude_evidence: SourceSeriesEvidence
     time_evidence: SourceSeriesEvidence
     gps_path_distance: GPSPathDistanceSuccess | None = None
+    is_closed: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -172,7 +174,10 @@ class CommonTrackReferenceEngine:
         )
 
         raw_distance_m = tuple(projection.raw_distance_m for projection in projections)
-        reference_is_closed = self._same_point(reference_points[0], reference_points[-1])
+        reference_is_closed = reference.is_closed or self._same_point(
+            reference_points[0],
+            reference_points[-1],
+        )
         reference_distance_m = (
             self._unwrap(
                 raw_distance_m,
@@ -182,16 +187,14 @@ class CommonTrackReferenceEngine:
             else raw_distance_m
         )
 
-        if not self._strictly_increasing(reference_distance_m):
+        if not self._non_decreasing(reference_distance_m):
             return CommonTrackReferenceNotReady(
                 issues=(
                     CommonTrackReferenceReadinessIssue(
-                        code=(
-                            CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_NOT_STRICTLY_INCREASING
-                        ),
+                        code=CommonTrackReferenceIssueCode.PROJECTED_DISTANCE_DECREASES,
                         message=(
-                            "Projected common-track reference distance must be strictly "
-                            "increasing after circular seam unwrap."
+                            "Projected common-track reference distance must not decrease "
+                            "after circular seam unwrap. Exact plateaus are preserved."
                         ),
                     ),
                 )
@@ -215,6 +218,7 @@ class CommonTrackReferenceEngine:
             origin_latitude_deg=origin_latitude_deg,
             origin_longitude_deg=origin_longitude_deg,
             reference_length_m=reference_path.total_distance_m,
+            reference_is_closed=reference_is_closed,
         )
 
         return CommonTrackReferenceSuccess(
