@@ -2,9 +2,9 @@
 
 from ome.evidence.model import (
     CanonicalSeriesEvidence,
+    CommonTrackReferenceProvenance,
     ComparisonProvenance,
     ComparisonReportProvenance,
-    CommonTrackReferenceProvenance,
     ContinuousOverlayProvenance,
     DeltaObservationProvenance,
     GearOverlayProvenance,
