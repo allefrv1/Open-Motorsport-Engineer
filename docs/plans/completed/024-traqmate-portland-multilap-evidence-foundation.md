@@ -1,8 +1,10 @@
 # Plan 024 — Traqmate Portland Multi-Lap Evidence & Layout Foundation
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-24
+
+Completed: 2026-09-24
 
 ## Objective
 
@@ -384,3 +386,24 @@ Plan 024 itself does not perform that orchestration.
 - Formula Student source integration;
 - native MoTeC `.ld`;
 - AI interpretation.
+
+
+## Merge evidence
+
+Plan 024 was implemented in PR #59.
+
+Final canonical verification:
+
+- OME CI #310 — success.
+
+Squash merge:
+
+`cb4207b9911c61ffd15c1610f317706294ccb35f`
+
+## Completion assessment
+
+All Plan 024 completion criteria are satisfied.
+
+The resulting repository now contains a legally traceable Portland physical-car fixture with two complete source laps and a Trackvision V2 importer that supports the verified extended layout while preserving legacy compatibility.
+
+The next responsibility is deliberately outside ingestion: interpret explicit sparse source lap-boundary markers into auditable lap sample windows.

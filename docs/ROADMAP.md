@@ -196,17 +196,26 @@ Completed:
 - explicit `track.reference_distance -> lap.distance` preparation;
 - direct-search performance characterization.
 
+Completed:
+
+- Plan 024 — Traqmate Portland Multi-Lap Evidence & Layout Foundation;
+- compact Apache-2.0 Portland two-complete-lap fixture;
+- real 28-column Trackvision V2 layout support;
+- non-zero Elapsed Time column support;
+- raw-header/source-order preservation;
+- sparse source Lap boundary preservation;
+- legacy Trackvision compatibility retained.
+
 Current plan:
 
-- `docs/plans/active/024-traqmate-portland-multilap-evidence-foundation.md`
+- `docs/plans/active/025-physical-car-lap-window-selection-foundation.md`
 
 Current work:
 
-- commit a compact two-complete-lap Portland physical-car fixture;
-- preserve upstream Apache-2.0 provenance;
-- support real extended Trackvision V2 column layout;
-- preserve sparse source Lap boundary markers;
-- generalize timestamp lookup without moving lap inference into ingestion.
+- select an explicitly requested complete source lap from sparse boundary markers;
+- preserve the next marker as a separate closing-boundary index;
+- keep source telemetry immutable;
+- return explicit not-ready evidence for missing/incomplete/ambiguous windows.
 
 Later:
 

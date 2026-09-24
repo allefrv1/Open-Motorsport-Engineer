@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 2.7.0
+Version: 2.8.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -192,12 +192,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–023 implemented the controlled MVP path through a deterministic common physical track reference and explicit canonical `lap.distance` preparation.
+Plans 003–024 implemented the controlled MVP path through real Portland extended Trackvision ingestion and preserved sparse physical-car lap-boundary evidence.
 
 The active engineering task is:
 
-`docs/plans/active/024-traqmate-portland-multilap-evidence-foundation.md`
+`docs/plans/active/025-physical-car-lap-window-selection-foundation.md`
 
-Use the Portland stripped blob as explicit evidence. Preserve the extended Trackvision V2 source layout, source channel order and sparse Lap boundary cells. Generalize ingestion with TDD; do not infer lap context, rewrite source cells or perform comparison logic inside ingestion.
+Follow `docs/specs/traqmate-lap-window-v0.1.md`. Select only an explicitly requested complete source lap. The next source Lap marker closes the current sample window but belongs to the next lap, so preserve it separately as `closing_boundary_index`. Do not fill sparse Lap cells, auto-select laps, derive GPS distance or build comparisons inside lap-window selection.
 
 ADR-0010 remains Proposed.

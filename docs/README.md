@@ -20,7 +20,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 024 — Traqmate Portland Multi-Lap Evidence & Layout Foundation](plans/active/024-traqmate-portland-multilap-evidence-foundation.md)
+- [Plan 025 — Physical-Car Lap Window Selection Foundation](plans/active/025-physical-car-lap-window-selection-foundation.md)
 
 ## Verification and implementation guidance
 

@@ -31,7 +31,8 @@ The repository now has:
 19. synchronized telemetry investigation plots that consume server arrays without browser-side engineering recomputation;
 20. explicit Traqmate Trackvision V2 physical-car ingestion with preserved GPS/Lap evidence and no fabricated lap distance;
 21. deterministic WGS84 horizontal GPS path-distance derivation with typed provenance and real physical-car validation;
-22. deterministic explicit-reference GPS projection with typed provenance, canonical `lap.distance` preparation and characterized direct-search scaling.
+22. deterministic explicit-reference GPS projection with typed provenance, canonical `lap.distance` preparation and characterized direct-search scaling;
+23. a traceable Portland two-complete-lap physical-car fixture and extended Trackvision V2 ingestion preserving sparse Lap-boundary evidence.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -239,19 +240,30 @@ The architecture is still intentionally being proven one boundary at a time.
 - direct-search performance characterization;
 - recorded RED -> GREEN CI history.
 
+### Portland multi-lap source evidence — Plan 024
+
+- direct Apache-2.0 Portland row-slice fixture with pinned upstream/derived Git blobs;
+- 7,250 physical-car telemetry rows covering complete source Laps 4 and 5 plus the Lap 6 boundary;
+- real 28-column Trackvision V2 ingestion;
+- non-zero Elapsed Time source-column support;
+- raw header and source-channel order preservation;
+- sparse source Lap marker preservation;
+- regression-proven legacy Trackvision compatibility;
+- recorded behavioral RED, rejected regression and final GREEN CI history.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/024-traqmate-portland-multilap-evidence-foundation.md`
+`docs/plans/active/025-physical-car-lap-window-selection-foundation.md`
 
 ### Guardrail
 
-Plan 024 may generalize Traqmate Trackvision V2 ingestion only enough to preserve the real Portland extended layout and sparse source Lap markers.
+Plan 025 may interpret preserved sparse Traqmate Lap boundary markers only enough to select an explicitly requested complete source lap window.
 
-It must not infer lap completion/context during ingestion, rewrite source values, or pull physical-car comparison orchestration into the adapter.
+The next marker closes the current lap window but remains a sample of the next lap. Preserve it separately as closing-boundary evidence. Do not fill sparse markers, auto-select laps, derive GPS distance or build comparison/report logic in this slice.
 
 ADR-0010 remains Proposed.
 
