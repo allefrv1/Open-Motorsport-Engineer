@@ -50,6 +50,16 @@ from ome.analysis.gps_path_distance import (
     GPSPathDistanceRequest,
     GPSPathDistanceSuccess,
 )
+from ome.analysis.tire_model import (
+    PacejkaMagicFormula,
+    PacejkaParameters,
+    SlipCoordinate,
+    TireForceAxis,
+    TireModel,
+    TireModelRequest,
+    TireModelResult,
+)
+
 from ome.analysis.lap_comparison import (
     ComparisonIssueCode,
     ComparisonReadinessIssue,
@@ -103,7 +113,7 @@ __all__ = [
     "ContinuousOverlayRequest",
     "ContinuousOverlaySeries",
     "ContinuousOverlaySuccess",
-    "ComparisonIssueCode",
+    "PacejkaMagicFormula",\n    "PacejkaParameters",\n    "SlipCoordinate",\n    "TireForceAxis",\n    "TireModel",\n    "TireModelRequest",\n    "TireModelResult",\n    "ComparisonIssueCode",
     "ComparisonReadinessIssue",
     "LapComparisonEngine",
     "LapComparisonLap",
