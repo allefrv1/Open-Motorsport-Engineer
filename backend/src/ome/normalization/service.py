@@ -188,6 +188,8 @@ class TelemetryNormalizer:
             return numeric / 100.0
         if kind is ConversionKind.RPM_TO_RAD_PER_SECOND:
             return numeric * 2.0 * math.pi / 60.0
+        if kind is ConversionKind.MPH_TO_MPS:
+            return numeric * 0.44704
 
         raise _ConversionFailure(f"Unsupported conversion kind: {kind}")
 
