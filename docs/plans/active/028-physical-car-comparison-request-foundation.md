@@ -121,6 +121,50 @@ NEXT STATE            = tests -> RED
 
 Human gate reopens if implementation would need to infer a source-channel meaning or reuse a next-lap boundary value as an optional vehicle-channel sample.
 
+## TDD execution evidence
+
+Pre-behavior harness cleanup:
+
+- CI #361 and CI #362 exposed only test formatting differences;
+- CI #363 was a temporary Ruff-diff diagnostic run used to obtain the exact canonical formatting and its harness instrumentation was removed before production work.
+
+Behavioral RED:
+
+- CI #364;
+- expected failure: the test module could not import `PhysicalComparisonPreparationIssueCode` / the new physical comparison preparation API because production behavior did not yet exist.
+
+GREEN:
+
+- CI #366;
+- the complete canonical verify passed after the minimum application preparation service and public application exports were added.
+
+The tests were not weakened to obtain GREEN.
+
+## Implementation traceability
+
+Executable coverage:
+
+`tests/application/test_physical_comparison_preparation.py`
+
+The first slice proves:
+
+- prepared Portland physical `lap.distance` objects are reused by identity;
+- reference/candidate lap-relative elapsed time begins at `0.0 s`;
+- elapsed-time lengths match the corresponding prepared distance lengths;
+- elapsed-time provenance retains the source `Elapsed Time` channel and explicit rebase start;
+- equivalent inputs produce equivalent requests;
+- preparation artifacts remain unchanged;
+- invalid grid steps are not-ready;
+- dataset/context mismatches are not-ready;
+- identical reference/candidate lap context is not-ready;
+- non-increasing physical time evidence is not-ready;
+- distance/time length mismatch is not-ready;
+- no optional continuous or gear channels are invented;
+- the resulting request produces a real `ComparisonReportSuccess`;
+- the report uses base comparison v0.2;
+- all six supporting concepts remain explicit not-ready Missing Evidence;
+- report output contains deterministic observations but no cause, hypothesis, engineering interpretation or recommendation.
+
 ## Completion criteria
 
 - Plan 027 archived;
