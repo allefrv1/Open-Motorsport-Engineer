@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 3.2.0
+Version: 3.3.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -24,6 +24,9 @@ Before substantial work, read only the documents relevant to the task:
 - `docs/specs/` — data/interface specifications
 - `docs/plans/active/` — active execution plans
 - `docs/HARNESS_ENGINEERING.md` — agent workflow and feedback-loop requirements
+- `docs/ENGINEERING_COUNCIL.md` — multidisciplinary software / motorsport / physics review
+- `docs/KANBAN.md` — pull policies, WIP limits and feedback cadences
+- `docs/agents/` — specialist role charters
 - `docs/DEVELOPMENT.md` — reproducible environment and canonical commands
 
 Use `docs/README.md` as the documentation index.
@@ -74,6 +77,22 @@ PROMPT
 ```
 
 Fix failures at the highest layer where they originate. Do not compensate for missing context or decisions by changing lower-layer code/tests.
+
+## Multidisciplinary engineering
+
+Material motorsport/physics/domain work must use the Engineering Council model.
+
+Required specialist perspectives:
+
+- Software / Architecture;
+- Motorsport Mechanical Engineering;
+- Physics Review.
+
+The Motorsport Mechanical Engineering role is book-backed. For non-trivial engineering rules/recommendations, consult `docs/references/motorsport-engineering-library.md` and an actually accessible reference. Never fabricate a book citation, chapter, page or engineering rule.
+
+Council reviews live under `docs/reviews/`.
+
+Kanban flow is defined by `docs/KANBAN.md`. Default product WIP is one active product plan.
 
 ## Architecture invariants
 
