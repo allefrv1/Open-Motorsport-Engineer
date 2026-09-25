@@ -108,7 +108,7 @@ It returns explicit not-ready/Missing Evidence when trustworthy preparation is i
 - live telemetry;
 - race strategy;
 - automatic setup recommendations;
-- tyre models;
+- user-facing tyre-analysis workflows and vehicle-level tyre simulation;\n- an isolated deterministic tyre-model foundation may be added only through an explicit requirement/ADR and does not become part of the MVP comparison flow;
 - advanced damper analysis;
 - aerodynamics models;
 - complete vehicle simulation;
