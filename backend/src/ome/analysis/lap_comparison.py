@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from bisect import bisect_left
+from bisect import bisect_left, bisect_right
 from dataclasses import dataclass
 from enum import StrEnum
 
@@ -14,7 +14,7 @@ from ome.evidence import (
 )
 
 ALGORITHM_ID = "ome.lap-comparison.distance-linear"
-ALGORITHM_VERSION = "0.1.0"
+ALGORITHM_VERSION = "0.2.0"
 DEFAULT_GRID_STEP_M = 1.0
 
 
@@ -28,6 +28,7 @@ class ComparisonIssueCode(StrEnum):
     NON_FINITE_DISTANCE = "non_finite_distance"
     NON_FINITE_TIME = "non_finite_time"
     DISTANCE_NOT_STRICTLY_INCREASING = "distance_not_strictly_increasing"
+    DISTANCE_DECREASES = "distance_decreases"
     TIME_NOT_STRICTLY_INCREASING = "time_not_strictly_increasing"
     NO_COMMON_DISTANCE = "no_common_distance"
     INVALID_GRID_STEP = "invalid_grid_step"
@@ -283,13 +284,11 @@ class LapComparisonEngine:
                     required_concept=CanonicalConcept.LAP_DISTANCE,
                 )
             )
-        elif len(series.values) >= 2 and not LapComparisonEngine._strictly_increasing(
-            series.values
-        ):
+        elif len(series.values) >= 2 and LapComparisonEngine._has_decrease(series.values):
             issues.append(
                 ComparisonReadinessIssue(
-                    code=ComparisonIssueCode.DISTANCE_NOT_STRICTLY_INCREASING,
-                    message=f"Lap {side} distance must be strictly increasing in v0.1.",
+                    code=ComparisonIssueCode.DISTANCE_DECREASES,
+                    message=f"Lap {side} distance must be non-decreasing in v0.2.",
                     lap_side=side,
                     required_concept=CanonicalConcept.LAP_DISTANCE,
                 )
@@ -385,6 +384,12 @@ class LapComparisonEngine:
         )
 
     @staticmethod
+    def _has_decrease(values: tuple[float, ...]) -> bool:
+        return any(
+            current < previous for previous, current in zip(values, values[1:], strict=False)
+        )
+
+    @staticmethod
     def _distance_grid(
         start_m: float,
         end_m: float,
@@ -414,7 +419,8 @@ class LapComparisonEngine:
             upper = bisect_left(distance_m, target_m)
 
             if upper < len(distance_m) and distance_m[upper] == target_m:
-                result.append(values[upper])
+                plateau_end = bisect_right(distance_m, target_m, lo=upper) - 1
+                result.append(values[plateau_end])
                 continue
 
             lower = upper - 1
