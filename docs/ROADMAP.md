@@ -227,16 +227,25 @@ Completed:
 - explicit closed-lap topology carried in provenance;
 - true projected-distance backtracking still blocked.
 
+Completed:
+
+- Plan 027 — Lap Comparison Plateau Semantics Foundation;
+- base lap comparison v0.2 accepts exact non-decreasing physical plateaus;
+- plateau dwell time remains visible in downstream delta;
+- true distance decreases remain explicit not-ready evidence;
+- downstream overlays/observations/reports remain compatible with base v0.2;
+- Portland physical Lap 4 / Lap 5 reaches base comparison readiness.
+
 Current plan:
 
-- `docs/plans/active/027-lap-comparison-plateau-semantics-foundation.md`
+- `docs/plans/active/028-physical-car-comparison-request-foundation.md`
 
 Current work:
 
-- evolve `time(distance)` comparison to consume non-decreasing physical `lap.distance`;
-- preserve plateau dwell time without deleting or moving samples;
-- keep true distance decreases not-ready;
-- retain no-plateau numerical compatibility.
+- derive explicit lap-relative `time.elapsed` from physical source Elapsed Time;
+- reuse prepared physical `lap.distance` unchanged;
+- compose `ComparisonReportRequest`;
+- produce a physical base report with unsupported supporting channels left as Missing Evidence.
 
 Later:
 
