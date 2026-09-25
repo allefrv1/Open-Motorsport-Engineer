@@ -17,11 +17,13 @@ Gear must never be linearly interpolated.
 A gear overlay requires a successful base comparison produced by:
 
 - algorithm `ome.lap-comparison.distance-linear`;
-- version `0.1.0`;
+- version `0.2.0`;
 - `lap.distance [m]`;
 - `time.elapsed [s]`.
 
 The overlay must reuse the exact base comparison distance grid and elapsed-time projections.
+
+Lap-comparison v0.2 changes plateau-aware base time(distance) semantics only. The discrete gear sampling rule and its own version remain unchanged.
 
 ## Supported concept
 
@@ -180,5 +182,5 @@ It does not claim:
 - REQ-005 — Compare Two Laps
 - REQ-006 — Preserve Analysis Evidence
 - ADR-0009
-- `docs/specs/lap-comparison-v0.1.md`
+- `docs/specs/lap-comparison-v0.2.md`
 - `docs/domain/canonical-channels-v0.1.md`
