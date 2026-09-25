@@ -65,8 +65,7 @@ class TraqmatePhysicalSupportingEvidenceNotReady:
 
 
 TraqmatePhysicalSupportingEvidenceOutcome = (
-    TraqmatePhysicalSupportingEvidenceSuccess
-    | TraqmatePhysicalSupportingEvidenceNotReady
+    TraqmatePhysicalSupportingEvidenceSuccess | TraqmatePhysicalSupportingEvidenceNotReady
 )
 
 
@@ -156,9 +155,9 @@ class TraqmatePhysicalSupportingEvidenceService:
 
         dataset = request.dataset
         validation = TelemetryValidator().validate(dataset)
-        normalization = TelemetryNormalizer(
-            traqmate_physical_normalization_rules()
-        ).normalize(dataset, validation)
+        normalization = TelemetryNormalizer(traqmate_physical_normalization_rules()).normalize(
+            dataset, validation
+        )
 
         speed_pair_or_issue = self._continuous_pair(
             dataset,
@@ -206,11 +205,7 @@ class TraqmatePhysicalSupportingEvidenceService:
             for pair in (speed_pair_or_issue, rpm_pair_or_issue)
             if isinstance(pair, ContinuousChannelPair)
         )
-        gear_pair = (
-            gear_pair_or_issue
-            if isinstance(gear_pair_or_issue, GearChannelPair)
-            else None
-        )
+        gear_pair = gear_pair_or_issue if isinstance(gear_pair_or_issue, GearChannelPair) else None
 
         return TraqmatePhysicalSupportingEvidenceSuccess(
             report_request=ComparisonReportRequest(
