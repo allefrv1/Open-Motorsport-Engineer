@@ -23,7 +23,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 029 — Traqmate Physical Supporting Evidence Foundation](plans/active/029-traqmate-physical-supporting-evidence-foundation.md)
+- [Plan 030 — Traqmate Physical Comparison HTTP Workflow](plans/active/030-traqmate-physical-comparison-http-workflow.md)
 
 ## Verification and implementation guidance
 
