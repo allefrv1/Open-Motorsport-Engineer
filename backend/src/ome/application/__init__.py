@@ -36,6 +36,15 @@ from ome.application.lap_window import (
     SourceLapWindowSuccess,
     TraqmateLapWindowSelector,
 )
+from ome.application.physical_comparison_preparation import (
+    PhysicalComparisonPreparationIssue,
+    PhysicalComparisonPreparationIssueCode,
+    PhysicalComparisonPreparationNotReady,
+    PhysicalComparisonPreparationOutcome,
+    PhysicalComparisonPreparationRequest,
+    PhysicalComparisonPreparationService,
+    PhysicalComparisonPreparationSuccess,
+)
 from ome.application.physical_track_reference import (
     PhysicalTrackReferencePreparation,
     PhysicalTrackReferencePreparationIssue,
@@ -75,6 +84,13 @@ __all__ = [
     "SourceLapWindowRequest",
     "SourceLapWindowSuccess",
     "TraqmateLapWindowSelector",
+    "PhysicalComparisonPreparationIssue",
+    "PhysicalComparisonPreparationIssueCode",
+    "PhysicalComparisonPreparationNotReady",
+    "PhysicalComparisonPreparationOutcome",
+    "PhysicalComparisonPreparationRequest",
+    "PhysicalComparisonPreparationService",
+    "PhysicalComparisonPreparationSuccess",
     "PhysicalTrackReferencePreparation",
     "PhysicalTrackReferencePreparationIssue",
     "PhysicalTrackReferencePreparationIssueCode",

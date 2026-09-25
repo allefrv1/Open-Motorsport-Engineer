@@ -210,6 +210,23 @@ It must not:
 - add API/frontend behavior;
 - use AI.
 
+## Implementation traceability
+
+Plan 028 implements this specification through:
+
+`tests/application/test_physical_comparison_preparation.py`
+
+TDD evidence:
+
+- behavioral RED: OME CI #364 — physical comparison preparation API absent;
+- GREEN: OME CI #366 — canonical verify successful after minimum implementation.
+
+Production implementation:
+
+`backend/src/ome/application/physical_comparison_preparation.py`
+
+The implementation composes existing comparison/report contracts; it does not duplicate the report or comparison algorithms.
+
 ## Related artifacts
 
 - Plan 026 — Physical-Car Track Reference Preparation
