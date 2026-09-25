@@ -125,9 +125,7 @@ class Plan029TraqmateNormalizationTests(unittest.TestCase):
             tuple(rule.source_channel_identifier for rule in rules),
             ("Velocity (MPH)", "RPMs", "Gear"),
         )
-        self.assertTrue(
-            all(rule.source_type == "traqmate-trackvision-csv" for rule in rules)
-        )
+        self.assertTrue(all(rule.source_type == "traqmate-trackvision-csv" for rule in rules))
 
         normalization = self.normalize()
         mapped = {mapping.canonical_concept for mapping in normalization.mappings}
@@ -242,7 +240,9 @@ class Plan029TraqmateSupportingEvidenceTests(unittest.TestCase):
 
     def test_boundary_provenance_is_explicit_without_changing_source_ownership(self) -> None:
         outcome = self.prepare()
-        pairs = {pair.canonical_concept: pair for pair in outcome.report_request.continuous_channels}
+        pairs = {
+            pair.canonical_concept: pair for pair in outcome.report_request.continuous_channels
+        }
         speed = pairs[CanonicalConcept.VEHICLE_SPEED]
         assert speed.lap_a_channel is not None
         assert speed.lap_b_channel is not None
