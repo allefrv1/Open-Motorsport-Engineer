@@ -50,16 +50,6 @@ from ome.analysis.gps_path_distance import (
     GPSPathDistanceRequest,
     GPSPathDistanceSuccess,
 )
-from ome.analysis.tire_model import (
-    PacejkaMagicFormula,
-    PacejkaParameters,
-    SlipCoordinate,
-    TireForceAxis,
-    TireModel,
-    TireModelRequest,
-    TireModelResult,
-)
-
 from ome.analysis.lap_comparison import (
     ComparisonIssueCode,
     ComparisonReadinessIssue,
@@ -70,6 +60,15 @@ from ome.analysis.lap_comparison import (
     LapComparisonRequest,
     LapComparisonSeries,
     LapComparisonSuccess,
+)
+from ome.analysis.tire_model import (
+    PacejkaMagicFormula,
+    PacejkaParameters,
+    SlipCoordinate,
+    TireForceAxis,
+    TireModel,
+    TireModelRequest,
+    TireModelResult,
 )
 
 __all__ = [
