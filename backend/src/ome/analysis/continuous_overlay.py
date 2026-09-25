@@ -15,7 +15,7 @@ from ome.evidence import (
 ALGORITHM_ID = "ome.lap-overlay.time-linear-on-distance-grid"
 ALGORITHM_VERSION = "0.1.0"
 BASE_ALGORITHM_ID = "ome.lap-comparison.distance-linear"
-BASE_ALGORITHM_VERSION = "0.1.0"
+BASE_ALGORITHM_VERSION = "0.2.0"
 
 _SUPPORTED_UNITS = {
     CanonicalConcept.VEHICLE_SPEED: "m/s",
@@ -119,7 +119,7 @@ class ContinuousOverlayEngine:
                 ContinuousOverlayReadinessIssue(
                     code=ContinuousOverlayIssueCode.INCOMPATIBLE_BASE_COMPARISON,
                     message=(
-                        "Continuous overlay requires the accepted v0.1 distance-linear "
+                        "Continuous overlay requires the accepted v0.2 distance-linear "
                         "lap comparison result."
                     ),
                     required_concept=request.canonical_concept,
