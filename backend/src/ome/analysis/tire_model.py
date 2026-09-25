@@ -97,10 +97,11 @@ class PacejkaMagicFormula:
 
         x = request.slip_value + parameters.horizontal_shift
         bx = parameters.b * x
-        force_n = parameters.d_n * math.sin(
-            parameters.c
-            * math.atan(bx - parameters.e * (bx - math.atan(bx)))
-        ) + parameters.vertical_shift_n
+        force_n = (
+            parameters.d_n
+            * math.sin(parameters.c * math.atan(bx - parameters.e * (bx - math.atan(bx))))
+            + parameters.vertical_shift_n
+        )
 
         return TireModelResult(
             force_axis=request.force_axis,
