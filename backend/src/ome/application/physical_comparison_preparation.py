@@ -8,7 +8,12 @@ from ome.analysis import LapComparisonLap, LapComparisonRequest, LapComparisonSe
 from ome.application.comparison_report import ComparisonReportRequest
 from ome.application.physical_track_reference import PhysicalTrackReferencePreparation
 from ome.domain import CanonicalConcept
-from ome.evidence import CanonicalSeriesEvidence, LapEvidenceContext, TransformationEvidence
+from ome.evidence import (
+    CanonicalSeriesEvidence,
+    LapEvidenceContext,
+    SourceSeriesEvidence,
+    TransformationEvidence,
+)
 
 PREPARATION_ID = "ome.preparation.physical-comparison-request"
 PREPARATION_VERSION = "0.1.0"
@@ -259,7 +264,7 @@ class PhysicalComparisonPreparationService:
     def _elapsed_series(
         fingerprint: str,
         timestamps_s: tuple[float, ...],
-        source_evidence,
+        source_evidence: SourceSeriesEvidence,
     ) -> LapComparisonSeries:
         start_s = timestamps_s[0]
         values = tuple(value - start_s for value in timestamps_s)
