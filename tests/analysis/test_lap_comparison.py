@@ -271,7 +271,7 @@ class Req005LapComparisonTests(unittest.TestCase):
             {issue.code for issue in result.issues},
         )
 
-    def test_non_monotonic_distance_returns_not_ready_without_repair(self) -> None:
+    def test_true_distance_decrease_returns_not_ready_without_repair(self) -> None:
         lap_b = lap(
             label="b",
             distance=(0.0, 60.0, 50.0, 100.0),
@@ -293,7 +293,7 @@ class Req005LapComparisonTests(unittest.TestCase):
         self.assertIsInstance(result, LapComparisonNotReady)
         assert isinstance(result, LapComparisonNotReady)
         self.assertIn(
-            ComparisonIssueCode.DISTANCE_NOT_STRICTLY_INCREASING,
+            ComparisonIssueCode.DISTANCE_DECREASES,
             {issue.code for issue in result.issues},
         )
         self.assertIs(lap_b.distance, before)
