@@ -96,7 +96,11 @@ class Plan028PhysicalComparisonPreparationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.service = PhysicalComparisonPreparationService()
 
-    def request(self, *, grid_step_m: float = 5.0) -> PhysicalComparisonPreparationRequest:
+    def request(
+        self,
+        *,
+        grid_step_m: float = 5.0,
+    ) -> PhysicalComparisonPreparationRequest:
         return PhysicalComparisonPreparationRequest(
             preparation=self.physical,
             grid_step_m=grid_step_m,
@@ -126,10 +130,15 @@ class Plan028PhysicalComparisonPreparationTests(unittest.TestCase):
         self.assertIsNone(report_request.gear)
 
         self.assertEqual(outcome.dataset_fingerprint, self.physical.dataset_fingerprint)
-        self.assertEqual(outcome.preparation_id, "ome.preparation.physical-comparison-request")
+        self.assertEqual(
+            outcome.preparation_id,
+            "ome.preparation.physical-comparison-request",
+        )
         self.assertEqual(outcome.preparation_version, "0.1.0")
 
-    def test_lap_relative_elapsed_time_starts_at_zero_and_matches_distance_lengths(self) -> None:
+    def test_lap_relative_elapsed_time_starts_at_zero_and_matches_distance_lengths(
+        self,
+    ) -> None:
         outcome = self.service.prepare(self.request())
 
         self.assertIsInstance(outcome, PhysicalComparisonPreparationSuccess)
@@ -179,7 +188,10 @@ class Plan028PhysicalComparisonPreparationTests(unittest.TestCase):
             evidence = elapsed.evidence
             self.assertIs(evidence.canonical_concept, CanonicalConcept.TIME_ELAPSED)
             self.assertEqual(evidence.unit, "s")
-            self.assertEqual(evidence.dataset_fingerprint, self.physical.dataset_fingerprint)
+            self.assertEqual(
+                evidence.dataset_fingerprint,
+                self.physical.dataset_fingerprint,
+            )
             self.assertEqual(
                 evidence.source_channel_identifier,
                 physical_lap.time_evidence.source_channel_identifier,
@@ -335,7 +347,9 @@ class Plan028PhysicalComparisonPreparationTests(unittest.TestCase):
             {issue.code for issue in outcome.issues},
         )
 
-    def test_portland_request_builds_real_report_with_missing_supporting_evidence(self) -> None:
+    def test_portland_request_builds_real_report_with_missing_supporting_evidence(
+        self,
+    ) -> None:
         preparation = self.service.prepare(self.request())
 
         self.assertIsInstance(preparation, PhysicalComparisonPreparationSuccess)
