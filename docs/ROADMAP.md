@@ -245,17 +245,27 @@ Completed:
 - real Portland base report success;
 - unsupported supporting channels remain explicit Missing Evidence.
 
+Completed:
+
+- Plan 029 — Traqmate Physical Supporting Evidence Foundation;
+- deterministic MPH -> m/s and RPM -> rad/s conversions;
+- exact Traqmate Velocity/RPMs/Gear source-semantic mappings;
+- explicit derived/assigned gear semantic identity;
+- shared start/finish boundary provenance without source-lap reassignment;
+- Portland physical report with speed, engine-speed and gear available;
+- throttle, brake and steering retained as Missing Evidence;
+- multidisciplinary Engineering Council alignment/delivery review.
+
 Current plan:
 
-- `docs/plans/active/029-traqmate-physical-supporting-evidence-foundation.md`
+- `docs/plans/active/030-traqmate-physical-comparison-http-workflow.md`
 
 Current work:
 
-- add deterministic mph -> m/s conversion;
-- promote exact Traqmate Velocity/RPMs/Gear source semantics only;
-- preserve shared start/finish boundary evidence without changing source-lap ownership;
-- enrich the Portland report with speed, engine-speed and gear;
-- keep throttle, brake and steering as Missing Evidence.
+- expose the verified physical Traqmate pipeline through a thin multipart FastAPI route;
+- require explicit reference/candidate source lap numbers;
+- preserve deterministic not-ready stages and provenance;
+- reuse existing engineering services without API-side recomputation.
 
 Later:
 
