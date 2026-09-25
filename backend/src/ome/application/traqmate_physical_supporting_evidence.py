@@ -243,7 +243,10 @@ class TraqmatePhysicalSupportingEvidenceService:
             issues.append(
                 cls._issue(
                     TraqmatePhysicalSupportingEvidenceIssueCode.DATASET_FINGERPRINT_MISMATCH,
-                    "Dataset, physical preparation and base preparation must share one fingerprint.",
+                    (
+                        "Dataset, physical preparation and base preparation "
+                        "must share one fingerprint."
+                    ),
                 )
             )
 
