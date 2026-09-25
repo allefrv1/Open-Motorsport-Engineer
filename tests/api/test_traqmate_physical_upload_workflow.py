@@ -8,9 +8,7 @@ from fastapi.testclient import TestClient
 from ome.api import create_app
 
 ROOT = Path(__file__).resolve().parents[2]
-PORTLAND_FIXTURE = (
-    ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-portland-laps-4-5.csv"
-)
+PORTLAND_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-portland-laps-4-5.csv"
 OME_FIXTURE = ROOT / "fixtures" / "ome" / "basic-lap.csv"
 
 
@@ -82,8 +80,7 @@ class Plan030TraqmatePhysicalComparisonHttpWorkflowTests(unittest.TestCase):
 
         report = body["report"]
         summaries = {
-            item["canonical_concept"]: item["status"]
-            for item in report["supporting_evidence"]
+            item["canonical_concept"]: item["status"] for item in report["supporting_evidence"]
         }
 
         self.assertEqual(summaries["vehicle.speed"], "available")
@@ -94,10 +91,7 @@ class Plan030TraqmatePhysicalComparisonHttpWorkflowTests(unittest.TestCase):
         self.assertEqual(summaries["driver.steering"], "not_ready")
 
         self.assertEqual(
-            {
-                item["canonical_concept"]
-                for item in report["continuous_overlays"]
-            },
+            {item["canonical_concept"] for item in report["continuous_overlays"]},
             {"vehicle.speed", "engine.speed"},
         )
         self.assertIsNotNone(report["gear_overlay"])
