@@ -17,11 +17,13 @@ It does not define causal interpretation or UI rendering.
 A continuous overlay requires a successful base comparison produced by:
 
 - algorithm `ome.lap-comparison.distance-linear`;
-- compatible v0.1 provenance;
+- compatible v0.2 provenance;
 - explicit distance grid;
 - interpolated `time_A(d)` and `time_B(d)`.
 
 The overlay must not rebuild or silently change the comparison grid.
+
+Lap-comparison v0.2 changes plateau-aware base time(distance) semantics only. The continuous overlay algorithm and its own version remain unchanged.
 
 ## Supported canonical concepts in v0.1
 
@@ -206,5 +208,5 @@ ContinuousOverlayResult
 - REQ-005 — Compare Two Laps
 - REQ-006 — Preserve Analysis Evidence
 - ADR-0009 — Align initial lap comparisons by monotonic lap distance
-- `docs/specs/lap-comparison-v0.1.md`
+- `docs/specs/lap-comparison-v0.2.md`
 - `docs/domain/canonical-channels-v0.1.md`
