@@ -120,6 +120,30 @@ NEXT STATE            = tests -> RED
 
 Human gate reopens if implementation would need to infer throttle/brake/steering semantics or invent non-source endpoint values.
 
+## Engineering Council / Kanban
+
+Council alignment:
+
+`docs/reviews/2026-09-25-plan-029-alignment.md`
+
+Council decision:
+
+`READY_WITH_ACTIONS`
+
+Kanban:
+
+- state: `DOING`;
+- class: Standard;
+- product WIP: `1 / 1`;
+- do not pull another product plan while Plan 029 remains active.
+
+Specialist constraints confirmed:
+
+- Velocity/RPM/Gear may be promoted exactly as specified;
+- throttle/brake/steering remain Missing Evidence;
+- closing-boundary evidence must not change source-lap ownership;
+- any new physical semantic assumption reopens council/human review.
+
 ## Completion criteria
 
 - Plan 028 archived;
