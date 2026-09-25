@@ -26,13 +26,7 @@ from ome.evidence import LapEvidenceContext
 from ome.ingestion import ImportSuccess, TraqmateTrackvisionCSVImporter
 
 ROOT = Path(__file__).resolve().parents[2]
-PORTLAND_FIXTURE = (
-    ROOT
-    / "fixtures"
-    / "public"
-    / "exit-speed"
-    / "traqmate-portland-laps-4-5.csv"
-)
+PORTLAND_FIXTURE = ROOT / "fixtures" / "public" / "exit-speed" / "traqmate-portland-laps-4-5.csv"
 FIXED_TIME = datetime(2026, 9, 25, 12, 0, tzinfo=UTC)
 
 REPORT_CONCEPTS = (
@@ -65,12 +59,8 @@ def context(dataset: ImportedTelemetryDataset, lap_number: int) -> LapEvidenceCo
 
 def physical_preparation(dataset: ImportedTelemetryDataset):
     selector = TraqmateLapWindowSelector()
-    reference = selector.select(
-        SourceLapWindowRequest(dataset=dataset, source_lap_number=4)
-    )
-    candidate = selector.select(
-        SourceLapWindowRequest(dataset=dataset, source_lap_number=5)
-    )
+    reference = selector.select(SourceLapWindowRequest(dataset=dataset, source_lap_number=4))
+    candidate = selector.select(SourceLapWindowRequest(dataset=dataset, source_lap_number=5))
     assert hasattr(reference, "window")
     assert hasattr(candidate, "window")
 
