@@ -2,7 +2,7 @@
 
 Date: 2026-09-25
 
-Status: **Operational harness — physical base report verified; supporting-evidence enrichment active**
+Status: **Operational harness — enriched physical report verified; physical HTTP workflow active**
 
 Scale:
 
@@ -20,10 +20,10 @@ Scale:
 | Product intent | 4 | Mission, MVP and non-goals are explicit. |
 | Domain legibility | 4 | Core telemetry concepts and evidence distinctions are documented and now represented in the first production domain types. |
 | Architecture legibility | 4 | Boundaries and ADRs are clear and initial structural enforcement exists. |
-| Root agent instructions | 4 | Concise map plus real canonical commands and scoped ingestion/validation/normalization guidance plus explicit repository-wide TDD rules. |
+| Root agent instructions | 4 | Concise map plus canonical commands, TDD, Kanban and multidisciplinary Engineering Council routing. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–028 have completed history and Plan 029 is active. |
+| Plan lifecycle | 4 | Plans 001–029 have completed history and Plan 030 is active. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -68,9 +68,11 @@ Plan 026 prepares selected Portland physical laps onto one canonical common refe
 
 Plan 027 makes the base comparison plateau-aware while preserving dwell time and rejecting true backtracking.
 
-Plan 028 now composes that real physical preparation into the existing report stack with explicit lap-relative time evidence, deterministic observations and truthful Missing Evidence for unsupported supporting channels.
+Plan 028 composes the real physical preparation into the existing report stack with explicit lap-relative time evidence and deterministic observations.
 
-The next maturity step is to enrich the physical report only with source semantics that are independently verified: Traqmate velocity, RPM and gear, while keeping ambiguous driver-input channels explicitly absent.
+Plan 029 now enriches that physical report with independently verified Traqmate velocity, RPM and gear while keeping ambiguous driver-input channels explicitly absent. It also exercised the new Engineering Council/Kanban governance through alignment and delivery reviews.
+
+The next maturity step is to expose this already-verified physical workflow through the existing local HTTP architecture without moving engineering calculations into transport code.
 
 ## Review cadence
 
