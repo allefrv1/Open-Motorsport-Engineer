@@ -100,7 +100,7 @@ def command_format() -> None:
 
 
 def command_lint() -> None:
-    ruff("format", "--check", "--diff", ".")
+    ruff("format", "--check", ".")
     ruff("check", ".")
 
 
