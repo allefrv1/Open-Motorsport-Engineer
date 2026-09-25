@@ -20,7 +20,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 026 — Physical-Car Track Reference Preparation Foundation](plans/active/026-physical-car-track-reference-preparation-foundation.md)
+- [Plan 027 — Lap Comparison Plateau Semantics Foundation](plans/active/027-lap-comparison-plateau-semantics-foundation.md)
 
 ## Verification and implementation guidance
 

@@ -33,7 +33,8 @@ The repository now has:
 21. deterministic WGS84 horizontal GPS path-distance derivation with typed provenance and real physical-car validation;
 22. deterministic explicit-reference GPS projection with typed provenance, canonical `lap.distance` preparation and characterized direct-search scaling;
 23. a traceable Portland two-complete-lap physical-car fixture and extended Trackvision V2 ingestion preserving sparse Lap-boundary evidence;
-24. deterministic explicit physical-car source-lap windows with separate closing-boundary evidence.
+24. deterministic explicit physical-car source-lap windows with separate closing-boundary evidence;
+25. deterministic physical reference/candidate canonical `lap.distance` preparation with plateau-preserving common-reference v0.2.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -262,19 +263,31 @@ The architecture is still intentionally being proven one boundary at a time.
 - imported dataset and sparse Lap evidence remain unchanged;
 - recorded behavioral RED and final GREEN CI history.
 
+### Physical track-reference preparation — Plan 026
+
+- explicit reference/candidate physical lap composition;
+- exactly one boundary-only closing point for derived geometry;
+- selected reference GPS path explicitly promoted to canonical `lap.distance`;
+- candidate projected onto the same common physical reference;
+- common-reference algorithm v0.2 with exact plateaus preserved;
+- explicit closed-lap topology instead of exact GPS-endpoint inference;
+- typed topology/geometry/source provenance;
+- true projected-distance decreases remain not-ready;
+- recorded multi-stage RED -> GREEN CI evidence.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/026-physical-car-track-reference-preparation-foundation.md`
+`docs/plans/active/027-lap-comparison-plateau-semantics-foundation.md`
 
 ### Guardrail
 
-Plan 026 may compose explicitly selected source-lap windows with accepted GPS path/common-track-reference engines.
+Plan 027 may evolve only the deterministic base lap-comparison numerical contract.
 
-The next marker remains owned by the next source lap; it may be appended only as boundary evidence for derived trajectory closure. Generic `gps.path_distance -> lap.distance` aliasing remains prohibited. Only the caller-selected reference path may use the explicit reference-path mapping defined by the Plan 026 spec. Do not auto-select laps, infer Session/Run context, normalize supporting vehicle channels or build comparison/report logic in this slice.
+Exact non-decreasing `lap.distance` plateaus from physical projection must remain unchanged. Comparison may model their vertical time interval explicitly, but must not insert epsilon distance, clamp, smooth, delete or reorder samples. True distance decreases remain not-ready. Do not normalize Traqmate supporting channels or compose a physical report request in this slice.
 
 ADR-0010 remains Proposed.
 

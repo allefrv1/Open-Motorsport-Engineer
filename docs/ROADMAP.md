@@ -215,18 +215,28 @@ Completed:
 - incomplete/ambiguous source windows remain explicit;
 - source telemetry remains immutable.
 
+Completed:
+
+- Plan 026 — Physical-Car Track Reference Preparation Foundation;
+- explicit Portland Lap 4 reference / Lap 5 candidate preparation;
+- one boundary-only closing point per derived trajectory;
+- selected-reference GPS path promoted explicitly to canonical `lap.distance`;
+- candidate projected onto the same physical reference;
+- Common Track Reference v0.2;
+- exact physical projection plateaus preserved;
+- explicit closed-lap topology carried in provenance;
+- true projected-distance backtracking still blocked.
+
 Current plan:
 
-- `docs/plans/active/026-physical-car-track-reference-preparation-foundation.md`
+- `docs/plans/active/027-lap-comparison-plateau-semantics-foundation.md`
 
 Current work:
 
-- extract explicit GPS/time evidence from selected windows;
-- append the closing point only as boundary evidence;
-- derive the caller-selected reference GPS path;
-- explicitly promote only the selected reference path to canonical `lap.distance`;
-- project the candidate onto that common reference;
-- preserve complete typed provenance.
+- evolve `time(distance)` comparison to consume non-decreasing physical `lap.distance`;
+- preserve plateau dwell time without deleting or moving samples;
+- keep true distance decreases not-ready;
+- retain no-plateau numerical compatibility.
 
 Later:
 

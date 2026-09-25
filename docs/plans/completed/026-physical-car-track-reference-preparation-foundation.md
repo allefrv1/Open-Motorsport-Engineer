@@ -1,8 +1,10 @@
 # Plan 026 — Physical-Car Track Reference Preparation Foundation
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-24
+
+Completed: 2026-09-24
 
 ## Objective
 
@@ -254,6 +256,22 @@ The final tests prove:
 - candidate common-reference mapping proven;
 - source dataset/window immutability proven;
 - canonical CI GREEN.
+
+## Merge evidence
+
+PR #63 was squash-merged as:
+
+`1263ff85ce9a9d9b83147936b8c2632d6c0b403a`
+
+Final canonical verification before merge:
+
+- OME CI #345 — success.
+
+## Completion assessment
+
+All Plan 026 completion criteria are satisfied.
+
+The physical Portland candidate retains two exact common-reference plateaus as measured derived evidence. That downstream comparison-readiness issue is deliberately handed to Plan 027 rather than repaired inside Plan 026.
 
 ## Next plan boundary
 
