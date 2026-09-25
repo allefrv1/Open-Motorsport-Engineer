@@ -34,7 +34,8 @@ The repository now has:
 22. deterministic explicit-reference GPS projection with typed provenance, canonical `lap.distance` preparation and characterized direct-search scaling;
 23. a traceable Portland two-complete-lap physical-car fixture and extended Trackvision V2 ingestion preserving sparse Lap-boundary evidence;
 24. deterministic explicit physical-car source-lap windows with separate closing-boundary evidence;
-25. deterministic physical reference/candidate canonical `lap.distance` preparation with plateau-preserving common-reference v0.2.
+25. deterministic physical reference/candidate canonical `lap.distance` preparation with plateau-preserving common-reference v0.2;
+26. plateau-aware lap-comparison v0.2 with physical Portland readiness and downstream report compatibility.
 
 The architecture is still intentionally being proven one boundary at a time.
 
@@ -281,13 +282,13 @@ The architecture is still intentionally being proven one boundary at a time.
 
 Proceed to:
 
-`docs/plans/active/027-lap-comparison-plateau-semantics-foundation.md`
+`docs/plans/active/028-physical-car-comparison-request-foundation.md`
 
 ### Guardrail
 
-Plan 027 may evolve only the deterministic base lap-comparison numerical contract.
+Plan 028 may compose only already-ready physical distance/context/time evidence into the existing report request contract.
 
-Exact non-decreasing `lap.distance` plateaus from physical projection must remain unchanged. Comparison may model their vertical time interval explicitly, but must not insert epsilon distance, clamp, smooth, delete or reorder samples. True distance decreases remain not-ready. Do not normalize Traqmate supporting channels or compose a physical report request in this slice.
+Derive lap-relative elapsed time explicitly and preserve provenance. Do not infer Traqmate throttle/brake/steering semantics, do not reuse next-lap boundary values as optional vehicle-channel samples, and do not change physical geometry or comparison mathematics. Unsupported supporting channels remain Missing Evidence.
 
 ADR-0010 remains Proposed.
 
