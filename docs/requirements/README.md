@@ -9,7 +9,7 @@ This directory contains OME product and system requirements.
 - [REQ-003 — Organize Session, Run and Lap Context](REQ-003-organize-session-run-lap.md)
 - [REQ-004 — Normalize Telemetry Channels](REQ-004-normalize-telemetry-channels.md)
 - [REQ-005 — Compare Two Laps](REQ-005-compare-two-laps.md)
-- [REQ-006 — Preserve Analysis Evidence](REQ-006-analysis-evidence.md)
+- [REQ-006 — Preserve Analysis Evidence](REQ-006-analysis-evidence.md)\n- [REQ-007 — Evaluate a Deterministic Pure-Slip Tyre Model](REQ-007-evaluate-pure-slip-tyre-model.md)
 
 ## Naming
 
