@@ -20,7 +20,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 028 — Physical-Car Comparison Request Foundation](plans/active/028-physical-car-comparison-request-foundation.md)
+- [Plan 029 — Traqmate Physical Supporting Evidence Foundation](plans/active/029-traqmate-physical-supporting-evidence-foundation.md)
 
 ## Verification and implementation guidance
 

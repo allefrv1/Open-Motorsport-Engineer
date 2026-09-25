@@ -1,6 +1,6 @@
 # OME External Source Registry
 
-Last verified: **2026-09-24**
+Last verified: **2026-09-25**
 
 ## Agent/harness engineering
 
@@ -92,6 +92,19 @@ Use:
 - evidence that six array elements at a 60 Hz base tick may represent a 360 Hz source channel.
 
 Classification: vendor format/telemetry semantics reference.
+
+### Traqmate — Traqview & TraqStudio User Manual v3.40
+
+URL: https://www.stableenergies.com/specs/Traqview_TraqStudio_User_Manual_3.40.pdf
+
+Use:
+
+- Traqmate/Trackvision velocity comparison semantics;
+- RPM acquisition semantics through TraqData/RPM input;
+- Gear semantics, including track-position assignment and RPM/gearing-derived behavior;
+- guardrail evidence that calculated acceleration/braking fields must not be silently relabeled as driver throttle/brake inputs.
+
+Classification: vendor/source-semantic reference.
 
 ## Technology
 

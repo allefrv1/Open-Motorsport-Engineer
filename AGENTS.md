@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 3.1.0
+Version: 3.2.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -192,12 +192,12 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–027 implemented the controlled MVP and the physical Portland path through plateau-aware base lap comparison v0.2.
+Plans 003–028 implemented the controlled MVP and a real Portland physical-car base report with explicit Missing Evidence for unsupported supporting channels.
 
 The active engineering task is:
 
-`docs/plans/active/028-physical-car-comparison-request-foundation.md`
+`docs/plans/active/029-traqmate-physical-supporting-evidence-foundation.md`
 
-Follow `docs/specs/physical-car-comparison-preparation-v0.1.md`. Reuse prepared physical `lap.distance` unchanged, derive lap-relative `time.elapsed` with explicit provenance, and compose the existing `ComparisonReportRequest`. Do not infer Traqmate throttle/brake/steering or other optional channel semantics; unsupported supporting evidence must remain explicit Missing Evidence.
+Follow `docs/specs/traqmate-physical-supporting-channels-v0.1.md`. Use TDD. Promote only exact verified Traqmate source semantics: `Velocity (MPH)` -> `vehicle.speed`, `RPMs` -> `engine.speed`, and `Gear` -> `transmission.gear` with explicit derived/assigned semantic identity. Do not map `Accel (calc)` to throttle, `Brake (calc)` to driver brake, or infer steering. Preserve next-lap closing-boundary ownership while allowing it only as explicit shared start/finish evidence.
 
 ADR-0010 remains Proposed.

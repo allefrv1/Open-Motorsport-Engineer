@@ -276,19 +276,32 @@ The architecture is still intentionally being proven one boundary at a time.
 - true projected-distance decreases remain not-ready;
 - recorded multi-stage RED -> GREEN CI evidence.
 
+### Physical base comparison/report — Plans 027–028
+
+- plateau-aware base comparison v0.2;
+- dwell time preserved on exact projected-distance plateaus;
+- physical lap-relative `time.elapsed` with explicit transformation provenance;
+- prepared physical `lap.distance` reused unchanged;
+- real Portland `ComparisonReportSuccess`;
+- deterministic gain/loss observations;
+- unsupported speed/throttle/brake/steering/RPM/gear evidence remains explicit rather than invented;
+- recorded RED -> GREEN CI evidence.
+
 ## Current implementation gate
 
 ### Go
 
 Proceed to:
 
-`docs/plans/active/028-physical-car-comparison-request-foundation.md`
+`docs/plans/active/029-traqmate-physical-supporting-evidence-foundation.md`
 
 ### Guardrail
 
-Plan 028 may compose only already-ready physical distance/context/time evidence into the existing report request contract.
+Plan 029 may promote only exact, externally verified Traqmate source semantics.
 
-Derive lap-relative elapsed time explicitly and preserve provenance. Do not infer Traqmate throttle/brake/steering semantics, do not reuse next-lap boundary values as optional vehicle-channel samples, and do not change physical geometry or comparison mathematics. Unsupported supporting channels remain Missing Evidence.
+Allowed initial mappings are `Velocity (MPH)` -> `vehicle.speed`, `RPMs` -> `engine.speed`, and `Gear` -> `transmission.gear` with an explicit Traqmate-derived/assigned semantic id.
+
+Do not infer throttle from `Accel (calc)`, driver brake from `Brake (calc)`, or steering from unrelated data. The next-lap closing-boundary value may be referenced only as explicit shared start/finish evidence and must not be relabeled as an owned sample of the prior source lap.
 
 ADR-0010 remains Proposed.
 

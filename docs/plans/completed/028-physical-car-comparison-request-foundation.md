@@ -1,8 +1,10 @@
 # Plan 028 — Physical-Car Comparison Request Foundation
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-25
+
+Completed: 2026-09-25
 
 ## Objective
 
@@ -177,9 +179,35 @@ The first slice proves:
 - provenance/immutability proven;
 - canonical CI GREEN.
 
+## Merge evidence
+
+PR #68 was squash-merged as:
+
+`1cd92820e570721fdf19049503398d969684755c`
+
+Canonical verification:
+
+- behavioral RED: OME CI #364;
+- GREEN: OME CI #366;
+- final documentation/traceability GREEN: OME CI #367.
+
+## Completion assessment
+
+All Plan 028 completion criteria are satisfied.
+
+The Portland physical report now succeeds with base delta/observations while all unsupported optional channels remain explicit Missing Evidence.
+
 ## Next plan boundary
 
-After Plan 028, a separate source-semantic plan may evaluate and add explicitly supported Traqmate physical channels such as speed and gear.
+Plan 029 may add only source semantics that are independently verified for the Traqmate physical source.
+
+The first supported candidates are:
+
+- `Velocity (MPH)` -> `vehicle.speed`;
+- `RPMs` -> `engine.speed`;
+- `Gear` -> `transmission.gear`.
+
+`Brake (calc)`, `Accel (calc)` and steering remain outside that promotion until their exact engineering semantics justify a canonical mapping.
 
 ## Explicitly out of scope
 
