@@ -12,7 +12,7 @@ from ome.evidence import CanonicalSeriesEvidence, GearOverlayProvenance
 ALGORITHM_ID = "ome.lap-overlay.gear-previous-sample-on-distance-grid"
 ALGORITHM_VERSION = "0.1.0"
 BASE_ALGORITHM_ID = "ome.lap-comparison.distance-linear"
-BASE_ALGORITHM_VERSION = "0.1.0"
+BASE_ALGORITHM_VERSION = "0.2.0"
 
 
 class GearOverlayIssueCode(StrEnum):
@@ -84,7 +84,7 @@ class DiscreteGearOverlayEngine:
                 GearOverlayReadinessIssue(
                     code=GearOverlayIssueCode.INCOMPATIBLE_BASE_COMPARISON,
                     message=(
-                        "Gear overlay requires the accepted v0.1 distance-linear "
+                        "Gear overlay requires the accepted v0.2 distance-linear "
                         "lap comparison result."
                     ),
                     required_concept=CanonicalConcept.TRANSMISSION_GEAR,

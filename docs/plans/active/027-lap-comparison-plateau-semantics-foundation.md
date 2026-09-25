@@ -167,6 +167,51 @@ TESTABLE CONTRACT     = yes
 NEXT STATE            = tests -> RED
 ```
 
+## TDD execution evidence
+
+Behavioral RED:
+
+- CI #349 — exact plateaus remained not-ready, algorithm provenance still reported `0.1.0`, and `DISTANCE_DECREASES` did not exist;
+- the failure reached the focused comparison tests and demonstrated the missing v0.2 behavior.
+
+Compatibility regression exposed during GREEN:
+
+- CI #351 — the base comparison produced v0.2 provenance, but continuous overlays, gear overlays and delta observations still required base version `0.1.0`;
+- no downstream numerical algorithm changed;
+- their accepted specs/compatibility gates were updated to consume the v0.2 base comparison.
+
+GREEN:
+
+- CI #354 — full canonical verification passed for plateau-aware comparison v0.2 and all existing downstream comparison/report consumers;
+- CI #355 — full canonical verification passed with the Portland Plan 026 physical-preparation integration regression.
+
+Tests were not weakened to obtain GREEN.
+
+## Implementation traceability
+
+Primary comparison coverage:
+
+`tests/analysis/test_lap_comparison.py`
+
+Plan 027 tests prove:
+
+- exact plateaus are ready and source/canonical inputs remain unchanged;
+- interpolation before a plateau uses first-arrival time;
+- exact plateau distance uses last-arrival time;
+- interpolation after a plateau retains dwell time;
+- downstream delta preserves plateau dwell time;
+- multiple plateaus are deterministic;
+- true distance decreases return `distance_decreases`;
+- elapsed time remains strictly increasing;
+- no-plateau numerical outputs remain compatible with v0.1;
+- algorithm provenance reports `0.2.0`.
+
+Physical integration coverage:
+
+`tests/application/test_physical_track_reference_preparation.py`
+
+The Portland Lap 4 reference / Lap 5 candidate preparation now reaches base lap-comparison v0.2 readiness while preserving the two measured common-reference plateaus.
+
 ## Completion criteria
 
 - Plan 026 archived;

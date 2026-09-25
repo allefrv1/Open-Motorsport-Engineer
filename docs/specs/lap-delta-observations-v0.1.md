@@ -16,9 +16,9 @@ without assigning a cause.
 
 ## Input
 
-Input is one successful v0.1 lap comparison produced by:
+Input is one successful v0.2 lap comparison produced by:
 
-`ome.lap-comparison.distance-linear / 0.1.0`
+`ome.lap-comparison.distance-linear / 0.2.0`
 
 Required fields:
 
@@ -171,4 +171,4 @@ DeltaRegionObservation
 - REQ-005 — Compare Two Laps
 - REQ-006 — Preserve Analysis Evidence
 - ADR-0009 — Align initial lap comparisons by monotonic lap distance
-- `docs/specs/lap-comparison-v0.1.md`
+- `docs/specs/lap-comparison-v0.2.md`

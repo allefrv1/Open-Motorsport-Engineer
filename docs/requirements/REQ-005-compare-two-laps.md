@@ -71,7 +71,7 @@ The user must be able to identify which Session / Run / Lap each comparison case
 
 ## Resolved Architecture Decision
 
-ADR-0009 and `docs/specs/lap-comparison-v0.1.md` resolve the initial comparison reference and numerical baseline:
+ADR-0009 and `docs/specs/lap-comparison-v0.2.md` define the current comparison reference and numerical contract:
 
 - align by trustworthy monotonic `lap.distance` in metres;
 - compare only the common distance interval;
@@ -80,7 +80,7 @@ ADR-0009 and `docs/specs/lap-comparison-v0.1.md` resolve the initial comparison 
 - compute `delta_B_vs_A = time_B - time_A`;
 - preserve source data unchanged and retain comparison provenance.
 
-The v0.1 spec defines a default 1.0 m grid step and conservative readiness requirements for the first implementation.
+The v0.2 spec retains the 1.0 m default grid and linear distance alignment while extending readiness/interpolation to preserve exact non-decreasing distance plateaus. True distance decreases remain not-ready.
 
 ## Delta-time foundation traceability
 
@@ -266,6 +266,29 @@ TDD evidence:
 - final architecture/docs verification: CI #163.
 
 REQ-005 remains Accepted rather than Implemented until the user-facing UI workflow makes the comparison selectable and inspectable end to end.
+
+### Plateau-aware physical comparison traceability
+
+Plan 027 evolves the accepted base comparison to algorithm version `0.2.0` without changing the delta sign convention or evidence model.
+
+Executable coverage:
+
+- `tests/analysis/test_lap_comparison.py`;
+- `tests/application/test_physical_track_reference_preparation.py::Plan026PhysicalTrackReferencePreparationTests.test_portland_prepared_distances_reach_base_comparison_v02_readiness`.
+
+The tests prove:
+
+- AC-001 / AC-002 — the same explicit `lap.distance` reference remains deterministic when exact physical projection plateaus are present;
+- AC-003 — true distance decreases remain explicit not-ready evidence;
+- AC-004 — no causal diagnosis is introduced;
+- AC-005 — comparison provenance reports `ome.lap-comparison.distance-linear / 0.2.0` and retains source/transformation evidence;
+- AC-006 — Portland reference/candidate Lap contexts remain inspectable through comparison provenance.
+
+TDD evidence:
+
+- RED: CI #349;
+- GREEN: CI #354;
+- physical Portland integration: CI #355.
 
 ## Out of Scope
 

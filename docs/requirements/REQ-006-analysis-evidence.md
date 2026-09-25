@@ -248,3 +248,33 @@ TDD evidence:
 - final transport-isolation verification: OME CI #163.
 
 FastAPI/Pydantic are mechanically forbidden from the deterministic core through `architecture.toml`, so evidence transport remains an adapter concern rather than a domain dependency.
+
+
+## Plateau-aware comparison evidence traceability
+
+Plan 027 changes the base lap-comparison algorithm version to `0.2.0` so exact physical common-reference distance plateaus remain inspectable evidence rather than being deleted or repaired.
+
+The existing typed `ComparisonProvenance` model is retained.
+
+The evidence chain continues to expose:
+
+- both Lap contexts and dataset fingerprints;
+- canonical distance/time evidence;
+- source channel identities;
+- transformation identities/versions/parameters;
+- comparison algorithm identity/version;
+- explicit comparison parameters.
+
+No plateau-collapse transformation is recorded because no input sample is deleted, reordered or rewritten.
+
+Executable coverage:
+
+- plateau/provenance tests in `tests/analysis/test_lap_comparison.py`;
+- Portland physical integration in `tests/application/test_physical_track_reference_preparation.py`.
+
+TDD evidence:
+
+- RED: CI #349;
+- GREEN: CI #354;
+- Portland physical integration: CI #355.
+
