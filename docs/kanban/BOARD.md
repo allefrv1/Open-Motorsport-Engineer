@@ -12,6 +12,7 @@ Authoritative detail remains in requirements/specs/plans/PRs.
 - physical-car MoTeC fixture outreach
 - native `.ld` feasibility when justified
 - domain analysis modules after physical evidence foundation
+- physical-workflow frontend integration after the backend source workflow is proven
 
 ## READY
 
@@ -19,17 +20,25 @@ None.
 
 ## DOING
 
-### Plan 029 — Traqmate Physical Supporting Evidence Foundation
+### Plan 030 — Traqmate Physical Comparison HTTP Workflow
 
 Class: Standard
 
 Goal:
 
-Promote only verified Traqmate speed/RPM/gear evidence into the Portland physical comparison report while retaining throttle/brake/steering as Missing Evidence.
+Expose the already-verified physical Traqmate comparison pipeline through a thin multipart HTTP boundary without adding new engineering calculations or source semantics.
 
-Required council state:
+Council replenishment:
 
-Engineering Council alignment review.
+`docs/reviews/2026-09-25-post-plan-029-replenishment.md`
+
+Decision:
+
+`READY`
+
+Commitment:
+
+`READY -> DOING`
 
 ## REVIEW
 
@@ -39,11 +48,11 @@ None.
 
 None at board level.
 
-Domain-specific missing evidence remains explicitly tracked inside Plan 029.
+Unsupported physical throttle/brake/steering remain product-level Missing Evidence, not flow blockers for Plan 030.
 
 ## DONE
 
-Plans 001–028.
+Plans 001–029.
 
 ## WIP check
 
