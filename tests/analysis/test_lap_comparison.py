@@ -421,7 +421,7 @@ class Req005LapComparisonTests(unittest.TestCase):
 
         provenance = result.provenance
         self.assertEqual(provenance.algorithm_id, "ome.lap-comparison.distance-linear")
-        self.assertEqual(provenance.algorithm_version, "0.1.0")
+        self.assertEqual(provenance.algorithm_version, "0.2.0")
         self.assertEqual(provenance.parameters["grid_step_m"], 25.0)
         self.assertEqual(provenance.lap_a.context.session_identifier, "session-practice")
         self.assertEqual(provenance.lap_a.context.run_identifier, "run-1")
@@ -440,6 +440,168 @@ class Req005LapComparisonTests(unittest.TestCase):
             provenance.lap_a.distance.transformations[0].transformation_id,
             "test.distance-normalization",
         )
+
+    def test_v02_accepts_plateau_and_preserves_input_values(self) -> None:
+        lap_a = lap(
+            label="a",
+            distance=(0.0, 10.0, 10.0, 20.0),
+            elapsed=(0.0, 1.0, 2.0, 3.0),
+        )
+        lap_b = lap(
+            label="b",
+            distance=(0.0, 10.0, 10.0, 20.0),
+            elapsed=(0.0, 1.0, 2.0, 3.0),
+        )
+        before_a = lap_a.distance
+        before_b = lap_b.distance
+
+        result = self.engine.compare(
+            LapComparisonRequest(
+                lap_a=lap_a,
+                lap_b=lap_b,
+                grid_step_m=5.0,
+            )
+        )
+
+        self.assertIsInstance(result, LapComparisonSuccess)
+        assert isinstance(result, LapComparisonSuccess)
+        self.assertEqual(result.distance_grid_m, (0.0, 5.0, 10.0, 15.0, 20.0))
+        self.assertEqual(result.lap_a_elapsed_s, (0.0, 0.5, 2.0, 2.5, 3.0))
+        self.assertEqual(result.lap_b_elapsed_s, (0.0, 0.5, 2.0, 2.5, 3.0))
+        self.assertTrue(all(delta == 0.0 for delta in result.delta_b_vs_a_s))
+
+        self.assertIs(lap_a.distance, before_a)
+        self.assertIs(lap_b.distance, before_b)
+        assert lap_a.distance is not None
+        assert lap_b.distance is not None
+        self.assertEqual(lap_a.distance.values, (0.0, 10.0, 10.0, 20.0))
+        self.assertEqual(lap_b.distance.values, (0.0, 10.0, 10.0, 20.0))
+
+    def test_v02_plateau_dwell_time_remains_in_downstream_delta(self) -> None:
+        result = self.engine.compare(
+            LapComparisonRequest(
+                lap_a=lap(
+                    label="a",
+                    distance=(0.0, 10.0, 20.0),
+                    elapsed=(0.0, 1.0, 2.0),
+                ),
+                lap_b=lap(
+                    label="b",
+                    distance=(0.0, 10.0, 10.0, 20.0),
+                    elapsed=(0.0, 1.0, 2.0, 3.0),
+                ),
+                grid_step_m=5.0,
+            )
+        )
+
+        self.assertIsInstance(result, LapComparisonSuccess)
+        assert isinstance(result, LapComparisonSuccess)
+        self.assertEqual(result.lap_a_elapsed_s, (0.0, 0.5, 1.0, 1.5, 2.0))
+        self.assertEqual(result.lap_b_elapsed_s, (0.0, 0.5, 2.0, 2.5, 3.0))
+        self.assertEqual(result.delta_b_vs_a_s, (0.0, 0.0, 1.0, 1.0, 1.0))
+
+    def test_v02_multiple_plateaus_are_deterministic(self) -> None:
+        request = LapComparisonRequest(
+            lap_a=lap(
+                label="a",
+                distance=(0.0, 10.0, 10.0, 20.0, 20.0, 30.0),
+                elapsed=(0.0, 1.0, 2.0, 3.0, 4.0, 5.0),
+            ),
+            lap_b=lap(
+                label="b",
+                distance=(0.0, 10.0, 10.0, 20.0, 20.0, 30.0),
+                elapsed=(0.0, 1.0, 2.0, 3.0, 4.0, 5.0),
+            ),
+            grid_step_m=5.0,
+        )
+
+        first = self.engine.compare(request)
+        second = self.engine.compare(request)
+
+        self.assertEqual(first, second)
+        self.assertIsInstance(first, LapComparisonSuccess)
+        assert isinstance(first, LapComparisonSuccess)
+        self.assertEqual(
+            first.lap_a_elapsed_s,
+            (0.0, 0.5, 2.0, 2.5, 4.0, 4.5, 5.0),
+        )
+
+    def test_v02_true_distance_decrease_is_not_ready_without_repair(self) -> None:
+        lap_b = lap(
+            label="b",
+            distance=(0.0, 10.0, 9.0, 20.0),
+            elapsed=(0.0, 1.0, 2.0, 3.0),
+        )
+        before = lap_b.distance
+
+        result = self.engine.compare(
+            LapComparisonRequest(
+                lap_a=lap(
+                    label="a",
+                    distance=(0.0, 10.0, 20.0),
+                    elapsed=(0.0, 1.0, 2.0),
+                ),
+                lap_b=lap_b,
+            )
+        )
+
+        self.assertIsInstance(result, LapComparisonNotReady)
+        assert isinstance(result, LapComparisonNotReady)
+        self.assertIn(
+            ComparisonIssueCode.DISTANCE_DECREASES,
+            {issue.code for issue in result.issues},
+        )
+        self.assertIs(lap_b.distance, before)
+        assert lap_b.distance is not None
+        self.assertEqual(lap_b.distance.values, (0.0, 10.0, 9.0, 20.0))
+
+    def test_v02_elapsed_time_still_requires_strict_increase(self) -> None:
+        result = self.engine.compare(
+            LapComparisonRequest(
+                lap_a=lap(
+                    label="a",
+                    distance=(0.0, 10.0, 10.0, 20.0),
+                    elapsed=(0.0, 1.0, 2.0, 3.0),
+                ),
+                lap_b=lap(
+                    label="b",
+                    distance=(0.0, 10.0, 10.0, 20.0),
+                    elapsed=(0.0, 1.0, 1.0, 3.0),
+                ),
+            )
+        )
+
+        self.assertIsInstance(result, LapComparisonNotReady)
+        assert isinstance(result, LapComparisonNotReady)
+        self.assertIn(
+            ComparisonIssueCode.TIME_NOT_STRICTLY_INCREASING,
+            {issue.code for issue in result.issues},
+        )
+
+    def test_v02_no_plateau_inputs_keep_existing_numerical_output(self) -> None:
+        result = self.engine.compare(
+            LapComparisonRequest(
+                lap_a=lap(
+                    label="a",
+                    distance=(0.0, 25.0, 75.0, 100.0),
+                    elapsed=(0.0, 2.5, 7.5, 10.0),
+                ),
+                lap_b=lap(
+                    label="b",
+                    distance=(0.0, 50.0, 100.0),
+                    elapsed=(0.0, 6.0, 12.0),
+                ),
+                grid_step_m=25.0,
+            )
+        )
+
+        self.assertIsInstance(result, LapComparisonSuccess)
+        assert isinstance(result, LapComparisonSuccess)
+        self.assertEqual(result.distance_grid_m, (0.0, 25.0, 50.0, 75.0, 100.0))
+        self.assertEqual(result.lap_a_elapsed_s, (0.0, 2.5, 5.0, 7.5, 10.0))
+        self.assertEqual(result.lap_b_elapsed_s, (0.0, 3.0, 6.0, 9.0, 12.0))
+        self.assertEqual(result.delta_b_vs_a_s, (0.0, 0.5, 1.0, 1.5, 2.0))
+        self.assertEqual(result.provenance.algorithm_version, "0.2.0")
 
     def test_missing_context_provenance_returns_not_ready(self) -> None:
         request = LapComparisonRequest(
