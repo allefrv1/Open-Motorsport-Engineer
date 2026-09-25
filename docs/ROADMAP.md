@@ -236,16 +236,26 @@ Completed:
 - downstream overlays/observations/reports remain compatible with base v0.2;
 - Portland physical Lap 4 / Lap 5 reaches base comparison readiness.
 
+Completed:
+
+- Plan 028 — Physical-Car Comparison Request Foundation;
+- explicit physical lap-relative `time.elapsed`;
+- prepared physical `lap.distance` reused unchanged;
+- deterministic `ComparisonReportRequest` composition;
+- real Portland base report success;
+- unsupported supporting channels remain explicit Missing Evidence.
+
 Current plan:
 
-- `docs/plans/active/028-physical-car-comparison-request-foundation.md`
+- `docs/plans/active/029-traqmate-physical-supporting-evidence-foundation.md`
 
 Current work:
 
-- derive explicit lap-relative `time.elapsed` from physical source Elapsed Time;
-- reuse prepared physical `lap.distance` unchanged;
-- compose `ComparisonReportRequest`;
-- produce a physical base report with unsupported supporting channels left as Missing Evidence.
+- add deterministic mph -> m/s conversion;
+- promote exact Traqmate Velocity/RPMs/Gear source semantics only;
+- preserve shared start/finish boundary evidence without changing source-lap ownership;
+- enrich the Portland report with speed, engine-speed and gear;
+- keep throttle, brake and steering as Missing Evidence.
 
 Later:
 
