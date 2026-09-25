@@ -23,6 +23,18 @@ For substantial work:
 
 Do not count formatting, environment or harness failures as behavioral RED.
 
+## Engineering Council / Kanban
+
+For material domain/physics/engineering changes:
+
+- Council review: N/A / link
+- Motorsport Mechanical review: N/A / READY / BLOCKED
+- Physics review: N/A / READY / BLOCKED
+- Kanban state: READY / DOING / REVIEW
+- Unresolved specialist objections:
+
+Do not hide a specialist objection to make a PR mergeable.
+
 ## Validation
 
 - [ ] `uv run --locked python scripts/harness.py verify` passes
