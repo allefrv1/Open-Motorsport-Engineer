@@ -33,6 +33,10 @@ Books do not override explicit source-system semantics.
 
 Publisher: SAE International
 
+Verified edition: 2014
+
+Reference: https://saemobilus.sae.org/books/analysis-techniques-racecar-data-acquisition-second-edition-r-408
+
 Use for:
 
 - data-analysis workflow;
@@ -49,6 +53,10 @@ Use for:
 Priority: **Core**
 
 #### Christopher Brown — Making Sense of Squiggly Lines
+
+Verified edition: 2011
+
+Reference: https://squigglylines.com/making-sense-of-squiggly-lines/
 
 Use for:
 
@@ -69,6 +77,10 @@ Priority: **Core practical reference**
 
 Publisher: SAE International
 
+Verified edition: 1995
+
+Reference: https://www.millikenresearch.com/rcvd.html
+
 Use for:
 
 - race-car vehicle dynamics;
@@ -87,6 +99,10 @@ Priority: **Core**
 
 Publisher: SAE International
 
+Verified edition: 2021
+
+Reference: https://saemobilus.sae.org/books/fundamentals-vehicle-dynamics-revised-edition-r-506
+
 Use for:
 
 - foundational equations;
@@ -103,6 +119,10 @@ Priority: **Core fundamentals**
 
 Publisher: Elsevier
 
+Verified edition: 2012
+
+Reference: https://shop.elsevier.com/books/tire-and-vehicle-dynamics/pacejka/978-0-08-097016-5
+
 Use for:
 
 - tyre input variables;
@@ -118,6 +138,10 @@ Priority: **Core advanced tyre reference**
 #### Paul Haney — The Racing & High-Performance Tire, Revised Edition
 
 Publisher: SAE International
+
+Verified revised edition: 2025
+
+Reference: https://saemobilus.sae.org/books/racing-high-performance-tire-r-594
 
 Use for:
 
