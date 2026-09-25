@@ -11,7 +11,7 @@ from ome.evidence import DeltaObservationProvenance
 ALGORITHM_ID = "ome.lap-observation.delta-regions"
 ALGORITHM_VERSION = "0.1.0"
 BASE_ALGORITHM_ID = "ome.lap-comparison.distance-linear"
-BASE_ALGORITHM_VERSION = "0.1.0"
+BASE_ALGORITHM_VERSION = "0.2.0"
 DEFAULT_ZERO_TOLERANCE_S = 1e-9
 
 
@@ -100,7 +100,7 @@ class DeltaObservationEngine:
                 DeltaObservationReadinessIssue(
                     code=DeltaObservationIssueCode.INCOMPATIBLE_BASE_COMPARISON,
                     message=(
-                        "Delta observations require the accepted v0.1 distance-linear "
+                        "Delta observations require the accepted v0.2 distance-linear "
                         "lap comparison result."
                     ),
                 )
