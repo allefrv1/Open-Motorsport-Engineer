@@ -17,6 +17,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 - [QUALITY_SCORE.md](QUALITY_SCORE.md) — current harness maturity
 - [PRE_CODE_READINESS.md](PRE_CODE_READINESS.md) — go/no-go assessment
 - [ROADMAP.md](ROADMAP.md) — engineering sequence
+- [ENGINEERING_COUNCIL.md](ENGINEERING_COUNCIL.md) — multidisciplinary decision/review model
+- [KANBAN.md](KANBAN.md) — flow/WIP/pull policies
+- [agents/](agents/) — specialist engineering role charters
 
 ## Current execution
 
@@ -41,7 +44,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 - [plans/](plans/) — active/completed execution plans and debt
 - [research/](research/) — informative research, not automatically normative
-- [references/](references/) — external source registry
+- [references/](references/) — external source registry and engineering reference library
+- [reviews/](reviews/) — Engineering Council alignment/delivery reviews
+- [kanban/BOARD.md](kanban/BOARD.md) — current lightweight Kanban flow view
 
 ## Knowledge promotion
 
