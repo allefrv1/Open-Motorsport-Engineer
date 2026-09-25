@@ -5,6 +5,13 @@ from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 
+from ome.analysis import (
+    LapComparisonEngine,
+    LapComparisonLap,
+    LapComparisonRequest,
+    LapComparisonSeries,
+    LapComparisonSuccess,
+)
 from ome.application import SourceLapWindowRequest, TraqmateLapWindowSelector
 from ome.application.physical_track_reference import (
     PhysicalTrackReferencePreparationIssueCode,
@@ -14,7 +21,11 @@ from ome.application.physical_track_reference import (
     PhysicalTrackReferencePreparationSuccess,
 )
 from ome.domain import CanonicalConcept, ImportedTelemetryDataset, SampleSeries
-from ome.evidence import LapEvidenceContext
+from ome.evidence import (
+    CanonicalSeriesEvidence,
+    LapEvidenceContext,
+    TransformationEvidence,
+)
 from ome.ingestion import ImportSuccess, TraqmateTrackvisionCSVImporter
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -242,6 +253,66 @@ class Plan026PhysicalTrackReferencePreparationTests(unittest.TestCase):
             if current == previous
         )
         self.assertEqual(plateau_indices, (495, 512))
+
+    def test_portland_prepared_distances_reach_base_comparison_v02_readiness(self) -> None:
+        outcome = self.service.prepare(self.request_for(self.portland))
+
+        self.assertIsInstance(outcome, PhysicalTrackReferencePreparationSuccess)
+        assert isinstance(outcome, PhysicalTrackReferencePreparationSuccess)
+        prepared = outcome.preparation
+
+        def elapsed_series(timestamps_s, source_evidence):
+            start = timestamps_s[0]
+            return LapComparisonSeries(
+                values=tuple(value - start for value in timestamps_s),
+                evidence=CanonicalSeriesEvidence(
+                    dataset_fingerprint=source_evidence.dataset_fingerprint,
+                    source_channel_identifier=source_evidence.source_channel_identifier,
+                    source_original_name=source_evidence.source_original_name,
+                    canonical_concept=CanonicalConcept.TIME_ELAPSED,
+                    unit="s",
+                    transformations=(
+                        TransformationEvidence(
+                            transformation_id="test.rebase-time-to-lap-start",
+                            transformation_version="1.0.0",
+                            parameters={"start_s": start},
+                        ),
+                    ),
+                ),
+            )
+
+        comparison = LapComparisonEngine().compare(
+            LapComparisonRequest(
+                lap_a=LapComparisonLap(
+                    context=prepared.reference_context,
+                    distance=prepared.reference_lap_distance,
+                    elapsed_time=elapsed_series(
+                        prepared.reference_lap.timestamps_s,
+                        prepared.reference_lap.time_evidence,
+                    ),
+                ),
+                lap_b=LapComparisonLap(
+                    context=prepared.candidate_context,
+                    distance=prepared.candidate_lap_distance,
+                    elapsed_time=elapsed_series(
+                        prepared.candidate_lap.timestamps_s,
+                        prepared.candidate_lap.time_evidence,
+                    ),
+                ),
+                grid_step_m=5.0,
+            )
+        )
+
+        self.assertIsInstance(comparison, LapComparisonSuccess)
+        assert isinstance(comparison, LapComparisonSuccess)
+        self.assertEqual(comparison.provenance.algorithm_version, "0.2.0")
+        self.assertEqual(comparison.provenance.lap_a.context.lap_identifier, "source-lap:4")
+        self.assertEqual(comparison.provenance.lap_b.context.lap_identifier, "source-lap:5")
+        self.assertGreater(len(comparison.distance_grid_m), 100)
+        self.assertEqual(
+            len(comparison.distance_grid_m),
+            len(comparison.delta_b_vs_a_s),
+        )
 
     def test_same_reference_and_candidate_window_is_not_ready(self) -> None:
         dataset = compact_dataset(self.portland)
