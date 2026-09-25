@@ -1,8 +1,10 @@
 # Plan 029 — Traqmate Physical Supporting Evidence Foundation
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-25
+
+Completed: 2026-09-25
 
 ## Objective
 
@@ -132,10 +134,9 @@ Council decision:
 
 Kanban:
 
-- state: `DOING`;
+- final state: `DONE`;
 - class: Standard;
-- product WIP: `1 / 1`;
-- do not pull another product plan while Plan 029 remains active.
+- product slot released after merge and documentation synchronization.
 
 Specialist constraints confirmed:
 
@@ -157,6 +158,42 @@ Specialist constraints confirmed:
 - throttle/brake/steering remain Missing Evidence;
 - source/provenance immutability proven;
 - canonical CI GREEN.
+
+## Completion evidence
+
+Behavioral RED:
+
+- OME CI #373;
+- expected failure: Plan 029 supporting-evidence production API was absent.
+
+GREEN:
+
+- OME CI #380 — canonical verify passed after the minimum implementation;
+- OME CI #381 — canonical verify passed with the Engineering Council delivery review.
+
+Mechanical formatter/lint failures during the GREEN iteration were classified as harness feedback, not behavioral RED.
+
+Engineering Council:
+
+- alignment: `docs/reviews/2026-09-25-plan-029-alignment.md`;
+- delivery: `docs/reviews/2026-09-25-plan-029-delivery.md`;
+- final specialist decision: READY.
+
+Merge:
+
+- PR #70;
+- squash commit: `57392a94c94a40780a9195845e45726bfc29e31b`.
+
+Delivered physical report evidence:
+
+- `vehicle.speed`: available;
+- `engine.speed`: available;
+- `transmission.gear`: available with derived/assigned Traqmate semantic identity;
+- `driver.throttle`: Missing Evidence;
+- `driver.brake`: Missing Evidence;
+- `driver.steering`: Missing Evidence.
+
+All completion criteria are satisfied.
 
 ## Next plan boundary
 
