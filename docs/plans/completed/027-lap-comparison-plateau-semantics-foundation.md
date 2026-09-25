@@ -1,8 +1,10 @@
 # Plan 027 — Lap Comparison Plateau Semantics Foundation
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-24
+
+Completed: 2026-09-25
 
 ## Objective
 
@@ -223,6 +225,22 @@ The Portland Lap 4 reference / Lap 5 candidate preparation now reaches base lap-
 - Portland physical base comparison ready;
 - provenance/version updated;
 - canonical CI GREEN.
+
+## Merge evidence
+
+PR #66 was squash-merged as:
+
+`f666a72531005a51e1516b4f22bfa3871a1be752`
+
+Final canonical verification before merge:
+
+- CI #357 — success.
+
+## Completion assessment
+
+All Plan 027 completion criteria are satisfied.
+
+The physical Portland candidate keeps its exact common-reference plateaus, the lap-comparison engine now models their time semantics explicitly, and all existing overlay/observation/report consumers remain compatible with base comparison v0.2.
 
 ## Next plan boundary
 

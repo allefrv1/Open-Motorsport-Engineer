@@ -20,7 +20,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 027 — Lap Comparison Plateau Semantics Foundation](plans/active/027-lap-comparison-plateau-semantics-foundation.md)
+- [Plan 028 — Physical-Car Comparison Request Foundation](plans/active/028-physical-car-comparison-request-foundation.md)
 
 ## Verification and implementation guidance
 
