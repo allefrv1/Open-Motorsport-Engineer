@@ -58,6 +58,16 @@ from ome.application.physical_track_reference import (
 from ome.application.track_reference_preparation import (
     prepare_track_reference_lap_distance,
 )
+from ome.application.traqmate_physical_supporting_evidence import (
+    TraqmatePhysicalSupportingEvidenceIssue,
+    TraqmatePhysicalSupportingEvidenceIssueCode,
+    TraqmatePhysicalSupportingEvidenceNotReady,
+    TraqmatePhysicalSupportingEvidenceOutcome,
+    TraqmatePhysicalSupportingEvidenceRequest,
+    TraqmatePhysicalSupportingEvidenceService,
+    TraqmatePhysicalSupportingEvidenceSuccess,
+    traqmate_physical_normalization_rules,
+)
 
 __all__ = [
     "ComparisonPreparationIssue",
@@ -84,6 +94,13 @@ __all__ = [
     "SourceLapWindowRequest",
     "SourceLapWindowSuccess",
     "TraqmateLapWindowSelector",
+    "TraqmatePhysicalSupportingEvidenceIssue",
+    "TraqmatePhysicalSupportingEvidenceIssueCode",
+    "TraqmatePhysicalSupportingEvidenceNotReady",
+    "TraqmatePhysicalSupportingEvidenceOutcome",
+    "TraqmatePhysicalSupportingEvidenceRequest",
+    "TraqmatePhysicalSupportingEvidenceService",
+    "TraqmatePhysicalSupportingEvidenceSuccess",
     "PhysicalComparisonPreparationIssue",
     "PhysicalComparisonPreparationIssueCode",
     "PhysicalComparisonPreparationNotReady",
@@ -106,4 +123,5 @@ __all__ = [
     "SupportingEvidenceSummary",
     "mvp_ome_csv_comparison_profile",
     "prepare_track_reference_lap_distance",
+    "traqmate_physical_normalization_rules",
 ]

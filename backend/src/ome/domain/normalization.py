@@ -21,6 +21,7 @@ class ConversionKind(StrEnum):
     PERCENT_TO_FRACTION = "percent_to_fraction"
     RPM_TO_RAD_PER_SECOND = "rpm_to_rad_per_second"
     INTEGER_IDENTITY = "integer_identity"
+    MPH_TO_MPS = "mph_to_mps"
 
 
 class UnmappedReason(StrEnum):
