@@ -25,7 +25,7 @@ Codex may propose an ADR, but must not mark a major decision Accepted without ma
 | 0007 | Accepted | Use SQLite for local project metadata |
 | 0008 | Accepted | Use local HTTP API and React/TypeScript UI |
 | 0009 | Accepted | Align initial lap comparisons by distance |
-| 0010 | Proposed | Introduce containers only for executable application boundaries |
+| 0010 | Proposed | Introduce containers only for executable application boundaries |\n| 0011 | Accepted | Keep tyre models replaceable behind a deterministic contract |
 
 See `0000-template.md` for new decisions.
 

@@ -61,6 +61,15 @@ from ome.analysis.lap_comparison import (
     LapComparisonSeries,
     LapComparisonSuccess,
 )
+from ome.analysis.tire_model import (
+    PacejkaMagicFormula,
+    PacejkaParameters,
+    SlipCoordinate,
+    TireForceAxis,
+    TireModel,
+    TireModelRequest,
+    TireModelResult,
+)
 
 __all__ = [
     "CommonTrackReferenceEngine",
@@ -103,6 +112,13 @@ __all__ = [
     "ContinuousOverlayRequest",
     "ContinuousOverlaySeries",
     "ContinuousOverlaySuccess",
+    "PacejkaMagicFormula",
+    "PacejkaParameters",
+    "SlipCoordinate",
+    "TireForceAxis",
+    "TireModel",
+    "TireModelRequest",
+    "TireModelResult",
     "ComparisonIssueCode",
     "ComparisonReadinessIssue",
     "LapComparisonEngine",
