@@ -227,6 +227,7 @@ class Plan015LocalHttpApiTests(unittest.TestCase):
                 "/healthz",
                 "/api/v1/comparison-reports",
                 "/api/v1/ome-csv/comparison-reports",
+                "/api/v1/traqmate/comparison-reports",
             },
         )
 
