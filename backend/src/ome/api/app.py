@@ -15,9 +15,11 @@ from ome.api.models import (
     HealthResponse,
     OmeCsvComparisonHttpResponse,
     OmeCsvComparisonNotReadyResponse,
+    TraqmateComparisonHttpResponse,
+    TraqmateComparisonNotReadyResponse,
     WorkflowIssueDto,
 )
-from ome.api.upload_workflow import stage_ome_csv_bundle
+from ome.api.upload_workflow import stage_ome_csv_bundle, stage_single_csv_upload
 from ome.application import (
     ComparisonPreparationNotReady,
     ComparisonPreparationRequest,
@@ -28,9 +30,31 @@ from ome.application import (
     ComparisonReportRequest,
     ComparisonReportService,
     ComparisonReportSuccess,
+    PhysicalComparisonPreparationNotReady,
+    PhysicalComparisonPreparationRequest,
+    PhysicalComparisonPreparationService,
+    PhysicalComparisonPreparationSuccess,
+    PhysicalTrackReferencePreparationNotReady,
+    PhysicalTrackReferencePreparationRequest,
+    PhysicalTrackReferencePreparationService,
+    PhysicalTrackReferencePreparationSuccess,
+    SourceLapWindowNotReady,
+    SourceLapWindowRequest,
+    SourceLapWindowSuccess,
+    TraqmateLapWindowSelector,
+    TraqmatePhysicalSupportingEvidenceNotReady,
+    TraqmatePhysicalSupportingEvidenceRequest,
+    TraqmatePhysicalSupportingEvidenceService,
+    TraqmatePhysicalSupportingEvidenceSuccess,
     mvp_ome_csv_comparison_profile,
 )
-from ome.ingestion import ImportFailure, ImportSuccess, OMECsvProfileImporter
+from ome.evidence import LapEvidenceContext
+from ome.ingestion import (
+    ImportFailure,
+    ImportSuccess,
+    OMECsvProfileImporter,
+    TraqmateTrackvisionCSVImporter,
+)
 
 
 class ReportBuilder(Protocol):
@@ -142,6 +166,177 @@ def create_app(
             report = service.build(preparation.report_request)
             if isinstance(report, ComparisonReportNotReady):
                 return OmeCsvComparisonNotReadyResponse(
+                    stage="report",
+                    issues=tuple(
+                        WorkflowIssueDto.from_report_issue(issue) for issue in report.issues
+                    ),
+                )
+
+            assert isinstance(report, ComparisonReportSuccess)
+            return ComparisonReportSuccessResponse(
+                report=ComparisonReportSuccessDto.from_domain(report)
+            )
+
+    traqmate_importer = TraqmateTrackvisionCSVImporter()
+    lap_window_selector = TraqmateLapWindowSelector()
+    track_reference_service = PhysicalTrackReferencePreparationService()
+    physical_comparison_service = PhysicalComparisonPreparationService()
+    supporting_evidence_service = TraqmatePhysicalSupportingEvidenceService()
+
+    @app.post(
+        "/api/v1/traqmate/comparison-reports",
+        response_model=TraqmateComparisonHttpResponse,
+    )
+    def traqmate_comparison_report(
+        telemetry_csv: Annotated[UploadFile, File()],
+        reference_lap: Annotated[int, Form()],
+        candidate_lap: Annotated[int, Form()],
+        grid_step_m: Annotated[float, Form()] = 1.0,
+    ) -> TraqmateComparisonHttpResponse:
+        with TemporaryDirectory(prefix="ome-api-traqmate-") as temporary:
+            source_path = stage_single_csv_upload(
+                Path(temporary),
+                csv_upload=telemetry_csv,
+                fallback="traqmate.csv",
+            )
+
+            imported = traqmate_importer.import_source(source_path)
+            if isinstance(imported, ImportFailure):
+                return TraqmateComparisonNotReadyResponse(
+                    stage="import",
+                    issues=(
+                        WorkflowIssueDto(
+                            code=imported.code.value,
+                            message=imported.message,
+                        ),
+                    ),
+                )
+            assert isinstance(imported, ImportSuccess)
+            dataset = imported.dataset
+
+            reference_window = lap_window_selector.select(
+                SourceLapWindowRequest(
+                    dataset=dataset,
+                    source_lap_number=reference_lap,
+                )
+            )
+            if isinstance(reference_window, SourceLapWindowNotReady):
+                return TraqmateComparisonNotReadyResponse(
+                    stage="lap_window",
+                    issues=tuple(
+                        WorkflowIssueDto(
+                            code=issue.code.value,
+                            message=issue.message,
+                        )
+                        for issue in reference_window.issues
+                    ),
+                )
+            assert isinstance(reference_window, SourceLapWindowSuccess)
+
+            candidate_window = lap_window_selector.select(
+                SourceLapWindowRequest(
+                    dataset=dataset,
+                    source_lap_number=candidate_lap,
+                )
+            )
+            if isinstance(candidate_window, SourceLapWindowNotReady):
+                return TraqmateComparisonNotReadyResponse(
+                    stage="lap_window",
+                    issues=tuple(
+                        WorkflowIssueDto(
+                            code=issue.code.value,
+                            message=issue.message,
+                        )
+                        for issue in candidate_window.issues
+                    ),
+                )
+            assert isinstance(candidate_window, SourceLapWindowSuccess)
+
+            fingerprint = dataset.provenance.content_fingerprint
+            session_identifier = f"dataset:{fingerprint}"
+            reference_context = LapEvidenceContext(
+                dataset_fingerprint=fingerprint,
+                session_identifier=session_identifier,
+                run_identifier=None,
+                lap_identifier=f"source-lap:{reference_lap}",
+            )
+            candidate_context = LapEvidenceContext(
+                dataset_fingerprint=fingerprint,
+                session_identifier=session_identifier,
+                run_identifier=None,
+                lap_identifier=f"source-lap:{candidate_lap}",
+            )
+
+            track_reference = track_reference_service.prepare(
+                PhysicalTrackReferencePreparationRequest(
+                    dataset=dataset,
+                    reference_window=reference_window.window,
+                    candidate_window=candidate_window.window,
+                    reference_context=reference_context,
+                    candidate_context=candidate_context,
+                )
+            )
+            if isinstance(track_reference, PhysicalTrackReferencePreparationNotReady):
+                return TraqmateComparisonNotReadyResponse(
+                    stage="track_reference",
+                    issues=tuple(
+                        WorkflowIssueDto(
+                            code=issue.code.value,
+                            message=issue.message,
+                        )
+                        for issue in track_reference.issues
+                    ),
+                )
+            assert isinstance(track_reference, PhysicalTrackReferencePreparationSuccess)
+
+            base_preparation = physical_comparison_service.prepare(
+                PhysicalComparisonPreparationRequest(
+                    preparation=track_reference.preparation,
+                    grid_step_m=grid_step_m,
+                )
+            )
+            if isinstance(base_preparation, PhysicalComparisonPreparationNotReady):
+                return TraqmateComparisonNotReadyResponse(
+                    stage="comparison_preparation",
+                    issues=tuple(
+                        WorkflowIssueDto(
+                            code=issue.code.value,
+                            message=issue.message,
+                        )
+                        for issue in base_preparation.issues
+                    ),
+                )
+            assert isinstance(base_preparation, PhysicalComparisonPreparationSuccess)
+
+            supporting_evidence = supporting_evidence_service.prepare(
+                TraqmatePhysicalSupportingEvidenceRequest(
+                    dataset=dataset,
+                    physical_preparation=track_reference.preparation,
+                    base_preparation=base_preparation,
+                )
+            )
+            if isinstance(
+                supporting_evidence,
+                TraqmatePhysicalSupportingEvidenceNotReady,
+            ):
+                return TraqmateComparisonNotReadyResponse(
+                    stage="supporting_evidence",
+                    issues=tuple(
+                        WorkflowIssueDto(
+                            code=issue.code.value,
+                            message=issue.message,
+                        )
+                        for issue in supporting_evidence.issues
+                    ),
+                )
+            assert isinstance(
+                supporting_evidence,
+                TraqmatePhysicalSupportingEvidenceSuccess,
+            )
+
+            report = service.build(supporting_evidence.report_request)
+            if isinstance(report, ComparisonReportNotReady):
+                return TraqmateComparisonNotReadyResponse(
                     stage="report",
                     issues=tuple(
                         WorkflowIssueDto.from_report_issue(issue) for issue in report.issues

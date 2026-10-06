@@ -636,6 +636,24 @@ class OmeCsvComparisonNotReadyResponse(ApiModel):
 OmeCsvComparisonHttpResponse = ComparisonReportSuccessResponse | OmeCsvComparisonNotReadyResponse
 
 
+class TraqmateComparisonNotReadyResponse(ApiModel):
+    status: Literal["not_ready"] = "not_ready"
+    stage: Literal[
+        "import",
+        "lap_window",
+        "track_reference",
+        "comparison_preparation",
+        "supporting_evidence",
+        "report",
+    ]
+    issues: tuple[WorkflowIssueDto, ...]
+
+
+TraqmateComparisonHttpResponse = (
+    ComparisonReportSuccessResponse | TraqmateComparisonNotReadyResponse
+)
+
+
 class HealthResponse(ApiModel):
     status: Literal["ok"] = "ok"
     service: Literal["ome-api"] = "ome-api"

@@ -6,6 +6,19 @@ from pathlib import Path
 from fastapi import UploadFile
 
 
+def stage_single_csv_upload(
+    root: Path,
+    *,
+    csv_upload: UploadFile,
+    fallback: str = "telemetry.csv",
+) -> Path:
+    root.mkdir(parents=True, exist_ok=True)
+    csv_name = _safe_csv_name(csv_upload.filename, fallback=fallback)
+    csv_path = root / csv_name
+    _copy_upload(csv_upload, csv_path)
+    return csv_path
+
+
 def stage_ome_csv_bundle(
     root: Path,
     *,
