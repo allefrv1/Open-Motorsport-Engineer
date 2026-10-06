@@ -1,3 +1,12 @@
+export type ComparisonWorkflowStage =
+  | "import"
+  | "preparation"
+  | "lap_window"
+  | "track_reference"
+  | "comparison_preparation"
+  | "supporting_evidence"
+  | "report";
+
 export interface WorkflowIssue {
   code: string;
   message: string;
@@ -112,7 +121,7 @@ export type ComparisonWorkflowResponse =
     }
   | {
       status: "not_ready";
-      stage: "import" | "preparation" | "report";
+      stage: ComparisonWorkflowStage;
       issues: WorkflowIssue[];
     };
 
@@ -135,6 +144,40 @@ export async function submitComparison(
   body.append("grid_step_m", upload.gridStep);
 
   const response = await fetch("/api/v1/ome-csv/comparison-reports", {
+    method: "POST",
+    body,
+  });
+
+  if (!response.ok) {
+    throw new Error(`OME API request failed with HTTP ${response.status}.`);
+  }
+
+  const payload = (await response.json()) as Partial<ComparisonWorkflowResponse>;
+
+  if (payload.status !== "success" && payload.status !== "not_ready") {
+    throw new Error("OME API returned an unsupported response.");
+  }
+
+  return payload as ComparisonWorkflowResponse;
+}
+
+export interface TraqmateComparisonUpload {
+  telemetryCsv: File;
+  referenceLap: string;
+  candidateLap: string;
+  gridStep: string;
+}
+
+export async function submitTraqmateComparison(
+  upload: TraqmateComparisonUpload,
+): Promise<ComparisonWorkflowResponse> {
+  const body = new FormData();
+  body.append("telemetry_csv", upload.telemetryCsv);
+  body.append("reference_lap", upload.referenceLap);
+  body.append("candidate_lap", upload.candidateLap);
+  body.append("grid_step_m", upload.gridStep);
+
+  const response = await fetch("/api/v1/traqmate/comparison-reports", {
     method: "POST",
     body,
   });
