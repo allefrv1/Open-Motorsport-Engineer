@@ -268,9 +268,16 @@ Completed:
 - no API-side physics, interpolation, unit conversion or lap ranking;
 - multidisciplinary Engineering Council delivery review.
 
-Next:
+Next READY candidate:
 
-- conduct Kanban replenishment before selecting another material product plan.
+- Plan 031 — Traqmate Physical Investigation Frontend Integration;
+- reuse the existing investigation workspace and deterministic report presentation;
+- one physical CSV plus explicit reference/candidate source laps;
+- no browser-side telemetry parsing, lap ranking or engineering recomputation.
+
+Replenishment decision:
+
+`docs/reviews/2026-10-06-post-plan-030-replenishment.md`
 
 Later:
 
