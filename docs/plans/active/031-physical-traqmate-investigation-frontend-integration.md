@@ -1,6 +1,8 @@
 # Plan 031 — Physical Traqmate Investigation Frontend Integration
 
-Status: **READY**
+Status: **Active**
+
+Kanban state: **READY**
 
 Started: 2026-10-06
 
