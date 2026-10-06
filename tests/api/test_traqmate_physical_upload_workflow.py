@@ -89,7 +89,8 @@ def source_with_cell_replaced(
     headers: list[str] | None = None
     for index, line in enumerate(lines):
         row = next(csv.reader([line]))
-        if "Elapsed Time" in row and channel_identifier in row:
+        normalized_headers = [cell.strip() for cell in row]
+        if "Elapsed Time" in normalized_headers and channel_identifier in normalized_headers:
             header_index = index
             headers = row
             break
@@ -97,7 +98,7 @@ def source_with_cell_replaced(
     if header_index is None or headers is None:
         raise AssertionError(f"Source channel {channel_identifier!r} was not found in fixture.")
 
-    channel_index = headers.index(channel_identifier)
+    channel_index = [cell.strip() for cell in headers].index(channel_identifier)
     for index in range(header_index + 1, len(lines)):
         row = next(csv.reader([lines[index]]))
         if len(row) != len(headers) or not row[channel_index].strip():
