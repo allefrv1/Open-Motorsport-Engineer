@@ -287,23 +287,49 @@ The architecture is still intentionally being proven one boundary at a time.
 - unsupported speed/throttle/brake/steering/RPM/gear evidence remains explicit rather than invented;
 - recorded RED -> GREEN CI evidence.
 
+### Traqmate supporting evidence — Plan 029
+
+- exact `Velocity (MPH)` -> `vehicle.speed` mapping;
+- exact `RPMs` -> `engine.speed` mapping;
+- explicit Traqmate-derived/assigned gear semantic identity;
+- speed/RPM unit conversions retain source/transformation provenance;
+- throttle/brake/steering remain explicit Missing Evidence;
+- Engineering Council alignment/delivery review.
+
+### Physical Traqmate HTTP workflow — Plan 030
+
+- one-file multipart Traqmate upload;
+- explicit caller-selected reference/candidate source laps;
+- safe temporary staging with exact byte preservation;
+- deterministic stage-specific not-ready outcomes;
+- accepted physical preparation/supporting-evidence/report services reused unchanged;
+- no API-side physics or lap ranking;
+- final canonical PR verification OME CI #403;
+- Engineering Council delivery review READY.
+
 ## Current implementation gate
 
-### Go
+### Replenishment required
 
-Proceed to:
+There is no active product plan.
 
-`docs/plans/active/029-traqmate-physical-supporting-evidence-foundation.md`
+Before another material behavior change:
 
-### Guardrail
+1. review the Kanban backlog and current product evidence;
+2. run Engineering Council replenishment when the candidate is cross-domain/material;
+3. define the requirement/spec/ADR context and acceptance strategy;
+4. move one candidate through READY -> DOING;
+5. use TDD for deterministic behavior.
 
-Plan 029 may promote only exact, externally verified Traqmate source semantics.
+Do not start backlog work merely because Plan 030 is complete.
 
-Allowed initial mappings are `Velocity (MPH)` -> `vehicle.speed`, `RPMs` -> `engine.speed`, and `Gear` -> `transmission.gear` with an explicit Traqmate-derived/assigned semantic id.
+### Guardrails that remain active
 
-Do not infer throttle from `Accel (calc)`, driver brake from `Brake (calc)`, or steering from unrelated data. The next-lap closing-boundary value may be referenced only as explicit shared start/finish evidence and must not be relabeled as an owned sample of the prior source lap.
-
-ADR-0010 remains Proposed.
+- physical throttle, brake and steering are still Missing Evidence for the current Traqmate path;
+- do not infer driver inputs from calculated acceleration/brake-shaped signals;
+- do not introduce automatic lap ranking without a requirement;
+- do not move engineering calculations into transport/UI;
+- ADR-0010 remains Proposed.
 
 The following remain separate responsibilities:
 
