@@ -15,13 +15,11 @@ Authoritative detail remains in requirements/specs/plans/PRs.
 
 ## READY
 
-- Plan 031 — Physical Traqmate Investigation Frontend Integration
+None.
 
 ## DOING
 
-None.
-
-Plan 031 may move READY -> DOING after the replenishment transition is merged.
+- Plan 031 — Physical Traqmate Investigation Frontend Integration
 
 ## REVIEW
 
