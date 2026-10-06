@@ -270,7 +270,9 @@ Completed:
 
 Next:
 
-- conduct Kanban replenishment before selecting another material product plan.
+- Plan 031 — Physical Traqmate Investigation Frontend Integration;
+- reuse the accepted Traqmate multipart HTTP workflow from the existing React investigation workspace;
+- preserve explicit source-lap choice, Missing Evidence and backend-owned engineering calculations.
 
 Later:
 
