@@ -12,11 +12,26 @@ Authoritative detail remains in requirements/specs/plans/PRs.
 - physical-car MoTeC fixture outreach
 - native `.ld` feasibility when justified
 - domain analysis modules after physical evidence foundation
-- physical-workflow frontend integration after the backend source workflow is proven
 
 ## READY
 
-None.
+### Plan 031 — Traqmate Physical Investigation Frontend Integration
+
+Class: Standard
+
+Goal:
+
+Expose the proven physical Traqmate comparison workflow in the existing investigation workspace without duplicating engineering calculations or result presentation.
+
+Replenishment:
+
+`docs/reviews/2026-10-06-post-plan-030-replenishment.md`
+
+Decision:
+
+`READY`
+
+The plan is not DOING until explicitly pulled after this transition is merged.
 
 ## DOING
 
