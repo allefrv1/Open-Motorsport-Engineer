@@ -3,12 +3,16 @@ import { FormEvent, useMemo, useState } from "react";
 import {
   ComparisonReport,
   ComparisonWorkflowResponse,
+  ComparisonWorkflowStage,
   SupportingEvidence,
   WorkflowIssue,
   submitComparison,
+  submitTraqmateComparison,
 } from "./api";
 import { DeltaChart } from "./DeltaChart";
 import { TelemetryInvestigationPlots } from "./TelemetryInvestigationPlots";
+
+type SourceWorkflow = "ome_csv" | "traqmate";
 
 interface SourceFileFieldProps {
   id: string;
@@ -91,15 +95,26 @@ function evidenceStatusLabel(item: SupportingEvidence): string {
   return item.status;
 }
 
-function stageLabel(stage: "import" | "preparation" | "report"): string {
-  return stage.charAt(0).toUpperCase() + stage.slice(1);
+function stageLabel(stage: ComparisonWorkflowStage): string {
+  return stage
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function isPositiveIntegerInput(value: string): boolean {
+  if (value.trim() === "") {
+    return false;
+  }
+  const number = Number(value);
+  return Number.isInteger(number) && number > 0;
 }
 
 function WorkflowIssues({
   stage,
   issues,
 }: {
-  stage: "import" | "preparation" | "report";
+  stage: ComparisonWorkflowStage;
   issues: WorkflowIssue[];
 }) {
   return (
@@ -130,11 +145,7 @@ function WorkflowIssues({
   );
 }
 
-function ComparisonResults({
-  report,
-}: {
-  report: ComparisonReport;
-}) {
+function ComparisonResults({ report }: { report: ComparisonReport }) {
   const comparison = report.comparison;
   const finalDelta = comparison.delta_b_vs_a_s.at(-1) ?? 0;
   const provenance = comparison.provenance;
@@ -275,10 +286,14 @@ function ComparisonResults({
 }
 
 export function App() {
+  const [workflow, setWorkflow] = useState<SourceWorkflow>("ome_csv");
   const [lapACsv, setLapACsv] = useState<File | null>(null);
   const [lapASidecar, setLapASidecar] = useState<File | null>(null);
   const [lapBCsv, setLapBCsv] = useState<File | null>(null);
   const [lapBSidecar, setLapBSidecar] = useState<File | null>(null);
+  const [traqmateCsv, setTraqmateCsv] = useState<File | null>(null);
+  const [referenceLap, setReferenceLap] = useState("");
+  const [candidateLap, setCandidateLap] = useState("");
   const [gridStep, setGridStep] = useState("1");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -289,24 +304,48 @@ export function App() {
     return Number.isFinite(value) && value > 0;
   }, [gridStep]);
 
-  const sourcesReady =
+  const referenceLapValid = isPositiveIntegerInput(referenceLap);
+  const candidateLapValid = isPositiveIntegerInput(candidateLap);
+
+  const omeSourcesReady =
     lapACsv !== null &&
     lapASidecar !== null &&
     lapBCsv !== null &&
     lapBSidecar !== null;
 
+  const traqmateSourcesReady =
+    traqmateCsv !== null && referenceLapValid && candidateLapValid;
+
+  const sourcesReady =
+    workflow === "ome_csv" ? omeSourcesReady : traqmateSourcesReady;
+
   const canSubmit = sourcesReady && gridValid && !loading;
+
+  function changeWorkflow(next: SourceWorkflow) {
+    if (next === workflow) {
+      return;
+    }
+
+    setWorkflow(next);
+    setError(null);
+    setOutcome(null);
+
+    if (next === "traqmate") {
+      setLapACsv(null);
+      setLapASidecar(null);
+      setLapBCsv(null);
+      setLapBSidecar(null);
+    } else {
+      setTraqmateCsv(null);
+      setReferenceLap("");
+      setCandidateLap("");
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (
-      !canSubmit ||
-      lapACsv === null ||
-      lapASidecar === null ||
-      lapBCsv === null ||
-      lapBSidecar === null
-    ) {
+    if (!canSubmit) {
       return;
     }
 
@@ -314,13 +353,42 @@ export function App() {
     setError(null);
 
     try {
-      const response = await submitComparison({
-        lapACsv,
-        lapASidecar,
-        lapBCsv,
-        lapBSidecar,
-        gridStep,
-      });
+      let response: ComparisonWorkflowResponse;
+
+      if (workflow === "ome_csv") {
+        if (
+          lapACsv === null ||
+          lapASidecar === null ||
+          lapBCsv === null ||
+          lapBSidecar === null
+        ) {
+          return;
+        }
+
+        response = await submitComparison({
+          lapACsv,
+          lapASidecar,
+          lapBCsv,
+          lapBSidecar,
+          gridStep,
+        });
+      } else {
+        if (
+          traqmateCsv === null ||
+          !referenceLapValid ||
+          !candidateLapValid
+        ) {
+          return;
+        }
+
+        response = await submitTraqmateComparison({
+          telemetryCsv: traqmateCsv,
+          referenceLap,
+          candidateLap,
+          gridStep,
+        });
+      }
+
       setOutcome(response);
     } catch {
       setError(
@@ -337,52 +405,168 @@ export function App() {
         <p className="eyebrow">Open Motorsport Engineer</p>
         <h1>Compare two laps</h1>
         <p>
-          Load two controlled OME CSV lap bundles. OME keeps Lap A as the
-          reference, compares Lap B on the accepted distance basis and exposes
-          the evidence behind the result.
+          Choose a supported source workflow, keep the reference/candidate order
+          explicit and investigate the same deterministic evidence model across
+          controlled and physical telemetry.
         </p>
       </header>
 
       <form className="source-form" onSubmit={handleSubmit}>
-        <div className="source-grid">
-          <fieldset className="source-group">
-            <legend>Lap A</legend>
-            <p className="source-group__role">Reference lap</p>
-            <SourceFileField
-              id="lap-a-csv"
-              label="Lap A CSV"
-              accept=".csv,text/csv"
-              file={lapACsv}
-              onChange={setLapACsv}
-            />
-            <SourceFileField
-              id="lap-a-sidecar"
-              label="Lap A sidecar"
-              accept=".json,application/json"
-              file={lapASidecar}
-              onChange={setLapASidecar}
-            />
-          </fieldset>
+        <fieldset className="workflow-selector">
+          <legend>Source workflow</legend>
+          <div className="workflow-options">
+            <div className="workflow-option">
+              <input
+                id="workflow-ome-csv"
+                type="radio"
+                name="source-workflow"
+                value="ome_csv"
+                checked={workflow === "ome_csv"}
+                disabled={loading}
+                onChange={() => changeWorkflow("ome_csv")}
+              />
+              <div>
+                <label htmlFor="workflow-ome-csv">Controlled OME CSV</label>
+                <p>Two prepared lap bundles with explicit sidecars.</p>
+              </div>
+            </div>
 
-          <fieldset className="source-group">
-            <legend>Lap B</legend>
-            <p className="source-group__role">Comparison lap</p>
-            <SourceFileField
-              id="lap-b-csv"
-              label="Lap B CSV"
-              accept=".csv,text/csv"
-              file={lapBCsv}
-              onChange={setLapBCsv}
-            />
-            <SourceFileField
-              id="lap-b-sidecar"
-              label="Lap B sidecar"
-              accept=".json,application/json"
-              file={lapBSidecar}
-              onChange={setLapBSidecar}
-            />
-          </fieldset>
-        </div>
+            <div className="workflow-option">
+              <input
+                id="workflow-traqmate"
+                type="radio"
+                name="source-workflow"
+                value="traqmate"
+                checked={workflow === "traqmate"}
+                disabled={loading}
+                onChange={() => changeWorkflow("traqmate")}
+              />
+              <div>
+                <label htmlFor="workflow-traqmate">Physical Traqmate</label>
+                <p>One Trackvision V2 source with caller-selected source laps.</p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        {workflow === "ome_csv" ? (
+          <div className="source-grid">
+            <fieldset className="source-group">
+              <legend>Lap A</legend>
+              <p className="source-group__role">Reference lap</p>
+              <SourceFileField
+                id="lap-a-csv"
+                label="Lap A CSV"
+                accept=".csv,text/csv"
+                file={lapACsv}
+                onChange={setLapACsv}
+              />
+              <SourceFileField
+                id="lap-a-sidecar"
+                label="Lap A sidecar"
+                accept=".json,application/json"
+                file={lapASidecar}
+                onChange={setLapASidecar}
+              />
+            </fieldset>
+
+            <fieldset className="source-group">
+              <legend>Lap B</legend>
+              <p className="source-group__role">Comparison lap</p>
+              <SourceFileField
+                id="lap-b-csv"
+                label="Lap B CSV"
+                accept=".csv,text/csv"
+                file={lapBCsv}
+                onChange={setLapBCsv}
+              />
+              <SourceFileField
+                id="lap-b-sidecar"
+                label="Lap B sidecar"
+                accept=".json,application/json"
+                file={lapBSidecar}
+                onChange={setLapBSidecar}
+              />
+            </fieldset>
+          </div>
+        ) : (
+          <div className="source-grid">
+            <fieldset className="source-group">
+              <legend>Physical source</legend>
+              <p className="source-group__role">Traqmate Trackvision V2</p>
+              <SourceFileField
+                id="traqmate-csv"
+                label="Traqmate telemetry CSV"
+                accept=".csv,text/csv"
+                file={traqmateCsv}
+                onChange={setTraqmateCsv}
+              />
+            </fieldset>
+
+            <fieldset className="source-group">
+              <legend>Source laps</legend>
+              <p className="source-group__role">
+                Explicit caller order. OME does not rank or auto-select laps.
+              </p>
+
+              <div className="lap-inputs">
+                <div className="grid-field grid-field--full">
+                  <label htmlFor="reference-source-lap">
+                    Reference source lap
+                  </label>
+                  <input
+                    id="reference-source-lap"
+                    type="number"
+                    min="1"
+                    step="1"
+                    inputMode="numeric"
+                    value={referenceLap}
+                    aria-invalid={
+                      referenceLap !== "" && !referenceLapValid
+                    }
+                    aria-describedby="reference-source-lap-help"
+                    onChange={(event) =>
+                      setReferenceLap(event.currentTarget.value)
+                    }
+                  />
+                  <span
+                    id="reference-source-lap-help"
+                    className="field-help"
+                  >
+                    Positive integer. This becomes Lap A, the reference.
+                  </span>
+                </div>
+
+                <div className="grid-field grid-field--full">
+                  <label htmlFor="candidate-source-lap">
+                    Candidate source lap
+                  </label>
+                  <input
+                    id="candidate-source-lap"
+                    type="number"
+                    min="1"
+                    step="1"
+                    inputMode="numeric"
+                    value={candidateLap}
+                    aria-invalid={
+                      candidateLap !== "" && !candidateLapValid
+                    }
+                    aria-describedby="candidate-source-lap-help"
+                    onChange={(event) =>
+                      setCandidateLap(event.currentTarget.value)
+                    }
+                  />
+                  <span
+                    id="candidate-source-lap-help"
+                    className="field-help"
+                  >
+                    Positive integer. This becomes Lap B, the comparison.
+                  </span>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        )}
 
         <div className="form-actions">
           <div className="grid-field">
