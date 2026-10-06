@@ -2,7 +2,7 @@
 
 Date: 2026-10-06
 
-Status: **Operational harness — physical HTTP workflow verified; replenishment pending**
+Status: **Operational harness — physical frontend integration replenished and READY**
 
 Scale:
 
@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus canonical commands, TDD, Kanban and multidisciplinary Engineering Council routing. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–030 have completed history; no product plan is active pending replenishment. |
+| Plan lifecycle | 4 | Plans 001–030 have completed history; Plan 031 is replenished and READY. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -74,7 +74,7 @@ Plan 029 enriches that physical report with independently verified Traqmate velo
 
 Plan 030 now exposes the same accepted physical workflow through a thin multipart HTTP boundary. Canonical tests prove caller-controlled lap order, deterministic stage-specific not-ready outcomes, unchanged core report serialization, upload-path safety, exact staged-byte integrity and preserved Missing Evidence without API-side engineering calculations.
 
-The next maturity step must be selected through Kanban replenishment rather than inferred from implementation momentum.
+Kanban replenishment selected Plan 031: integrate the proven physical Traqmate HTTP workflow into the existing investigation frontend without moving engineering calculations into the browser.
 
 ## Review cadence
 

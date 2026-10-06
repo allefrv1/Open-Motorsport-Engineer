@@ -12,17 +12,16 @@ Authoritative detail remains in requirements/specs/plans/PRs.
 - physical-car MoTeC fixture outreach
 - native `.ld` feasibility when justified
 - domain analysis modules after physical evidence foundation
-- physical-workflow frontend integration after the backend source workflow is proven
 
 ## READY
 
-None.
+- Plan 031 — Physical Traqmate Investigation Frontend Integration
 
 ## DOING
 
 None.
 
-Replenishment is required before another material product plan can move to READY / DOING.
+Plan 031 may move READY -> DOING after the replenishment transition is merged.
 
 ## REVIEW
 

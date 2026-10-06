@@ -23,9 +23,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-No product plan is currently active.
+- [Plan 031 — Physical Traqmate Investigation Frontend Integration](plans/active/031-physical-traqmate-investigation-frontend-integration.md) — READY
 
-Kanban replenishment is required before the next material plan moves to READY / DOING.
+The replenishment review is complete. After this transition is merged, Plan 031 may move READY -> DOING.
 
 ## Verification and implementation guidance
 
