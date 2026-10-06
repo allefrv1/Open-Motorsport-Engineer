@@ -99,6 +99,54 @@
     padding-block: 24px;
   }
 
+  .workflow-selector {
+    margin: 0 0 22px;
+    padding: 0;
+    border: 0;
+  }
+
+  .workflow-selector > legend {
+    margin-bottom: 10px;
+    padding: 0;
+    color: #d7dde7;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .workflow-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .workflow-option {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    padding: 13px 14px;
+    border: 1px solid #353d49;
+    border-radius: 10px;
+    background: #151920;
+  }
+
+  .workflow-option input {
+    margin-top: 3px;
+  }
+
+  .workflow-option label {
+    color: #e1e6ee;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .workflow-option p {
+    margin: 4px 0 0;
+    color: #93a2b7;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
   .source-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -165,6 +213,16 @@
     display: grid;
     gap: 7px;
     width: 180px;
+  }
+
+  .grid-field--full {
+    width: 100%;
+  }
+
+  .lap-inputs {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
   }
 
   .grid-field input {
@@ -477,6 +535,7 @@
       padding-top: 22px;
     }
 
+    .workflow-options,
     .source-grid,
     .comparison-header {
       grid-template-columns: 1fr;
