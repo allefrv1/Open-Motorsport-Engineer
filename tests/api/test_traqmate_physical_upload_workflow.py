@@ -109,9 +109,7 @@ def source_with_cell_replaced(
         lines[index] = buffer.getvalue()
         return ("\n".join(lines) + "\n").encode("utf-8")
 
-    raise AssertionError(
-        f"Source channel {channel_identifier!r} had no replaceable fixture value."
-    )
+    raise AssertionError(f"Source channel {channel_identifier!r} had no replaceable fixture value.")
 
 
 class Plan030TraqmatePhysicalComparisonHttpWorkflowTests(unittest.TestCase):
