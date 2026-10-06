@@ -317,6 +317,47 @@ class Plan030TraqmatePhysicalComparisonHttpWorkflowTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 422)
 
+    def test_non_numeric_form_value_returns_422(self) -> None:
+        response = self.client.post(
+            "/api/v1/traqmate/comparison-reports",
+            files=physical_files(),
+            data={
+                "reference_lap": "4",
+                "candidate_lap": "5",
+                "grid_step_m": "not-a-number",
+            },
+        )
+
+        self.assertEqual(response.status_code, 422)
+
+    def test_staged_upload_bytes_match_client_payload_exactly(self) -> None:
+        payload = PORTLAND_FIXTURE.read_bytes()
+        staged_payloads: list[bytes] = []
+
+        def recording_stage(
+            root: Path,
+            *,
+            csv_upload: UploadFile,
+            fallback: str = "telemetry.csv",
+        ) -> Path:
+            staged = real_stage_single_csv_upload(
+                root,
+                csv_upload=csv_upload,
+                fallback=fallback,
+            )
+            staged_payloads.append(staged.read_bytes())
+            return staged
+
+        with patch(
+            "ome.api.app.stage_single_csv_upload",
+            side_effect=recording_stage,
+        ):
+            response = self.post(payload=payload)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["status"], "success")
+        self.assertEqual(staged_payloads, [payload])
+
     def test_client_filename_cannot_escape_staging_or_leak_server_paths(self) -> None:
         staged_paths: list[Path] = []
 
