@@ -1,6 +1,6 @@
 # Open Motorsport Engineer — Codex Map
 
-Version: 3.4.0
+Version: 3.5.0
 
 OME is an open-source motorsport engineering analysis platform.
 
@@ -211,12 +211,10 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–029 implemented the controlled MVP plus a real Portland physical-car comparison report with verified speed, engine-speed and gear evidence. Throttle, brake and steering remain explicit Missing Evidence.
+Plans 003–030 implemented the controlled MVP plus a real Portland physical-car comparison report and a browser-usable Traqmate multipart HTTP workflow with verified speed, engine-speed and gear evidence. Throttle, brake and steering remain explicit Missing Evidence.
 
-The active engineering task is:
+There is currently no active product plan.
 
-`docs/plans/active/030-traqmate-physical-comparison-http-workflow.md`
-
-Use TDD. Keep the HTTP layer thin: one Traqmate CSV plus explicit reference/candidate source lap numbers must flow through the existing deterministic physical preparation/report services. Do not rank laps automatically, add API-side physics, infer missing channels, or change engineering provenance.
+Before starting another material behavior change, conduct Kanban replenishment and move an explicitly reviewed candidate through READY -> DOING. Do not pull backlog work directly into implementation.
 
 ADR-0010 remains Proposed.

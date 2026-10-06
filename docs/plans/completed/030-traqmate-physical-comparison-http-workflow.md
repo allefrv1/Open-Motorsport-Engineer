@@ -1,8 +1,10 @@
 # Plan 030 — Traqmate Physical Comparison HTTP Workflow
 
-Status: **Active**
+Status: **Completed**
 
 Started: 2026-09-25
+
+Completed: 2026-10-06
 
 ## Objective
 
@@ -214,6 +216,26 @@ Decision:
 - route/OpenAPI GREEN;
 - canonical verify GREEN;
 - delivery Council review complete.
+
+## Merge evidence
+
+PR:
+
+`#75 — feat: add current Traqmate physical comparison HTTP workflow`
+
+Final canonical PR verification:
+
+- OME CI #403 — success.
+
+Squash merge:
+
+`8234e17bef8c18f8dd9c4a6e975ae4ecee2d3e0c`
+
+## Completion assessment
+
+All Plan 030 completion criteria are satisfied.
+
+The accepted physical Traqmate source-to-report pipeline is now browser-usable through a thin multipart HTTP boundary while retaining caller lap order, Missing Evidence, deterministic engineering outputs and provenance.
 
 ## Explicitly out of scope
 

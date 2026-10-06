@@ -1,6 +1,6 @@
 # OME Kanban Board
 
-Updated: 2026-09-25
+Updated: 2026-10-06
 
 This is a lightweight flow view.
 
@@ -20,25 +20,9 @@ None.
 
 ## DOING
 
-### Plan 030 — Traqmate Physical Comparison HTTP Workflow
+None.
 
-Class: Standard
-
-Goal:
-
-Expose the already-verified physical Traqmate comparison pipeline through a thin multipart HTTP boundary without adding new engineering calculations or source semantics.
-
-Council replenishment:
-
-`docs/reviews/2026-09-25-post-plan-029-replenishment.md`
-
-Decision:
-
-`READY`
-
-Commitment:
-
-`READY -> DOING`
+Replenishment is required before another material product plan can move to READY / DOING.
 
 ## REVIEW
 
@@ -48,14 +32,14 @@ None.
 
 None at board level.
 
-Unsupported physical throttle/brake/steering remain product-level Missing Evidence, not flow blockers for Plan 030.
+Unsupported physical throttle/brake/steering remain product-level Missing Evidence, not hidden flow blockers.
 
 ## DONE
 
-Plans 001–029.
+Plans 001–030.
 
 ## WIP check
 
-- Product Doing: 1 / 1
+- Product Doing: 0 / 1
 - Review: 0 / 2
 - Expedite: 0 / 1

@@ -256,16 +256,21 @@ Completed:
 - throttle, brake and steering retained as Missing Evidence;
 - multidisciplinary Engineering Council alignment/delivery review.
 
-Current plan:
+Completed:
 
-- `docs/plans/active/030-traqmate-physical-comparison-http-workflow.md`
+- Plan 030 — Traqmate Physical Comparison HTTP Workflow;
+- browser-usable single-file multipart Traqmate source workflow;
+- explicit caller-selected reference/candidate source laps;
+- deterministic import/lap-window/track-reference/preparation/support/report stage semantics;
+- speed, engine-speed and gear evidence preserved through HTTP;
+- throttle, brake and steering retained as Missing Evidence;
+- source-safe temporary staging and exact upload-byte preservation;
+- no API-side physics, interpolation, unit conversion or lap ranking;
+- multidisciplinary Engineering Council delivery review.
 
-Current work:
+Next:
 
-- expose the verified physical Traqmate pipeline through a thin multipart FastAPI route;
-- require explicit reference/candidate source lap numbers;
-- preserve deterministic not-ready stages and provenance;
-- reuse existing engineering services without API-side recomputation.
+- conduct Kanban replenishment before selecting another material product plan.
 
 Later:
 

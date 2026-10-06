@@ -23,7 +23,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 030 — Traqmate Physical Comparison HTTP Workflow](plans/active/030-traqmate-physical-comparison-http-workflow.md)
+No product plan is currently active.
+
+Kanban replenishment is required before the next material plan moves to READY / DOING.
 
 ## Verification and implementation guidance
 

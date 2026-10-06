@@ -1,8 +1,8 @@
 # OME Harness Quality Score
 
-Date: 2026-09-25
+Date: 2026-10-06
 
-Status: **Operational harness — enriched physical report verified; physical HTTP workflow active**
+Status: **Operational harness — physical HTTP workflow verified; replenishment pending**
 
 Scale:
 
@@ -23,7 +23,7 @@ Scale:
 | Root agent instructions | 4 | Concise map plus canonical commands, TDD, Kanban and multidisciplinary Engineering Council routing. |
 | Documentation system of record | 4 | Structured/indexed with mechanical local-link/status/index checks. |
 | Requirement traceability | 3 | REQ-001 through REQ-004 have executable traceability; REQ-005/REQ-006 now have executable delta-time/evidence traceability while their broader comparison scope continues incrementally. |
-| Plan lifecycle | 4 | Plans 001–029 have completed history and Plan 030 is active. |
+| Plan lifecycle | 4 | Plans 001–030 have completed history; no product plan is active pending replenishment. |
 | Automated feedback | 4 | Locked setup, formatter, linter, static check, tests, CI and canonical verify are operational. |
 | Architecture enforcement | 3 | Initial dependency/cycle checks exist and ingestion stayed within its boundary. |
 | Reproducible environment | 4 | Exact runtimes/tools, lockfiles, fresh-runner CI and documented setup exist. |
@@ -70,9 +70,11 @@ Plan 027 makes the base comparison plateau-aware while preserving dwell time and
 
 Plan 028 composes the real physical preparation into the existing report stack with explicit lap-relative time evidence and deterministic observations.
 
-Plan 029 now enriches that physical report with independently verified Traqmate velocity, RPM and gear while keeping ambiguous driver-input channels explicitly absent. It also exercised the new Engineering Council/Kanban governance through alignment and delivery reviews.
+Plan 029 enriches that physical report with independently verified Traqmate velocity, RPM and gear while keeping ambiguous driver-input channels explicitly absent.
 
-The next maturity step is to expose this already-verified physical workflow through the existing local HTTP architecture without moving engineering calculations into transport code.
+Plan 030 now exposes the same accepted physical workflow through a thin multipart HTTP boundary. Canonical tests prove caller-controlled lap order, deterministic stage-specific not-ready outcomes, unchanged core report serialization, upload-path safety, exact staged-byte integrity and preserved Missing Evidence without API-side engineering calculations.
+
+The next maturity step must be selected through Kanban replenishment rather than inferred from implementation momentum.
 
 ## Review cadence
 
