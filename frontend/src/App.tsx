@@ -96,10 +96,8 @@ function evidenceStatusLabel(item: SupportingEvidence): string {
 }
 
 function stageLabel(stage: ComparisonWorkflowStage): string {
-  return stage
-    .split("_")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+  const label = stage.replaceAll("_", " ");
+  return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
 function isPositiveIntegerInput(value: string): boolean {
