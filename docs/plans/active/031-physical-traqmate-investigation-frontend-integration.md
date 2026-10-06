@@ -2,7 +2,7 @@
 
 Status: **Active**
 
-Kanban state: **READY**
+Kanban state: **DOING**
 
 Started: 2026-10-06
 
