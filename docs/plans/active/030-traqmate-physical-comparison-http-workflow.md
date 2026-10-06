@@ -170,6 +170,38 @@ accepted endpoint contract
 -> delivery council review
 ```
 
+## TDD execution evidence
+
+Behavioral RED:
+
+- OME CI #396;
+- expected failure: `/api/v1/traqmate/comparison-reports` did not exist and Plan 030 endpoint tests returned HTTP 404.
+
+GREEN progression:
+
+- OME CI #397 — route behavior existed, but the pre-existing exact OpenAPI route-set test correctly rejected the new unregistered contract;
+- OME CI #398 — canonical verify GREEN after OpenAPI contract synchronization.
+
+Robustness iteration:
+
+- OME CI #399 — formatter-only failure in newly added robustness tests;
+- OME CI #400 — test helper failed to locate raw ` RPMs` because the physical fixture intentionally preserves source-header padding;
+- the helper was corrected to locate source columns by normalized identity while retaining the raw row;
+- OME CI #401 — canonical verify GREEN;
+- OME CI #402 — final canonical verify GREEN with explicit non-numeric-form 422 coverage and exact staged-upload byte-integrity coverage.
+
+No production test was weakened to obtain GREEN.
+
+## Delivery review
+
+Engineering Council delivery review:
+
+`docs/reviews/2026-10-06-plan-030-delivery.md`
+
+Decision:
+
+`READY`
+
 ## Completion criteria
 
 - Plan 029 archived;
