@@ -76,6 +76,19 @@ The goal is simple:
 
 ## Current Stage
 
-The project is currently in the early development and research stage.
+OME now has a runnable local vertical slice.
 
-The first versions will focus on building the telemetry core, defining a normalized data model, and implementing basic lap and driver performance analysis.
+The current system can:
+
+- import controlled OME CSV telemetry;
+- ingest iRacing `.ibt`, MoTeC CSV and Traqmate Trackvision CSV through source-specific adapters;
+- preserve source provenance and Missing Evidence;
+- prepare deterministic lap comparisons;
+- compare physical Traqmate laps through the local HTTP API;
+- render delta time, synchronized telemetry, observations, evidence status and provenance in the React investigation frontend.
+
+For a reproducible local demonstration using the committed Portland physical-car fixture, see:
+
+`docs/QUICKSTART.md`
+
+The project is still under active development and does not yet include persistence/history, desktop packaging, automatic lap ranking or AI explanation.
