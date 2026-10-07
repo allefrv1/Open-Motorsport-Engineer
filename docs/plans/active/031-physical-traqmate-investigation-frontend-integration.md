@@ -2,7 +2,7 @@
 
 Status: **Active**
 
-Kanban state: **DOING**
+Kanban state: **REVIEW**
 
 Started: 2026-10-06
 
@@ -142,6 +142,42 @@ Behavioral RED targets:
 12. network errors preserve selected physical inputs;
 13. switching workflows never submits stale hidden inputs;
 14. keyboard/semantic labels remain usable.
+
+## TDD execution evidence
+
+Behavioral RED:
+
+- OME CI #410;
+- frontend acceptance tests failed because the accessible source-workflow controls did not yet exist.
+
+Implementation feedback:
+
+- OME CI #411 exposed the widened workflow-stage TypeScript contract;
+- OME CI #412 exposed sentence-case presentation for `track_reference`.
+
+GREEN:
+
+- OME CI #414 — canonical verify successful after the minimum frontend integration.
+
+Acceptance tests were not weakened to obtain GREEN.
+
+## Reviews
+
+UX / accessibility:
+
+`docs/reviews/2026-10-06-plan-031-ux-accessibility.md`
+
+Decision:
+
+`READY`
+
+Delivery:
+
+`docs/reviews/2026-10-06-plan-031-delivery.md`
+
+Decision:
+
+`READY`
 
 ## Verification
 
