@@ -157,6 +157,29 @@ const successBody = {
   },
 };
 
+function selectPhysicalSource({
+  referenceLap = "4",
+  candidateLap = "5",
+}: {
+  referenceLap?: string;
+  candidateLap?: string;
+} = {}) {
+  fireEvent.click(screen.getByRole("radio", { name: "Physical Traqmate" }));
+
+  const telemetryCsv = file("portland.csv", "text/csv");
+  fireEvent.change(screen.getByLabelText("Traqmate telemetry CSV"), {
+    target: { files: [telemetryCsv] },
+  });
+  fireEvent.change(screen.getByLabelText("Reference source lap"), {
+    target: { value: referenceLap },
+  });
+  fireEvent.change(screen.getByLabelText("Candidate source lap"), {
+    target: { value: candidateLap },
+  });
+
+  return { telemetryCsv };
+}
+
 function selectSources() {
   const lapACsv = file("lap-a.csv", "text/csv");
   const lapASidecar = file("lap-a.ome.json", "application/json");
@@ -185,6 +208,188 @@ afterEach(() => {
 });
 
 describe("MVP investigation frontend", () => {
+  it("offers explicit source workflows and keeps controlled OME CSV as default", () => {
+    render(<App />);
+
+    const controlled = screen.getByRole("radio", { name: "Controlled OME CSV" });
+    const physical = screen.getByRole("radio", { name: "Physical Traqmate" });
+
+    expect((controlled as HTMLInputElement).checked).toBe(true);
+    expect((physical as HTMLInputElement).checked).toBe(false);
+    expect(screen.getByLabelText("Lap A CSV")).toBeTruthy();
+    expect(screen.getByLabelText("Lap A sidecar")).toBeTruthy();
+    expect(screen.queryByLabelText("Traqmate telemetry CSV")).toBeNull();
+  });
+
+  it("shows only the physical Traqmate source inputs in physical mode", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("radio", { name: "Physical Traqmate" }));
+
+    expect(screen.getByLabelText("Traqmate telemetry CSV")).toBeTruthy();
+    expect(screen.getByLabelText("Reference source lap")).toBeTruthy();
+    expect(screen.getByLabelText("Candidate source lap")).toBeTruthy();
+    expect(screen.queryByLabelText("Lap A sidecar")).toBeNull();
+    expect(screen.queryByLabelText("Lap B sidecar")).toBeNull();
+  });
+
+  it("requires a physical source and positive integer source laps before submit", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("radio", { name: "Physical Traqmate" }));
+    const compare = screen.getByRole("button", { name: "Compare laps" });
+
+    expect((compare as HTMLButtonElement).disabled).toBe(true);
+
+    const telemetryCsv = file("portland.csv", "text/csv");
+    fireEvent.change(screen.getByLabelText("Traqmate telemetry CSV"), {
+      target: { files: [telemetryCsv] },
+    });
+    fireEvent.change(screen.getByLabelText("Reference source lap"), {
+      target: { value: "4" },
+    });
+    fireEvent.change(screen.getByLabelText("Candidate source lap"), {
+      target: { value: "5" },
+    });
+
+    expect((compare as HTMLButtonElement).disabled).toBe(false);
+
+    fireEvent.change(screen.getByLabelText("Candidate source lap"), {
+      target: { value: "5.5" },
+    });
+    expect((compare as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it("submits the exact Plan 030 Traqmate multipart contract", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(mockResponse(successBody));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<App />);
+
+    const selected = selectPhysicalSource({ referenceLap: "4", candidateLap: "5" });
+    fireEvent.change(screen.getByLabelText("Grid step (m)"), {
+      target: { value: "25" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    const [url, options] = fetchMock.mock.calls[0] as [string, RequestInit];
+
+    expect(url).toBe("/api/v1/traqmate/comparison-reports");
+    expect(options.method).toBe("POST");
+    expect(options.body).toBeInstanceOf(FormData);
+
+    const body = options.body as FormData;
+    expect(body.get("telemetry_csv")).toBe(selected.telemetryCsv);
+    expect(body.get("reference_lap")).toBe("4");
+    expect(body.get("candidate_lap")).toBe("5");
+    expect(body.get("grid_step_m")).toBe("25");
+    expect(body.get("lap_a_csv")).toBeNull();
+    expect(body.get("lap_a_sidecar")).toBeNull();
+  });
+
+  it("preserves caller-controlled physical reference and candidate order", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(mockResponse(successBody));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<App />);
+
+    selectPhysicalSource({ referenceLap: "5", candidateLap: "4" });
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    const [, options] = fetchMock.mock.calls[0] as [string, RequestInit];
+    const body = options.body as FormData;
+
+    expect(body.get("reference_lap")).toBe("5");
+    expect(body.get("candidate_lap")).toBe("4");
+  });
+
+  it("renders Traqmate workflow not-ready stages without collapsing responsibility", async () => {
+    const notReady = {
+      status: "not_ready",
+      stage: "track_reference",
+      issues: [
+        {
+          code: "same_reference_candidate",
+          message: "Reference and candidate must identify different source laps.",
+          lap_side: null,
+          canonical_concept: null,
+        },
+      ],
+    };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockResponse(notReady)));
+    render(<App />);
+
+    selectPhysicalSource({ referenceLap: "4", candidateLap: "4" });
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    expect(await screen.findByText("Comparison not ready")).toBeTruthy();
+    expect(screen.getByText("Track reference")).toBeTruthy();
+    expect(
+      screen.getByText("Reference and candidate must identify different source laps."),
+    ).toBeTruthy();
+  });
+
+  it("reuses the accepted report UI for physical success and preserves Missing Evidence", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockResponse(successBody)));
+    render(<App />);
+
+    selectPhysicalSource();
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    expect(await screen.findByText("+0.200 s")).toBeTruthy();
+    expect(screen.getByText("Delta = Lap B - Lap A")).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Synchronized telemetry" })).toBeTruthy();
+    expect(screen.getByText("driver.brake")).toBeTruthy();
+    expect(screen.getByText("Missing evidence")).toBeTruthy();
+    expect(screen.getByText("Method and provenance")).toBeTruthy();
+  });
+
+  it("preserves physical source selection after a recoverable network error", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("connection refused")));
+    render(<App />);
+
+    selectPhysicalSource();
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    expect((await screen.findByRole("alert")).textContent).toContain(
+      "Could not reach the local OME API",
+    );
+    expect(screen.getByText("portland.csv")).toBeTruthy();
+    expect((screen.getByLabelText("Reference source lap") as HTMLInputElement).value).toBe("4");
+    expect((screen.getByLabelText("Candidate source lap") as HTMLInputElement).value).toBe("5");
+  });
+
+  it("never submits stale hidden OME inputs from physical mode", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(mockResponse(successBody));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<App />);
+
+    selectSources();
+    const physical = screen.getByRole("radio", { name: "Physical Traqmate" });
+    fireEvent.click(physical);
+
+    const telemetryCsv = file("portland.csv", "text/csv");
+    fireEvent.change(screen.getByLabelText("Traqmate telemetry CSV"), {
+      target: { files: [telemetryCsv] },
+    });
+    fireEvent.change(screen.getByLabelText("Reference source lap"), {
+      target: { value: "4" },
+    });
+    fireEvent.change(screen.getByLabelText("Candidate source lap"), {
+      target: { value: "5" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    const [url, options] = fetchMock.mock.calls[0] as [string, RequestInit];
+    const body = options.body as FormData;
+
+    expect(url).toBe("/api/v1/traqmate/comparison-reports");
+    expect(body.get("telemetry_csv")).toBe(telemetryCsv);
+    expect(body.get("lap_a_csv")).toBeNull();
+    expect(body.get("lap_b_csv")).toBeNull();
+  });
+
   it("keeps Compare laps disabled until all four source files exist", () => {
     render(<App />);
 
