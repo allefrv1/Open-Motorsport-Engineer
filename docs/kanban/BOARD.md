@@ -19,11 +19,11 @@ None.
 
 ## DOING
 
-- Plan 031 — Physical Traqmate Investigation Frontend Integration
+None.
 
 ## REVIEW
 
-None.
+- Plan 031 — Physical Traqmate Investigation Frontend Integration
 
 ## BLOCKED
 
@@ -38,5 +38,5 @@ Plans 001–030.
 ## WIP check
 
 - Product Doing: 0 / 1
-- Review: 0 / 2
+- Review: 1 / 2
 - Expedite: 0 / 1
