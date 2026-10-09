@@ -9,6 +9,7 @@ vi.mock("plotly.js-dist-min", () => ({
   default: {
     react: vi.fn().mockResolvedValue(undefined),
     purge: vi.fn(),
+    relayout: vi.fn().mockResolvedValue(undefined),
   },
 }));
 
@@ -118,6 +119,70 @@ describe("synchronized telemetry investigation plots", () => {
     render(<TelemetryInvestigationPlots report={report} />);
 
     expect(screen.queryByText("driver.throttle exact values")).toBeNull();
+  });
+
+
+  it("lets engineers hide and restore individual channels without changing source arrays", async () => {
+    render(<TelemetryInvestigationPlots report={report} />);
+
+    const speed = screen.getByRole("checkbox", { name: /vehicle\\.speed/ });
+    expect((speed as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(speed);
+    expect((speed as HTMLInputElement).checked).toBe(false);
+
+    await waitFor(() => {
+      const lastCall = vi.mocked(Plotly.react).mock.lastCall;
+      const traces = lastCall?.[1] as Array<{ name: string }>;
+      expect(traces.map((trace) => trace.name)).toEqual([
+        "B - A",
+        "transmission.gear · Lap A",
+        "transmission.gear · Lap B",
+      ]);
+    });
+
+    fireEvent.click(speed);
+    await waitFor(() => {
+      const lastCall = vi.mocked(Plotly.react).mock.lastCall;
+      const traces = lastCall?.[1] as Array<{ name: string }>;
+      expect(traces).toHaveLength(5);
+    });
+  });
+
+  it("provides keyboard-operable inspection of exact server values", () => {
+    render(<TelemetryInvestigationPlots report={report} />);
+
+    const cursor = screen.getByRole("slider", { name: "Inspection distance point" });
+    fireEvent.change(cursor, { target: { value: "2" } });
+
+    const inspector = screen.getByRole("region", { name: "Inspection cursor" });
+    expect(inspector.textContent).toContain("50 m");
+    expect(inspector.textContent).toContain("44 m/s");
+    expect(inspector.textContent).toContain("45 m/s");
+    expect(inspector.textContent).toContain("0.08 s");
+  });
+
+  it("allows Plotly zoom presets and a full-distance reset", async () => {
+    render(<TelemetryInvestigationPlots report={report} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Focus first half" }));
+    await waitFor(() => expect(vi.mocked(Plotly.relayout)).toHaveBeenCalledWith(
+      expect.anything(),
+      { "xaxis.range": [0, 50] },
+    ));
+
+    fireEvent.click(screen.getByRole("button", { name: "Reset zoom" }));
+    await waitFor(() => expect(vi.mocked(Plotly.relayout)).toHaveBeenCalledWith(
+      expect.anything(),
+      { "xaxis.autorange": true },
+    ));
+  });
+
+  it("labels available measured and derived channels without fabricating missing channels", () => {
+    render(<TelemetryInvestigationPlots report={report} />);
+
+    expect(screen.getByText("Derived · B - A")).toBeTruthy();
+    expect(screen.getByText("Measured · vehicle.speed")).toBeTruthy();
+    expect(screen.queryByText("Measured · driver.brake")).toBeNull();
   });
 
   it("purges the Plotly figure when the visualization unmounts", async () => {
