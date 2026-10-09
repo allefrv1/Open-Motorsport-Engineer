@@ -75,7 +75,7 @@ jobs:
           .ci-playwright/bin/python -m playwright install --with-deps chromium
 
       - name: Verify physical Traqmate flow in Chromium
-        run: .ci-playwright/bin/python scripts/verify_browser_ui.py
+        run: .ci-playwright/bin/python tests/browser/verify_ui.py
 
       - name: Preserve browser QA screenshots
         if: always()
