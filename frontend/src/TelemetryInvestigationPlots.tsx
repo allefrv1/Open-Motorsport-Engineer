@@ -157,6 +157,13 @@ export function TelemetryInvestigationPlots({
 
         <div className="telemetry-plot-scroll">
           <PlotlyTelemetryFigure
+            key={[
+              report.comparison.provenance?.lap_a.context.dataset_fingerprint,
+              report.comparison.provenance?.lap_a.context.lap_identifier,
+              report.comparison.provenance?.lap_b.context.dataset_fingerprint,
+              report.comparison.provenance?.lap_b.context.lap_identifier,
+              distanceGrid.length,
+            ].join(":")}
             model={visibleModel}
             zoomCommand={zoomCommand}
             onDistanceSelect={selectPlotDistance}
@@ -166,7 +173,7 @@ export function TelemetryInvestigationPlots({
         <section className="inspector" role="region" aria-label="Inspection cursor">
           <div className="inspector__top">
             <div>
-              <p className="eyebrow">Exact source-grid inspection</p>
+              <p className="eyebrow">Exact comparison-grid inspection</p>
               <h3>Inspection cursor</h3>
             </div>
             <output className="inspector__distance">{selectedDistance ?? "—"} m</output>
@@ -183,8 +190,8 @@ export function TelemetryInvestigationPlots({
             disabled={distanceGrid.length === 0}
           />
           <p className="inspector__help">
-            Use arrow keys to move between returned distance samples, or click a plotted point.
-            No values are estimated between samples.
+            Use arrow keys to move across server-returned comparison points, or click a plotted point.
+            No interpolation is performed by the browser.
           </p>
           <div className="inspector__readouts">
             {visibleModel.panels.map((panel) => {
