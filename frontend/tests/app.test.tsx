@@ -531,6 +531,38 @@ describe("MVP investigation frontend", () => {
     expect(screen.getByText("Brake evidence is unavailable for Lap B.")).toBeTruthy();
   });
 
+  it("distinguishes a physically missing channel from other not-ready evidence", async () => {
+    const missing = {
+      ...successBody.report.supporting_evidence[1],
+      status: "not_ready",
+      issue_codes: ["missing_channel"],
+      messages: ["Lap A does not provide driver.brake evidence."],
+    };
+    const incompatible = {
+      ...missing,
+      canonical_concept: "driver.steering",
+      issue_codes: ["incompatible_unit"],
+      messages: ["Steering evidence is not compatible."],
+    };
+    const payload = {
+      status: "success",
+      report: {
+        ...successBody.report,
+        supporting_evidence: [missing, incompatible],
+      },
+    };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockResponse(payload)));
+    render(<App />);
+
+    selectPhysicalSource();
+    fireEvent.click(screen.getByRole("button", { name: "Compare laps" }));
+
+    expect(await screen.findByRole("heading", { name: "Supporting evidence" })).toBeTruthy();
+    expect(screen.getByText("Missing evidence")).toBeTruthy();
+    expect(screen.getByText("Evidence not ready")).toBeTruthy();
+    expect(screen.getByText("Lap A does not provide driver.brake evidence.")).toBeTruthy();
+  });
+
   it("makes provenance discoverable through progressive disclosure", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockResponse(successBody)));
     render(<App />);
