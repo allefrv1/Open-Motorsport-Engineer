@@ -74,6 +74,63 @@ The goal is simple:
 
 > **Make motorsport engineering more open, understandable, and accessible.**
 
+## Run locally
+
+OME provides a FastAPI backend and a React/Vite investigation frontend. For a fully
+worked example with physical Traqmate data, follow [the quickstart](docs/QUICKSTART.md).
+
+### Docker Compose (optional)
+
+Install Docker Engine or Docker Desktop with Docker Compose v2, then run from the
+repository root:
+
+```bash
+docker compose up --build
+```
+
+Open **http://127.0.0.1:5173** in your browser. The API health endpoint is
+**http://127.0.0.1:8000/healthz**. Both ports are published on localhost only.
+
+Compose starts exactly two application services: `web` (Vite/React) and `api`
+(FastAPI). The web service proxies `/api` requests to the backend container.
+No PostgreSQL, Redis or cloud service is required.
+
+To stop the stack:
+
+```bash
+docker compose down
+```
+
+These images provide an optional local development environment, **not a production
+deployment**. Persistent project storage and external telemetry mounts are not yet
+part of this Compose workflow.
+
+### Native development (canonical)
+
+The native locked toolchain remains the repository's canonical development and
+verification path. See [development setup](docs/DEVELOPMENT.md) for pinned
+Python, uv, Node and pnpm versions and setup commands.
+
+Start the API from the repository root:
+
+```bash
+uv sync --locked
+uv run --locked uvicorn --app-dir backend/src ome.api:create_app --factory --host 127.0.0.1 --port 8000
+```
+
+In a second terminal, install and start the frontend:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm --dir frontend dev
+```
+
+Run the complete canonical verification:
+
+```bash
+uv run --locked python scripts/harness.py verify
+```
+
 ## Current Stage
 
 OME now has a runnable local vertical slice.
