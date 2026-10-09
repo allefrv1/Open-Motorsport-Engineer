@@ -211,15 +211,15 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–032 delivered a controlled MVP, a physical Traqmate comparison workflow
+Plans 003–033 delivered a controlled MVP, a physical Traqmate comparison workflow
 and a responsive interactive Plotly investigation workspace. Deterministic engineering
 calculations remain in the backend; Lap A/reference, Lap B/candidate, B-A sign,
 provenance and Missing Evidence stay explicit.
 
-Plan 033 (real-browser Traqmate UI QA) is now DOING in the single product WIP slot.
-Its objective is real Chromium regression coverage against the local Compose app, without
-changing domain calculations or source provenance. Replenish after verification and closure.
+Plan 033 completed real Chromium regression coverage against the local Docker Compose app.
+The missing-channel evidence presentation and workspace title hierarchy were corrected.
+The product WIP slot is now empty; replenish before the next material product increment.
 
-Completed UI plan: `docs/plans/completed/032-interactive-telemetry-workspace.md`.
+Completed UX QA plan: `docs/plans/completed/033-real-browser-telemetry-qa.md`.
 
 ADR-0010 remains Proposed.
