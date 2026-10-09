@@ -19,7 +19,7 @@ None.
 
 ## DOING
 
-None.
+- Plan 034 — Evidence Status Visual Consistency
 
 ## REVIEW
 
@@ -37,6 +37,6 @@ Plans 001–033.
 
 ## WIP check
 
-- Product Doing: 0 / 1
+- Product Doing: 1 / 1
 - Review: 0 / 2
 - Expedite: 0 / 1
