@@ -216,8 +216,9 @@ and a responsive interactive Plotly investigation workspace. Deterministic engin
 calculations remain in the backend; Lap A/reference, Lap B/candidate, B-A sign,
 provenance and Missing Evidence stay explicit.
 
-The current product WIP slot is empty after Plan 032. Replenish through the Kanban
-policy before starting the next material product increment.
+Plan 033 (real-browser Traqmate UI QA) is now DOING in the single product WIP slot.
+Its objective is real Chromium regression coverage against the local Compose app, without
+changing domain calculations or source provenance. Replenish after verification and closure.
 
 Completed UI plan: `docs/plans/completed/032-interactive-telemetry-workspace.md`.
 

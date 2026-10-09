@@ -86,8 +86,15 @@ function evidenceStatusLabel(item: SupportingEvidence): string {
   if (item.status === "available") {
     return "Available";
   }
-  if (item.status === "missing" || item.status === "missing_evidence") {
+  if (
+    item.status === "missing" ||
+    item.status === "missing_evidence" ||
+    (item.status === "not_ready" && item.issue_codes.includes("missing_channel"))
+  ) {
     return "Missing evidence";
+  }
+  if (item.status === "not_ready") {
+    return "Evidence not ready";
   }
   if (item.status === "incompatible") {
     return "Incompatible evidence";
@@ -444,8 +451,10 @@ export function App() {
         <span className="app-topbar__state">Evidence-first analysis</span>
       </div>
       <header className="page-header">
-        <p className="eyebrow">Workspace / Lap analysis</p>
-        <h1>Compare two laps</h1>
+        <div className="page-header__heading">
+          <p className="eyebrow">Workspace / Lap analysis</p>
+          <h1>Compare two laps</h1>
+        </div>
         <p>
           Choose a supported source workflow, keep the reference/candidate order
           explicit and investigate the same deterministic evidence model across

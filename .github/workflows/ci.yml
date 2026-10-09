@@ -68,6 +68,24 @@ jobs:
           curl --fail --silent --show-error http://127.0.0.1:5173/ >/dev/null
           test "$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:5173/api/v1/comparison-reports)" = "405"
 
+      - name: Install pinned real-browser test runner
+        run: |
+          python3 -m venv .ci-playwright
+          .ci-playwright/bin/python -m pip install --disable-pip-version-check playwright==1.57.0
+          .ci-playwright/bin/python -m playwright install --with-deps chromium
+
+      - name: Verify physical Traqmate flow in Chromium
+        run: .ci-playwright/bin/python tests/browser/verify_ui.py
+
+      - name: Preserve browser QA screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ome-ui-chromium-screenshots
+          path: artifacts/ui/
+          if-no-files-found: ignore
+          retention-days: 14
+
       - name: Stop container stack
         if: always()
         run: docker compose down --volumes
