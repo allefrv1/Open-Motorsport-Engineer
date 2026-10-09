@@ -451,8 +451,10 @@ export function App() {
         <span className="app-topbar__state">Evidence-first analysis</span>
       </div>
       <header className="page-header">
-        <p className="eyebrow">Workspace / Lap analysis</p>
-        <h1>Compare two laps</h1>
+        <div className="page-header__heading">
+          <p className="eyebrow">Workspace / Lap analysis</p>
+          <h1>Compare two laps</h1>
+        </div>
         <p>
           Choose a supported source workflow, keep the reference/candidate order
           explicit and investigate the same deterministic evidence model across
