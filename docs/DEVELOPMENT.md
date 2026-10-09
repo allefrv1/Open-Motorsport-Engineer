@@ -155,7 +155,50 @@ proxies `/api` to `http://127.0.0.1:8000`.
 
 The default host is intentionally loopback-only for the local-first baseline.
 
-Docker is not required to run this API. ADR-0010 defines the proposed incremental containerization direction.
+## Optional Docker Compose development
+
+Native locked development remains the canonical baseline. Docker is an optional packaging and
+onboarding path following ADR-0010.
+
+Requirements:
+
+- Docker Engine with Docker Compose v2.
+
+From the repository root:
+
+```text
+docker compose up --build
+```
+
+The Compose topology contains only the executable application boundaries:
+
+- `api` — FastAPI/Uvicorn on `http://127.0.0.1:8000`;
+- `web` — Vite on `http://127.0.0.1:5173`.
+
+Both host ports bind to loopback only. The frontend container sets
+`OME_API_PROXY_TARGET=http://api:8000` so Vite can proxy `/api` across the internal Compose
+network while native development keeps the existing `http://127.0.0.1:8000` default.
+
+Stop the stack with:
+
+```text
+docker compose down
+```
+
+Useful container verification commands:
+
+```text
+docker compose config --quiet
+docker compose build
+docker compose up --detach --wait --wait-timeout 90
+```
+
+The container images use the repository's pinned Python, Node, uv and pnpm versions, run application
+processes as non-root users, and expose image healthchecks. Compose does not introduce a database,
+cache or message broker: SQLite/local project storage remains part of the local-first architecture.
+
+CI validates the native canonical harness and the optional Compose path separately. A Docker failure
+does not redefine a behavioral test failure; classify it as a packaging/harness failure.
 
 ## CI parity
 

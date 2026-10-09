@@ -1,0 +1,23 @@
+name: open-motorsport-engineer
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    init: true
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      OME_API_PROXY_TARGET: http://api:8000
+    ports:
+      - "127.0.0.1:5173:5173"

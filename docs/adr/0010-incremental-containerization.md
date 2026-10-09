@@ -17,9 +17,9 @@ The accepted application architecture will eventually contain:
 
 At proposal time the repository did not yet contain an executable FastAPI server or React/Vite application.
 
-Plan 015 has since produced a verified local FastAPI process and `/healthz` route. The React/Vite product application still does not exist.
+Plan 015 produced a verified local FastAPI process and `/healthz` route. Plans 018 and 031 have since produced the executable React/Vite product application.
 
-Adding Docker can now package a real backend boundary. Adding Docker Compose would still create an artificial multi-service topology before there is a second executable application process.
+The repository now has the two long-running application processes anticipated by this proposal: the local API and the browser frontend. Containerization can therefore package real executable boundaries without introducing a speculative service topology.
 
 ## Proposed decision
 
@@ -134,11 +134,33 @@ Executable evidence now supports the backend-image half of this proposal:
 - the canonical native run command binds to loopback by default;
 - transport-framework isolation is mechanically enforced.
 
-Therefore:
+Therefore, at the Plan 015 checkpoint:
 
 - **backend Dockerfile: justified once this ADR is accepted**;
 - **Docker Compose: continue to defer** until the React/Vite application or another required long-running process exists;
 - **database/cache containers: not justified** under the current SQLite/local-first architecture.
+
+## 2026-10-09 implementation checkpoint
+
+The condition that previously deferred Compose is now satisfied:
+
+- FastAPI/Uvicorn is executable and exposes `/healthz`;
+- React/Vite is executable as a separate local process;
+- Vite already owns the browser-to-API `/api` proxy boundary;
+- no external database/cache/message broker is required.
+
+The implementation therefore follows the proposal with:
+
+- a locked, non-root backend image;
+- a locked, non-root frontend development image;
+- `compose.yaml` containing only `api` and `web`;
+- loopback-only published ports;
+- an internal `web -> api` proxy target;
+- image healthchecks;
+- CI smoke verification of the optional container path.
+
+Native locked development remains canonical. This checkpoint records implementation evidence only;
+it does not change this ADR's **Proposed** status.
 
 ## Reversibility
 
