@@ -4,7 +4,6 @@ import {
   ComparisonReport,
   ComparisonWorkflowResponse,
   ComparisonWorkflowStage,
-  SupportingEvidence,
   WorkflowIssue,
   submitComparison,
   submitTraqmateComparison,
