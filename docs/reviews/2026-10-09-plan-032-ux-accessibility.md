@@ -4,7 +4,7 @@ Date: 2026-10-09
 
 Related PR: #81
 
-Decision: **REVIEW — CI and visual QA pending**
+Decision: **READY — source and CI acceptance complete**
 
 ## Task and information architecture
 
@@ -43,7 +43,7 @@ Decision: **REVIEW — CI and visual QA pending**
   checkboxes, exact-value slider, zoom controls and derived-delta identity.
 - Existing frontend regression tests cover OME CSV and physical Traqmate requests,
   Missing Evidence, delta B-A, provenance and not-ready states.
-- CI GREEN: pending final PR-head canonical verification.
+- CI GREEN: OME CI run `37892682883` on final PR #81 head. Canonical harness and container verification both passed.
 
 ## Limitations and risks
 
@@ -57,4 +57,5 @@ Decision: **REVIEW — CI and visual QA pending**
 
 ## Exit gate
 
-The PR may move REVIEW -> DONE only after canonical verify is GREEN and the change is merged.
+PR #81 merged to `main` as `087163e400fae8570ee79ab0692ccf6a0700203a` after full CI GREEN.
+The remaining manual browser visual QA is explicitly noted as a follow-up, not hidden as completed evidence.

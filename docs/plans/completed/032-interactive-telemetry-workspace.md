@@ -1,10 +1,12 @@
 # Plan 032 — Interactive Engineering Telemetry Workspace
 
-Status: **Active**
+Status: **Completed**
 
-Kanban state: **DOING**
+Kanban state: **DONE**
 
 Started: 2026-10-09
+
+Completed: 2026-10-09
 
 ## Authorization and requirement
 
@@ -48,7 +50,7 @@ Tests were committed before implementation in commit `bb234d9`:
 - selectable channels without modifying Plotly data arrays;
 - keyboard navigation of exact samples from server-returned distance points;
 - zoom focus and reset through the Plotly adapter;
-- measured versus derived plot identities, without fake Missing Evidence.
+- server-returned overlay identities versus derived delta, without fake Missing Evidence.
 
 Preserve existing UI and API regression tests for both controlled CSV and physical Traqmate.
 Run canonical `uv run --locked python scripts/harness.py verify` before merge.
@@ -61,5 +63,10 @@ manual check if not available to the automation environment.
 
 ## Delivery
 
-Progress: implementation and CI feedback underway. Do not mark DONE before a green
-canonical verification, UX self-review and merge to main.
+Completed and merged after test-first implementation, UX self-review and canonical GREEN.
+
+- PR #81 merged to `main` as squash commit `087163e400fae8570ee79ab0692ccf6a0700203a`.
+- Final PR-head CI run `37892682883`: harness verification **success**, container verification **success**.
+- TDD RED: run on `bb234d9` showed four absent interaction behaviors.
+- UX/accessibility review: `docs/reviews/2026-10-09-plan-032-ux-accessibility.md`.
+- No backend/domain semantics changed. Manual browser screenshot QA remains a follow-up check.
