@@ -66,3 +66,20 @@
 @media (prefers-reduced-motion: reduce) {
   .ui-button { transition: none; }
 }
+
+.ui-input {
+  display: block;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-background);
+  color: var(--ui-foreground);
+  font: inherit;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+.ui-input:focus-visible { outline: 3px solid var(--ui-ring); outline-offset: 2px; }
+.ui-input[aria-invalid="true"] { border-color: #e7a38c; }
+.ui-input:disabled { opacity: 0.5; cursor: not-allowed; }
