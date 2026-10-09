@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { ComparisonReport } from "./api";
 import { PlotlyTelemetryFigure, type ZoomCommand } from "./PlotlyTelemetryFigure";
@@ -68,7 +68,12 @@ export function TelemetryInvestigationPlots({
   const [cursorIndex, setCursorIndex] = useState(0);
   const [zoomCommand, setZoomCommand] = useState<ZoomCommand | null>(null);
 
+  const priorModel = useRef(model);
   useEffect(() => {
+    if (priorModel.current === model) {
+      return;
+    }
+    priorModel.current = model;
     setVisibleChannels(
       model.panels.filter((panel) => panel.kind !== "delta").map((panel) => panel.concept),
     );
