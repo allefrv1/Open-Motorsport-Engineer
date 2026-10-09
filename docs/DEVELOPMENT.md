@@ -204,4 +204,5 @@ does not redefine a behavioral test failure; classify it as a packaging/harness 
 
 GitHub Actions uses the same version pins and calls the same `scripts/harness.py verify` command.
 
-A CI-only alternate verification path is intentionally avoided.
+The container job is additional packaging verification, not an alternate application verification
+path. The canonical harness remains authoritative for product correctness.
