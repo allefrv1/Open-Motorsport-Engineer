@@ -113,9 +113,7 @@ def main() -> None:
         try:
             test_real_traqmate_in_browser(page)
             assert not js_errors, f"Uncaught frontend JavaScript errors: {js_errors}"
-            print(
-                "Browser QA passed: Traqmate, inspection, zoom, evidence and mobile reflow."
-            )
+            print("Browser QA passed: Traqmate, inspection, zoom, evidence and mobile reflow.")
         except Exception:
             page.screenshot(
                 path=str(SCREENSHOTS / "failure.png"), full_page=True, animations="disabled"
