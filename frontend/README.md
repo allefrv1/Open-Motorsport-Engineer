@@ -32,11 +32,11 @@ The canonical repository harness runs frontend test, typecheck and build before 
 
 ## Product scope
 
-Current execution: `docs/plans/active/032-interactive-telemetry-workspace.md`.
+Delivered in Plan 032: `docs/plans/completed/032-interactive-telemetry-workspace.md`.
 
 The UI provides an engineering workstation with a responsive source sidebar, interactive
 synchronized Plotly panels, channel selectors, focus/reset zoom, exact keyboard-selectable
-source-grid inspection, and concise observations. Both OME CSV and physical Traqmate inputs
+comparison-grid inspection, and concise observations. Both OME CSV and physical Traqmate inputs
 retain their existing HTTP contracts and evidence model. No engineering calculations move into
 the browser.
 
