@@ -211,12 +211,14 @@ For substantial work, report:
 
 ## Current project state
 
-Plans 003–030 implemented the controlled MVP plus a real Portland physical-car comparison report and a browser-usable Traqmate multipart HTTP workflow with verified speed, engine-speed and gear evidence. Throttle, brake and steering remain explicit Missing Evidence.
+Plans 003–032 delivered a controlled MVP, a physical Traqmate comparison workflow
+and a responsive interactive Plotly investigation workspace. Deterministic engineering
+calculations remain in the backend; Lap A/reference, Lap B/candidate, B-A sign,
+provenance and Missing Evidence stay explicit.
 
-Plan 031 is replenished and READY:
+The current product WIP slot is empty after Plan 032. Replenish through the Kanban
+policy before starting the next material product increment.
 
-`docs/plans/active/031-physical-traqmate-investigation-frontend-integration.md`
-
-After the replenishment transition is merged, move it READY -> DOING before product behavior. Use the repository UX skill and OME interface principles. Keep engineering calculations in the backend and preserve explicit caller lap order, Missing Evidence, B-A semantics and provenance.
+Completed UI plan: `docs/plans/completed/032-interactive-telemetry-workspace.md`.
 
 ADR-0010 remains Proposed.
