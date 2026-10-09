@@ -12,6 +12,7 @@ import {
 import { DeltaChart } from "./DeltaChart";
 import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
+import { Card } from "./components/ui/card";
 import { TelemetryInvestigationPlots } from "./TelemetryInvestigationPlots";
 
 type SourceWorkflow = "ome_csv" | "traqmate";
@@ -658,7 +659,7 @@ export function App() {
 
       <div className="analysis-pane" aria-label="Engineering investigation">
       {outcome === null && !loading && error === null ? (
-        <section className="empty-workspace" aria-label="Ready to investigate">
+        <Card className="empty-workspace" aria-label="Ready to investigate">
           <span className="empty-workspace__eyebrow">02 / Investigate</span>
           <div className="empty-workspace__visual" aria-hidden="true">
             <span />
@@ -674,7 +675,7 @@ export function App() {
           <p className="empty-workspace__hint">
             No demonstration values or missing channels are invented.
           </p>
-        </section>
+        </Card>
       ) : null}
 
       {loading ? (
