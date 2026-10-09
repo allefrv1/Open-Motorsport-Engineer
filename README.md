@@ -148,4 +148,9 @@ For a reproducible local demonstration using the committed Portland physical-car
 
 `docs/QUICKSTART.md`
 
+The interactive engineering workspace provides synchronized Plotly zoom/pan, optional
+channel visibility, distance-interval focus controls, keyboard-operable exact sample
+inspection, concise observations, and full evidence/provenance disclosure. The browser
+does not interpolate, rank laps or infer missing physical inputs.
+
 The project is still under active development and does not yet include persistence/history, desktop packaging, automatic lap ranking or AI explanation.
