@@ -10,6 +10,7 @@ import {
   submitTraqmateComparison,
 } from "./api";
 import { DeltaChart } from "./DeltaChart";
+import { EvidenceStatus } from "./components/EvidenceStatus";
 import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
 import { Card } from "./components/ui/card";
@@ -84,26 +85,6 @@ function observationLabel(kind: string): string {
     return "Neutral";
   }
   return kind;
-}
-
-function evidenceStatusLabel(item: SupportingEvidence): string {
-  if (item.status === "available") {
-    return "Available";
-  }
-  if (
-    item.status === "missing" ||
-    item.status === "missing_evidence" ||
-    (item.status === "not_ready" && item.issue_codes.includes("missing_channel"))
-  ) {
-    return "Missing evidence";
-  }
-  if (item.status === "not_ready") {
-    return "Evidence not ready";
-  }
-  if (item.status === "incompatible") {
-    return "Incompatible evidence";
-  }
-  return item.status;
 }
 
 function stageLabel(stage: ComparisonWorkflowStage): string {
@@ -280,7 +261,7 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
               <div>
                 <div className="evidence-concept">{item.canonical_concept}</div>
                 <div className="evidence-status">
-                  {evidenceStatusLabel(item)}
+                  <EvidenceStatus status={item.status} issueCodes={item.issue_codes} />
                 </div>
               </div>
               <div className="evidence-detail">
