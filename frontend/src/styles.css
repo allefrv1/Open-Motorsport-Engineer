@@ -655,8 +655,8 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #69d9bb;
-    box-shadow: 0 0 0 4px #69d9bb1b;
+    background: #6fd5e5;
+    box-shadow: 0 0 0 4px #6fd5e517;
   }
 
   .eyebrow {
@@ -972,7 +972,7 @@
   }
 
   .delta-value {
-    color: #8ce8e0;
+    color: #eaf0f9;
     font-size: clamp(2.3rem, 4vw, 3.8rem);
     white-space: nowrap;
   }
