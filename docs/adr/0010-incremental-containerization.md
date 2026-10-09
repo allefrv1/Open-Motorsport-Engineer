@@ -104,14 +104,15 @@ OME is local-first and telemetry-heavy; native development remains valuable for 
 - avoids premature infrastructure;
 - keeps Docker aligned with real executable boundaries;
 - preserves simple local development;
-- makes future container health/data semantics explicit;
+- provides one-command optional `docker compose up --build` onboarding;
+- makes container health/data semantics explicit;
 - avoids fake database/cache services.
 
 ### Negative
 
-- developers cannot yet use one-command `docker compose up`;
-- two supported development paths may eventually require parity tests;
-- host filesystem differences still need validation when container support arrives.
+- native and containerized development are two supported paths that require parity checks;
+- container builds add registry/network dependencies that native development does not require;
+- host filesystem differences still need validation for future mounted project/telemetry storage.
 
 ## Security/build guidance
 
@@ -166,7 +167,8 @@ it does not change this ADR's **Proposed** status.
 
 High.
 
-The proposal deliberately defers concrete Dockerfile/Compose topology until executable evidence exists.
+The implemented Dockerfiles and two-service Compose topology remain an optional packaging layer. They
+can be replaced or removed without changing the accepted local modular-monolith or HTTP/UI boundaries.
 
 ## Related decisions
 
