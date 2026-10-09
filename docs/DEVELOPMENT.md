@@ -212,3 +212,32 @@ GitHub Actions uses the same version pins and calls the same `scripts/harness.py
 
 The container job is additional packaging verification, not an alternate application verification
 path. The canonical harness remains authoritative for product correctness.
+
+## Optional real-browser UI verification
+
+After the existing native verification and container smoke checks, the CI container job
+runs the committed Portland Traqmate example in a **real headless Chromium browser**.
+
+It tests the browser-to-local-FastAPI upload workflow, explicit reference/candidate lap
+selection, B-A summary, Missing Evidence, channel visibility, zoom/reset, Plotly click
+and keyboard exact-sample inspection. It also checks 390 px mobile reflow and captures
+desktop/mobile screenshots.
+
+GitHub Actions stores the screenshots as the `ome-ui-chromium-screenshots` artifact
+(retained for 14 days). No screenshot is fabricated or committed as reference telemetry.
+
+To reproduce on a machine with Docker and Python 3:
+
+```text
+docker compose up --build --detach --wait
+python -m venv .ci-playwright
+.ci-playwright/bin/python -m pip install playwright==1.57.0
+.ci-playwright/bin/python -m playwright install chromium
+.ci-playwright/bin/python tests/browser/verify_ui.py
+docker compose down
+```
+
+On Windows, use the virtual environment's `Scripts/python.exe` path. Install
+Chromium OS dependencies separately if the Playwright installer requests them.
+This browser QA is additive to, not a replacement for, the canonical
+`scripts/harness.py verify`.

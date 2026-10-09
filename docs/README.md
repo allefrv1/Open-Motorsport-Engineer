@@ -24,9 +24,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-Plans 001–032 are complete. No product plan is currently in DOING or REVIEW.
+Plans 001–032 are complete. Plan 033 is in DOING: [Real Browser Telemetry QA](plans/active/033-real-browser-telemetry-qa.md).
 
-See `docs/plans/completed/032-interactive-telemetry-workspace.md` for the verified interactive telemetry workspace. The Kanban product WIP slot is empty pending replenishment.
+See `docs/plans/completed/032-interactive-telemetry-workspace.md` for the verified interactive telemetry workspace. The single product WIP slot is occupied by Plan 033 browser regression testing.
 
 ## Verification and implementation guidance
 
