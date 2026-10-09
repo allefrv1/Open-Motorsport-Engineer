@@ -185,7 +185,7 @@ export function PlotlyTelemetryFigure({
     }
 
     if (zoomCommand.mode === "reset") {
-      void Plotly.relayout(container, { "xaxis.autorange": true });
+      void Plotly.relayout(container, { "xaxis.autorange": true } as Partial<Layout>);
       return;
     }
 
@@ -193,7 +193,7 @@ export function PlotlyTelemetryFigure({
     const range = zoomCommand.mode === "first"
       ? [first, midpoint]
       : [midpoint, last];
-    void Plotly.relayout(container, { "xaxis.range": range });
+    void Plotly.relayout(container, { "xaxis.range": range } as Partial<Layout>);
   }, [zoomCommand, model]);
 
   return (
