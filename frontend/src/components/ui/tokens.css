@@ -1,0 +1,85 @@
+:root {
+  --ui-background: #090f19;
+  --ui-foreground: #edf3fb;
+  --ui-card: #111b29;
+  --ui-muted: #172435;
+  --ui-muted-foreground: #a0b2c7;
+  --ui-border: #304155;
+  --ui-primary: #71d5e7;
+  --ui-primary-foreground: #071922;
+  --ui-ring: #a5e7f0;
+  --ui-radius: 0.625rem;
+}
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid transparent;
+  border-radius: var(--ui-radius);
+  background: var(--ui-primary);
+  color: var(--ui-primary-foreground);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+.ui-button--secondary { background: var(--ui-muted); color: var(--ui-foreground); }
+.ui-button--outline { border-color: var(--ui-border); background: transparent; color: var(--ui-foreground); }
+.ui-button--ghost { background: transparent; color: var(--ui-foreground); }
+.ui-button--sm { min-height: 2rem; padding: 0.35rem 0.65rem; font-size: 0.75rem; }
+.ui-button--lg { min-height: 2.75rem; }
+.ui-button--icon { width: 2.5rem; padding: 0; }
+.ui-button:disabled { opacity: 0.45; cursor: not-allowed; }
+.ui-button:not(:disabled):hover { filter: brightness(1.12); }
+.ui-button:focus-visible { outline: 3px solid var(--ui-ring); outline-offset: 3px; }
+
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.ui-badge--default { background: var(--ui-primary); color: var(--ui-primary-foreground); border-color: transparent; }
+.ui-badge--secondary { background: var(--ui-muted); color: var(--ui-foreground); }
+.ui-badge--outline { background: transparent; color: var(--ui-muted-foreground); }
+.ui-badge--warning { background: #3b2b19; border-color: #866338; color: #f4cc8e; }
+
+.ui-card {
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: calc(var(--ui-radius) + 0.2rem);
+  background: var(--ui-card);
+  color: var(--ui-foreground);
+}
+.ui-card__header { padding: 1.25rem 1.25rem 0; }
+.ui-card__content { padding: 1.25rem; }
+@media (prefers-reduced-motion: reduce) {
+  .ui-button { transition: none; }
+}
+
+.ui-input {
+  display: block;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-background);
+  color: var(--ui-foreground);
+  font: inherit;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+.ui-input:focus-visible { outline: 3px solid var(--ui-ring); outline-offset: 2px; }
+.ui-input[aria-invalid="true"] { border-color: #e7a38c; }
+.ui-input:disabled { opacity: 0.5; cursor: not-allowed; }

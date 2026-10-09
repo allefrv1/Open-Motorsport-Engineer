@@ -10,6 +10,10 @@ import {
   submitTraqmateComparison,
 } from "./api";
 import { DeltaChart } from "./DeltaChart";
+import { Button } from "./components/ui/button";
+import { Badge } from "./components/ui/badge";
+import { Card } from "./components/ui/card";
+import { Input } from "./components/ui/input";
 import { TelemetryInvestigationPlots } from "./TelemetryInvestigationPlots";
 
 type SourceWorkflow = "ome_csv" | "traqmate";
@@ -244,15 +248,16 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
           </ul>
         )}
         {report.observations.regions.length > 7 ? (
-          <button
+          <Button
             type="button"
+            variant="outline"
             className="secondary-action observations-toggle"
             onClick={() => setShowAllObservations((current) => !current)}
           >
             {showAllObservations
               ? "Show fewer observations"
               : `Show all ${report.observations.regions.length} observations`}
-          </button>
+          </Button>
         ) : null}
       </section>
 
@@ -448,7 +453,7 @@ export function App() {
           <span className="brand-mark" aria-hidden="true">OME</span>
           <span>Open Motorsport Engineer <small>Local engineering workspace</small></span>
         </div>
-        <span className="app-topbar__state">Evidence-first analysis</span>
+        <Badge variant="outline" className="app-topbar__state">Evidence-first analysis</Badge>
       </div>
       <header className="page-header">
         <div className="page-header__heading">
@@ -572,7 +577,7 @@ export function App() {
                   <label htmlFor="reference-source-lap">
                     Reference source lap
                   </label>
-                  <input
+                  <Input
                     id="reference-source-lap"
                     type="number"
                     min="1"
@@ -599,7 +604,7 @@ export function App() {
                   <label htmlFor="candidate-source-lap">
                     Candidate source lap
                   </label>
-                  <input
+                  <Input
                     id="candidate-source-lap"
                     type="number"
                     min="1"
@@ -629,7 +634,7 @@ export function App() {
         <div className="form-actions">
           <div className="grid-field">
             <label htmlFor="grid-step">Grid step (m)</label>
-            <input
+            <Input
               id="grid-step"
               type="number"
               min="0.001"
@@ -646,16 +651,16 @@ export function App() {
             </span>
           </div>
 
-          <button className="primary-action" type="submit" disabled={!canSubmit}>
+          <Button className="primary-action" type="submit" disabled={!canSubmit}>
             Compare laps
-          </button>
+          </Button>
         </div>
       </form>
       </aside>
 
       <div className="analysis-pane" aria-label="Engineering investigation">
       {outcome === null && !loading && error === null ? (
-        <section className="empty-workspace" aria-label="Ready to investigate">
+        <Card className="empty-workspace" aria-label="Ready to investigate">
           <span className="empty-workspace__eyebrow">02 / Investigate</span>
           <div className="empty-workspace__visual" aria-hidden="true">
             <span />
@@ -671,7 +676,7 @@ export function App() {
           <p className="empty-workspace__hint">
             No demonstration values or missing channels are invented.
           </p>
-        </section>
+        </Card>
       ) : null}
 
       {loading ? (
