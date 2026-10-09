@@ -10,6 +10,8 @@ import {
   submitTraqmateComparison,
 } from "./api";
 import { DeltaChart } from "./DeltaChart";
+import { Button } from "./components/ui/button";
+import { Badge } from "./components/ui/badge";
 import { TelemetryInvestigationPlots } from "./TelemetryInvestigationPlots";
 
 type SourceWorkflow = "ome_csv" | "traqmate";
@@ -244,15 +246,16 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
           </ul>
         )}
         {report.observations.regions.length > 7 ? (
-          <button
+          <Button
             type="button"
+            variant="outline"
             className="secondary-action observations-toggle"
             onClick={() => setShowAllObservations((current) => !current)}
           >
             {showAllObservations
               ? "Show fewer observations"
               : `Show all ${report.observations.regions.length} observations`}
-          </button>
+          </Button>
         ) : null}
       </section>
 
@@ -448,7 +451,7 @@ export function App() {
           <span className="brand-mark" aria-hidden="true">OME</span>
           <span>Open Motorsport Engineer <small>Local engineering workspace</small></span>
         </div>
-        <span className="app-topbar__state">Evidence-first analysis</span>
+        <Badge variant="outline" className="app-topbar__state">Evidence-first analysis</Badge>
       </div>
       <header className="page-header">
         <div className="page-header__heading">
@@ -646,9 +649,9 @@ export function App() {
             </span>
           </div>
 
-          <button className="primary-action" type="submit" disabled={!canSubmit}>
+          <Button className="primary-action" type="submit" disabled={!canSubmit}>
             Compare laps
-          </button>
+          </Button>
         </div>
       </form>
       </aside>
