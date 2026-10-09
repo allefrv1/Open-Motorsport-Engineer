@@ -14,6 +14,7 @@ Use progressive disclosure: start here, then open only documents relevant to the
 - [QUALITY_ATTRIBUTES.md](QUALITY_ATTRIBUTES.md) — architecture drivers
 - [HARNESS_ENGINEERING.md](HARNESS_ENGINEERING.md) — agent operating model
 - [DEVELOPMENT.md](DEVELOPMENT.md) — pinned environment and canonical verification commands
+- [QUICKSTART.md](QUICKSTART.md) — runnable local demo using the committed physical Traqmate fixture
 - [QUALITY_SCORE.md](QUALITY_SCORE.md) — current harness maturity
 - [PRE_CODE_READINESS.md](PRE_CODE_READINESS.md) — go/no-go assessment
 - [ROADMAP.md](ROADMAP.md) — engineering sequence
@@ -23,9 +24,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-- [Plan 031 — Physical Traqmate Investigation Frontend Integration](plans/active/031-physical-traqmate-investigation-frontend-integration.md) — READY
+No product plan is currently in DOING or REVIEW.
 
-The replenishment review is complete. After this transition is merged, Plan 031 may move READY -> DOING.
+Plan 031 is complete. The Kanban WIP slot is empty and requires replenishment before the next material product increment.
 
 ## Verification and implementation guidance
 

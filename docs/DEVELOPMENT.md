@@ -142,6 +142,7 @@ Local endpoints:
 - `GET http://127.0.0.1:8000/healthz`
 - `POST http://127.0.0.1:8000/api/v1/comparison-reports`
 - `POST http://127.0.0.1:8000/api/v1/ome-csv/comparison-reports`
+- `POST http://127.0.0.1:8000/api/v1/traqmate/comparison-reports`
 - `GET http://127.0.0.1:8000/openapi.json`
 
 Run the frontend development server in a second terminal:
@@ -154,6 +155,10 @@ Vite binds to `127.0.0.1:5173` for the local-first development baseline and
 proxies `/api` to `http://127.0.0.1:8000`.
 
 The default host is intentionally loopback-only for the local-first baseline.
+
+For a complete browser walkthrough using the committed physical Portland fixture, see:
+
+`docs/QUICKSTART.md`
 
 ## Optional Docker Compose development
 
@@ -199,6 +204,7 @@ cache or message broker: SQLite/local project storage remains part of the local-
 
 CI validates the native canonical harness and the optional Compose path separately. A Docker failure
 does not redefine a behavioral test failure; classify it as a packaging/harness failure.
+
 
 ## CI parity
 

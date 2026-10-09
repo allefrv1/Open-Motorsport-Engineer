@@ -23,7 +23,7 @@ None.
 
 ## REVIEW
 
-- Plan 031 — Physical Traqmate Investigation Frontend Integration
+None.
 
 ## BLOCKED
 
@@ -33,10 +33,10 @@ Unsupported physical throttle/brake/steering remain product-level Missing Eviden
 
 ## DONE
 
-Plans 001–030.
+Plans 001–031.
 
 ## WIP check
 
 - Product Doing: 0 / 1
-- Review: 1 / 2
+- Review: 0 / 2
 - Expedite: 0 / 1
