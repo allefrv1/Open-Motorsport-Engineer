@@ -86,8 +86,15 @@ function evidenceStatusLabel(item: SupportingEvidence): string {
   if (item.status === "available") {
     return "Available";
   }
-  if (item.status === "missing" || item.status === "missing_evidence") {
+  if (
+    item.status === "missing" ||
+    item.status === "missing_evidence" ||
+    (item.status === "not_ready" && item.issue_codes.includes("missing_channel"))
+  ) {
     return "Missing evidence";
+  }
+  if (item.status === "not_ready") {
+    return "Evidence not ready";
   }
   if (item.status === "incompatible") {
     return "Incompatible evidence";
