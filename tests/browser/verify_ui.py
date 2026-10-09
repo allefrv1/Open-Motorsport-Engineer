@@ -39,7 +39,14 @@ def assert_plot_click_inspects_exact_sample(page: Page) -> None:
 
 def test_real_traqmate_in_browser(page: Page) -> None:
     page.goto(BASE_URL, wait_until="domcontentloaded")
-    expect(page.get_by_role("heading", name="Compare two laps")).to_be_visible()
+    heading = page.get_by_role("heading", name="Compare two laps")
+    expect(heading).to_be_visible()
+    eyebrow_box = page.locator(".page-header .eyebrow").bounding_box()
+    heading_box = heading.bounding_box()
+    assert eyebrow_box is not None and heading_box is not None
+    assert abs(eyebrow_box["x"] - heading_box["x"]) < 4, (
+        "Page title is visually disconnected from its section label"
+    )
     expect(page.get_by_role("region", name="Ready to investigate")).to_be_visible()
     expect(page.get_by_role("button", name="Compare laps")).to_be_disabled()
 
