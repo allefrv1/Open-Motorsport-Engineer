@@ -13,6 +13,7 @@ import { DeltaChart } from "./DeltaChart";
 import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
 import { Card } from "./components/ui/card";
+import { Input } from "./components/ui/input";
 import { TelemetryInvestigationPlots } from "./TelemetryInvestigationPlots";
 
 type SourceWorkflow = "ome_csv" | "traqmate";
@@ -576,7 +577,7 @@ export function App() {
                   <label htmlFor="reference-source-lap">
                     Reference source lap
                   </label>
-                  <input
+                  <Input
                     id="reference-source-lap"
                     type="number"
                     min="1"
@@ -603,7 +604,7 @@ export function App() {
                   <label htmlFor="candidate-source-lap">
                     Candidate source lap
                   </label>
-                  <input
+                  <Input
                     id="candidate-source-lap"
                     type="number"
                     min="1"
@@ -633,7 +634,7 @@ export function App() {
         <div className="form-actions">
           <div className="grid-field">
             <label htmlFor="grid-step">Grid step (m)</label>
-            <input
+            <Input
               id="grid-step"
               type="number"
               min="0.001"
