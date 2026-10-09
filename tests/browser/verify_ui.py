@@ -93,11 +93,14 @@ def test_real_traqmate_in_browser(page: Page) -> None:
     page.get_by_text("Method and provenance").click()
     expect(page.get_by_text("Algorithm", exact=True)).to_be_visible()
     SCREENSHOTS.mkdir(parents=True, exist_ok=True)
+    # Reset scroll before capture so the sticky source pane is shown in its natural position.
+    page.evaluate("window.scrollTo(0, 0)")
     page.screenshot(
         path=str(SCREENSHOTS / "desktop-traqmate.png"), full_page=True, animations="disabled"
     )
 
     page.set_viewport_size({"width": 390, "height": 844})
+    page.evaluate("window.scrollTo(0, 0)")
     page.screenshot(
         path=str(SCREENSHOTS / "mobile-traqmate.png"), full_page=True, animations="disabled"
     )
