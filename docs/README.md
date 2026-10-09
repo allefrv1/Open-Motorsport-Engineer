@@ -24,9 +24,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-Plans 001–032 are complete. Plan 033 is in DOING: [Real Browser Telemetry QA](plans/active/033-real-browser-telemetry-qa.md).
+Plans 001–033 are complete. See [Plan 033](plans/completed/033-real-browser-telemetry-qa.md) for the real-browser QA evidence.
 
-See `docs/plans/completed/032-interactive-telemetry-workspace.md` for the verified interactive telemetry workspace. The single product WIP slot is occupied by Plan 033 browser regression testing.
+See `docs/plans/completed/032-interactive-telemetry-workspace.md` for the verified interactive telemetry workspace. The product WIP slot is empty after Plan 033; replenish before starting new product work.
 
 ## Verification and implementation guidance
 
