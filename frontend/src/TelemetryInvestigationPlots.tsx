@@ -193,7 +193,7 @@ export function TelemetryInvestigationPlots({
                 : panel.distanceM.indexOf(selectedDistance);
               return (
                 <div className="inspector__readout" key={panel.concept}>
-                  <span>{panel.kind === "delta" ? "Derived · B - A" : panel.concept}</span>
+                  <span>{panel.kind === "delta" ? "Delta readout" : `Readout · ${panel.concept}`}</span>
                   <div className="inspector__values">
                     {panel.traces.map((trace) => (
                       <div key={trace.name}>
@@ -213,14 +213,14 @@ export function TelemetryInvestigationPlots({
         </section>
       </div>
 
-      <details className="raw-data-disclosure">
-        <summary>Inspect exact data tables</summary>
+      <div className="raw-data-disclosure">
+        <h3>Exact data tables</h3>
         <div className="exact-values-list">
           {model.panels.map((panel) => (
             <ExactValuesTable panel={panel} key={panel.concept} />
           ))}
         </div>
-      </details>
+      </div>
     </section>
   );
 }
