@@ -177,12 +177,12 @@ describe("synchronized telemetry investigation plots", () => {
     ));
   });
 
-  it("labels available measured and derived channels without fabricating missing channels", () => {
+  it("labels source overlays without claiming their evidence kind or fabricating channels", () => {
     render(<TelemetryInvestigationPlots report={report} />);
 
     expect(screen.getByText("Derived · B - A")).toBeTruthy();
-    expect(screen.getByText("Measured · vehicle.speed")).toBeTruthy();
-    expect(screen.queryByText("Measured · driver.brake")).toBeNull();
+    expect(screen.getByText("Channel · vehicle.speed")).toBeTruthy();
+    expect(screen.queryByText("Channel · driver.brake")).toBeNull();
   });
 
   it("purges the Plotly figure when the visualization unmounts", async () => {
