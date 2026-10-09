@@ -125,7 +125,7 @@ describe("synchronized telemetry investigation plots", () => {
   it("lets engineers hide and restore individual channels without changing source arrays", async () => {
     render(<TelemetryInvestigationPlots report={report} />);
 
-    const speed = screen.getByRole("checkbox", { name: /vehicle\\.speed/ });
+    const speed = screen.getByRole("checkbox", { name: /vehicle\.speed/ });
     expect((speed as HTMLInputElement).checked).toBe(true);
     fireEvent.click(speed);
     expect((speed as HTMLInputElement).checked).toBe(false);
