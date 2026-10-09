@@ -1,10 +1,12 @@
 # Plan 033 — Real Browser Telemetry QA
 
-Status: **Active**
+Status: **Completed**
 
-Kanban state: **DOING**
+Kanban state: **DONE**
 
 Started: 2026-10-09
+
+Completed: 2026-10-09
 
 ## Authorization and replenishment
 
@@ -49,6 +51,22 @@ Keep the canonical harness as authoritative; browser QA is an additional contain
 No new data source, physics/tyre model, lap ranking, synthetic channel, cloud service,
 frontend interpolation or backend contract change. Images are QA evidence, not product assets.
 
+## Delivery evidence
+
+- Browser CI initially exposed source-status confusion: unsupported Portland inputs
+  were shown as raw `not_ready` instead of Missing Evidence.
+- TDD RED `37895223046` confirmed that a backend `not_ready/missing_channel` response
+  was not presented as missing and did not distinguish other not-ready reasons.
+- The initial real-browser screenshot also revealed a split heading/eyebrow layout.
+- The UI now maps missing-channel evidence clearly, preserves other not-ready reasons,
+  and keeps the workspace title with its label.
+- The final PR #83 workflow `37895892318` passed the canonical harness and
+  the Docker Compose Chromium test.
+- Full-page desktop and 390px mobile screenshots were reviewed. They are retained
+  for 14 days as the `ome-ui-chromium-screenshots` GitHub Actions artifact.
+- PR #83 merged into `main` as `7873d52f805d31677ee8a90c46db675935348497`.
+- No backend/domain computations or transport contracts changed.
+
 ## Verification gates
 
 - `uv run --locked python scripts/harness.py verify` passes.
@@ -56,3 +74,8 @@ frontend interpolation or backend contract change. Images are QA evidence, not p
 - Screenshot artifacts are available on PR CI runs for inspection.
 - Review accessibility, responsive behavior, Missing Evidence and source provenance.
 - Merge only after both CI jobs are GREEN and update Kanban/plan completion.
+
+## Completion assessment
+
+All automated browser gates passed and the PR was merged to main.
+This incremental UX/QA hardening is complete; future enhancements require new replenishment.

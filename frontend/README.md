@@ -41,3 +41,14 @@ retain their existing HTTP contracts and evidence model. No engineering calculat
 the browser.
 
 Do not move deterministic engineering calculations into frontend code.
+
+
+## Real-browser integration coverage
+
+Plan 033 is completed: `docs/plans/completed/033-real-browser-telemetry-qa.md`.
+Docker Compose CI runs `tests/browser/verify_ui.py` against the Portland fixture
+with pinned Playwright/Chromium and saves desktop/mobile screenshots.
+The backend `not_ready` status remains authoritative: `missing_channel`
+is shown as Missing Evidence while other not-ready issues remain distinct.
+
+See `docs/DEVELOPMENT.md` for reproduction commands.

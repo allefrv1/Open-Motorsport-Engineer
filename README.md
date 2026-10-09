@@ -154,3 +154,12 @@ inspection, concise observations, and full evidence/provenance disclosure. The b
 does not interpolate, rank laps or infer missing physical inputs.
 
 The project is still under active development and does not yet include persistence/history, desktop packaging, automatic lap ranking or AI explanation.
+
+
+## Browser QA
+
+CI exercises the committed Portland Traqmate fixture using headless Chromium and the
+real Docker Compose app. It verifies lap selection, synchronized plots, cursor/zoom controls,
+explicit Missing Evidence and the mobile layout. Desktop/mobile screenshots are published
+as GitHub Actions artifacts. See
+[browser verification instructions](docs/DEVELOPMENT.md#optional-real-browser-ui-verification).
