@@ -24,7 +24,9 @@ Use progressive disclosure: start here, then open only documents relevant to the
 
 ## Current execution
 
-Plan 032 — Interactive Engineering Telemetry Workspace is in DOING. See `docs/plans/active/032-interactive-telemetry-workspace.md`. Plan 031 is complete.
+Plans 001–032 are complete. No product plan is currently in DOING or REVIEW.
+
+See `docs/plans/completed/032-interactive-telemetry-workspace.md` for the verified interactive telemetry workspace. The Kanban product WIP slot is empty pending replenishment.
 
 ## Verification and implementation guidance
 
