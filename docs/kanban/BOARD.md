@@ -19,7 +19,7 @@ None.
 
 ## DOING
 
-- Plan 033 — Real Browser Telemetry QA
+None.
 
 ## REVIEW
 
@@ -33,10 +33,10 @@ Unsupported physical throttle/brake/steering remain product-level Missing Eviden
 
 ## DONE
 
-Plans 001–032.
+Plans 001–033.
 
 ## WIP check
 
-- Product Doing: 1 / 1
+- Product Doing: 0 / 1
 - Review: 0 / 2
 - Expedite: 0 / 1
