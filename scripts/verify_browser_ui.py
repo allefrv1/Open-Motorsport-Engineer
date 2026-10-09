@@ -86,11 +86,17 @@ def test_real_traqmate_in_browser(page: Page) -> None:
     page.get_by_text("Method and provenance").click()
     expect(page.get_by_text("Algorithm", exact=True)).to_be_visible()
     SCREENSHOTS.mkdir(parents=True, exist_ok=True)
-    page.screenshot(path=str(SCREENSHOTS / "desktop-traqmate.png"), full_page=True, animations="disabled")
+    page.screenshot(
+        path=str(SCREENSHOTS / "desktop-traqmate.png"), full_page=True, animations="disabled"
+    )
 
     page.set_viewport_size({"width": 390, "height": 844})
-    page.screenshot(path=str(SCREENSHOTS / "mobile-traqmate.png"), full_page=True, animations="disabled")
-    size = page.evaluate("() => ({viewport: innerWidth, document: document.documentElement.scrollWidth})")
+    page.screenshot(
+        path=str(SCREENSHOTS / "mobile-traqmate.png"), full_page=True, animations="disabled"
+    )
+    size = page.evaluate(
+        "() => ({viewport: innerWidth, document: document.documentElement.scrollWidth})"
+    )
     assert size["document"] <= size["viewport"] + 2, (
         f"Page-level horizontal overflow on mobile: {size}"
     )
@@ -107,9 +113,13 @@ def main() -> None:
         try:
             test_real_traqmate_in_browser(page)
             assert not js_errors, f"Uncaught frontend JavaScript errors: {js_errors}"
-            print("Browser QA passed: Portland Traqmate, inspection, zoom, evidence and mobile reflow.")
+            print(
+                "Browser QA passed: Portland Traqmate, inspection, zoom, evidence and mobile reflow."
+            )
         except Exception:
-            page.screenshot(path=str(SCREENSHOTS / "failure.png"), full_page=True, animations="disabled")
+            page.screenshot(
+                path=str(SCREENSHOTS / "failure.png"), full_page=True, animations="disabled"
+            )
             raise
         finally:
             browser.close()
