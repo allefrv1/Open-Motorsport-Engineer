@@ -144,6 +144,7 @@ function WorkflowIssues({
 }
 
 function ComparisonResults({ report }: { report: ComparisonReport }) {
+  const [showAllObservations, setShowAllObservations] = useState(false);
   const comparison = report.comparison;
   const finalDelta = comparison.delta_b_vs_a_s.at(-1) ?? 0;
   const provenance = comparison.provenance;
@@ -161,11 +162,13 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
     <section className="results" aria-labelledby="comparison-result-heading">
       <div className="comparison-header">
         <div>
-          <p className="eyebrow">Deterministic comparison</p>
+          <p className="eyebrow">Analysis ready · Derived metric</p>
           <h2 id="comparison-result-heading">Lap comparison</h2>
           <div className="comparison-meta" aria-label="Comparison method summary">
             <span>Lap A = reference</span>
             <span>Delta = Lap B - Lap A</span>
+            <span>Reference: {provenance.lap_a.context.lap_identifier}</span>
+            <span>Candidate: {provenance.lap_b.context.lap_identifier}</span>
             <span>
               {formatDistanceRange(
                 comparison.common_start_m,
@@ -182,7 +185,7 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
         </div>
       </div>
 
-      <section className="result-section" aria-labelledby="delta-heading">
+      <section className="result-section result-section--overview" aria-labelledby="delta-heading">
         <h2 id="delta-heading">Delta over distance</h2>
         <DeltaChart
           distances={comparison.distance_grid_m}
@@ -192,13 +195,24 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
 
       <TelemetryInvestigationPlots report={report} />
 
+      <div className="analysis-lower-grid">
       <section className="result-section" aria-labelledby="observations-heading">
-        <h2 id="observations-heading">Observations</h2>
+        <div className="lower-section-header">
+          <div>
+            <p className="eyebrow">Server-returned regions</p>
+            <h2 id="observations-heading">Observations</h2>
+          </div>
+          <span className="count-pill">{report.observations.regions.length} regions</span>
+        </div>
+        <p className="analysis-note">Gain/loss observations are not causal diagnoses.</p>
         {report.observations.regions.length === 0 ? (
           <p>No gain/loss regions were returned by the deterministic observation layer.</p>
         ) : (
           <ul className="observation-list">
-            {report.observations.regions.map((region, index) => (
+            {(showAllObservations
+              ? report.observations.regions
+              : report.observations.regions.slice(0, 7)
+            ).map((region, index) => (
               <li
                 className="observation-item"
                 key={`${region.kind}-${region.start_distance_m}-${index}`}
@@ -222,13 +236,35 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
             ))}
           </ul>
         )}
+        {report.observations.regions.length > 7 ? (
+          <button
+            type="button"
+            className="secondary-action observations-toggle"
+            onClick={() => setShowAllObservations((current) => !current)}
+          >
+            {showAllObservations
+              ? "Show fewer observations"
+              : `Show all ${report.observations.regions.length} observations`}
+          </button>
+        ) : null}
       </section>
 
       <section className="result-section" aria-labelledby="evidence-heading">
-        <h2 id="evidence-heading">Supporting evidence</h2>
+        <div className="lower-section-header">
+          <div>
+            <p className="eyebrow">Available and missing channels</p>
+            <h2 id="evidence-heading">Supporting evidence</h2>
+          </div>
+          <span className="count-pill">{report.supporting_evidence.length} concepts</span>
+        </div>
         <ul className="evidence-list">
           {report.supporting_evidence.map((item) => (
-            <li className="evidence-item" key={item.canonical_concept}>
+            <li
+              className={item.status === "available"
+                ? "evidence-item"
+                : "evidence-item evidence-item--missing"}
+              key={item.canonical_concept}
+            >
               <div>
                 <div className="evidence-concept">{item.canonical_concept}</div>
                 <div className="evidence-status">
@@ -245,6 +281,7 @@ function ComparisonResults({ report }: { report: ComparisonReport }) {
           ))}
         </ul>
       </section>
+      </div>
 
       <section className="result-section provenance">
         <details>
@@ -399,8 +436,15 @@ export function App() {
 
   return (
     <main className="app-shell">
+      <div className="app-topbar">
+        <div className="brand-lockup">
+          <span className="brand-mark" aria-hidden="true">OME</span>
+          <span>Open Motorsport Engineer <small>Local engineering workspace</small></span>
+        </div>
+        <span className="app-topbar__state">Evidence-first analysis</span>
+      </div>
       <header className="page-header">
-        <p className="eyebrow">Open Motorsport Engineer</p>
+        <p className="eyebrow">Workspace / Lap analysis</p>
         <h1>Compare two laps</h1>
         <p>
           Choose a supported source workflow, keep the reference/candidate order
@@ -409,6 +453,13 @@ export function App() {
         </p>
       </header>
 
+      <div className="workspace-layout">
+      <aside className="setup-pane" aria-label="Source setup">
+        <div className="pane-heading">
+          <p className="eyebrow">01 / Prepare</p>
+          <h2>Source setup</h2>
+          <p>Select measured source data and keep lap order explicit.</p>
+        </div>
       <form className="source-form" onSubmit={handleSubmit}>
         <fieldset className="workflow-selector">
           <legend>Source workflow</legend>
@@ -591,6 +642,28 @@ export function App() {
           </button>
         </div>
       </form>
+      </aside>
+
+      <div className="analysis-pane" aria-label="Engineering investigation">
+      {outcome === null && !loading && error === null ? (
+        <section className="empty-workspace" aria-label="Ready to investigate">
+          <span className="empty-workspace__eyebrow">02 / Investigate</span>
+          <div className="empty-workspace__visual" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <h2>Your telemetry investigation starts here</h2>
+          <p>
+            Select a source, specify Lap A and Lap B, then compare. Verified
+            metrics, synchronized channels, exact samples and provenance will
+            appear in this workspace.
+          </p>
+          <p className="empty-workspace__hint">
+            No demonstration values or missing channels are invented.
+          </p>
+        </section>
+      ) : null}
 
       {loading ? (
         <div className="status-line" role="status" aria-live="polite">
@@ -611,6 +684,8 @@ export function App() {
       {outcome?.status === "success" ? (
         <ComparisonResults report={outcome.report} />
       ) : null}
+      </div>
+      </div>
     </main>
   );
 }

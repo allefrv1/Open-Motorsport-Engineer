@@ -1,6 +1,6 @@
 # OME Kanban Board
 
-Updated: 2026-10-06
+Updated: 2026-10-09
 
 This is a lightweight flow view.
 
@@ -19,7 +19,7 @@ None.
 
 ## DOING
 
-None.
+- Plan 032 — Interactive Engineering Telemetry Workspace
 
 ## REVIEW
 
@@ -37,6 +37,6 @@ Plans 001–031.
 
 ## WIP check
 
-- Product Doing: 0 / 1
+- Product Doing: 1 / 1
 - Review: 0 / 2
 - Expedite: 0 / 1
