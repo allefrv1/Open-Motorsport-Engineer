@@ -120,7 +120,7 @@ export function TelemetryInvestigationPlots({
     >
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Measured and derived evidence</p>
+          <p className="eyebrow">Source overlays and derived evidence</p>
           <h2 id="telemetry-investigation-heading">Synchronized telemetry</h2>
         </div>
         <p>
@@ -149,7 +149,7 @@ export function TelemetryInvestigationPlots({
                 onChange={() => toggleChannel(panel.concept)}
                 aria-label={`${panel.concept} (${panel.unit})`}
               />
-              <span>Measured · {panel.concept}</span>
+              <span>Channel · {panel.concept}</span>
               <small>{panel.unit}</small>
             </label>
           ))}
